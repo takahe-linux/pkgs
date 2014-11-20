@@ -1,14 +1,18 @@
 # Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
 
-pkgname=NAME
-pkgver=VERSION
+# Package information
+pkgname='NAME'
+pkgver='VERSION'
 pkgrel=1
 epoch=
 pkgdesc=""
 
-arch=()
+# Additional information...
+arch=('i586')
 url=""
 license=('GPL')
+
+# Dependency information
 groups=()
 depends=()
 makedepends=()
@@ -17,6 +21,8 @@ optdepends=()
 provides=()
 conflicts=()
 replaces=()
+
+# Building information
 backup=()
 options=()
 install=
@@ -26,23 +32,31 @@ source=($pkgname-$pkgver.tar.gz
 noextract=()
 md5sums=() #generate with 'makepkg -g'
 
+
 prepare() {
-	cd "$srcdir/$pkgname-$pkgver"
-	patch -p1 -i "$srcdir/$pkgname-$pkgver.patch"
+	cd "${srcdir}/${pkgname}-${pkgver}"
+
+	patch -p1 -i "${srcdir}/${pkgname}-${pkgver}.patch"
 }
 
+
 build() {
-	cd "$srcdir/$pkgname-$pkgver"
+	cd "${srcdir}/${pkgname}-${pkgver}"
+
 	./configure --prefix=/usr
 	make
 }
 
+
 check() {
-	cd "$srcdir/$pkgname-$pkgver"
+	cd "${srcdir}/${pkgname}-${pkgver}"
+
 	make -k check
 }
 
+
 package() {
-	cd "$srcdir/$pkgname-$pkgver"
-	make DESTDIR="$pkgdir/" install
+	cd "${srcdir}/${pkgname}-${pkgver}"
+
+	make DESTDIR="${pkgdir}/" install
 }

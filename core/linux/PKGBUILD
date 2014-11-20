@@ -77,7 +77,7 @@ build() {
 
 
 package() {
-	cd "$srcdir/$pkgname-$pkgver"
+	cd "${srcdir}/${_srcname}"
 
     #TODO: Make more flexible
     KARCH=x86
@@ -87,6 +87,6 @@ package() {
     cp arch/${KARCH}/boot/bzImage \
        "${pkgdir}/boot/vmlinuz-${_target_config}"
 
-    # Install the modules (?)
+    # Install the modules (?) (modules_install?)
 	make DESTDIR="${pkgdir}/" install
 }

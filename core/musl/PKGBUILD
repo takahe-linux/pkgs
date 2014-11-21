@@ -1,48 +1,42 @@
 # Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
 
-pkgname=NAME
-pkgver=VERSION
+# Package information
+pkgname='musl'
+pkgver='1.1.5'
 pkgrel=1
-epoch=
-pkgdesc=""
+pkgdesc="Lightweight libc implementation"
 
-arch=()
-url=""
-license=('GPL')
-groups=()
-depends=()
-makedepends=()
-checkdepends=()
-optdepends=()
-provides=()
-conflicts=()
-replaces=()
-backup=()
+# Additional information...
+arch=('i586')
+url="http://www.musl-libc.org"
+license=('MIT')
+
+# Dependency information
+groups=('base')
+makedepends=('linux-api-headers')
+provides=('libc')
+conflicts=('libc')
+
+# Building information
 options=()
-install=
-changelog=
-source=($pkgname-$pkgver.tar.gz
-        $pkgname-$pkgver.patch)
-noextract=()
-md5sums=() #generate with 'makepkg -g'
+source=("http://www.musl-libc.org/releases/${pkgname}-${pkgver}.tar.gz")
+md5sums=('94f8aa9dab80229fed68991bb9984cc5')
 
-prepare() {
-	cd "$srcdir/$pkgname-$pkgver"
-	patch -p1 -i "$srcdir/$pkgname-$pkgver.patch"
-}
 
 build() {
-	cd "$srcdir/$pkgname-$pkgver"
-	./configure --prefix=/usr
-	make
+	cd "${srcdir}/${pkgname}-${pkgver}"
+
+    ./configure --target="${_target_triplet}" \
+                --prefix="${_prefix}" \
+                --systemlibdir="${_libdir}" \
+                --libdir="${_libdir}"
+
+    make CC="${CC}"
 }
 
-check() {
-	cd "$srcdir/$pkgname-$pkgver"
-	make -k check
-}
 
 package() {
-	cd "$srcdir/$pkgname-$pkgver"
-	make DESTDIR="$pkgdir/" install
+    cd "${pkgname}-${pkgver}"
+
+    make DESTDIR="${pkgdir}" install
 }

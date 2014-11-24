@@ -1,0 +1,4 @@
+sysroot
+sources/*
+pkgs/*
+*.tar.*

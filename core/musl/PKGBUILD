@@ -18,7 +18,6 @@ provides=('libc')
 conflicts=('libc')
 
 # Building information
-options=()
 source=("http://www.musl-libc.org/releases/${pkgname}-${pkgver}.tar.gz")
 md5sums=('94f8aa9dab80229fed68991bb9984cc5')
 

@@ -8,10 +8,10 @@ around with some different software.
 
 # Status #
 
-Currently, there is nothing to see. Literally. Apart from this document.
+I've made a start with the initial packages!
 
-I'll hopefully have a stab at adding some initial packages during the 2014-2015
-holiday break.
+I hope to get some serious work done during the holidays (2014/2015 break).
+
 
 I've managed to build a working system before, both using LFS, and loosely
 based on [Sabotage Linux](https://github.com/sabotage-linux/sabotage
@@ -49,6 +49,8 @@ Who else :)
 
 More seriously, I am not a distro maintainer, developer, or any other such
 title. Experimenter, really. Keep that in mind if you decide to try this distro!
+
+Not that I expect anyone will for a while...
 
 
 # Contributing #

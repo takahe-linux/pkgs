@@ -34,29 +34,29 @@ md5sums=() #generate with 'makepkg -g'
 
 
 prepare() {
-	cd "${srcdir}/${pkgname}-${pkgver}"
+    cd "${srcdir}/${pkgname}-${pkgver}"
 
-	patch -p1 -i "${srcdir}/${pkgname}-${pkgver}.patch"
+    patch -p1 -i "${srcdir}/${pkgname}-${pkgver}.patch"
 }
 
 
 build() {
-	cd "${srcdir}/${pkgname}-${pkgver}"
+    cd "${srcdir}/${pkgname}-${pkgver}"
 
-	./configure --prefix=/usr
-	make
+    ./configure --prefix=/usr
+    make
 }
 
 
 check() {
-	cd "${srcdir}/${pkgname}-${pkgver}"
+    cd "${srcdir}/${pkgname}-${pkgver}"
 
-	make -k check
+    make -k check
 }
 
 
 package() {
-	cd "${srcdir}/${pkgname}-${pkgver}"
+    cd "${srcdir}/${pkgname}-${pkgver}"
 
-	make DESTDIR="${pkgdir}/" install
+    make DESTDIR="${pkgdir}/" install
 }

@@ -1,0 +1,69 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+_pkgname='binutils'
+pkgname="${_target_triplet}-${_pkgname}"
+pkgver='2.25'
+pkgrel=1
+pkgdesc="A set of programs to assemble and manipulate binary and object files"
+
+# Additional information...
+arch=('x86_64')
+url="http://www.gnu.org/software/${_pkgname}/"
+license=('GPL')
+
+# Dependency information
+depends=('glibc>=2.20' 'zlib')
+checkdepends=('dejagnu' 'bc')
+
+# Building information
+options=('staticlibs' '!distcc' '!ccache')
+source=("ftp://ftp.gnu.org/gnu/${_pkgname}/${_pkgname}-${pkgver}.tar.bz2")
+md5sums=('d9f3303f802a5b6b0bb73a335ab89d66')
+
+
+prepare() {
+    cd "${srcdir}/${_pkgname}-${pkgver}"
+
+    # hack! - libiberty configure tests for header files using "$CPP $CPPFLAGS"
+    sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" libiberty/configure
+
+    mkdir "${srcdir}/${_pkgname}-build"
+}
+
+
+build() {
+    cd "${srcdir}/${_pkgname}-build"
+
+    "${srcdir}/${_pkgname}-${pkgver}/configure" \
+        --prefix="${_toolroot}" \
+        --host="${_local_triplet}" \
+        --target="${_target_triplet}" \
+        --with-sysroot="${_sysroot}" \
+        --disable-nls --disable-multilib \
+        --disable-static --disable-werror \
+        --with-lib-path="${_toolroot}/lib"
+
+    # Check the host environment and makes sure all the necessary tools are
+    # available
+    make configure-host
+
+    make
+}
+
+
+check() {
+    cd "${srcdir}/${_pkgname}-build"
+
+    make -k LDFLAGS="" check || true
+}
+
+
+package() {
+    cd "${srcdir}/${_pkgname}-build"
+
+    make prefix="${pkgdir}${_toolroot}" install
+
+    # Remove file conflicting with host binutils and manpages for MS Windows tools
+    rm "${pkgdir}${_toolroot}/share/man/man1/${_target_triplet}-"{dlltool,nlmconv,windres,windmc}*
+}

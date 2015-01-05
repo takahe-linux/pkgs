@@ -1,0 +1,115 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+_pkgname='gcc'
+pkgname="${_target_triplet}-${_pkgname}"
+pkgver='4.8.3'
+_islver='0.12.2'
+_cloogver='0.18.2'
+pkgrel=1
+pkgdesc="The GNU Compiler Collection - cross for i586-linux-musl"
+
+# Additional information...
+arch=('i586' 'x86_64')
+url='http://gcc.gnu.org/'
+license=('GPL' 'LGPL' 'FDL')
+
+# Dependency information
+depends=("${_target_triplet}-binutils" 
+         "${_target_triplet}-linux-api-headers" 
+         "${_target_triplet}-libc" 'zlib' 'libmpc')
+makedepends=("${_target_triplet}-gcc-static" 'gmp' 'mpfr')
+conflicts=("${_target_triplet}-gcc-static")
+replaces=("${_target_triplet}-gcc-static")
+
+# Building information
+options=(!emptydirs !strip)
+source=("ftp://gcc.gnu.org/pub/gcc/releases/gcc-${pkgver}/gcc-${pkgver}.tar.bz2"
+        "http://isl.gforge.inria.fr/isl-${_islver}.tar.bz2"
+        "http://www.bastoul.net/cloog/pages/download/cloog-${_cloogver}.tar.gz"
+        "gcc-4.8.3-musl.patch")
+sha256sums=('6a8e4f11b185f4fe2ed9d7fc053e80f8c7e73f800c045f51f9d8bea33f080f1e'
+            'f4b3dbee9712850006e44f0db2103441ab3d13b406f77996d1df19ee89d11fb4'
+            'ba3cc2d3750dfcb51f65ce029f0dda31347b8eeed216b1bac6170ab12d967581'
+            '0bcf4db18111be1942b9fde1ffe48d94c32ce008283bbce9dcde9333ea4fe8d7')
+
+
+prepare() {
+    cd "${srcdir}/${_pkgname}-${pkgver}"
+
+    # link isl/cloog for in-tree builds
+    ln -s "${srcdir}/isl-${_islver}" isl
+    ln -s "${srcdir}/cloog-${_cloogver}" cloog
+
+    echo "${pkgver}" > gcc/BASE-VER
+
+    # hack! - some configure tests for header files using "$CPP $CPPFLAGS"
+    sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" {libiberty,gcc}/configure
+
+    patch -p1 < "${srcdir}"/*.patch
+    
+
+    mkdir "${srcdir}/gcc-build"
+}
+
+
+build() {
+    cd "${srcdir}/gcc-build"
+
+    export CFLAGS_FOR_TARGET='-g -Os -ffunction-sections -fdata-sections -fno-exceptions'
+    export CXXFLAGS_FOR_TARGET="${CFLAGS_FOR_TARGET}"
+
+    "${srcdir}/${_pkgname}-${pkgver}/configure" \
+        --build="${_local_triplet}" \
+        --host="${_local_triplet}" \
+        --target="${_target_triplet}" \
+        --prefix="${_toolroot}" \
+        --with-sysroot="${_sysroot}" \
+        --with-arch="${_target_arch}" \
+        --libexecdir="${_libdir}" \
+        --enable-languages=c \
+        --enable-c99 \
+        --enable-long-long \
+        --enable-plugins \
+        --enable-threads=posix \
+        --disable-libmudflap \
+        --disable-nls \
+        --disable-static \
+        --disable-multilib \
+        --with-gnu-as \
+        --with-gnu-ld \
+        --with-system-zlib \
+        --with-gmp \
+        --with-mpfr \
+        --with-mpc \
+        --with-cloog \
+        --with-isl \
+        --with-newlib \
+        --enable-cloog-backend=isl
+
+    make all-gcc all-target-libgcc
+}
+
+
+package() {
+    cd "${srcdir}/gcc-build"
+
+    make DESTDIR="${pkgdir}" install-gcc install-target-libgcc -j1
+
+    # strip target binaries
+    find "${pkgdir}/usr/lib/gcc/${_target_triplet}/" \
+         "${pkgdir}${_toolroot}/lib" \
+         -type f -and \( -name \*.a -or -name \*.o \) \
+         -exec "${_toolroot}/bin/${_target_triplet}-objcopy" \
+         -R .comment -R .note -R .debug_info -R .debug_aranges \
+         -R .debug_pubnames -R .debug_pubtypes -R .debug_abbrev -R .debug_line \
+         -R .debug_str -R .debug_ranges -R .debug_loc '{}' \;
+
+    # strip host binaries
+    find "${pkgdir}${_toolroot}/bin/" \
+         "${pkgdir}/usr/lib/gcc/${_target_triplet}/" \
+         -type f -and \( -executable \) -exec strip '{}' \;
+
+    # Remove info files (already existing)
+    rm -r "${pkgdir}${_toolroot}/share/info"
+}

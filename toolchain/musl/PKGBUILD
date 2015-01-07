@@ -13,7 +13,6 @@ url="http://www.musl-libc.org"
 license=('MIT')
 
 # Dependency information
-groups=('base')
 makedepends=("${_target_triplet}-linux-api-headers"
              "${_target_triplet}-${_cc}"
              "${_target_triplet}-binutils")

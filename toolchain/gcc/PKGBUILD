@@ -19,6 +19,7 @@ depends=("${_target_triplet}-binutils"
          "${_target_triplet}-linux-api-headers" 
          "${_target_triplet}-libc" 'zlib' 'libmpc')
 makedepends=("${_target_triplet}-gcc-static" 'gmp' 'mpfr')
+provides=("${_target_triplet}-gcc-static")
 conflicts=("${_target_triplet}-gcc-static")
 replaces=("${_target_triplet}-gcc-static")
 

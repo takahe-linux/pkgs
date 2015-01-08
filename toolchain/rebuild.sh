@@ -3,6 +3,9 @@
 ################################################################################
 # Script to rebuild the toolchain, using the new vars in the config files.
 #
+# On one of my machines (Core 2 Duo @ 2.4GHz, 3GB RAM), the packages built in 
+# about 25 minutes. YMMV
+#
 # Author: Alastair Hughes
 # Contact: < hobbitalastair at yandex dot com >
 # Date: 7-1-15
@@ -33,7 +36,8 @@ packages="linux-api-headers binutils gcc-static musl gcc"
 
 # Remove the packages, if they are installed
 for pkg in ${packages}; do
-    pacman -Q ${target_triplet}-${pkg} && yes 'y' | sudo pacman -R ${target_triplet}-${pkg}
+    pacman -Q ${target_triplet}-${pkg} && yes 'y' | \
+        sudo pacman -Rsc ${target_triplet}-${pkg}
 done
 
 for pkg in ${packages}; do
@@ -41,7 +45,7 @@ for pkg in ${packages}; do
 
     # Clean tmp dir, if it exists.
     #TODO: Improve to use the target triplet (from where?)
-    builddir="/tmp/makepkg/${target_triplet}-${pkg}"
+    builddir="/tmp/makepkg/"
     if [ -d "${builddir}" ]; then
         rm -rf "${builddir}"
     fi

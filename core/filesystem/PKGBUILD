@@ -55,18 +55,17 @@ md5sums=('d46cb1adf8175888cc827a3dad8857d2'
          '4c4540eeb748bf1f71d631b8c1dcf0b3'
          'f28150d4c0b22a017be51b9f7f9977ed'
          '6e488ffecc8ba142c0cf7e2d7aeb832e'
-         'a998d1e6c7cc5791a7f4a2b49b2d10ce'
+         'c465a5f74bdf25ccf6af3791202bfc8a'
          '1ec1b16e2a71fad63ab8f147069a5d97'
          '693c97f2c9a519bb97a17008e92c2b74'
          '1745349eb24ed21b4cfaa6f423bddb76'
          '7bc65f234dfb6abf24e7c3b03e86f4ff'
          'd41d8cd98f00b204e9800998ecf8427e'
          '6f48288b6fcaf0065fcb7b0e525413e0'
-         '22518e922891f9359f971f4f5b4e793c'
+         'bb51026508581e55bbefe36e2b799108'
          '09bce9236c3729d31aaa528bcf5d198e'
-         '0b6f835598c7640184e476057b3c7722'
+         '203dbcc864f3e8e68e5da5eb5cfb663c'
          '4fab2b798deff348e04f05152111aae0')
-
 
 package() {
     cd ${pkgdir}

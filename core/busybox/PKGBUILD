@@ -14,8 +14,8 @@ license=('GPL') # Busybox; not sure about the service files, which
 
 # Dependency information
 groups=('base')
-depends=('libc')
-makedepends=() #TODO: Fill in
+depends=() # Statically linked; not dependent on anything.
+makedepends=('libc') #TODO: Fill in
 provides=('coreutils' 'util-linux' 'init' 'sh')
 conflicts=('coreutils' 'util-linux' 'init' 'sh')
 
@@ -29,36 +29,31 @@ source=("${_web_address}/${pkgname}-${pkgver}.tar.bz2"
         "${_patch_address}/busybox-${pkgver}-nc.patch"
         "config"
         *.patch
-
-        # Services...
-        'install-service'
-        'dmesg'
-        tty{1,2,3,4}
        )
 md5sums=('337d1a15ab1cb1d4ed423168b1eb7d7e'
          '538d8cddbdfc449239b25a40bc8d1575'
          'bc381f9ceb3824141c968f5bc4353943'
          '24686ec2750a8703feb57fc9c6aaed1d'
          '69eecaae5f812d08655dfdf34b60503f'
-         'SKIP'
+         '18ab4c18f4ea8b68690f15dfb08396b0'
          'b1f67463f918d0f7f9d1c26a8aeba32b'
          '433fffbb43d6a837d162f2d0e01e3216'
          '2f1fe972c8bbfb8b21e0c45a83a28b00'
          '6e04950f5f9e6330d1c0221840a02814'
          '2b7304860943dabc87dfb96cbc2ffa37'
-         '26531040c17d648a67ecb89fb043c653'
-         '6f7f0e4f421c76722031bb3e6055c02d'
-         '8caaa14876835479cd7e3e941c39a42c'
-         '4a271359aa2e7139f59afe5a32d0e4c2'
-         '9a5a5b401ce8a11c8184682368d89de3'
-         '799ca96bd5091222907cfbe851ef9f30'
-         '0ab63f654a0d7d0a19c59705f0395300'
-        )
+         '26531040c17d648a67ecb89fb043c653')
 
 
 prepare() {
     cd "${srcdir}/${pkgname}-${pkgver}"
 
+    # Adjust the config for the current settings
+    sed -i -e "/CONFIG_CROSS_COMPILER_PREFIX/s:=\"\":=\"${CROSS_COMPILE}\":" \
+        "${srcdir}/config"
+    sed -i -e "/CONFIG_SYSROOT/s:=\"\":=\"${_sysroot}\":" "${srcdir}/config"
+
+
+    # Apply the patches
     for patch_file in ${srcdir}/*.patch; do
         echo "Applying patch ${patch_file}"
         patch -p1 -i "${patch_file}"
@@ -78,7 +73,8 @@ build() {
     # If you want to run menuconfig uncomment the following line:
     #make menuconfig; return 1
 
-    make CC="${CC}" HOSTCC="${HOSTCC}" \
+    make ARCH="${_target_arch}" \
+        CC="${CC}" HOSTCC="${HOSTCC}" \
         HOSTCFLAGS="${HOSTCFLAGS}" \
         LDFLAGS="${LDFLAGS}"
 
@@ -88,19 +84,11 @@ build() {
 package() {
     cd "${srcdir}/${pkgname}-${pkgver}"
 
-    make DESTDIR="${pkgdir}/" install
+    ARCH="${_target_arch}" make DESTDIR="${pkgdir}/" install
 
     # Install the apps to the target location
     for app in _install/{bin,sbin}/*; do
-        install -Dm755 "$app" "$pkgdir/usr/bin/$(basename ${app})"
+        install -Dm755 "${app}" "${pkgdir}${_bindir}/$(basename ${app})"
     done
 
-    # Install the services
-    for service in {dmesg,tty{1,2,3,4}}; do
-        R="${pkgdir}" "${srcdir}/install-service" --force "${service}" \
-            "${srcdir}/${service}"
-    done
-
-    install -Dm0755 "${srcdir}/install-service" \
-                    "${pkgdir}${_bindir}/install-service"
 }

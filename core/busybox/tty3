@@ -1,3 +1,0 @@
-#!/bin/sh
-[ "$1" = "--prereqs" ] && exit 0
-exec getty -L 38400 tty3 linux

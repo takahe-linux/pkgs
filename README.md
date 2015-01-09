@@ -5,20 +5,57 @@ Takahe Linux is my experimental Linux distro, dedicated to 'extinct' computers.
 It is supposed to be a learning experience for me, and an opportunity to play
 around with some different software.
 
+I will be testing it on what hardware I have, mostly Qemu and a Toshiba 310CDS
+laptop.
+
+I hope to support older computers, and those of weirder architectures. If you
+are looking for a lightweight (ish) system for more modern computers, [Arch
+Linux](https://www.archlinux.org) is the way to go!
+
 
 # Status #
 
-I've made a start with the initial packages!
+Currently, I have managed to build the toolchain, and a basic system bootable
+in [Qemu](https://wiki.qemu.org/Main_Page).
 
-I hope to get some serious work done during the holidays (2014/2015 break).
+I plan to work from here, until I get to a workable stage.
 
 
-I've managed to build a working system before, both using LFS, and loosely
-based on [Sabotage Linux](https://github.com/sabotage-linux/sabotage
-"Sabotage Linux (Github)").
-So, in theory, this is something I am quite capable of doing.
-But I haven't had any success with building a cross-compile toolchain. Which
-does suggest further troubles...
+# Testing #
+
+Since I have no working bootloader, testing is a little difficult...
+
+I plan to upload a working system image to Bitbucket, but only once I've
+completed a bootloader and an init system (ie generally made a sane system).
+
+Until then, I am using the kernel and append options for qemu to test images.
+
+
+# Future plans #
+
+I've got some ideas of where to go from here!
+
+## Toolchain ##
+
+Currently, everything is good here. However, I'd like to make it less dependent
+on the host system (read: building it's own mpfr/mpc and so on).
+The automatic script could also do with some love.
+
+## System ##
+
+I'd like to add some automation here (rebuild all? automatic image creation?).
+I also need to add a working init system, bootloader, and prove to myself that
+it boots on my test machine, as well as in Qemu.
+
+The eventual goal is to make the system capable of then building itself - with
+the system created by the cross-compile toolchain becoming a 'temporary' system
+between architectures.
+
+Of course, such a system would also be able to bootstrap other architectures,
+and generally do everything I'd like it to do...
+
+I'd also like to hack makepkg to ensure that it works better with a distinction
+between the host and target systems, but that's a job for another day.
 
 
 # Takahe #
@@ -56,3 +93,4 @@ Not that I expect anyone will for a while...
 # Contributing #
 
 TODO: Fill in
+

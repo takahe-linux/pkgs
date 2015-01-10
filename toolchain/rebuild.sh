@@ -4,7 +4,7 @@
 # Script to rebuild the toolchain, using the new vars in the config files.
 #
 # On one of my machines (Core 2 Duo @ 2.4GHz, 3GB RAM), the packages built in 
-# about 25 minutes. YMMV
+# about 29 minutes. YMMV
 #
 # Author: Alastair Hughes
 # Contact: < hobbitalastair at yandex dot com >
@@ -12,7 +12,7 @@
 ################################################################################
 
 # Making bash exit if need be (and other shells?)
-set -e
+#set -e
 #set -o pipefail
 
 # Config...
@@ -30,21 +30,28 @@ makepkg_flags="fi"
 
 # Edit this to change the which packages are built, and the order.
 # Default:
-packages="linux-api-headers binutils gcc-static musl gcc"
+packages="linux-api-headers m4 pkg-config gmp mpfr mpc binutils gcc-static libc gcc"
 # sysroot specific:
-#packages="linux-api-headers gcc-static musl gcc"
+#packages="echo ${packages} | sed s:gcc-static::"
+# Edit this for individual packages:
+# Note that order will need to be maintained...
+#packages=""
 
-# Remove the packages, if they are installed
-for pkg in ${packages}; do
-    pacman -Q ${target_triplet}-${pkg} && yes 'y' | \
-        sudo pacman -Rsc ${target_triplet}-${pkg}
-done
+remove_packages() {
 
-for pkg in ${packages}; do
+    # Remove the packages, if they are installed
+    for pkg in $@; do
+        pacman -Q ${target_triplet}-${pkg} && yes 'y' | \
+            sudo pacman -Rsc ${target_triplet}-${pkg}
+    done
+}
+
+build_package() {
+    pkg="$1"
+
     cd "${toolchain}/${pkg}"
 
     # Clean tmp dir, if it exists.
-    #TODO: Improve to use the target triplet (from where?)
     builddir="/tmp/makepkg/"
     if [ -d "${builddir}" ]; then
         rm -rf "${builddir}"
@@ -53,7 +60,23 @@ for pkg in ${packages}; do
     # Build!
     # yes 'y' is for installing/removing packages.
     yes 'y' | \
-        makepkg -src${makepkg_flags} --config "${toolchain}/makepkg.conf" | \
-        tee log.txt
+        makepkg -src${makepkg_flags} --config "${toolchain}/makepkg.conf"
 
-done
+    error="$?"
+
+    [ "${error}" != 0 ] && echo "!!! Build failed on pkg ${pkg}!" && exit "${error}"
+}
+
+build_all() {
+
+    remove_packages $@
+
+    for pkg in $@; do
+        echo "--> Building package ${pkg}"
+        build_package "${pkg}"
+    done
+}
+
+build_all "${packages}" | tee log.txt
+
+

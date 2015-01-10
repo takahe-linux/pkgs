@@ -1,0 +1,47 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+_pkgname='mpc'
+pkgname="${_target_triplet}-${_pkgname}"
+pkgver='1.0.2'
+pkgrel=1
+pkgdesc="Library for the arithmetic of complex numbers with arbitrarily high precision"
+
+# Additional information...
+arch=('x86_64')
+url="http://www.multiprecision.org/"
+license=('LGPL')
+url=""
+
+# Dependency information
+groups=("${_target_triplet}")
+depends=("${_target_triplet}-mpfr")
+
+# Building information
+source=(http://www.multiprecision.org/mpc/download/mpc-${pkgver/_/-}.tar.gz)
+md5sums=('68fadff3358fb3e7976c7a398a0af4c3')
+
+
+build() {
+    cd "${srcdir}/${_pkgname}-${pkgver}"
+
+    ./configure --prefix="${_toolroot}" --disable-static \
+        --with-gmp="${_toolroot}" --with-mpfr="${_toolroot}"
+    make
+}
+
+
+check() {
+    cd "${srcdir}/${_pkgname}-${pkgver}"
+
+    make check
+}
+
+
+package() {
+    cd "${srcdir}/${_pkgname}-${pkgver}"
+
+    make DESTDIR="${pkgdir}/" install
+
+    rm -rf "${pkgdir}${_toolroot}/share/info"
+}

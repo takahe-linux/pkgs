@@ -67,4 +67,7 @@ package() {
 
     # Remove file conflicting with host binutils and manpages for MS Windows tools
     rm "${pkgdir}${_toolroot}/share/man/man1/${_target_triplet}-"{dlltool,nlmconv,windres,windmc}*
+
+    # Remove the info files - I'm not using them and they conflict
+    rm -rf "${pkgdir}${_toolroot}/share/info"
 }

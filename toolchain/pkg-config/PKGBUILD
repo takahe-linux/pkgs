@@ -1,0 +1,62 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# This is a local version of pkg-config to ensure that the host system version does
+# not get used...
+
+# Package information
+_pkgname='pkg-config'
+pkgname="${_target_triplet}-${_pkgname}"
+pkgver='0.28'
+pkgrel=1
+pkgdesc="A system for managing library compile/link flags"
+
+# Additional information...
+arch=('x86_64')
+url="http://pkgconfig.freedesktop.org/wiki/"
+license=('GPL')
+
+# Dependency information
+groups=("${_target_triplet}")
+depends=('glib2')
+
+# Building information
+source=("http://pkgconfig.freedesktop.org/releases/${_pkgname}-${pkgver}.tar.gz")
+md5sums=('aa3c86e67551adc3ac865160e34a2a0d')
+
+
+prepare() {
+    cd "${srcdir}/${_pkgname}-${pkgver}"
+
+    # Because config.sub is stupid, override it.
+
+    cat > "config.sub" << EOF
+#!/usr/sh
+
+echo \$@
+EOF
+
+}
+
+build() {
+    cd "${srcdir}/${_pkgname}-${pkgver}"
+
+    ./configure --prefix="${_toolroot}" \
+        --host="${_target_triplet}" \
+        --with-pc-path="${_sysroot}${_libdir}/pkgconfig:${_sysroot}${_prefix}/share/pkgconfig"
+
+    make
+}
+
+
+check() {
+    cd "${srcdir}/${_pkgname}-${pkgver}"
+
+    make -k check
+}
+
+
+package() {
+    cd "${srcdir}/${_pkgname}-${pkgver}"
+
+    make DESTDIR="${pkgdir}/" install
+}

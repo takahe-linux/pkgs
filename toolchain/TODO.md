@@ -1,6 +1,7 @@
 # TODO for toolchain #
 
-- Clean up!
-- Make more fancy... provide own cloog/isl/mpfr/...
+- Clean up.
+- Check what options I really need for gcc{,-static}
 - Test!
+- Improve the build script so that it exits on errors...
 

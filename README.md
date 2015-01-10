@@ -58,6 +58,22 @@ I'd also like to hack makepkg to ensure that it works better with a distinction
 between the host and target systems, but that's a job for another day.
 
 
+# Goals #
+
+The long-term goal of Takahe linux is to provide a working system, based on
+the musl libc, the Linux kernel, and some userspace tools.
+
+I would also like it to be self-hosting: a system running Takahe Linux can
+build another system, also running Takahe Linux.
+Preferably, it would also be easy to bootstrap to new architetures (at least
+those supported by Linux and Musl - at the moment, realistically that means
+ARM and x86-64 as I have hardware for both.
+
+In the future, I'd love to be building and maintaining a Linux distro
+entirely from 'vintage' computers - but I'd need something a bit more grunty
+than my Toshiba to do that!
+
+
 # Takahe #
 
 The Takahe is a flightless New Zealand bird, which was thought to be extinct.

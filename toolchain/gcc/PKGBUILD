@@ -15,6 +15,7 @@ url='http://gcc.gnu.org/'
 license=('GPL' 'LGPL' 'FDL')
 
 # Dependency information
+groups=("${_target_triplet}")
 depends=("${_target_triplet}-binutils" 
          "${_target_triplet}-linux-api-headers" 
          "${_target_triplet}-libc" 'zlib' 'libmpc')

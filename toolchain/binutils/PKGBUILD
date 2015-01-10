@@ -13,6 +13,7 @@ url="http://www.gnu.org/software/${_pkgname}/"
 license=('GPL')
 
 # Dependency information
+groups=("${_target_triplet}")
 depends=('glibc>=2.20' 'zlib')
 checkdepends=('dejagnu' 'bc')
 

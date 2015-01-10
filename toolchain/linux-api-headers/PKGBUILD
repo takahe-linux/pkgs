@@ -12,6 +12,9 @@ arch=('any')
 url="http://www.kernel.org"
 license=('GPL2')
 
+# Dependency information
+groups=("${_target_triplet}")
+
 # Building information
 source=("http://ftp.barfooze.de/pub/sabotage/tarballs/\
 kernel-headers-${pkgver}-${_header_version}.tar.xz"

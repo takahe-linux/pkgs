@@ -81,7 +81,10 @@ build() {
                  -DSYS_BASH_LOGOUT=\'\"/etc/bash/bash.logout\"\')
     export CFLAGS="${CFLAGS} ${_bashconfig[@]}"
 
-    ./configure --prefix=/usr --without-bash-malloc --host="${_target_triplet}"
+    ./configure --prefix="${_prefix}" --without-bash-malloc \
+        --host="${_target_triplet}" \
+        --build="${_local_triplet}" \
+        --with-ncurses
     make
 }
 

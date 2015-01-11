@@ -1,0 +1,53 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='zlib'
+pkgver='1.2.8'
+pkgrel=1
+pkgdesc='Compression library implementing the deflate compression method found in gzip and PKZIP'
+
+# Additional information...
+arch=('i586')
+url="http://www.zlib.net/"
+license=('custom')
+
+# Dependency information
+depends=('libc')
+
+# Building information
+source=("http://zlib.net/current/zlib-${pkgver}.tar.gz")
+md5sums=('44d667c142d7cda120332623eab69f40')
+
+
+prepare() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    # Extract the the license from zlib.h
+    echo "Extracting license..."
+    grep -A 26 '^Copyright' README > LICENSE
+}
+
+
+build() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    ./configure --prefix="${_prefix}"
+    make
+}
+
+
+check() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    make test
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    make DESTDIR="${pkgdir}/" install
+
+    # Install the license
+    install -D -m644 LICENSE "${pkgdir}${_licensedir}/${pkgname}/LICENSE"
+}

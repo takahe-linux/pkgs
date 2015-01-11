@@ -1,0 +1,100 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='bash'
+_basever='4.3'
+_patchlevel='030'
+pkgver="${_basever}.${_patchlevel}"
+pkgrel=1
+pkgdesc='The GNU Bourne Again shell'
+
+# Additional information...
+arch=('i586')
+url='http://www.gnu.org/software/bash/bash.html'
+license=('GPL')
+
+# Dependency information
+groups=('base')
+depends=('libc')
+optdepends=('bash-completion: for tab completion')
+# provides=('sh') Doesn't for now.
+
+# Building information
+_stripped_basever="$(echo ${_basever} | tr -d '.')"
+# Arch Linux downloads all patches up to _patchlevel, so I will to.
+source=("http://ftp.gnu.org/gnu/bash/bash-${_basever}.tar.gz"
+        "privmode-setuid-fail.patch")
+for _patch in $(seq 1 ${_patchlevel}); do
+    source=(${source[@]} "http://ftp.gnu.org/gnu/bash/bash-${_basever}-patches/bash${_stripped_basever}-$(printf "%03d" ${_patch})")
+done
+md5sums=('81348932d5da294953e15d4814c74dd1'
+         'a577d42e38249d298d6a8d4bf2823883'
+         '1ab682b4e36afa4cf1b426aa7ac81c0d'
+         '8fc22cf50ec85da00f6af3d66f7ddc1b'
+         'a41728eca78858758e26b5dea64ae506'
+         'bf8d53d227829d67235927689a03cc7a'
+         'c0c00935c8b8ffff76e8ab77e7be7d15'
+         '6f01e364cd092faa28dd7119f47ddb5f'
+         'dcf471d222bcd83283d3094e6ceeb6f8'
+         'f7553416646dc26c266454c78a916d36'
+         '7e73d2151f4064b484a4ba2c4b09960e'
+         'a275463d21735bb6d7161f9fbd320d8f'
+         'c17103ee20420d77e46b224c8d3fceda'
+         '3e2a057a19d02b3f92a3a09eacbc03ae'
+         'fb377143a996d4ff087a2771bc8332f9'
+         '1a1aaecc99a9d0cbc310e8e247dcc8b6'
+         '4f04387458a3c1b4d460d199f49991a8'
+         '90e759709720c4f877525bebc9d5dc06'
+         '11e4046e1b86070f6adbb7ffc89641be'
+         'cd5a9b46f5bea0dc0248c93c7dfac011'
+         'cff4dc024d9d3456888aaaf8a36ca774'
+         '167839c5f147347f4a03d88ab97ff787'
+         '1d350671c48dec30b34d8b81f09cd79d'
+         '11c349af66a55481a3215ef2520bec36'
+         'b3cb0d80fd0c47728264405cbb3b23c7'
+         'b5ea5600942acceb4b6f07313d2de74e'
+         '193c06f578d38ffdbaebae9c51a7551f'
+         '922578e2be7ed03729454e92ee8d3f3a'
+         '8ff6948b16f2db5c29b1b9ae1085bbe7'
+         'dd51fa67913b5dca45a702b672b3323f'
+         '0729364c977ef4271e9f8dfafadacf67'
+         'efb709fdb1368945513de23ccbfae053')
+
+
+prepare() {
+    cd "${srcdir}/${pkgname}-${_basever}"
+
+    for _patch in $(seq 1 ${_patchlevel}); do
+        patch -p0 -i "${srcdir}/bash${_stripped_basever}-$(printf "%03d" ${_patch})"
+    done
+
+    # http://hmarco.org/bugs/bash_4.3-setuid-bug.html (FS#40663)
+    patch -p0 -i "${srcdir}/privmode-setuid-fail.patch"
+}
+
+
+build() {
+    cd "${srcdir}/${pkgname}-${_basever}"
+    _bashconfig=(-DDEFAULT_PATH_VALUE=\'\"/usr/bin\"\'
+                 -DSTANDARD_UTILS_PATH=\'\"/usr/bin\"\'
+                 -DSYS_BASHRC=\'\"/etc/bash/bash.conf\"\'
+                 -DSYS_BASH_LOGOUT=\'\"/etc/bash/bash.logout\"\')
+    export CFLAGS="${CFLAGS} ${_bashconfig[@]}"
+
+    ./configure --prefix=/usr --without-bash-malloc --host="${_target_triplet}"
+    make
+}
+
+
+check() {
+    cd "${srcdir}/${pkgname}-${_basever}"
+
+    make check
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}-${_basever}"
+
+    make DESTDIR="${pkgdir}/" install
+}

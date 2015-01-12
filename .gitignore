@@ -1,4 +1,7 @@
 sysroot
 sources/*
 pkgs/*
+logs/*
 *.tar.*
+system.img
+vmlinuz-*

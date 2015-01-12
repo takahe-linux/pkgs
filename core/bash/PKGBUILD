@@ -3,7 +3,7 @@
 # Package information
 pkgname='bash'
 _basever='4.3'
-_patchlevel='030'
+_patchlevel='033'
 pkgver="${_basever}.${_patchlevel}"
 pkgrel=1
 pkgdesc='The GNU Bourne Again shell'
@@ -58,7 +58,10 @@ md5sums=('81348932d5da294953e15d4814c74dd1'
          '8ff6948b16f2db5c29b1b9ae1085bbe7'
          'dd51fa67913b5dca45a702b672b3323f'
          '0729364c977ef4271e9f8dfafadacf67'
-         'efb709fdb1368945513de23ccbfae053')
+         'efb709fdb1368945513de23ccbfae053'
+         '236df1ac1130a033ed0dbe2d2115f28f'
+         '2360f7e79cfb28526f80021025ea5909'
+         'b551c4ee7b8713759e4143499d0bbd48')
 
 
 prepare() {
@@ -75,16 +78,21 @@ prepare() {
 
 build() {
     cd "${srcdir}/${pkgname}-${_basever}"
+
+    # Setup some config for bash
     _bashconfig=(-DDEFAULT_PATH_VALUE=\'\"/usr/bin\"\'
                  -DSTANDARD_UTILS_PATH=\'\"/usr/bin\"\'
                  -DSYS_BASHRC=\'\"/etc/bash/bash.conf\"\'
                  -DSYS_BASH_LOGOUT=\'\"/etc/bash/bash.logout\"\')
     export CFLAGS="${CFLAGS} ${_bashconfig[@]}"
 
+    # Build bash!
     ./configure --prefix="${_prefix}" --without-bash-malloc \
         --host="${_target_triplet}" \
         --build="${_local_triplet}" \
-        --with-ncurses
+        --enable-static-link
+
+
     make
 }
 

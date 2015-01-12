@@ -30,6 +30,10 @@ completed a bootloader and an init system (ie generally made a sane system).
 
 Until then, I am using the kernel and append options for qemu to test images.
 
+I also want to have an end-to-end build script. Currently, this is messy, but
+I'm giving it a go in the form of shell scripts. The main issue is that
+the tools I'm using do not handle cross-compiling well...
+
 
 # Future plans #
 

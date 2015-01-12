@@ -76,13 +76,13 @@ build() {
         --with-gnu-as \
         --with-gnu-ld \
         --with-system-zlib \
-        --without-headers \
         --with-gmp="${_toolroot}" \
         --with-mpfr="${_toolroot}" \
         --with-mpc="${_toolroot}" \
+        --without-headers \
         --without-cloog \
         --without-isl \
-        --with-newlib \
+        --with-newlib
 
     make all-gcc all-target-libgcc
 }

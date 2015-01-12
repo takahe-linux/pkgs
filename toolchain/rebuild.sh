@@ -11,10 +11,6 @@
 # Date: 7-1-15
 ################################################################################
 
-# Making bash exit if need be (and other shells?)
-#set -e
-#set -o pipefail
-
 # Config...
 #TODO: Set some of this automatically...
 #TODO: Accept CLI arguments.
@@ -60,7 +56,7 @@ build_package() {
     # Build!
     # yes 'y' is for installing/removing packages.
     yes 'y' | \
-        makepkg -src${makepkg_flags} --config "${toolchain}/makepkg.conf"
+        makepkg -srcL${makepkg_flags} --config "${toolchain}/makepkg.conf"
 
     error="$?"
 
@@ -77,6 +73,6 @@ build_all() {
     done
 }
 
-build_all "${packages}" | tee log.txt
+build_all "${packages}"
 
 

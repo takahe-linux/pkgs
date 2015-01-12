@@ -53,7 +53,13 @@ build() {
     export CFLAGS_FOR_TARGET='-g -Os -ffunction-sections -fdata-sections -fno-exceptions'
     export CXXFLAGS_FOR_TARGET="${CFLAGS_FOR_TARGET}"
 
-
+    # Libsanitizer is ignored because it doesn't build (assertion fails -
+    #   negative array size). I'm not sure why, but I suspect it's an issue
+    # with using the wrong headers? I've also no idea how to fix it...
+    # It could be an issue further up the toolchain, too.
+    # And mudflap fails to build, too.
+    # On a different note, I think this should create a working C++ compiler.
+    LDFLAGS="-Wl,-rpath,${_toolroot}/lib" \
     "${srcdir}/${_pkgname}-${pkgver}/configure" \
         --build="${_local_triplet}" \
         --host="${_local_triplet}" \
@@ -61,26 +67,27 @@ build() {
         --prefix="${_toolroot}" \
         --with-sysroot="${_sysroot}" \
         --with-arch="${_target_arch}" \
+        --with-local-prefix="${_sysroot}" \
         --libexecdir="${_libdir}" \
-        --enable-languages=c \
+        --enable-languages=c,c++ \
         --enable-c99 \
         --enable-__cxa_atexit \
-        --enable-long-long \
-        --enable-plugins \
         --enable-threads=posix \
-        --disable-libmudflap \
+        --enable-libstdcxx-time \
         --disable-nls \
         --disable-static \
         --disable-multilib \
+        --disable-libmudflap \
+        --disable-mudflap \
+        --disable-libsanitizer \
         --with-gnu-as \
         --with-gnu-ld \
-        --with-system-zlib \
         --with-gmp="${_toolroot}" \
         --with-mpfr="${_toolroot}" \
         --with-mpc="${_toolroot}" \
+        --with-system-zlib \
         --without-cloog \
-        --without-isl \
-        --with-newlib
+        --without-isl
 
     make
 }

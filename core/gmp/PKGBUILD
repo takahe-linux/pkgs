@@ -1,0 +1,40 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='gmp'
+pkgver='6.0.0'
+pkgrel=1
+pkgdesc="A free library for arbitrary precision arithmetic"
+
+# Additional information...
+arch=('i586')
+url="http://gmplib.org/"
+license=('LGPL3' 'GPL')
+
+# Dependency information
+groups=("base-devel")
+depends=('gcc-libs')
+makedepends=('m4')
+
+# Building information
+source=("ftp://ftp.gmplib.org/pub/${pkgname}-${pkgver}/${pkgname}-${pkgver}a.tar.xz")
+md5sums=('1e6da4e434553d2811437aa42c7f7c76')
+
+
+build() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    CC_FOR_BUILD="${HOSTCC}" ./configure --prefix="${_prefix}" \
+        --build="${_local_triplet}" \
+        --host="${_target_triplet}" \
+        --enable-cxx
+
+    make
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    make DESTDIR="${pkgdir}/" install
+}

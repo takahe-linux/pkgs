@@ -1,0 +1,60 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Based off the Arch Linux pkgbuild
+
+# Package information
+pkgname='mpfr'
+_pkgver='3.1.2'
+_patchlevel='p11'
+pkgver="${_pkgver}.${_patchlevel}"
+pkgrel=1
+pkgdesc="Multiple-precision floating-point library"
+
+# Additional information...
+arch=('i586')
+url="http://www.mpfr.org/"
+license=('LGPL')
+
+# Dependency information
+groups=("base-devel")
+depends=("gmp>=5.0")
+
+# Building information
+source=("http://www.mpfr.org/mpfr-current/${pkgname}-${_pkgver}.tar.xz"
+        "${pkgname}-${_pkgver}-${_patchlevel}.patch")
+md5sums=('e3d203d188b8fe60bb6578dd3152e05c'
+         '9f96a5c7cac1d6cd983ed9cf7d997074')
+
+
+prepare() {
+    cd "${srcdir}/${pkgname}-${_pkgver}"
+
+    # Add linux-musl as a system to ncurses' config.sub
+    sed -i -e 's:linux-uclibc\* |:linux-musl\* | linux-uclibc\* |:' 'config.sub'
+    sed -i -e 's:| -linux-uclibc\*:| -linux-musl\* | -linux-uclibc\*:' 'config.sub'
+
+    # Add the patchlevel version patch
+    patch -p1 -i "${srcdir}/${pkgname}-${_pkgver}-${_patchlevel}.patch"
+}
+
+
+build() {
+    cd "${srcdir}/${pkgname}-${_pkgver}"
+
+    ./configure --prefix="${_sysroot}" \
+        --build="${_local_triplet}" \
+        --host="${_target_triplet}" \
+        --enable-thread-safe \
+
+    make
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}-${_pkgver}"
+
+    make DESTDIR="${pkgdir}/" install
+
+    # Remove info files as they cause conflicts.
+    rm -rf "${pkgdir}${_sysroot}/share/info"
+}

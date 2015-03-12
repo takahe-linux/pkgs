@@ -1,0 +1,51 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='ncurses'
+pkgver='5.9'
+pkgrel=1
+pkgdesc='System V Release 4.0 curses emulation library'
+
+# Additional information...
+arch=('i586')
+url='http://invisible-island.net/ncurses/ncurses.html'
+license=('MIT')
+
+# Dependency information
+depends=('libc' 'sh' 'gcc-libs')
+
+# Building information
+source=(ftp://invisible-island.net/ncurses/ncurses-${pkgver}.tar.gz)
+md5sums=('8cb9c412e5f2d96bc6f459aa8c6282a1')
+
+
+prepare() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+    
+    # Add linux-musl as a system to ncurses' config.sub
+    sed -i -e 's:linux-uclibc\* |:linux-musl\* | linux-uclibc\* |:' 'config.sub'
+    sed -i -e 's:| -linux-uclibc\*:| -linux-musl\* | -linux-uclibc\*:' 'config.sub'
+}
+
+
+build() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    ./configure --prefix="${_prefix}" --mandir="${_mandir}" --with-shared \
+        --host="${_target_triplet}" \
+        --without-debug --without-ada --enable-overwrite --with-build-cc="${_cc}" \
+        --without-cxx-binding --without-cxx
+    make
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    make DESTDIR="${pkgdir}/" install
+
+    # Install license, rip it from the readme
+    cd "$srcdir"/$pkgname-${pkgver/_/-}
+    install -dm755 "$pkgdir"/usr/share/licenses/$pkgname
+    grep -B 100 '$Id' README > "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
+}

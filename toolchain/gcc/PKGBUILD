@@ -7,7 +7,7 @@ pkgver='4.8.3'
 _islver='0.12.2'
 _cloogver='0.18.2'
 pkgrel=1
-pkgdesc="The GNU Compiler Collection - cross for i586-linux-musl"
+pkgdesc="The GNU Compiler Collection"
 
 # Additional information...
 arch=('i586' 'x86_64')
@@ -16,10 +16,8 @@ license=('GPL' 'LGPL' 'FDL')
 
 # Dependency information
 groups=("${_target_triplet}")
-depends=("${_target_triplet}-binutils" 
-         "${_target_triplet}-linux-api-headers" 
-         "${_target_triplet}-libc" 'zlib' 'libmpc')
-makedepends=("${_target_triplet}-gcc-static" 'gmp' 'mpfr')
+depends=("${_target_triplet}-binutils" 'zlib' 'libmpc')
+makedepends=("${_target_triplet}-gcc-static" 'gmp' 'mpfr' 'cloog' 'isl')
 provides=("${_target_triplet}-gcc-static")
 conflicts=("${_target_triplet}-gcc-static")
 replaces=("${_target_triplet}-gcc-static")
@@ -50,7 +48,7 @@ prepare() {
 build() {
     cd "${srcdir}/gcc-build"
 
-    export CFLAGS_FOR_TARGET='-g -Os -ffunction-sections -fdata-sections -fno-exceptions'
+    export CFLAGS_FOR_TARGET="${CFLAGS_FOR_TARGET}"
     export CXXFLAGS_FOR_TARGET="${CFLAGS_FOR_TARGET}"
 
     # Libsanitizer is ignored because it doesn't build (assertion fails -
@@ -82,12 +80,7 @@ build() {
         --disable-libsanitizer \
         --with-gnu-as \
         --with-gnu-ld \
-        --with-gmp="${_toolroot}" \
-        --with-mpfr="${_toolroot}" \
-        --with-mpc="${_toolroot}" \
-        --with-system-zlib \
-        --without-cloog \
-        --without-isl
+        --with-system-zlib
 
     make
 }

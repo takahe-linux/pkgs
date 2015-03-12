@@ -15,8 +15,8 @@ url='http://gcc.gnu.org/'
 license=('GPL' 'LGPL' 'FDL')
 
 # Dependency information
-depends=("${_target_triplet}-binutils" 
-         "${_target_triplet}-linux-api-headers" 'zlib' 'libmpc')
+depends=("${_target_triplet}-binutils" 'zlib' 'libmpc')
+#targetdepends=('kernel-api-headers')
 makedepends=('gmp' 'mpfr')
 
 # Building information
@@ -45,7 +45,7 @@ prepare() {
 build() {
     cd "${srcdir}/gcc-build"
 
-    export CFLAGS_FOR_TARGET='-g -Os -ffunction-sections -fdata-sections -fno-exceptions'
+    export CFLAGS_FOR_TARGET="${_target_cflags}"
     export CXXFLAGS_FOR_TARGET="${CFLAGS_FOR_TARGET}"
 
     "${srcdir}/${_pkgname}-${pkgver}/configure" \
@@ -76,9 +76,6 @@ build() {
         --with-gnu-as \
         --with-gnu-ld \
         --with-system-zlib \
-        --with-gmp="${_toolroot}" \
-        --with-mpfr="${_toolroot}" \
-        --with-mpc="${_toolroot}" \
         --without-headers \
         --without-cloog \
         --without-isl \
@@ -90,6 +87,8 @@ build() {
 
 package() {
     cd "${srcdir}/gcc-build"
+
+    #TODO: Split this into two packages, one for each architecture.
 
     make DESTDIR="${pkgdir}" install-gcc install-target-libgcc -j1
 
@@ -110,3 +109,5 @@ package() {
     # Remove info files (already existing)
     rm -r "${pkgdir}${_toolroot}/share/info"
 }
+
+

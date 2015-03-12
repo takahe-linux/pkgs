@@ -1,0 +1,43 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='musl'
+pkgver='1.1.5'
+pkgrel=1
+pkgdesc="Lightweight libc implementation"
+
+# Additional information...
+arch=('i586' 'mips')
+url="http://www.musl-libc.org"
+license=('MIT')
+
+# Dependency information
+groups=('base')
+makedepends=('linux-api-headers')
+provides=('libc')
+conflicts=('libc')
+
+# Building information
+source=("http://www.musl-libc.org/releases/${pkgname}-${pkgver}.tar.gz")
+md5sums=('94f8aa9dab80229fed68991bb9984cc5')
+
+
+build() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    CFLAGS="${_target_cflags}" CXXFLAGS="${CFLAGS}" \
+        CROSS_COMPILE="${CROSS_COMPILE}" CC="${CC}" AR="${AR}" AS="${AS}" \
+    ./configure --target="${_target_triplet}" \
+                --prefix="${_prefix}" \
+                --systemlibdir="${_libdir}" \
+                --libdir="${_libdir}"
+
+    make CC="${CC}" CROSS_COMPILE="${CROSS_COMPILE}"
+}
+
+
+package() {
+    cd "${pkgname}-${pkgver}"
+
+    make DESTDIR="${pkgdir}" install
+}

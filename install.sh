@@ -1,6 +1,6 @@
 #!/usr/bin/sh
 # Install some packages ($@) to the sysroot
 
-SYSROOT="$(cat makepkg.conf | grep '_sysroot=' | cut -f2 -d=)"
+source ./config.sh
 
-sudo pacstrap -C pacman.conf -d -G -i -M "${SYSROOT}" $@
+sudo pacstrap -C pacman.conf -d -G -i -M "${_sysroot}" $@

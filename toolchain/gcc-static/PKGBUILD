@@ -7,10 +7,10 @@ pkgver='4.8.3'
 _islver='0.12.2'
 _cloogver='0.18.2'
 pkgrel=1
-pkgdesc="The GNU Compiler Collection - cross for i586-linux-musl"
+pkgdesc="The GNU Compiler Collection"
 
 # Additional information...
-arch=('i586' 'x86_64')
+arch=('x86_64')
 url='http://gcc.gnu.org/'
 license=('GPL' 'LGPL' 'FDL')
 

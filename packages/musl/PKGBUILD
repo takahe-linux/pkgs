@@ -2,7 +2,7 @@
 
 # Package information
 pkgname='musl'
-pkgver='1.1.5'
+pkgver='1.1.6'
 pkgrel=1
 pkgdesc="Lightweight libc implementation"
 
@@ -19,7 +19,7 @@ conflicts=('libc')
 
 # Building information
 source=("http://www.musl-libc.org/releases/${pkgname}-${pkgver}.tar.gz")
-md5sums=('94f8aa9dab80229fed68991bb9984cc5')
+md5sums=('591e2d25a12ca1748e30ee0cf23f8b8a')
 
 
 build() {
@@ -29,8 +29,10 @@ build() {
         CROSS_COMPILE="${CROSS_COMPILE}" CC="${CC}" AR="${AR}" AS="${AS}" \
     ./configure --target="${_target_triplet}" \
                 --prefix="${_prefix}" \
-                --systemlibdir="${_libdir}" \
-                --libdir="${_libdir}"
+                --syslibdir="${_libdir}" \
+                --libdir="${_libdir}" \
+                --bindir="${_bindir}" \
+                --includedir="${_includedir}"
 
     make CC="${CC}" CROSS_COMPILE="${CROSS_COMPILE}"
 }
@@ -39,5 +41,11 @@ build() {
 package() {
     cd "${pkgname}-${pkgver}"
 
+    # Install musl
     make DESTDIR="${pkgdir}" install
+
+    # Add a ldd executable
+    install -dm755 "${pkgdir}${_bindir}"
+    ln -s "${_pkgdir}${_libdir}/libc.so" "${pkgdir}${_bindir}/ldd"
+
 }

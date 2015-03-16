@@ -1,47 +1,40 @@
 # Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
 
 # Package information
-pkgname='busybox'
-pkgver='1.22.1'
+pkgname=('busybox' 'mdev' 'hush' 'bb-coreutils' 'bb-util-linux' 'bb-findutils')
+pkgver='1.23.1'
 pkgrel=1
-pkgdesc="Lightweight coreutils implementation"
 
 # Additional information...
-arch=('i586')
+arch=('i586' 'mips')
 url="https://www.busybox.net"
 license=('GPL') # Busybox; not sure about the service files, which 
                 # are from sabotage linux
 
 # Dependency information
-groups=('base')
-depends=() # Statically linked; not dependent on anything.
-makedepends=('libc') #TODO: Fill in
-provides=('coreutils' 'util-linux' 'init' 'sh')
-conflicts=('coreutils' 'util-linux' 'init' 'sh')
+depends=('libc') 
+makedepends=('make') #TODO: Fill in
 
 # Building information
 _web_address="${url}/downloads"
 _patch_address="${_web_address}/fixes-${pkgver}"
 source=("${_web_address}/${pkgname}-${pkgver}.tar.bz2"
-        "${_patch_address}/busybox-${pkgver}-ash.patch"
-        "${_patch_address}/busybox-${pkgver}-date.patch"
-        "${_patch_address}/busybox-${pkgver}-iplink.patch"
-        "${_patch_address}/busybox-${pkgver}-nc.patch"
+        "${_patch_address}/busybox-${pkgver}-dc.patch"
+        "${_patch_address}/busybox-${pkgver}-modinfo.patch"
+        "${_patch_address}/busybox-${pkgver}-modprobe-small.patch"
+        "${_patch_address}/busybox-${pkgver}-wget.patch"
         "config"
         *.patch
        )
-md5sums=('337d1a15ab1cb1d4ed423168b1eb7d7e'
-         '538d8cddbdfc449239b25a40bc8d1575'
-         'bc381f9ceb3824141c968f5bc4353943'
-         '24686ec2750a8703feb57fc9c6aaed1d'
-         '69eecaae5f812d08655dfdf34b60503f'
+md5sums=('5c94d6301a964cd91619bd4d74605245'
+         '0f6d96206d98ba4de68317bd2a232e35'
+         '05e2f11bd968bae952f74745c46ee43e'
+         '4152f8eb84b727beba2af02b856f8e94'
+         'fb515c1c849330eeb6596519f65d4540'
          'SKIP'
          'b1f67463f918d0f7f9d1c26a8aeba32b'
          '433fffbb43d6a837d162f2d0e01e3216'
-         '2f1fe972c8bbfb8b21e0c45a83a28b00'
-         '6e04950f5f9e6330d1c0221840a02814'
-         '2b7304860943dabc87dfb96cbc2ffa37'
-         '26531040c17d648a67ecb89fb043c653')
+         'c07df6a724d05ed6957741a93d512816')
 
 
 prepare() {
@@ -75,20 +68,118 @@ build() {
 
     make ARCH="${_target_arch}" \
         CC="${CC}" HOSTCC="${HOSTCC}" \
-        HOSTCFLAGS="${HOSTCFLAGS}" \
-        LDFLAGS="${LDFLAGS}"
+        HOSTCFLAGS="${HOSTCFLAGS}"
 
 }
 
 
-package() {
+package_busybox() {
+    pkgdesc="Main busybox binary and symlinks"
+    groups=('bb')
+    _pkg_list=('kbd' 'ncurses' 'which' 'gzip' 'tar' 'bzip2' 'awk' \
+        'diffutils' 'sed' 'vi' 'patch' 'shadow' 'e2fsprogs' 'less' 'hdparm' \
+        'man' 'inetutils' 'ip2route' 'iputils' 'dhcpcd' 'procps-ng')
+    provides=${_pkg_list}
+    conflicts=${_pkg_list}
+
     cd "${srcdir}/${pkgname}-${pkgver}"
 
     ARCH="${_target_arch}" make DESTDIR="${pkgdir}/" install
 
-    # Install the apps to the target location
-    for app in _install/{bin,sbin}/*; do
-        install -Dm755 "${app}" "${pkgdir}${_bindir}/$(basename ${app})"
-    done
+    # Copy the busybox binary into place
+    install -Dm755 "_install/bin/busybox" "${pkgdir}${_bindir}/busybox"
 
+
+    #TODO: Figure out what here is actually provided by kbd
+    KBD="deallocvt dumpkmap loadfont loadkmap openvt resize setconsole \
+        setfont setkeycodes setlogcons showkey vlock"
+    NCURSES="clear reset"
+    WHICH="which"
+
+    APPLETS="gunzip gzip lzop tar bzip2 bunzip2 unxz"
+    EDITORS="awk cmp diff patch sed vi"
+    SHADOW="adduser addgroup deluser delgroup passwd cryptpw"
+    EXT2="chattr fsck lsattr tune2fs"
+
+    MISC="less hdparm man"
+    NET="ping whois hostname ip dhpcd"
+    PROC="iostat lsof mpstat nmeter pmap powertop pstree top free fuser kill killall pgrep pidof pkill ps renice watch"
+
+    _link_packages $KBD $NCURSES $WHICH $APPLETS $EDITORS $LOGIN $EXT2 $MISC $NET $PROC
+}
+
+package_mdev() {
+    pkgdesc="Lightweight udev alternative, from busybox"
+    depends="busybox"
+    groups=('bb')
+
+    MDEV="mdev"
+
+    _link_packages $MDEV
+}
+
+package_hush() {
+    pkgdesc="Simple busybox shell"
+    depends="busybox"
+    groups=('bb')
+    provides='sh'
+    conflicts='sh'
+
+    SHELLS="hush sh"
+
+    _link_packages $SHELLS
+}
+
+package_bb-coreutils() {
+    pkgdesc="Coreutils symlinks for busybox"
+    groups=('bb')
+    depends=('busybox')
+    provides=('coreutils')
+    conflicts=('coreutils')
+
+    COREUTILS="basename cat date id groups shuf test touch tr who users chgrp \
+        chmod chown chroot cksum comm cp cut dd df dirname du echo env expand \
+        expr false fold fsync head install ln logname ls md5sum mkdir mkfifo \
+        mknod mv nice nohup printenv printf pwd readlink realpath rm rmdir seq \
+        sha1sum sha256sum sha512sum sha3sum sleep sort split stat sync tac \
+        tail tee true tty uname unexpand uniq usleep uudecode uuencode wc \
+        whoami yes timeout"
+
+    _link_packages $COREUTILS
+    
+}
+
+package_bb-util-linux() {
+    pkgdesc="util linux symlinks for busybox"
+    groups=('bb')
+    depends=('busybox')
+    provides=('util-linux')
+    conflicts=('util-linux')
+
+    UTILLINUX="blockdev blkid dmesg fbset getopt hwclock losetup lspci lsusb mount swapon swapoff umount"
+    LOGIN="getty login sulogin"
+    MISC_UTILS="ionice mountpoint setsid time"
+
+    _link_packages $UTIL_LINUX $LOGIN $MISC_UTILS
+}
+
+package_bb-findutils() {
+    pkgdesc="findutils symlinks for busybox"
+    groups=('bb')
+    depends=('busybox')
+    provides=('findutils')
+    conflicts=('findutils')
+
+    FIND="find grep xargs"
+
+    _link_packages $FIND
+}
+
+_link_packages() {
+
+    install -dm755 "${pkgdir}${_bindir}"
+    
+    for package in $@; do
+        ln -s "${_bindir}/busybox" "${pkgdir}${_bindir}/${package}"
+    done
 }

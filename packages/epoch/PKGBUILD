@@ -1,0 +1,58 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='epoch'
+pkgver='1.2.2'
+pkgrel=1
+pkgdesc="Basic init system with minimal dependencies"
+
+# Additional information...
+arch=('mips')
+url="http://universe2.us/epoch.html"
+license=('custom') # Public domain
+
+# Dependency information
+groups=('base')
+depends=('libc')
+makedepends=("${_target_triplet}-gcc" "linux-api-headers" "sh")
+provides=("init")
+conflicts=("init")
+
+# Building information
+#TODO: Make the backup file ${_configdir}/... minus the leading /
+backup=("etc/epoch/epoch.conf")
+source=("http://universe2.us/${pkgname}_${pkgver}.tar.gz"
+    "epoch.conf")
+md5sums=('e962c37c4c5cded7e3ba42e5514d9806'
+         '670ecac216003548b878a8f4bd0e52ea')
+
+
+package() {
+    cd "${srcdir}/${pkgname}_${pkgver}"
+
+
+    EPOCH_OPTS="--configdir ${_configdir}/epoch/ \
+        --logdir ${_logdir} \
+        --binarypath ${_bindir}/epoch \
+        --cflags ${_target_cflags} \
+        --ldflags ${LDFLAGS} \
+        --cc ${CC} \
+        --shellpath ${_bindir}/sh \
+        --disable-backtraces"
+
+    ./buildepoch.sh $EPOCH_OPTS
+
+    # Install the built programs and symlinks
+    install -d -m0755 "${pkgdir}${_bindir}"
+    mv built/sbin/* "${pkgdir}${_bindir}"
+    # Add a new wall symlink
+    ln -s "${pkgdir}${_bindir}/epoch" "${pkgdir}${_bindir}/wall"
+    
+
+    # Copy the license file across
+    install -D -m644 UNLICENSE.TXT "${pkgdir}${_licensedir}/${pkgname}/LICENSE"
+
+    # Install the default config
+    install -D -m644 "${srcdir}/epoch.conf" "${pkgdir}${_configdir}/epoch/epoch.conf"
+
+}

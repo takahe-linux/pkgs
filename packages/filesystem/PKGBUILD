@@ -4,74 +4,50 @@
 
 # Package information
 pkgname='filesystem'
-pkgver='2014.11'
+pkgver='2015.3'
 pkgrel=1
 pkgdesc='Base filesystem'
 
 # Additional information...
 arch=('any')
 url=''
-license=('GPL')
+license=('GPL') # Can I change this?
 
 # Dependency information
 groups=('base')
 depends=() # iana-etc in the Arch Linux PKGBUILD...
 
 # Building information
-backup=('etc/fstab'
-        'etc/crypttab'
+backup=(
         'etc/group'
-        'etc/hosts'
-        'etc/ld.so.conf'
         'etc/passwd'
         'etc/shadow'
-        'etc/gshadow'
-        'etc/resolv.conf'
         'etc/motd'
         'etc/shells'
-        'etc/host.conf'
-        'etc/securetty'
         'etc/profile'
         'etc/issue')
-install='filesystem.install'
 source=('group'
         'issue'
-        'securetty'
-        'host.conf'
-        'ld.so.conf'
         'passwd'
         'shadow'
-        'fstab'
-        'crypttab'
-        'hosts'
         'motd'
-        'resolv.conf'
         'shells'
-        'gshadow'
         'profile'
         'locale.sh')
-md5sums=('d46cb1adf8175888cc827a3dad8857d2'
-         '7813c481156f6b280a3ba91fc6236368'
-         '4c4540eeb748bf1f71d631b8c1dcf0b3'
-         'f28150d4c0b22a017be51b9f7f9977ed'
-         '6e488ffecc8ba142c0cf7e2d7aeb832e'
-         'c465a5f74bdf25ccf6af3791202bfc8a'
-         '1ec1b16e2a71fad63ab8f147069a5d97'
-         '693c97f2c9a519bb97a17008e92c2b74'
-         '1745349eb24ed21b4cfaa6f423bddb76'
-         '7bc65f234dfb6abf24e7c3b03e86f4ff'
+md5sums=('96ac8b97d60f21957b65be52cecf0160'
+         '58233879530afb7b1c6a8e51a14d3433'
+         'a9d43e66298f11c8e997268f6746b99b'
+         '7a4d75479bc052c6dbe44ac957cb19d3'
          'd41d8cd98f00b204e9800998ecf8427e'
-         '6f48288b6fcaf0065fcb7b0e525413e0'
-         'bb51026508581e55bbefe36e2b799108'
-         '09bce9236c3729d31aaa528bcf5d198e'
+         'eef6376b9b624b4aa0e2963f38597228'
          '203dbcc864f3e8e68e5da5eb5cfb663c'
-         '4fab2b798deff348e04f05152111aae0')
+         '7fd1a7398ccfa02172a12b0f6511e2fc')
 
 package() {
     cd ${pkgdir}
 
     # Setup root filesystem
-    for d in boot dev etc home usr var; do
+    for d in boot dev ${_configdir} ${_homedir} ${_prefix} var; do
         install -d -m755 ${d}
     done
     install -d -m555 proc
@@ -79,18 +55,17 @@ package() {
     install -d -m1777 tmp
 
     # Setup /etc
-    install -d etc/{ld.so.conf.d,skel,profile.d}
-    for f in fstab group host.conf hosts issue ld.so.conf motd \
-             passwd resolv.conf securetty shells profile; do
-        install -m644 ${srcdir}/${f} etc/
+    install -d ${pkgdir}${_configdir}/profile.d
+    for file in group issue motd passwd shells profile; do
+        install -m644 "${srcdir}/${file}" "${pkgdir}${_configdir}"
     done
 
-    ln -s /proc/self/mounts etc/mtab
-    for f in gshadow shadow crypttab; do
-        install -m600 ${srcdir}/${f} etc/
+    ln -s "/proc/self/mounts" "${pkgdir}${_configdir}/mtab"
+    for file in shadow; do
+        install -m600 "${srcdir}/${file}" "${pkgdir}${_configdir}"
     done
 
-    install -m755 ${srcdir}/locale.sh etc/profile.d/locale.sh
+    install -m755 "${srcdir}/locale.sh" "${pkgdir}${_configdir}/profile.d/locale.sh"
 
     # Setup /var
     for d in cache/man local opt log/old lib/misc empty; do

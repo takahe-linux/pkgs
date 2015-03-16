@@ -40,6 +40,7 @@ _licensedir="${_prefix}/share/license"
 _mandir="${_prefix}/share/man"
 _datadir="/var/lib"
 _cachedir="/var/cache"
+_logdir="/var/log"
 
 
 #

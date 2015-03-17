@@ -35,7 +35,7 @@ prepare() {
 
 
 build() {
-	cd "${srcdir}/${pkgname}-${pkgver}"
+    cd "${srcdir}/${pkgname}-${pkgver}"
 
     ./configure CC="${CC}" HOSTCC="${CC}" \
                 CFLAGS="${CFLAGS}" LDFLAGS="${LDFLAGS}" \
@@ -47,7 +47,7 @@ build() {
                 --host="${_target_triplet}" \
                 --without-ncurses --disable-nls --disable-fsck
 
-	make CC="${CC}" HOSTCC="${HOSTCC}" \
+    make CC="${CC}" HOSTCC="${HOSTCC}" \
         CFLAGS="${CFLAGS}" LDFLAGS="${LDFLAGS}" \
         HOSTCFLAGS="${HOSTCFLAGS}"
 }
@@ -59,9 +59,9 @@ package_e2fsprogs() {
     backup=('etc/mke2fs.conf')
     install="${pkgname}.install"
 
-	cd "${srcdir}/${pkgbase}-${pkgver}"
+    cd "${srcdir}/${pkgbase}-${pkgver}"
 
-	make DESTDIR="${pkgdir}/" install install-libs
+    make DESTDIR="${pkgdir}/" install install-libs
 
     # Make sure awk is awk...
     sed -i -e 's/^AWK=.*/AWK=awk/' "${pkgdir}/usr/bin/compile_et"

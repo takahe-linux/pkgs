@@ -9,7 +9,7 @@ pkgrel=1
 pkgdesc='The GNU Bourne Again shell'
 
 # Additional information...
-arch=('i586')
+arch=('i586' 'mips')
 url='http://www.gnu.org/software/bash/bash.html'
 license=('GPL')
 
@@ -89,9 +89,7 @@ build() {
     # Build bash!
     ./configure --prefix="${_prefix}" --without-bash-malloc \
         --host="${_target_triplet}" \
-        --build="${_local_triplet}" \
-        --enable-static-link
-
+        --build="${_local_triplet}"
 
     make
 }

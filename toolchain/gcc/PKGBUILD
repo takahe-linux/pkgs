@@ -38,7 +38,6 @@ prepare() {
 
     patch -p1 < "${srcdir}"/*.patch
     
-
     mkdir "${srcdir}/gcc-build"
 }
 
@@ -51,7 +50,12 @@ build() {
 
     # --enable-cxx-flags is a hack, because currently libstdc++ uses CXXFLAGS,
     # not CXXFLAGS_FOR_TARGET. See GCC bug 53579...
-    # Delete CXXFLAGS and use --enable-cxx-flags...
+    # Sigh...
+    #TODO: Figure out exactly how the build systems _works_ (or doesn't) so
+    # that I can patch it instead of applying this hack...
+    # WARNING: To use -Os or -O2, you need more than 1.5GB of space (tmp if you
+    # are using /tmp for compiling). It also failed with -g... for the same
+    # reason. I might need to set up virtual swap?
     export CXXFLAGS=""
 
     # Also, disable libmudflap and mudflap (they do not build)
@@ -67,11 +71,11 @@ build() {
         --with-local-prefix="${_sysroot}" \
         --libexecdir="${_libdir}" \
         --enable-languages=c,c++ \
-        --enable-cxx-flags="${CXXFLAGS_FOR_TARGET}" \
         --enable-c99 \
         --enable-__cxa_atexit \
         --enable-threads=posix \
         --enable-libstdcxx-time \
+        --enable-cxx-flags="${CXXFLAGS_FOR_TARGET}" \
         --disable-nls \
         --disable-static \
         --disable-multilib \

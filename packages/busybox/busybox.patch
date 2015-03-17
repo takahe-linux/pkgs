@@ -28,19 +28,6 @@ diff -aur busybox-1.19.2.orig//include/platform.h busybox-1.19.2//include/platfo
   * Now, define prototypes for all the functions defined in platform.c
   * These must come after all the HAVE_* macros are defined (or not)
 Only in busybox-1.19.2//include: platform.h.orig
-diff -aur busybox-1.19.2.orig//miscutils/man.c busybox-1.19.2//miscutils/man.c
---- busybox-1.19.2.orig//miscutils/man.c	2011-09-16 01:12:38.000000000 +0000
-+++ busybox-1.19.2//miscutils/man.c	2011-09-16 01:13:21.000000000 +0000
-@@ -116,7 +116,7 @@
- 	/* "2>&1" is added so that nroff errors are shown in pager too.
- 	 * Otherwise it may show just empty screen */
- 	cmd = xasprintf(
--		man ? "gtbl | nroff -Tlatin1 -mandoc 2>&1 | %s"
-+		man ? "nroff -Tutf -man 2>&1 | %s"
- 		    : "%s",
- 		pager);
- 	system(cmd);
-Only in busybox-1.19.2//miscutils: man.c.orig
 diff -aur busybox-1.19.2.orig//networking/tcpudp.c busybox-1.19.2//networking/tcpudp.c
 --- busybox-1.19.2.orig//networking/tcpudp.c	2011-09-16 01:12:38.000000000 +0000
 +++ busybox-1.19.2//networking/tcpudp.c	2011-09-16 01:13:21.000000000 +0000

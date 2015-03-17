@@ -3,7 +3,7 @@
 # Package information
 pkgname=('busybox' 'mdev' 'hush' 'bb-coreutils' 'bb-util-linux' 'bb-findutils')
 pkgver='1.23.1'
-pkgrel=1
+pkgrel=2
 
 # Additional information...
 arch=('i586' 'mips')
@@ -160,7 +160,7 @@ package_bb-util-linux() {
     LOGIN="getty login sulogin"
     MISC_UTILS="ionice mountpoint setsid time"
 
-    _link_packages $UTIL_LINUX $LOGIN $MISC_UTILS
+    _link_packages $UTILLINUX $LOGIN $MISC_UTILS
 }
 
 package_bb-findutils() {

@@ -25,8 +25,8 @@ I plan to work from here, until I get to a workable stage.
 
 Since I have no working bootloader, testing is a little difficult...
 
-I plan to upload a working system image to Bitbucket, but only once I've
-completed a bootloader and an init system (ie generally made a sane system).
+I plan to upload a working system image to Bitbucket, but only once I've added
+a bootloader and generally made a working system.
 
 Until then, I am using the kernel and append options for qemu to test images.
 
@@ -43,13 +43,14 @@ I've got some ideas of where to go from here!
 
 Currently, everything is good here. However, I'd like to make it less dependent
 on the host system (read: building it's own mpfr/mpc and so on).
-The automatic script could also do with some love.
 
 ## System ##
 
-I'd like to add some automation here (rebuild all? automatic image creation?).
-I also need to add a working init system, bootloader, and prove to myself that
-it boots on my test machine, as well as in Qemu.
+I'd like to add some automation here. The current script is a good start, but
+is still missing some 'key' functionality, and it's pretty dumb - it rebuilds
+_everything_, not just what needs to be rebuilt.
+I also need to add a bootloader, and prove to myself that it boots on my test 
+machine, as well as in Qemu.
 
 The eventual goal is to make the system capable of then building itself - with
 the system created by the cross-compile toolchain becoming a 'temporary' system

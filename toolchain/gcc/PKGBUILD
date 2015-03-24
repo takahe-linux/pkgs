@@ -36,6 +36,9 @@ prepare() {
     # hack! - some configure tests for header files using "$CPP $CPPFLAGS"
     sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" {libiberty,gcc}/configure
 
+    # Disable fixincludes (could lead to header pollution)
+    sed -i 's@\./fixinc\.sh@-c true@' gcc/Makefile.in
+
     patch -p1 < "${srcdir}"/*.patch
     
     mkdir "${srcdir}/gcc-build"

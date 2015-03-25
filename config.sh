@@ -19,9 +19,6 @@ _target_system="${_target_kernel}-${_target_libc_alias}"
 _target_triplet="${_target_arch}-${_target_system}"
 _local_triplet="${CHOST}"
 
-# Target CFLAGS
-_target_cflags="-g -Os -ffunction-sections -fno-exceptions"
-
 
 #
 # Target preferences
@@ -52,10 +49,18 @@ PKGDEST="${_pkgroot}/pkgs"
 SRCDEST="${_pkgroot}/sources"
 LOGDEST="${_pkgroot}/logs"
 
+
 #
 # Toolchain location preferences
 #
 
 _toolroot="/opt/${_target_triplet}"
 _sysroot="${_toolroot}/sysroot"
+
+
+#
+# Target CFLAGS and ldflags
+#
+_target_cflags="-g -Os -ffunction-sections -fno-exceptions -fdata-sections"
+_target_ldflags="-Wl,-rpath,${_sysroot}${_libdir},--sysroot,${_sysroot},--gc-sections"
 

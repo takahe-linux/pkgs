@@ -35,7 +35,7 @@ package() {
         --logdir ${_logdir} \
         --binarypath ${_bindir}/epoch \
         --cflags ${_target_cflags} \
-        --ldflags ${LDFLAGS} \
+        --ldflags ${_target_ldflags} \
         --cc ${CC} \
         --shellpath ${_bindir}/sh \
         --disable-backtraces"

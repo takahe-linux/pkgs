@@ -3,7 +3,7 @@
 # Build script for Takahe Linux.
 #
 # Author:   Alastair Hughes
-# Date:     19-3-2015
+# Date:     25-3-2015
 # Contact:  < hobbitalastair at yandex dot com >
 
 set -e
@@ -25,8 +25,12 @@ toolchain="packages/linux-api-headers \
     packages/musl \
     toolchain/gcc"
 base="packages/busybox packages/filesystem packages/bash packages/epoch"
+cleanup="actions/fix_bugs.sh \
+    actions/strip.sh \
+    actions/unmount_sysroot.sh"
 
-all="${setup} ${toolchain} ${base}"
+#all="${setup} ${toolchain} ${base} ${cleanup}"
+all="${cleanup}"
 
 # This is for testing purposes. It will cause the program to print out what it
 # would build instead of actually doing it...
@@ -52,7 +56,7 @@ build() {
     case "${prefix}" in
         packages) build_target "${name}" "${prefix}";;
         toolchain) build_local "${name}" "${prefix}";;
-        actions) ${package};;
+        actions) $noop || "./${package}";;
         *) message "Unknown package prefix '${prefix}'!";;
     esac
 }
@@ -145,6 +149,7 @@ for package in $all; do
 done
 
 # Clean up the helper processes
+kill "${KEEPALIVE_PID}"
 wait
 
 message "Cleaned up and exited!"

@@ -47,7 +47,7 @@ if [ -e "${sysimage}" ]; then
     if [ "${input}" == "y" ]; then
         echo "Overwriting system image '${sysimage}'"
     else
-        die "Sysroot already exists!" "" "" ""
+        die "Aborting; not overwriting system image!" "" "" ""
     fi
 fi
 dd if="/dev/zero" of="/tmp/${_target_triplet}.img" bs=1M \
@@ -61,6 +61,7 @@ echo "Created and partitioned the new disk image"
 # Use losetup to create a new loop device.
 loop="$(sudo losetup -f --show -P "${sysimage}")"
 echo "Setup a new loop device on ${loop}"
+sleep .1
 if [ ! -b "${loop}p1" ]; then
     die "Expected a loopdev (${loop}p1)!" "${sysimage}" "${loop}" ""
 fi

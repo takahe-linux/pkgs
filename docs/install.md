@@ -3,15 +3,10 @@
 My notes on installing Takahe Linux:
 
 1. Run build.sh
-2. Fix the bugs...
-3. Unmount the sysroot
-4. Unset the loop device (/dev/loop something, whatever was mounted on the 
-   sysroot - you did take note, right?)
-5. Copy the resulting image (it will be /tmp/\*.img or something like that), or
+2. Fix any bugs... mount the image (using losetup -f --show -p, then mount),
+   fix the bugs, the unmount the image and use losetup -d to destroy the loop
+   device.
+   Or, use some of the scripts in actions...
+3. Copy the resulting image (it will be /tmp/\*.img or something like that), or
    just point qemu at it.
-
-# Known bugs #
-
-Currently, you manually need to link /lib/ld-linux-musl.so.1 to 
-/usr/lib/libc.so, and install a fstab of some sort.
 

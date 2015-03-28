@@ -24,7 +24,7 @@ backup=("etc/epoch/epoch.conf")
 source=("http://universe2.us/${pkgname}_${pkgver}.tar.gz"
     "epoch.conf")
 md5sums=('e962c37c4c5cded7e3ba42e5514d9806'
-         '670ecac216003548b878a8f4bd0e52ea')
+         'SKIP')
 
 
 package() {

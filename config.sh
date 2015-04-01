@@ -67,6 +67,4 @@ _sysroot="${_toolroot}/sysroot"
 _target_cflags="-g -Os -ffunction-sections -fno-exceptions -fdata-sections"
 _target_ldflags="-Wl,-rpath,${_sysroot}${_libdir},--sysroot,${_sysroot},--gc-sections,-dynamic-linker,${_libdir}/ld-musl-${_target_arch}.so.1"
 
-# 'Other' build preferences
-_link_type="static" # Or "shared"
 

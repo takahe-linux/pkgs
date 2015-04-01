@@ -51,6 +51,9 @@ build() {
     export CFLAGS_FOR_TARGET="${_target_cflags}"
     export CXXFLAGS_FOR_TARGET="${CFLAGS_FOR_TARGET}"
 
+    export CFLAGS_FOR_BUILD="${CFLAGS}"
+    export CXXFLAGS_FOR_BUILD="${CXXFLAGS}"
+
     # --enable-cxx-flags is a hack, because currently libstdc++ uses CXXFLAGS,
     # not CXXFLAGS_FOR_TARGET. See GCC bug 53579...
     # Sigh...
@@ -62,7 +65,6 @@ build() {
     export CXXFLAGS=""
 
     # Also, disable libmudflap and mudflap (they do not build)
-
     LDFLAGS="-Wl,-rpath,${_toolroot}/lib" \
     "${srcdir}/${_pkgname}-${pkgver}/configure" \
         --build="${_local_triplet}" \

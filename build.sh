@@ -29,8 +29,7 @@ cleanup="actions/fix_bugs.sh \
     actions/strip.sh \
     actions/unmount_sysroot.sh"
 
-#all="${setup} ${toolchain} ${base} ${cleanup}"
-all="${cleanup}"
+all="${setup} ${toolchain} ${base} ${cleanup}"
 
 # This is for testing purposes. It will cause the program to print out what it
 # would build instead of actually doing it...
@@ -143,9 +142,21 @@ sudo echo "Sudo working, thanks!"
 sudo_keepalive "$$" &
 KEEPALIVE_PID="$!"
 
+#TODO: Add argument parsing for more functionality
+
 # Build
+BUILDING="false"
+if [ "$1" == "" ]; then
+    FIRST="$(echo $all | cut -d' ' -f1)"
+else
+    FIRST="$1"
+fi
+
 for package in $all; do
-    build "${package}"
+    if ${BUILDING} || [ "${package}" == "${FIRST}" ]; then
+        build "${package}"
+        BUILDING="true"
+    fi
 done
 
 # Clean up the helper processes

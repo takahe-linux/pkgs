@@ -55,7 +55,7 @@ build() {
     case "${prefix}" in
         packages) build_target "${name}" "${prefix}";;
         toolchain) build_local "${name}" "${prefix}";;
-        actions) $noop || "./${package}";;
+        actions) $noop || "${rootdir}/${package}";;
         *) message "Unknown package prefix '${prefix}'!";;
     esac
 }

@@ -2,7 +2,7 @@
 
 # Package information
 pkgname=('busybox' 'mdev' 'hush' 'bb-coreutils' 'bb-util-linux' 'bb-findutils')
-pkgver='1.23.1'
+pkgver='1.23.2'
 pkgrel=2
 
 # Additional information...
@@ -19,18 +19,10 @@ makedepends=('make') #TODO: Fill in
 _web_address="${url}/downloads"
 _patch_address="${_web_address}/fixes-${pkgver}"
 source=("${_web_address}/${pkgname}-${pkgver}.tar.bz2"
-        "${_patch_address}/busybox-${pkgver}-dc.patch"
-        "${_patch_address}/busybox-${pkgver}-modinfo.patch"
-        "${_patch_address}/busybox-${pkgver}-modprobe-small.patch"
-        "${_patch_address}/busybox-${pkgver}-wget.patch"
         "config"
         *.patch
        )
-md5sums=('5c94d6301a964cd91619bd4d74605245'
-         '0f6d96206d98ba4de68317bd2a232e35'
-         '05e2f11bd968bae952f74745c46ee43e'
-         '4152f8eb84b727beba2af02b856f8e94'
-         'fb515c1c849330eeb6596519f65d4540'
+md5sums=('7925683d7dd105aabe9b6b618d48cc73'
          'SKIP'
          'b1f67463f918d0f7f9d1c26a8aeba32b'
          '433fffbb43d6a837d162f2d0e01e3216'

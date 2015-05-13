@@ -47,8 +47,7 @@ on the host system (read: building it's own mpfr/mpc and so on).
 ## System ##
 
 I'd like to add some automation here. The current script is a good start, but
-is still missing some 'key' functionality, and it's pretty dumb - it rebuilds
-_everything_, not just what needs to be rebuilt.
+is still missing some 'key' functionality, and it's pretty dumb.
 I also need to add a bootloader, and prove to myself that it boots on my test 
 machine, as well as in Qemu.
 

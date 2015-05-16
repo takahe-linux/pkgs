@@ -24,7 +24,11 @@ toolchain="packages/linux-api-headers \
     toolchain/gcc-static \
     packages/musl \
     toolchain/gcc"
-base="packages/busybox packages/filesystem packages/bash packages/epoch"
+base="packages/libarchive \
+    packages/busybox \
+    packages/filesystem \
+    packages/bash \
+    packages/epoch"
 cleanup="actions/fix_bugs.sh \
     actions/strip.sh \
     actions/unmount_sysroot.sh"
@@ -87,7 +91,9 @@ build_target() {
 
     cd "${rootdir}/${prefix}/${name}"
 
-    makepkg --config ../makepkg.conf -df
+    # Run makepkg
+    # Disable checks since they probably won't work
+    makepkg --config ../makepkg.conf -df --nocheck
 
     sudo pacman --config "${rootdir}/pacman.conf" -U *.pkg.tar.* --noconfirm
 }
@@ -145,19 +151,23 @@ KEEPALIVE_PID="$!"
 #TODO: Add argument parsing for more functionality
 
 # Build
-BUILDING="false"
 if [ "$1" == "" ]; then
     FIRST="$(echo $all | cut -d' ' -f1)"
 else
     FIRST="$1"
 fi
 
+BUILDING="false"
 for package in $all; do
     if ${BUILDING} || [ "${package}" == "${FIRST}" ]; then
-        build "${package}"
         BUILDING="true"
+        build "${package}"
     fi
 done
+
+if ! "${BUILDING}"; then
+    echo "Error: start package '${FIRST}' does not exist"
+fi
 
 # Clean up the helper processes
 kill "${KEEPALIVE_PID}"

@@ -8,7 +8,7 @@
 #
 
 _target_arch="mips" # Full name
-_target_arch_alias="mips" # Partial name (ie 1586->i386)
+_target_arch_alias="mips" # Partial name (ie i586->i386)
 _target_libc="musl" # libc name
 _target_libc_alias="musl" # Partial name (ie glibc->gnu)
 _target_kernel="linux"
@@ -35,6 +35,8 @@ _docdir="${_prefix}/share/doc"
 _infodir="${_prefix}/share/info"
 _licensedir="${_prefix}/share/license"
 _mandir="${_prefix}/share/man"
+_bashcompletiondir="${_prefix}/share/bash-completion/completions"
+_vimdir="${_prefix}/share/vim"
 _datadir="/var/lib"
 _cachedir="/var/cache"
 _logdir="/var/log"

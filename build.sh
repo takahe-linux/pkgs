@@ -28,6 +28,7 @@ base="packages/libarchive \
     packages/busybox \
     packages/filesystem \
     packages/bash \
+    packages/pacman \
     packages/epoch"
 cleanup="actions/fix_bugs.sh \
     actions/strip.sh \
@@ -93,7 +94,7 @@ build_target() {
 
     # Run makepkg
     # Disable checks since they probably won't work
-    makepkg --config ../makepkg.conf -df --nocheck
+    makepkg --config ../makepkg.conf -dfL --nocheck
 
     sudo pacman --config "${rootdir}/pacman.conf" -U *.pkg.tar.* --noconfirm
 }

@@ -1,0 +1,95 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Based off the Arch Linux PKGBUILD's
+
+# Package information
+pkgname='pacman'
+pkgver='4.2.1'
+pkgrel=1
+pkgdesc="Arch Linux's simple package manager"
+
+# Additional information...
+arch=('i586' 'mips')
+url="http://www.archlinux.org/pacman/"
+license=('GPL')
+
+# Dependency information
+groups=('base')
+depends=('bash' 'libc' 'libarchive>=3.1.2')
+makedepends=('asciidoc')
+checkdepends=('python2' 'fakechroot')
+optdepends=('wget')
+
+# Building information
+backup=('etc/pacman.conf' 'etc/makepkg.conf')
+source=("https://sources.archlinux.org/other/pacman/${pkgname}-${pkgver}.tar.gz"
+        pacman.conf
+        makepkg.conf)
+md5sums=('2a596fc8f723e99660c0869a74afcf47'
+         '6b40bff8bd90882a7d3f6b3024f74d38'
+         '03d578816b56852d803cbafac85b9f09')
+
+
+prepare() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    # Remove AC_FUNC_MALLOC - this is autodetected at runtime so causes a
+    # build failure!
+    sed -i -e '/AC_FUNC_MALLOC/d' 'configure.ac'
+
+}
+
+build() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    ./configure --prefix="${_prefix}" \
+        --host="${_target_triplet}" \
+        --localstatedir='/var' \
+        --sysconfdir="${_configdir}" \
+        --enable-doc \
+        --with-scriptlet-shell="${_bindir}/bash" \
+        --without-gpgme \
+        --without-openssl \
+        --without-curl \
+        --without-libcurl
+
+    make
+    make -C contrib
+}
+
+
+check() {
+    make -C "${srcdir}/${pkgname}-${pkgver}" check
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    make DESTDIR="${pkgdir}/" install
+    make DESTDIR="${pkgdir}/" -C contrib install
+
+    # Install the configuration files
+    install -dm755 "${pkgdir}${_configdir}"
+    install -m644 "${srcdir}/pacman.conf" "${pkgdir}${_configdir}/pacman.conf"
+
+    # Install and update the makepkg config file
+    install -m644 "${srcdir}/makepkg.conf" "${pkgdir}${_configdir}/makepkg.conf"
+    sed -i "${pkgdir}${_configdir}/makepkg.conf" \
+        -e "s|@CARCH[@]|${_target_arch}|g" \
+        -e "s|@CHOST[@]|${_target_triplet}|g" \
+        -e "s|@CARCHFLAGS[@]|-march=${_target_arch}|g"
+
+    # Install the bash completion files
+    install -dm755 "${pkgdir}${_bashcompletiondir}"
+    mv "${pkgdir}${_configdir}/bash_completion.d/pacman" \
+        "${pkgdir}${_bashcompletiondir}"
+    rmdir "${pkgdir}${_configdir}/bash_completion.d"
+
+    for file in makepkg pacman-key; do
+        ln -s 'pacman' "${pkgdir}${_bashcompletiondir}/${file}"
+    done
+
+    install -Dm644 'contrib/PKGBUILD.vim' \
+        "${pkgdir}${_vimdir}/vimfiles/syntax/PKGBUILD.vim"
+}

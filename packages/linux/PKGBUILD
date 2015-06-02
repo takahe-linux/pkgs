@@ -3,18 +3,18 @@
 # Based of the Arch Linux linux package
 
 # Edit this line to change the target config (TODO: Make automatic)
-_target_config='qemu'
+_target_config='qemu-malta'
 
 # Package information
 pkgname="linux-${_target_config}"
-_major_version='3.17'
+_major_version='4.0'
 _srcname="linux-${_major_version}"
 pkgdesc="Linux kernel and modules for '${_target_config}'"
-pkgver="${_major_version}.3"
+pkgver="${_major_version}.1"
 pkgrel=1
 
 # Additional information...
-arch=('i586')
+arch=('i586' 'mips')
 url='http://www.kernel.org'
 license=('GPL2')
 
@@ -32,10 +32,9 @@ source=("https://www.kernel.org/pub/linux/kernel/v3.x/${_srcname}.tar.xz"
         "config.${_target_config}"
         *.patch
        )
-md5sums=('fb30d0f29214d75cddd2faa94f73d5cf'
-         '13f495e3ce72ed6ccefb38591587a6ef'
+md5sums=('d3fc8316d4d4d04b65cbc2d70799e763'
+         '2f2822cf2d84a8ec3a8b044e732cf45b'
          'SKIP'
-         'df7fceae6ee5d7e7be7b60ecd7f6bb35'
          'ee9e4d173c2fff74659c862479570d36')
 
 prepare() {
@@ -62,11 +61,17 @@ prepare() {
     # Move the configuration file to it's location
     cat "${srcdir}/config.${_target_config}" > ./.config
 
-    # Uncomment this to use menuconfig
-    #make menuconfig; exit 1
+    # Make the default config
+    #make defconfig ARCH="${_target_arch_alias}" CROSS_COMPILE="${CROSS_COMPILE}"
+    # Make allnoconfig
+    #make allnoconfig ARCH="${_target_arch_alias}"
+    # Make menuconfig
+    #make menuconfig ARCH="${_target_arch_alias}" && \
+    #    exit 1
+    make menuconfig ARCH="${_target_arch_alias}"
 
-    # Make the config
-    yes "" | make oldconfig
+    # Update the config
+    yes "" | make oldconfig ARCH="${_target_arch_alias}"  
 }
 
 
@@ -74,13 +79,17 @@ build() {
     cd "${srcdir}/${_srcname}"
 
     # Make the kernel image and modules, if needed
-    if [ $(cat "${srcdir}/config.${_target_config}" | grep CONFIG_MODULES=y) ]
+    if [ $(cat "${srcdir}/config.${_target_config}" | grep 'CONFIG_MODULES=y') ]
         then
         # Modules are enabled
-        make ${MAKEFLAGS} bzImage modules
+        #make ${MAKEFLAGS} bzImage modules ARCH="${_target_arch_alias}"
+        LDFLAGS="-rpath ${_sysroot}${_libdir}" \
+        make V=1 ${MAKEFLAGS} ARCH="${_target_arch_alias}" CROSS_COMPILE="${CROSS_COMPILE}"
     else
         # Modules are not enabled
-        make ${MAKEFLAGS} bzImage
+        #make ${MAKEFLAGS} bzImage ARCH="${_target_arch_alias}"
+        LDFLAGS="-rpath ${_sysroot}${_libdir}" \
+        make V=1 ${MAKEFLAGS} ARCH="${_target_arch_alias}" CROSS_COMPILE="${CROSS_COMPILE}"
     fi
 }
 
@@ -91,11 +100,8 @@ package() {
     cd "${srcdir}/${_srcname}"
 
     # Check for module support
-    [ $(cat "${srcdir}/config.${_target_config}" | grep CONFIG_MODULES=y) ] && \
+    [ $(cat "${srcdir}/config.${_target_config}" | grep 'CONFIG_MODULES=y') ] && \
         MODULES=true || MODULES=false
-
-    #TODO: Make more flexible
-    KARCH='x86'
 
     # Find the kernel version
     _kernver="$(make kernelrelease)"
@@ -104,7 +110,7 @@ package() {
     mkdir -p "${pkgdir}"/{/usr/lib/modules,/usr/lib/firmware,boot}
 
     # Copy the image to the end location
-    cp "arch/${KARCH}/boot/bzImage" \
+    cp "arch/${_target_arch_alias}/boot/bzImage" \
        "${pkgdir}/boot/vmlinuz-${_target_config}"
 
     # Install the modules and firmware, if required

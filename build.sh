@@ -1,9 +1,9 @@
-#/usr/bin/env sh
+#!/usr/bin/env sh
 #
 # Build script for Takahe Linux.
 #
 # Author:   Alastair Hughes
-# Date:     25-3-2015
+# Date:     17-6-2015
 # Contact:  < hobbitalastair at yandex dot com >
 
 set -e

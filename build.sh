@@ -14,11 +14,6 @@ set -e
 
 rootdir="$(dirname $(realpath $0))"
 
-setup="actions/clean_sysroot.sh \
-    actions/clean_toolchain.sh \
-    actions/mount_sysroot.sh \
-    actions/prepare_sysroot.sh"
-
 toolchain="packages/linux-api-headers \
     toolchain/binutils \
     toolchain/gcc-static \
@@ -34,19 +29,38 @@ cleanup="actions/fix_bugs.sh \
     actions/strip.sh \
     actions/unmount_sysroot.sh"
 
-all="${setup} ${toolchain} ${base} ${cleanup}"
+all="actions/setup.sh ${toolchain} ${base} ${cleanup}"
 
 # This is for testing purposes. It will cause the program to print out what it
 # would build instead of actually doing it...
 noop="false"
 
 #
-# Define the main functions
+# Define the helper functions
 #
 
 message() {
     echo ">>> $@"
 }
+
+check_arg_numbers() {
+    # Check that there are the given numbers of arguments
+
+    if [ "$#" -lt 1 ]; then
+        message "check_arg_numbers requires an argument!"
+        exit 1
+    fi
+
+    if [ "$(expr "$#" - 1)" != "$1" ]; then
+        message "Expected $1 arguments; got '$#' ($@)"
+        exit 1
+    fi
+}
+
+
+#
+# Define the build functions
+#
 
 build() {
     
@@ -70,14 +84,32 @@ build_local() {
 
     check_arg_numbers 2 $@
 
-    if $noop; then
-        message "Building remote package ${prefix}/${name}"
-        return 0
-    fi
+    message "Building toolchain package ${prefix}/${name}..."
 
     cd "${rootdir}/${prefix}/${name}"
 
-    yes 'y' | makepkg --config ../makepkg.conf -sricf
+    # Figure out the names of the resulting packages.
+    names="$("${rootdir}/scripts/pkgnames" "PKGBUILD")"
+
+    # Rebuild if need be.
+    if need_rebuild ${names}; then
+        message "Rebuilding ${prefix}/${name}!"
+
+        # Build the package
+        "${noop}" || yes 'y' | makepkg --config ../makepkg.conf -srcfC
+    fi
+
+    # Exit as needed.
+    "${noop}" && return 0
+
+    # Install all of the resulting packages.
+    for pkgname in ${names}; do
+        if [ ! -e "${pkgname}" ]; then
+            message "Expected to find a package in '$(pwd)' called '${pkgname}'!"
+            exit 1
+        fi
+        yes 'y' | sudo pacman -U "${pkgname}" > /dev/null
+    done
 }
 
 build_target() {
@@ -85,93 +117,91 @@ build_target() {
 
     check_arg_numbers 2 $@
 
-    if $noop; then
-        message "Building toolchain package ${prefix}/${name}"
-        return 0
-    fi
+    message "Building target package ${prefix}/${name}"
+
 
     cd "${rootdir}/${prefix}/${name}"
 
-    # Run makepkg
-    # Disable checks since they probably won't work
-    makepkg --config ../makepkg.conf -dfL --nocheck
+    # Figure out the names of the resulting packages.
+    names="$("${rootdir}/scripts/pkgnames" "PKGBUILD")"
 
-    sudo pacman --config "${rootdir}/pacman.conf" -U *.pkg.tar.* --noconfirm
-}
+    # Rebuild if need be.
+    if need_rebuild "${names}"; then
+        message "Rebuilding ${prefix}/${name}!"
 
-check_arg_numbers() {
-    # Check that there are the given numbers of arguments
-
-    if [ "$#" -lt 1 ]; then
-        message "check_arg_numbers requires an argument!"
-        exit 1
+        # Build the package
+        "${noop}" || makepkg --config ../makepkg.conf -dfCcL --nocheck
     fi
 
-    if [ "$(expr "$#" - 1)" != "$1" ]; then
-        message "Expected $1 arguments; got '$#' ($@)"
-        exit 1
-    fi
-}
+    # Exit as needed.
+    "${noop}" && return 0
 
-sudo_keepalive() {
-
-    # Record the parent PID
-    parent_pid="$1"
-
-    # Set up some vars
-    sudo_retry=240 # Number of seconds between sudo calls
-
-    while true; do
-        sudo true
-        echo ">>> heartbeat!"
-        
-        time_to_sudo="${sudo_retry}"
-        while [ "${time_to_sudo}" -gt 0 ]; do
-            
-            # Check on the parent process
-            if kill -0 ${parent_pid} 2> /dev/null ; then
-                # All is well
-                sleep 1
-            else
-                echo ">>> heartbeat stopped; sudo_keepalive is exiting..."
-                return 0 # Parent has died; exit
-            fi
-
-            # Subtract off another waiting second...
-            time_to_sudo="$(expr "${time_to_sudo}" - 1)"
-
-        done
+    # Install all of the resulting packages.
+    for pkgname in ${names}; do
+        if [ ! -e "${pkgname}" ]; then
+            message "Expected to find a package in '$(pwd)' called '${pkgname}'!"
+            exit 1
+        fi
+        sudo pacman --config "${rootdir}/pacman.conf" -U "${pkgname}" --noconfirm \
+            > /dev/null
     done
 }
 
-# Setup sudo_keepalive
-sudo echo "Sudo working, thanks!"
-sudo_keepalive "$$" &
-KEEPALIVE_PID="$!"
+need_rebuild() {
+    # Check if a the package in the current directory needs to be rebuilt.
+    # It assumes that a list of packages (files) are given as the arguments.
+    # It will return 0 (true) if the packages need rebuilding, 1 (false) if
+    # they don't.
+
+    # Check if the build is already 'dirty'.
+    if [ "$(cat "${STATUS_FILE}" | grep 'DIRTY' | sed 's:DIRTY=::')" == 'true' ]; then
+        return 0
+    fi
+
+    # Check for a cached version.
+    local pkgage="$(stat -c "%Y" PKGBUILD)"
+    for pkgname in ${1}; do
+        # Check that a symlink exists, and that the symlink is newer than the
+        # pkgbuild.
+        if [ ! -e "${pkgname}" ] || [ "$(stat -c "%Y" "${pkgname}")" -lt "${pkgage}" ]; then
+            make_dirty
+            return 0
+        fi
+    done
+
+    return 1
+}
+
+make_dirty() {
+    # Identify the build as being 'dirty' from this point onwards.
+
+    echo "DIRTY=true" >> "${STATUS_FILE}"
+}
 
 #TODO: Add argument parsing for more functionality
+# Possible arguments:
+# --rebuild-all
+# --rebuild=<packages> # Just 'touch' the PKGBUILD's?
+# --???
 
-# Build
-if [ "$1" == "" ]; then
-    FIRST="$(echo $all | cut -d' ' -f1)"
-else
-    FIRST="$1"
-fi
+# Create a shared status file.
+STATUS_FILE="$(mktemp --suffix="-$(basename "${0}")")"
 
-BUILDING="false"
-for package in $all; do
-    if ${BUILDING} || [ "${package}" == "${FIRST}" ]; then
-        BUILDING="true"
-        build "${package}"
-    fi
+# Setup sudo_keepalive
+#TODO: Remove this... building using root _is_ dangerous!
+sudo echo "Sudo working, thanks!"
+"${rootdir}/scripts/keepalive" "$$" "240" sudo true &
+KEEPALIVE_PID="$!"
+
+for package in ${all}; do
+    build "${package}"
 done
-
-if ! "${BUILDING}"; then
-    echo "Error: start package '${FIRST}' does not exist"
-fi
 
 # Clean up the helper processes
 kill "${KEEPALIVE_PID}"
 wait
+
+# Remove the status file.
+rm "${STATUS_FILE}"
 
 message "Cleaned up and exited!"

@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+#
+# Print the name of the package files that would be created by building the
+# given PKGBUILD.
+
+safe_source() {
+    if ! . "$@"; then
+        echo "Failed to source '$@'!"
+        exit 1
+    fi
+}
+
+safe_source ../makepkg.conf # Source the config.
+safe_source "$1" # Source the actual package.
+
+# Generate the names...
+for name in "${pkgname[@]}"; do
+
+    if [ "${arch}" == "any" ]; then
+        actual_arch="any"
+    else
+        actual_arch="${CARCH}"
+    fi
+
+    echo "${name}-${pkgver}-${pkgrel}-${actual_arch}${PKGEXT}"
+done
+

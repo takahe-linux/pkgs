@@ -1,0 +1,40 @@
+#!/usr/bin/env sh
+
+# Keep the given command 'alive'.
+# This makes the most sense for things like sudo, which will timeout after so
+# long...
+
+# Record the parent PID so that we can die if they vanish.
+# Note that this is not 100% reliable; it's possible that the PID could be used
+# by something else.
+parent_pid="$1"
+
+# Set the wait time.
+wait_time="$2"
+
+# Set the pause time between checks on the parent.
+pause=10
+
+# Adjust the CLI vars so that the first two arguments are discarded...
+shift 2
+
+while true; do
+    $@
+
+    time_to_retry="${wait_time}"
+    while [ "${time_to_retry}" -gt 0 ]; do
+
+        # Check on the parent process
+        if kill -0 ${parent_pid} 2> /dev/null ; then
+            # All is well
+            sleep "${pause}"
+        else
+            exit # Parent has died...
+        fi
+
+        # Subtract off another pause interval...
+        time_to_retry="$(expr "${time_to_retry}" - "${pause}")"
+
+    done
+done
+

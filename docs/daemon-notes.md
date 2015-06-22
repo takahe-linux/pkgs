@@ -26,6 +26,9 @@ Currently I just don't support multiseat.
 D-bus traditionally, but I'm not sure that I really want to run a daemon just
 for system communication...
 
+Sockets and so forth appear to work just as well, although I can understand the
+need for a library over them to try to smooth out the wrinkles.
+
 ## Device detection ##
 
 There appears to be three choices here:
@@ -46,6 +49,9 @@ or the [mdev primer](https://git.busybox.net/busybox/plain/docs/mdev.txt).
 
 udev has plenty of existing documentation.
 
+Also, there is a minimal devd implementation in both C and shell 
+[here](https://lkml.iu.edu/hypermail/linux/kernel/0510.3/1853.html).
+
 ## Init ##
 
 Highly important :)
@@ -56,6 +62,9 @@ Epoch suffers from some of the issues of mdev, ie it appears to be harder to
 install default service files (to use some systemd vocabulary) with packages,
 but otherwise it's fairly good.
 There are a few 'missing' features, but it's better than the alternatives...
+
+Note: Epoch, as it turns out, has a few bugs. The 'custom' IPC system is flaky,
+      for instance...
 
 ## Cron ##
 

@@ -21,7 +21,7 @@ echo "Unmounted ${loopdev}"
 sudo rmdir "${_sysroot}"
 
 # Remove the loopdev
-sudo losetup -d "$(echo ${loopdev} | sed -e 's:p1::')"
-echo "Cleaned up loopdev $(echo ${loopdev} | sed -e 's:p1::')"
+sudo losetup -d "$(echo ${loopdev} | sed -e 's:p1$::')"
+echo "Cleaned up loopdev $(echo ${loopdev} | sed -e 's:p1$::')"
 
 

@@ -2,7 +2,7 @@
 
 # Package information
 pkgname='epoch'
-pkgver='1.2.2'
+pkgver='1.3.0'
 pkgrel=1
 pkgdesc="Basic init system with minimal dependencies"
 
@@ -23,31 +23,28 @@ conflicts=("init")
 backup=("etc/epoch/epoch.conf")
 source=("http://universe2.us/${pkgname}_${pkgver}.tar.gz"
     "epoch.conf")
-md5sums=('e962c37c4c5cded7e3ba42e5514d9806'
-         'SKIP')
+md5sums=('30bfaeee48a42fa22a83bef57e3b15c7'
+         '6c69dd37789145fe80e5e6a6fc775fd4')
 
 
 package() {
     cd "${srcdir}/${pkgname}_${pkgver}"
 
-
     EPOCH_OPTS="--configdir ${_configdir}/epoch/ \
         --logdir ${_logdir} \
         --binarypath ${_bindir}/epoch \
-        --cflags ${_target_cflags} \
         --ldflags ${_target_ldflags} \
         --cc ${CC} \
         --shellpath ${_bindir}/sh \
         --disable-backtraces"
 
-    ./buildepoch.sh $EPOCH_OPTS
+    CFLAGS="${_target_cflags}" ./buildepoch.sh $EPOCH_OPTS
 
     # Install the built programs and symlinks
     install -d -m0755 "${pkgdir}${_bindir}"
     mv built/sbin/* "${pkgdir}${_bindir}"
     # Add a new wall symlink
-    ln -s "${pkgdir}${_bindir}/epoch" "${pkgdir}${_bindir}/wall"
-    
+    ln -s "${_bindir}/epoch" "${pkgdir}${_bindir}/wall"
 
     # Copy the license file across
     install -D -m644 UNLICENSE.TXT "${pkgdir}${_licensedir}/${pkgname}/LICENSE"

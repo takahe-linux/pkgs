@@ -117,9 +117,17 @@ build_package() {
 
 need_rebuild() {
     # Check if a the package in the current directory needs to be rebuilt.
-    # It will print out a list of the package files that will be created, and 
-    # will return 0 (true) if the packages need rebuilding, 1 (false) if they
+    # It assumes that it has been passed the names of the generated packages.
+    # It will return 0 (true) if the packages need rebuilding, 1 (false) if they
     # don't.
+
+    # Check that the package is _not_ on the rebuild list.
+    local path="$(pwd | rev | cut -d'/' -f1-2 | rev)"
+    for package in ${REBUILD}; do
+        if [ "${package}" = "${path}" ]; then
+            return 0
+        fi
+    done
 
     # Check that there exists an up-to-date package.
     local pkgdate="$(date '+%s')" # Set to now; time of youngest package.
@@ -183,7 +191,7 @@ parse_arguments() {
     for arg in $@; do
         case "${arg}" in
             --rebuild-all) REBUILD="${all}";;
-            --rebuild=*) REBUILD="$(echo "${arg}" | sed 's:.*=::')";;
+            --rebuild=*) REBUILD="${REBUILD} $(echo "${arg}" | sed 's:.*=::')";;
             -h|--help) echo "Usage: ${0} [-h|--help] [--rebuild=*|--rebuild-all]"
                 exit 0;;
             *) echo "Unknown argument '${arg}'"; exit 1;;
@@ -192,9 +200,6 @@ parse_arguments() {
 }
 
 parse_arguments $@
-if [ -n "${REBUILD}" ]; then
-    echo "Ignoring --rebuild*; this does nothing!"
-fi
 
 # Setup sudo_keepalive
 #TODO: Remove this... building using root _is_ dangerous!

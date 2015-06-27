@@ -115,53 +115,11 @@ build_package() {
     done
 }
 
-#
-# Define the build functions
-#
-
-build() {
-    
-    package="$1"
-
-    check_arg_numbers 1 $@
-
-    name="$(echo "${package}" | sed -e 's:.*/::')"
-    prefix="$(echo "${package}" | sed -e "s:/${name}$::")"
-
-    case "${prefix}" in
-        packages) build_target "${name}" "${prefix}";;
-        toolchain) build_local "${name}" "${prefix}";;
-        actions) $noop || "${rootdir}/${package}";;
-        *) message "Unknown package prefix '${prefix}'!";;
-    esac
-}
-
-build_local() {
-    # Build a given package for the local machine.
-
-    check_arg_numbers 2 $@
-
-    makepkg_args="-srf" \
-        pacman_args="" \
-        build_package "${1}" "${2}"
-}
-
-build_target() {
-    # Build a given package for the target machine.
-
-    check_arg_numbers 2 $@
-
-    # Build the package...
-    makepkg_args="-dLf --nocheck" \
-        pacman_args="--config ${rootdir}/pacman.conf --noconfirm" \
-        build_package "${1}" "${2}"
-}
-
 need_rebuild() {
     # Check if a the package in the current directory needs to be rebuilt.
-    # It assumes that a list of packages (files) are given as the arguments.
-    # It will return 0 (true) if the packages need rebuilding, 1 (false) if
-    # they don't.
+    # It will print out a list of the package files that will be created, and 
+    # will return 0 (true) if the packages need rebuilding, 1 (false) if they
+    # don't.
 
     # Check that there exists an up-to-date package.
     local pkgdate="$(date '+%s')" # Set to now; time of youngest package.
@@ -194,16 +152,49 @@ need_rebuild() {
     if [ -n "${previous_package_date}" ] && [ "${previous_package_date}" -gt "${pkgdate}" ]; then
         return 0
     fi
-    
 
     return 1
 }
 
-#TODO: Add argument parsing for more functionality
-# Possible arguments:
-# --rebuild-all
-# --rebuild=<packages> # Just 'touch' the PKGBUILD's?
-# --???
+build() {
+    # Build a given target!
+    
+    package="$1"
+
+    check_arg_numbers 1 $@
+
+    name="$(echo "${package}" | sed -e 's:.*/::')"
+    prefix="$(echo "${package}" | sed -e "s:/${name}$::")"
+
+    case "${prefix}" in
+        toolchain) makepkg_args="-srf" pacman_args="" \
+            build_package "${name}" "${prefix}";;
+        packages) makepkg_args="-dLf --nocheck" \
+            pacman_args="--config ${rootdir}/pacman.conf --noconfirm" \
+            build_package "${name}" "${prefix}";;
+        actions) $noop || "${rootdir}/${package}";;
+        *) message "Unknown package prefix '${prefix}'!";;
+    esac
+}
+
+parse_arguments() {
+    # Parse the given arguments...
+
+    for arg in $@; do
+        case "${arg}" in
+            --rebuild-all) REBUILD="${all}";;
+            --rebuild=*) REBUILD="$(echo "${arg}" | sed 's:.*=::')";;
+            -h|--help) echo "Usage: ${0} [-h|--help] [--rebuild=*|--rebuild-all]"
+                exit 0;;
+            *) echo "Unknown argument '${arg}'"; exit 1;;
+        esac
+    done
+}
+
+parse_arguments $@
+if [ -n "${REBUILD}" ]; then
+    echo "Ignoring --rebuild*; this does nothing!"
+fi
 
 # Setup sudo_keepalive
 #TODO: Remove this... building using root _is_ dangerous!

@@ -72,7 +72,7 @@ package() {
         install -d -m755 var/${d}
     done
 
-    install -d -m1777 var/{tmp}
+    install -d -m1777 var/tmp
     ln -s spool/mail var/mail
     ln -s ../run var/run
     ln -s ../run/lock var/lock

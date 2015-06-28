@@ -6,6 +6,6 @@ source "$(dirname $(realpath $0))"/../config.sh
 
 # In theory, all of the packages should belong to the group...
 echo "Removing all toolchain packages..."
-sudo pacman -R ${_target_triplet} --noconfirm --noprogressbar ||
+sudo pacman -R ${_target_triplet} --noconfirm --noprogressbar \
+    2> /dev/stdout || \
     echo "The toolchain appears to not be installed"
-

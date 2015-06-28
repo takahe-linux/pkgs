@@ -8,11 +8,14 @@
 
 set -e
 
+# Add the rootdir and adjust the PATH to include the scripts...
+rootdir="$(dirname $(realpath $0))"
+export PATH="${rootdir}/scripts:${PATH}"
+
 #
 # Define build variables
 #
 
-rootdir="$(dirname $(realpath $0))"
 
 toolchain="packages/linux-api-headers \
     toolchain/binutils \
@@ -39,14 +42,10 @@ noop="false"
 # Define the helper functions
 #
 
-message() {
-    echo ">>> $@"
-}
-
 error() {
     errno="$1"
     shift
-    echo "!!! $@"
+    "${rootdir}/scripts/error" $@
     exit "${errno}"
 }
 
@@ -111,7 +110,7 @@ build_package() {
             if [ ! -e "${pkgname}" ]; then
                 error 1 "Expected to find a package in '$(pwd)' called '${pkgname}'!"
             fi
-            yes 'y' | sudo pacman ${pacman_args} -U "${pkgname}" > /dev/null
+            yes 'y' | sudo pacman ${pacman_args} -U "${pkgname}" 2> /dev/stdout
         fi
 
         # Check the timestamp on the package...
@@ -191,7 +190,8 @@ parse_arguments() {
         case "${arg}" in
             --rebuild-all) REBUILD="${all}";;
             --rebuild=*) REBUILD="${REBUILD} $(echo "${arg}" | sed 's:.*=::')";;
-            -h|--help) error 0 "Usage: ${0} [-h|--help] [--rebuild=*|--rebuild-all]";;
+            -h|--help) message "Usage: ${0} [-h|--help] [--rebuild=*|--rebuild-all]";
+                exit 0;;
             *) error 1 "Unknown argument '${arg}'";;
         esac
     done
@@ -213,16 +213,16 @@ parse_arguments $@
 
 # Setup sudo_keepalive
 #TODO: Remove this... building using root _is_ dangerous!
-sudo echo "Sudo working, thanks!"
+sudo message "Sudo working, thanks!"
 "${rootdir}/scripts/keepalive" "$$" "240" sudo true &
 KEEPALIVE_PID="$!"
 
 for package in ${all}; do
-    build "${package}"
+    build "${package}" > /dev/null
 done
 
 # Clean up the helper processes
 kill "${KEEPALIVE_PID}"
-wait
+wait 2> /dev/null
 
 message "Cleaned up and exited!"

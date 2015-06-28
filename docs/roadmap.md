@@ -2,9 +2,7 @@
 
 ## v0.1.3 ##
 
-- Cleanup build system.
 - Transfer to a rootless, chrooted build.
-- Add some CLI options to the build system.
 - Add signal handling to the build system.
 - Add file + diffutils + patch packages.
 

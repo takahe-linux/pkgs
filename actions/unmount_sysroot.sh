@@ -9,7 +9,7 @@ source "$(dirname $(realpath $0))"/../config.sh
 loopdev="$(mount | grep -e "/dev/loop.* on ${_sysroot} " | cut -d' ' -f'1')"
 
 if [ "z${loopdev}" == "z" ]; then
-    echo "Cannot find a loopdevice mounted on ${_sysroot}!"
+    error "Cannot find a loopdevice mounted on ${_sysroot}!"
     exit 1
 fi
 

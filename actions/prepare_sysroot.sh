@@ -6,7 +6,7 @@ source "$(dirname $(realpath $0))"/../config.sh
 
 # Check that the sysroot dir does exist
 if [ ! -e "${_sysroot}" ]; then
-    echo "Sysroot dir does not exist!"
+    error "Sysroot dir does not exist!"
     exit 1
 fi
 

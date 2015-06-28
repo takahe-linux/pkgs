@@ -8,24 +8,24 @@ _sysroot="${_sysroot}"
 
 if [ "z${_sysroot}" != "z/" ] && [ "z${_sysroot}" != "z" ]; then
     if [ -e "${_sysroot}" ]; then
-        echo "Is this the correct system root: ${_sysroot}?"
-        echo "WARNING: Everything under ${_sysroot} _will_ be deleted."
-        echo "Are you sure that you want to proceed? [y/N]"
+        message "Is this the correct system root: ${_sysroot}?"
+        message "WARNING: Everything under ${_sysroot} _will_ be deleted."
+        message "Are you sure that you want to proceed? [y/N]"
         read input
         if [ "${input}" == "y" ]; then
-            echo "Deleting everything under '${_sysroot}'..."
+            message "Deleting everything under '${_sysroot}'..."
             if mountpoint "${_sysroot}"; then
                 sudo umount "${_sysroot}"
             fi
             sudo rm -r "${_sysroot}"
         else
-            echo "Aborting!"
+            error "Aborting!"
             exit 1
         fi
     else
         echo "Sysroot does not exist... leaving"
     fi
 else
-    echo "Sysroot '${_sysroot}' is not valid!"
+    error "Sysroot '${_sysroot}' is not valid!"
     exit 1
 fi

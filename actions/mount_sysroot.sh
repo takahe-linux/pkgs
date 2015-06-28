@@ -35,27 +35,27 @@ die() {
         rm -r "${sysroot}"
     fi
 
-    echo "Error: ${message}"
+    error "${message}" > /dev/stderr
     exit 1
 }
 
 # Create a new system image
 if [ -e "${sysimage}" ]; then
-    echo "System image '${sysimage}' already exists!"
-    echo "Overwrite? [y/N]"
+    message "System image '${sysimage}' already exists!"
+    message "Overwrite? [y/N]"
     read input
     if [ "${input}" == "y" ]; then
-        echo "Overwriting system image '${sysimage}'"
+        message "Overwriting system image '${sysimage}'" > /dev/stderr
     else
         die "Aborting; not overwriting system image!" "" "" ""
     fi
 fi
 dd if="/dev/zero" of="/tmp/${_target_triplet}.img" bs=1M \
-    count="${sysimage_size}"
+    count="${sysimage_size}" 2> /dev/stdout
 
 # Partition the new image
-parted "${sysimage}" mklabel msdos
-parted "${sysimage}" mkpart primary 2 "${sysimage_size}"
+parted "${sysimage}" mklabel msdos 2> /dev/stdout
+parted "${sysimage}" mkpart primary 2 "${sysimage_size}" 2> /dev/stdout
 echo "Created and partitioned the new disk image"
 
 # Use losetup to create a new loop device.
@@ -68,7 +68,7 @@ fi
 
 # Make a new filesystem on the disk
 #TODO: Make this configurable...
-sudo mkfs.ext2 "${loop}p1" -L "Takahe Linux"
+sudo mkfs.ext2 "${loop}p1" -L "Takahe Linux" 2> /dev/stdout
 echo "Created a new filesystem on '${loop}p1'"
 
 # Make the new sysroot directory

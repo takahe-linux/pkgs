@@ -3,6 +3,7 @@
 ## v0.1.3 ##
 
 - Transfer to a rootless, chrooted build.
+- Add a 'activity' bar/monitor.
 - Add signal handling to the build system.
 - Add file + diffutils + patch packages.
 

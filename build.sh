@@ -85,7 +85,7 @@ build_package() {
         *) error 1 "Unknown target '${prefix}'!";;
     esac
 
-    message "Building ${target} package ${prefix}/${name}..."
+    message "Installing ${target} package ${prefix}/${name}..."
 
     cd "${rootdir}/${prefix}/${name}"
 
@@ -98,7 +98,9 @@ build_package() {
 
         # Build the package
         "${noop}" || yes 'y' | makepkg --config ../makepkg.conf -cC \
-            ${makepkg_args}
+            ${makepkg_args} 2> /dev/stdout || \
+            error "$?" \
+            "Build failed! Please check the build log for more information."
     fi
 
     # Install all of the resulting packages.
@@ -173,7 +175,7 @@ build() {
     prefix="$(echo "${package}" | sed -e "s:/${name}$::")"
 
     case "${prefix}" in
-        toolchain) makepkg_args="-srf" pacman_args="" \
+        toolchain) makepkg_args="-srLf" pacman_args="" \
             build_package "${name}" "${prefix}";;
         packages) makepkg_args="-dLf --nocheck" \
             pacman_args="--config ${rootdir}/pacman.conf --noconfirm" \

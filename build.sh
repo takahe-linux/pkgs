@@ -43,17 +43,25 @@ message() {
     echo ">>> $@"
 }
 
+error() {
+    errno="$1"
+    shift
+    echo "!!! $@"
+    exit "${errno}"
+}
+
 check_arg_numbers() {
     # Check that there are the given numbers of arguments
 
     if [ "$#" -lt 1 ]; then
-        message "check_arg_numbers requires an argument!"
-        exit 1
+        error 1 "check_arg_numbers requires an argument!"
     fi
 
-    if [ "$(expr "$#" - 1)" != "$1" ]; then
-        message "Expected $1 arguments; got '$#' ($@)"
-        exit 1
+    num="$1"
+    shift
+
+    if [ "$#" != "${num}" ]; then
+        error 1 "Expected ${num} arguments; got '$#' ($@)"
     fi
 }
 
@@ -75,7 +83,7 @@ build_package() {
     case "${prefix}" in
         toolchain) target="local";;
         packages) target="target";;
-        *) echo "Unknown target '${prefix}'!"; exit 1;;
+        *) error 1 "Unknown target '${prefix}'!";;
     esac
 
     message "Building ${target} package ${prefix}/${name}..."
@@ -101,8 +109,7 @@ build_package() {
     for pkgname in ${names}; do
         if ! "${noop}"; then
             if [ ! -e "${pkgname}" ]; then
-                message "Expected to find a package in '$(pwd)' called '${pkgname}'!"
-                exit 1
+                error 1 "Expected to find a package in '$(pwd)' called '${pkgname}'!"
             fi
             yes 'y' | sudo pacman ${pacman_args} -U "${pkgname}" > /dev/null
         fi
@@ -120,14 +127,6 @@ need_rebuild() {
     # It assumes that it has been passed the names of the generated packages.
     # It will return 0 (true) if the packages need rebuilding, 1 (false) if they
     # don't.
-
-    # Check that the package is _not_ on the rebuild list.
-    local path="$(pwd | rev | cut -d'/' -f1-2 | rev)"
-    for package in ${REBUILD}; do
-        if [ "${package}" = "${path}" ]; then
-            return 0
-        fi
-    done
 
     # Check that there exists an up-to-date package.
     local pkgdate="$(date '+%s')" # Set to now; time of youngest package.
@@ -192,10 +191,21 @@ parse_arguments() {
         case "${arg}" in
             --rebuild-all) REBUILD="${all}";;
             --rebuild=*) REBUILD="${REBUILD} $(echo "${arg}" | sed 's:.*=::')";;
-            -h|--help) echo "Usage: ${0} [-h|--help] [--rebuild=*|--rebuild-all]"
-                exit 0;;
-            *) echo "Unknown argument '${arg}'"; exit 1;;
+            -h|--help) error 0 "Usage: ${0} [-h|--help] [--rebuild=*|--rebuild-all]";;
+            *) error 1 "Unknown argument '${arg}'";;
         esac
+    done
+
+    # 'touch' the PKGBUILD's of the packages that need rebuilding.
+    # This should make them rebuild - fingers crossed.
+    for pkg in ${REBUILD}; do
+        pkgbuild="${rootdir}/${pkg}/PKGBUILD"
+        # Check that the PKGBUILD exists!
+        if [ ! -f "${pkgbuild}" ]; then
+            error 1 "Unknown package '${pkg}'!"
+        fi
+        # 'touch' the given PKGBUILD.
+        touch "${pkgbuild}"
     done
 }
 

@@ -1,0 +1,13 @@
+pkgbase = linux-api-headers
+	pkgdesc = Kernel headers sanitized for use in userspace, with musl patches
+	pkgver = 3.12.6
+	pkgrel = 1
+	url = http://www.kernel.org
+	license = GPL2
+	provides = kernel-api-headers
+	conflicts = kernel-api-headers
+	source = http://ftp.barfooze.de/pub/sabotage/tarballs/kernel-headers-3.12.6-5.tar.xz
+	md5sums = 633a0ff5b4d321d8e553133dcc2df36c
+
+pkgname = linux-api-headers
+

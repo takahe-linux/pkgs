@@ -1,0 +1,19 @@
+pkgbase = musl
+	pkgdesc = Lightweight libc implementation
+	pkgver = 1.1.10
+	pkgrel = 1
+	url = http://www.musl-libc.org
+	arch = i586
+	arch = mips
+	groups = base
+	license = MIT
+	makedepends = linux-api-headers
+	provides = libc
+	conflicts = libc
+	source = http://www.musl-libc.org/releases/musl-1.1.10.tar.gz
+	source = uselocale.patch
+	md5sums = fc30892ee582c91920505bbd0021049f
+	md5sums = 87bafc4f79c7b88261ed7d4f73d4581f
+
+pkgname = musl
+

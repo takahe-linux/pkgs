@@ -1,0 +1,33 @@
+pkgbase = filesystem
+	pkgdesc = Base filesystem
+	pkgver = 2015.3
+	pkgrel = 1
+	arch = any
+	groups = base
+	license = GPL
+	backup = etc/group
+	backup = etc/passwd
+	backup = etc/shadow
+	backup = etc/motd
+	backup = etc/shells
+	backup = etc/profile
+	backup = etc/issue
+	source = group
+	source = issue
+	source = passwd
+	source = shadow
+	source = motd
+	source = shells
+	source = profile
+	source = locale.sh
+	md5sums = 96ac8b97d60f21957b65be52cecf0160
+	md5sums = 58233879530afb7b1c6a8e51a14d3433
+	md5sums = a9d43e66298f11c8e997268f6746b99b
+	md5sums = 7a4d75479bc052c6dbe44ac957cb19d3
+	md5sums = d41d8cd98f00b204e9800998ecf8427e
+	md5sums = eef6376b9b624b4aa0e2963f38597228
+	md5sums = 203dbcc864f3e8e68e5da5eb5cfb663c
+	md5sums = 7fd1a7398ccfa02172a12b0f6511e2fc
+
+pkgname = filesystem
+

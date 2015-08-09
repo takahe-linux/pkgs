@@ -1,0 +1,22 @@
+pkgbase = epoch
+	pkgdesc = Basic init system with minimal dependencies
+	pkgver = 1.3.0
+	pkgrel = 1
+	url = http://universe2.us/epoch.html
+	arch = mips
+	groups = base
+	license = custom
+	makedepends = -gcc
+	makedepends = linux-api-headers
+	makedepends = sh
+	depends = libc
+	provides = init
+	conflicts = init
+	backup = etc/epoch/epoch.conf
+	source = http://universe2.us/epoch_1.3.0.tar.gz
+	source = epoch.conf
+	md5sums = 30bfaeee48a42fa22a83bef57e3b15c7
+	md5sums = 6c69dd37789145fe80e5e6a6fc775fd4
+
+pkgname = epoch
+

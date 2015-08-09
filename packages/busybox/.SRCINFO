@@ -1,0 +1,53 @@
+pkgbase = busybox
+	pkgver = 1.23.2
+	pkgrel = 2
+	url = https://www.busybox.net
+	arch = i586
+	arch = mips
+	license = GPL
+	makedepends = make
+	depends = libc
+	source = https://www.busybox.net/downloads/busybox-1.23.2.tar.bz2
+	source = config
+	source = busybox-blowfish.patch
+	source = busybox-fdisk-sector-size.patch
+	source = busybox.patch
+	md5sums = 7925683d7dd105aabe9b6b618d48cc73
+	md5sums = SKIP
+	md5sums = b1f67463f918d0f7f9d1c26a8aeba32b
+	md5sums = 433fffbb43d6a837d162f2d0e01e3216
+	md5sums = c07df6a724d05ed6957741a93d512816
+
+pkgname = busybox
+	pkgdesc = Main busybox binary and symlinks
+	groups = bb
+
+pkgname = mdev
+	pkgdesc = Lightweight udev alternative, from busybox
+	groups = bb
+
+pkgname = hush
+	pkgdesc = Simple busybox shell
+	groups = bb
+
+pkgname = bb-coreutils
+	pkgdesc = Coreutils symlinks for busybox
+	groups = bb
+	depends = busybox
+	provides = coreutils
+	conflicts = coreutils
+
+pkgname = bb-util-linux
+	pkgdesc = util linux symlinks for busybox
+	groups = bb
+	depends = busybox
+	provides = util-linux
+	conflicts = util-linux
+
+pkgname = bb-findutils
+	pkgdesc = findutils symlinks for busybox
+	groups = bb
+	depends = busybox
+	provides = findutils
+	conflicts = findutils
+

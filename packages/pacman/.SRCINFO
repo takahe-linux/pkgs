@@ -1,0 +1,27 @@
+pkgbase = pacman
+	pkgdesc = Arch Linux's simple package manager
+	pkgver = 4.2.1
+	pkgrel = 1
+	url = http://www.archlinux.org/pacman/
+	arch = i586
+	arch = mips
+	groups = base
+	license = GPL
+	checkdepends = python2
+	checkdepends = fakechroot
+	makedepends = asciidoc
+	depends = bash
+	depends = libc
+	depends = libarchive>=3.1.2
+	optdepends = wget
+	backup = etc/pacman.conf
+	backup = etc/makepkg.conf
+	source = https://sources.archlinux.org/other/pacman/pacman-4.2.1.tar.gz
+	source = pacman.conf
+	source = makepkg.conf
+	md5sums = 2a596fc8f723e99660c0869a74afcf47
+	md5sums = 6b40bff8bd90882a7d3f6b3024f74d38
+	md5sums = 03d578816b56852d803cbafac85b9f09
+
+pkgname = pacman
+

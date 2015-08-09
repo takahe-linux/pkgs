@@ -1,0 +1,25 @@
+pkgbase = linux-qemu-malta
+	pkgdesc = Linux kernel and modules for 'qemu-malta'
+	pkgver = 4.0.1
+	pkgrel = 1
+	url = http://www.kernel.org
+	arch = i586
+	arch = mips
+	groups = base
+	license = GPL2
+	makedepends = bc
+	makedepends = gcc
+	provides = kernel
+	conflicts = kernel
+	options = !strip
+	source = https://www.kernel.org/pub/linux/kernel/v3.x/linux-4.0.tar.xz
+	source = https://www.kernel.org/pub/linux/kernel/v3.x/patch-4.0.1.xz
+	source = config.qemu-malta
+	source = change-default-console-loglevel.patch
+	md5sums = d3fc8316d4d4d04b65cbc2d70799e763
+	md5sums = 2f2822cf2d84a8ec3a8b044e732cf45b
+	md5sums = SKIP
+	md5sums = ee9e4d173c2fff74659c862479570d36
+
+pkgname = linux-qemu-malta
+

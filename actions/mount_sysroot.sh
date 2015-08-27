@@ -20,6 +20,8 @@ die() {
     loop=$3
     sysroot=$4
 
+    error "${message}" > /dev/stderr
+
     if [ "z${sysimage}" != "z" ] && [ -f "${sysimage}" ]; then
         echo "Removing sysimage ${sysimage}"
         rm "${sysimage}"
@@ -35,7 +37,6 @@ die() {
         rm -r "${sysroot}"
     fi
 
-    error "${message}" > /dev/stderr
     exit 1
 }
 
@@ -50,12 +51,24 @@ if [ -e "${sysimage}" ]; then
         die "Aborting; not overwriting system image!" "" "" ""
     fi
 fi
-dd if="/dev/zero" of="/tmp/${_target_triplet}.img" bs=1M \
+dd if="/dev/zero" of="${sysimage}" bs=1M \
     count="${sysimage_size}" 2> /dev/stdout
+# Check that the system image actually exists...
+if [ ! -e "${sysimage}" ]; then
+    die "Failed to create system image!"
+fi
 
 # Partition the new image
 parted "${sysimage}" mklabel msdos 2> /dev/stdout
+ERR="$?"
+if [ "${ERR}" != 0 ]; then
+    die "Creating a partition table failed; got a return value of ${ERR}!"
+fi
 parted "${sysimage}" mkpart primary 2 "${sysimage_size}" 2> /dev/stdout
+ERR="$?"
+if [ "${ERR}" != 0 ]; then
+    die "Creating a partition failed; got a return value of ${ERR}!"
+fi
 echo "Created and partitioned the new disk image"
 
 # Use losetup to create a new loop device.

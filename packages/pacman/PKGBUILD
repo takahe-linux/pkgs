@@ -16,7 +16,7 @@ license=('GPL')
 # Dependency information
 groups=('base')
 depends=('bash' 'libc' 'libarchive>=3.1.2')
-makedepends=('asciidoc')
+makedepends=('asciidoc' 'libtool=2.4.5')
 checkdepends=('python2' 'fakechroot')
 optdepends=('wget')
 

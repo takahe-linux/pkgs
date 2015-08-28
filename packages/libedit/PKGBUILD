@@ -1,0 +1,58 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='libedit'
+_pkgver='20150325-3.1'
+pkgver="$(echo "${_pkgver}" | tr '-' '_')"
+pkgrel=1
+pkgdesc="Command line editing library"
+
+# Additional information...
+arch=('mips')
+url='http://www.thrysoee.dk/editline/'
+license=('BSD')
+
+# Dependency information
+depends=('ncurses' 'libc')
+makedepends=('gcc')
+
+# Building information
+source=("http://www.thrysoee.dk/editline/libedit-${_pkgver}.tar.gz")
+sha1sums=('c5bf50b433ea35f9fc883400cde674556c44af30')
+
+
+build() {
+    cd "${srcdir}/${pkgname}-${_pkgver}"
+
+    ./configure --prefix="${_prefix}" --enable-widec \
+        --host="${_target_triplet}" \
+        --build="${_local_triplet}"
+    # __STDC_ISO_10646 required, otherwise libedit complains about size of
+    # wchar_t?
+    make CFLAGS="${CFLAGS} -D__STDC_ISO_10646__"
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}-${_pkgver}"
+
+    make DESTDIR="${pkgdir}/" install
+
+    # Use libedit instead of readline...
+    # Borrowed from Sabotage Linux
+    for t in a so; do
+        ln -s "${_libdir}/libedit.${t}" \
+            "${pkgdir}${_libdir}/libreadline.${t}"
+    done
+    mkdir -p "${pkgdir}${_includedir}/readline"
+    for file in "history" "tilde"; do
+        touch "${pkgdir}${_includedir}/readline/${file}.h"
+    done
+    ln -s "${_includedir}/editline/readline.h" \
+        "${pkgdir}${_includedir}/readline/readline.h"
+
+    cp "${pkgdir}${_mandir}/man3/editline.3" \
+        "${pkgdir}${_mandir}/man3/el.3"
+    install -Dm644 COPYING \
+        "${pkgdir}${_licensedir}/libedit/LICENSE"
+}

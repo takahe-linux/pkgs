@@ -25,6 +25,8 @@ toolchain="packages/linux-api-headers \
 base="packages/libarchive \
     packages/busybox \
     packages/filesystem \
+    packages/ncurses \
+    packages/libedit \
     packages/bash \
     packages/pacman \
     packages/epoch"
@@ -112,7 +114,11 @@ build_package() {
             if [ ! -e "${pkgname}" ]; then
                 error 1 "Expected to find a package in '$(pwd)' called '${pkgname}'!"
             fi
-            yes 'y' | sudo pacman ${pacman_args} -U "${pkgname}" 2> /dev/stdout
+            # We don't use --noconfirm because we have to install conflicting
+            # packages... :(
+            yes 'y' | \
+                sudo pacman ${pacman_args} -U "${pkgname}" || \
+                error "$?" "Failed to install package '${pkgname}'!"
         fi
 
         # Check the timestamp on the package...
@@ -215,6 +221,8 @@ parse_arguments $@
 
 # Setup sudo_keepalive
 #TODO: Remove this... building using root _is_ dangerous!
+# Just in case anyone thinks this is a good idea; it's not.
+# I just haven't got around to hacking up a workaround...
 sudo message "Sudo working, thanks!"
 "${rootdir}/scripts/keepalive" "$$" "240" sudo true &
 KEEPALIVE_PID="$!"

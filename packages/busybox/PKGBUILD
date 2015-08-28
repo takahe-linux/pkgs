@@ -85,7 +85,6 @@ package_busybox() {
     #TODO: Figure out what here is actually provided by kbd
     KBD="deallocvt dumpkmap loadfont loadkmap openvt resize setconsole \
         setfont setkeycodes setlogcons showkey vlock"
-    NCURSES="clear reset"
     WHICH="which"
 
     APPLETS="gunzip gzip lzop tar bzip2 bunzip2 unxz"

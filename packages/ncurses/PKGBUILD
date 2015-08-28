@@ -7,12 +7,13 @@ pkgrel=1
 pkgdesc='System V Release 4.0 curses emulation library'
 
 # Additional information...
-arch=('i586')
+arch=('i586' 'mips')
 url='http://invisible-island.net/ncurses/ncurses.html'
 license=('MIT')
 
 # Dependency information
-depends=('libc' 'sh' 'gcc-libs')
+depends=('libc' 'sh')
+makedepends=('make') #TODO: Fill in...
 
 # Building information
 source=(ftp://invisible-island.net/ncurses/ncurses-${pkgver}.tar.gz)

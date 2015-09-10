@@ -56,7 +56,9 @@ Also, there is a minimal devd implementation in both C and shell
 
 Highly important :)
 
-There are many choices, see [here](https://www.troubleshooters.com/linux/init/features_and_benefits.htm) for a (biased against systemd) overview.
+There are many choices, see
+[here](https://www.troubleshooters.com/linux/init/features_and_benefits.htm)
+for a (biased against systemd) overview.
 Personally, I like some features of systemd, so have gone for Epoch.
 Epoch suffers from some of the issues of mdev, ie it appears to be harder to
 install default service files (to use some systemd vocabulary) with packages,
@@ -103,6 +105,7 @@ I'll have another look if I run across anything that needs this.
 ## Print server ##
 
 Ummm... cupsd?
+lprng?
 
 I have yet to look.
 

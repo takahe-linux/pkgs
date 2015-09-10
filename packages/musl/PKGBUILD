@@ -2,7 +2,7 @@
 
 # Package information
 pkgname='musl'
-pkgver='1.1.10'
+pkgver='1.1.11'
 pkgrel=1
 pkgdesc="Lightweight libc implementation"
 
@@ -18,16 +18,8 @@ provides=('libc')
 conflicts=('libc')
 
 # Building information
-source=("http://www.musl-libc.org/releases/${pkgname}-${pkgver}.tar.gz"
-        "uselocale.patch")
-md5sums=('fc30892ee582c91920505bbd0021049f'
-         '87bafc4f79c7b88261ed7d4f73d4581f')
-
-prepare() {
-    cd "${srcdir}/${pkgname}-${pkgver}"
-
-    patch -p1 < "${srcdir}/uselocale.patch"
-}
+source=("http://www.musl-libc.org/releases/${pkgname}-${pkgver}.tar.gz")
+md5sums=('48be0777e32f374d387e9cf85e36ec4d')
 
 build() {
     cd "${srcdir}/${pkgname}-${pkgver}"

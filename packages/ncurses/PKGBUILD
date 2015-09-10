@@ -2,7 +2,7 @@
 
 # Package information
 pkgname='ncurses'
-pkgver='5.9'
+pkgver='6.0'
 pkgrel=1
 pkgdesc='System V Release 4.0 curses emulation library'
 
@@ -17,7 +17,7 @@ makedepends=('make') #TODO: Fill in...
 
 # Building information
 source=(ftp://invisible-island.net/ncurses/ncurses-${pkgver}.tar.gz)
-md5sums=('8cb9c412e5f2d96bc6f459aa8c6282a1')
+md5sums=('ee13d052e1ead260d7c28071f46eefb1')
 
 
 prepare() {

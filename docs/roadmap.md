@@ -18,9 +18,17 @@
 ## v0.2.0 ##
 
 - Standalone system!
+- Kernel and bootloader built and installed.
+- Improved build system.
+
+## v0.3.0 ##
+
+- Working on the Toshiba.
 
 ## Misc ##
 
+- Update the toolchain packages.
+- Update the linux kernel build.
 - Add a target for my Toshiba.
 - Make the build system handle different targets cleanly.
 - Improve the documentation.

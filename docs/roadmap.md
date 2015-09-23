@@ -20,6 +20,8 @@
 - Standalone system!
 - Kernel and bootloader built and installed.
 - Improved build system.
+- Fully static builds.
+- Testing system.
 
 ## v0.3.0 ##
 

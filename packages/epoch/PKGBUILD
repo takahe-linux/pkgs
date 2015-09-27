@@ -38,7 +38,7 @@ package() {
         --shellpath ${_bindir}/sh \
         --disable-backtraces"
 
-    CFLAGS="${_target_cflags}" ./buildepoch.sh $EPOCH_OPTS
+    CFLAGS="${_target_cflags} -static" ./buildepoch.sh $EPOCH_OPTS
 
     # Install the built programs and symlinks
     install -d -m0755 "${pkgdir}${_bindir}"

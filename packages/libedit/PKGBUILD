@@ -15,7 +15,7 @@ license=('BSD')
 # Dependency information
 depends=('ncurses' 'libc')
 makedepends=('gcc')
-provides=('readline')
+provides=('readline' 'libreadline.so')
 conflicts=('readline')
 
 # Building information

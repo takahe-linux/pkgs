@@ -14,6 +14,7 @@ license=('MIT')
 # Dependency information
 depends=('libc' 'sh')
 makedepends=('make') #TODO: Fill in...
+provides=('libncurses.so')
 
 # Building information
 source=(ftp://invisible-island.net/ncurses/ncurses-${pkgver}.tar.gz)

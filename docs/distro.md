@@ -103,13 +103,6 @@ large for older machines to load. A custom kernel, in this case, is a must, so
 an initcpio is a waste of time and resources.
 
 
-# Statically compiled #
-
-I'm not sure about this; I'll have to try and run some speed tests!
-
-TODO: Check statically compiled vs runtime linking for speed...
-
-
 # Bash #
 
 Bash is a ridiculous language; I'd prefer to get rid of it entirely. There is

@@ -2,7 +2,6 @@
 
 ## v0.1.3 ##
 
-- Fix bash build so it uses the system readline (libedit).
 - Add file + zlib + gettext packages.
 
 ## v0.1.4 ##

@@ -31,7 +31,8 @@ build() {
                 --syslibdir="${_libdir}" \
                 --libdir="${_libdir}" \
                 --bindir="${_bindir}" \
-                --includedir="${_includedir}"
+                --includedir="${_includedir}" \
+                --disable-shared
 
     make CC="${CC}" CROSS_COMPILE="${CROSS_COMPILE}"
 }

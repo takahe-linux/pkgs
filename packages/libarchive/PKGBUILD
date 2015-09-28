@@ -42,6 +42,8 @@ prepare() {
 build() {
     cd "${srcdir}/${pkgname}-${pkgver}"
 
+    export LDFLAGS="${LDFLAGS} -static"
+
     ./configure --prefix="${_prefix}" \
         --host="${_target_triplet}" \
         --libdir="${_libdir}" \

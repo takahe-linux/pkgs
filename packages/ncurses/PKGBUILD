@@ -14,7 +14,6 @@ license=('MIT')
 # Dependency information
 depends=('libc' 'sh')
 makedepends=('make') #TODO: Fill in...
-provides=('libncurses.so')
 
 # Building information
 source=(ftp://invisible-island.net/ncurses/ncurses-${pkgver}.tar.gz)
@@ -33,7 +32,7 @@ prepare() {
 build() {
     cd "${srcdir}/${pkgname}-${pkgver}"
 
-    ./configure --prefix="${_prefix}" --mandir="${_mandir}" --with-shared \
+    ./configure --prefix="${_prefix}" --mandir="${_mandir}" --disable-shared \
         --host="${_target_triplet}" \
         --without-debug --without-ada --enable-overwrite --with-build-cc="${_cc}" \
         --without-cxx-binding --without-cxx

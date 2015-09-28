@@ -82,7 +82,7 @@ build() {
         --enable-libstdcxx-time \
         --enable-cxx-flags="${CXXFLAGS_FOR_TARGET}" \
         --disable-nls \
-        --disable-static \
+        --disable-shared \
         --disable-multilib \
         --disable-libmudflap \
         --disable-mudflap \

@@ -15,7 +15,7 @@ license=('BSD')
 # Dependency information
 depends=('ncurses' 'libc')
 makedepends=('gcc')
-provides=('readline' 'libreadline.so')
+provides=('readline')
 conflicts=('readline')
 
 # Building information
@@ -28,7 +28,8 @@ build() {
 
     ./configure --prefix="${_prefix}" --enable-widec \
         --host="${_target_triplet}" \
-        --build="${_local_triplet}"
+        --build="${_local_triplet}" \
+        --disable-shared
     # __STDC_ISO_10646 required, otherwise libedit complains about size of
     # wchar_t?
     make CFLAGS="${CFLAGS} -D__STDC_ISO_10646__"
@@ -42,10 +43,7 @@ package() {
 
     # Use libedit instead of readline...
     # Borrowed from Sabotage Linux
-    for t in a so; do
-        ln -s "${_libdir}/libedit.${t}" \
-            "${pkgdir}${_libdir}/libreadline.${t}"
-    done
+    ln -s "${_libdir}/libedit.a" "${pkgdir}${_libdir}/libreadline.a"
     mkdir -p "${pkgdir}${_includedir}/readline"
     for file in "history" "tilde"; do
         touch "${pkgdir}${_includedir}/readline/${file}.h"

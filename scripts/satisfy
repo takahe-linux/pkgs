@@ -151,6 +151,7 @@ need_rebuild() {
     # Check that the symlinks all exist.
     for pkgname in ${@}; do
         if [ ! -e "${pkgname}" ]; then
+            message "${pkgname} does not exist!"
             return 0
         fi
     done
@@ -161,6 +162,7 @@ need_rebuild() {
     # Check that the package is up to date.
     local pkgbuilddate="$(stat -c "%Y" PKGBUILD)" # The age of the PKGBUILD.
     if [ "${pkgbuilddate}" -gt "${pkgdate}" ]; then
+        message "Package is out of date (${pkgbuilddate} vs ${pkgdate})!"
         return 0
     fi
 
@@ -174,6 +176,7 @@ need_rebuild() {
             [ "${depprefix}" == 'packages' ]; then
             depdate="$(packagedate $(pkgnames "${depprefix}" "${depname}"))"
             if [ "${depdate}" -gt "${pkgdate}" ]; then
+                message "Dependency ${dep} is more modern!"
                 return 0
             fi
         fi
@@ -187,7 +190,7 @@ packagedate() {
     for pkgname in ${@}; do
         # Check that a symlink exists. If not, then ignore (the package does
         # not exist??).
-        if [ ! -e "${pkgname}" ]; then
+        if [ -e "${pkgname}" ]; then
             # Update the youngest age of the packages...
             local currentpkgdate="$(stat -c "%Y" "${pkgname}")"
             if [ "${pkgdate}" -gt "${currentpkgdate}" ]; then

@@ -1,5 +1,4 @@
 packages/linux-api-headers
 toolchain/binutils
-toolchain/gcc-static
 packages/musl
 toolchain/gcc

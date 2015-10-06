@@ -12,8 +12,8 @@ license=('GPL') # Busybox; not sure about the service files, which
                 # are from sabotage linux
 
 # Dependency information
-depends=('libc') 
-makedepends=('make') #TODO: Fill in
+# Depends: packages/musl targets/toolchain
+makedepends=('libc') #TODO: Fill in
 
 # Building information
 _web_address="${url}/downloads"

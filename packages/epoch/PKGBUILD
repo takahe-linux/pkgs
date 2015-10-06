@@ -13,8 +13,10 @@ license=('custom') # Public domain
 
 # Dependency information
 groups=('base')
-depends=('libc')
-makedepends=("${_target_triplet}-gcc" "linux-api-headers" "sh")
+# Depends: packages/musl packages/bash packages/linux-api-headers
+# Depends: targets/toolchain
+depends=('sh')
+makedepends=('libc' 'linux-api-headers')
 provides=("init")
 conflicts=("init")
 

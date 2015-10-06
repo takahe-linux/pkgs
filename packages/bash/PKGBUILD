@@ -15,8 +15,8 @@ license=('GPL')
 
 # Dependency information
 groups=('base')
-depends=('libc')
-makedepends=('ncurses') # Doesn't use libedit for now; too old apparently...
+# Depends: packages/musl packages/ncurses targets/toolchain
+makedepends=('ncurses' 'libc') # Doesn't use libedit for now; too old apparently...
 # optdepends=('bash-completion: for tab completion')
 # provides=('sh') Doesn't for now.
 

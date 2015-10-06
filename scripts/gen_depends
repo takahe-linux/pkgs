@@ -1,0 +1,98 @@
+#!/usr/bin/env sh
+#
+# Generate the dependencies for a given target, and prints them on stdout.
+#
+# Author:   Alastair Hughes
+# Contact:  < hobbitalastair at yandex dot com >
+
+set -e
+
+#
+# Define the helper functions
+#
+
+error() {
+    errno="$1"
+    shift
+    "${rootdir}/scripts/error" $@
+    exit "${errno}"
+}
+
+check_arg_numbers() {
+    # Check that there are the given numbers of arguments
+
+    if [ "$#" -lt 1 ]; then
+        error 1 "check_arg_numbers requires an argument!"
+    fi
+
+    num="$1"
+    shift
+
+    if [ "$#" != "${num}" ]; then
+        error 1 "Expected ${num} arguments; got '$#' ($@)"
+    fi
+}
+
+
+#
+# Dependency generation functions
+#
+
+dep_toolchain() {
+
+    dir="${rootdir}/toolchain/${1}"
+
+    check_arg_numbers 1 $@
+    echo "targets/setup"
+
+    # We use 'fake' depends because the PKGBUILD can't tell the difference
+    # between host and target depends, and also because otherwise there is
+    # no distinction between the local and system packages.
+    #TODO: Figure out how to *just* use the PKGBUILD.
+    #TODO: Figure out provides/make/install deps...
+    sed -n -e 's:  *: :g' -e '/# Depends:/p' < "${dir}/PKGBUILD" | \
+        sed -e 's:# Depends\:::' | \
+        tr ' ' '\n'
+}
+
+dep_packages() {
+    dir="${rootdir}/packages/${1}"
+    check_arg_numbers 1 $@
+    echo "targets/setup"
+
+    # We use 'fake' depends because the PKGBUILD can't tell the difference
+    # between host and target depends, and also because otherwise there is
+    # no distinction between the local and system packages.
+    #TODO: Figure out how to *just* use the PKGBUILD.
+    #TODO: Figure out provides/make/install deps...
+    sed -n -e 's:  *: :g' -e '/# Depends:/p' < "${dir}/PKGBUILD" | \
+        sed -e 's:# Depends\:::' | \
+        tr ' ' '\n'
+}
+
+dep_actions() {
+    check_arg_numbers 1 $@
+    # Actions depend on other actions?
+}
+
+dep_targets() {
+    check_arg_numbers 1 $@
+    cat "${rootdir}/targets/${1}"
+}
+
+#
+# Figure out what function to use, and run it.
+#
+
+check_arg_numbers 2 $@
+prefix="$1"
+name="$2"
+
+case "${prefix}" in
+    toolchain) dep_toolchain "${name}";;
+    packages) dep_packages "${name}";;
+    actions) dep_actions "${name}";;
+    targets) dep_targets "${name}";;
+    *) error 1 "Unknown target prefix '${prefix}'!";;
+esac
+

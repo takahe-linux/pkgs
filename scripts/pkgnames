@@ -1,7 +1,13 @@
 #!/usr/bin/env bash
 #
-# Print the name of the package files that would be created by building the
+# Print the paths of the package files that would be created by building the
 # given PKGBUILD.
+
+set -e
+
+# Assume $1 is the prefix, and $2 is the package name.
+prefix="$1"
+_name="$2"
 
 safe_source() {
     if ! . "$@"; then
@@ -10,8 +16,8 @@ safe_source() {
     fi
 }
 
-safe_source ../makepkg.conf # Source the config.
-safe_source "$1" # Source the actual package.
+safe_source "${rootdir}/${prefix}/makepkg.conf" # Source the config.
+safe_source "${rootdir}/${prefix}/${_name}/PKGBUILD" # Source the actual package.
 
 # Generate the names...
 for name in "${pkgname[@]}"; do
@@ -22,6 +28,6 @@ for name in "${pkgname[@]}"; do
         actual_arch="${CARCH}"
     fi
 
-    echo "${name}-${pkgver}-${pkgrel}-${actual_arch}${PKGEXT}"
+    echo "${rootdir}/${prefix}/${_name}/${name}-${pkgver}-${pkgrel}-${actual_arch}${PKGEXT}"
 done
 

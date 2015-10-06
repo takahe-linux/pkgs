@@ -15,8 +15,9 @@ license=('GPL')
 
 # Dependency information
 groups=('base')
-depends=('bash' 'libc' 'libarchive>=3.1.2')
-makedepends=('asciidoc' 'libtool=2.4.5')
+# Depends: targets/toolchain packages/musl packages/libarchive packages/bash
+depends=('bash' 'libarchive>=3.1.2')
+makedepends=('asciidoc' 'libtool=2.4.5' 'libc')
 checkdepends=('python2' 'fakechroot')
 optdepends=('wget')
 

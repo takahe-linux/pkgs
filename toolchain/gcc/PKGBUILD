@@ -13,6 +13,7 @@ url='http://gcc.gnu.org/'
 license=('GPL' 'LGPL' 'FDL')
 
 # Dependency information
+# Depends: toolchain/gcc-static toolchain/binutils packages/musl
 groups=("${_target_triplet}")
 depends=("${_target_triplet}-binutils" 'zlib' 'libmpc')
 makedepends=("${_target_triplet}-gcc-static" 'gmp' 'mpfr')

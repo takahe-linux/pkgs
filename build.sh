@@ -11,16 +11,6 @@ set -e
 export rootdir="$(dirname $(realpath $0))"
 export PATH="${rootdir}/scripts:${PATH}"
 
-#
-# Define build variables
-#
-
-all="targets/setup \
-    targets/toolchain \
-    targets/base \
-    targets/build \
-    targets/cleanup"
-
 # This is for testing purposes. It will cause the program to print out what it
 # would build instead of actually doing it...
 export noop="false"
@@ -77,9 +67,7 @@ sudo message "Sudo working, thanks!"
 "${rootdir}/scripts/keepalive" "$$" "240" sudo true &
 KEEPALIVE_PID="$!"
 
-for target in ${all}; do
-    build "${target}"
-done
+satisfy "targets/all" #TODO: This is partially broken (no ordering for the script)
 
 # Clean up the helper processes
 kill "${KEEPALIVE_PID}"

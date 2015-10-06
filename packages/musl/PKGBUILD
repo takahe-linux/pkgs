@@ -13,6 +13,7 @@ license=('MIT')
 
 # Dependency information
 groups=('base')
+# Depends: toolchain/gcc-static toolchain/binutils packages/linux-api-headers
 makedepends=('linux-api-headers')
 provides=('libc')
 conflicts=('libc')

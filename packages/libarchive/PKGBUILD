@@ -14,7 +14,8 @@ url="http://www.libarchive.org"
 license=('BSD')
 
 # Dependency information
-depends=()
+# Depends: packages/musl targets/toolchain
+makedepends=('libc')
 
 # Building information
 options=() # Originally 'strip', 'debug', and 'libtool'

@@ -12,7 +12,8 @@ url="http://www.zlib.net/"
 license=('custom')
 
 # Dependency information
-depends=('libc')
+# Depends: packages/musl targets/toolchain
+makedepends=('libc')
 
 # Building information
 source=("http://zlib.net/current/zlib-${pkgver}.tar.gz")

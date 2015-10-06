@@ -9,7 +9,7 @@
 set -e
 
 # Add the rootdir and adjust the PATH to include the scripts...
-rootdir="$(dirname $(realpath $0))"
+export rootdir="$(dirname $(realpath $0))"
 export PATH="${rootdir}/scripts:${PATH}"
 
 #
@@ -29,7 +29,8 @@ base="packages/libarchive \
     packages/libedit \
     packages/bash \
     packages/pacman \
-    packages/epoch"
+    packages/epoch \
+    packages/zlib"
 cleanup="actions/fix_bugs.sh \
     actions/strip.sh \
     actions/unmount_sysroot.sh"

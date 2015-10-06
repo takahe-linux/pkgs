@@ -1,0 +1,3 @@
+actions/fix_bugs.sh
+actions/strip.sh
+actions/unmount_sysroot.sh

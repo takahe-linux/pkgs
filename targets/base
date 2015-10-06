@@ -1,0 +1,8 @@
+packages/busybox
+packages/libarchive
+packages/filesystem
+packages/ncurses
+packages/libedit
+packages/bash
+packages/pacman
+packages/epoch

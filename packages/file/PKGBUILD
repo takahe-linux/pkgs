@@ -1,0 +1,50 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='file'
+pkgver='5.25'
+pkgrel=1
+pkgdesc='File type identification utility'
+
+# Additional information...
+arch=('mips')
+url='http://www.darwinsys.com/file/'
+license=('custom')
+
+# Dependency information
+groups=('base')
+# Depends: packages/musl packages/zlib targets/toolchain
+makedepends=('zlib' 'libc')
+
+# Building information
+source=("ftp://ftp.astron.com/pub/$pkgname/$pkgname-$pkgver.tar.gz")
+md5sums=('e6a972d4e10d9e76407a432f4a63cd4c')
+
+
+build() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    #TODO: Fix workaround here (patch upstream?)
+    ./configure --prefix="${_prefix}" \
+        --host="$(echo "${_target_triplet}" | sed 's:musl:gnu:')" \
+        --build="${_local_triplet}" \
+        --disable-shared
+    make
+}
+
+
+check() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    make -k check
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    make DESTDIR="${pkgdir}/" install
+    install -Dm644 COPYING "${pkgdir}/usr/share/licenses/${pkgname}/COPYING"
+    rmdir "${pkgdir}/usr/share/man/man5"
+}
+

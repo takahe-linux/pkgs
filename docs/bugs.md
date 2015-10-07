@@ -2,5 +2,6 @@
 
 These are known bugs with Takahe Linux.
 
-- Epoch's config is partially stuffed.
+- epoch's config is partially stuffed.
+- file segfaults after running.
 

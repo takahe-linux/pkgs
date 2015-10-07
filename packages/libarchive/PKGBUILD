@@ -14,8 +14,8 @@ url="http://www.libarchive.org"
 license=('BSD')
 
 # Dependency information
-# Depends: packages/musl targets/toolchain
-makedepends=('libc')
+# Depends: packages/musl packages/zlib targets/toolchain
+makedepends=('libc' 'zlib')
 
 # Building information
 options=() # Originally 'strip', 'debug', and 'libtool'
@@ -53,7 +53,8 @@ build() {
         --without-xml2 \
         --without-iconv \
         --without-nettle \
-        --without-expat
+        --without-expat \
+        --disable-shared
     make
 }
 

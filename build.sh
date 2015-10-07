@@ -16,18 +16,6 @@ export PATH="${rootdir}/scripts:${PATH}"
 export noop="false"
 
 #
-# Define the helper functions
-#
-
-error() {
-    errno="$1"
-    shift
-    "${rootdir}/scripts/error" $@
-    exit "${errno}"
-}
-
-
-#
 # Main body
 #
 parse_arguments() {
@@ -35,6 +23,7 @@ parse_arguments() {
 
     for arg in $@; do
         case "${arg}" in
+            #TODO: This is currently broken...
             --rebuild-all) REBUILD="${all}";;
             --rebuild=*) REBUILD="${REBUILD} $(echo "${arg}" | sed 's:.*=::')";;
             -h|--help) message "Usage: ${0} [-h|--help] [--rebuild=*|--rebuild-all]";

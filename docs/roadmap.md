@@ -18,6 +18,7 @@ Packages to be fixed:
 
 - Fix relying on ordered dependencies (v0.1.5)
 - Fix relying on date and time (v0.1.5)
+- Add a nice way of running cleanup scripts (v0.1.5)
 - Add chroot support (v0.1.5)
 - Add 'strict' dependencies (via chroot?) (v0.1.5)
 - Fix 'SATISFIED' hack (v0.1.5)

@@ -1,0 +1,49 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='gettext'
+pkgver='0.19.6'
+pkgrel=1
+pkgdesc="GNU internationalization library"
+
+# Additional information...
+arch=('mips')
+url="http://www.gnu.org/software/gettext/"
+license=('GPL')
+
+# Dependency information
+groups=('base')
+# Depends: packages/musl packages/ncurses targets/toolchain
+makedepends=('libc' 'ncurses')
+
+# Building information
+options=(!docs)
+install=gettext.install
+source=(ftp://ftp.gnu.org/pub/gnu/gettext/${pkgname}-${pkgver}.tar.gz)
+md5sums=('6d1447f8c5c45c329371ef4bfe7d79a5')
+
+
+build() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    ./configure --prefix="${_prefix}" \
+        --host="${_target_triplet}" \
+        --build="${_local_triplet}" \
+        --disable-shared
+    make
+}
+
+
+check() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    make -k check
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    make DESTDIR="${pkgdir}/" install
+    rm "${pkgdir}/usr/include/libintl.h" # Otherwise this conflicts with musl?
+}

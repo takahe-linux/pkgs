@@ -1,45 +1,44 @@
 # Roadmap #
 
-## v0.1.3 ##
+## Packages ##
 
-- Add gettext packages.
+Packages to do:
+- gettext (v0.1.3)
+- make + binutils + gcc packages (v0.1.4)
+- kernel + bootloader (v0.2.0)
 
-## v0.1.4 ##
+Packages to be updated:
+- toolchain + kernel
 
-- Add make + binutils + gcc packages.
+Packages to be fixed:
+- file (currently segfaults after running)
 
-## v0.1.5 ##
 
-- Transfer to a rootless, chrooted build.
-- Add an 'activity' bar/monitor.
-- Add signal handling to the build system.
+## Build system ##
 
-## v0.2.0 ##
+- Fix relying on ordered dependencies (v0.1.5)
+- Fix relying on date and time (v0.1.5)
+- Add chroot support (v0.1.5)
+- Add 'strict' dependencies (via chroot?) (v0.1.5)
+- Fix 'SATISFIED' hack (v0.1.5)
+- Remove remaining TODO's (v0.1.6)
+- Add rebuild support back in (v0.2.0)
+- Add signal handling (v0.1.6)
+- Add an activity monitor (v0.2.0)
+- Add logging (v0.1.6)
+- Add target (toshiba, qemu-mips, etc) support (v0.2.0)
+- Add asynchronous build support (v0.3.0)
+- cross compile support in makepkg (v0.3.0)
 
-- Standalone system!
-- Kernel and bootloader built and installed.
-- Improved build system.
-- Testing system.
-
-## v0.3.0 ##
-
-- Working on the Toshiba.
 
 ## Misc ##
 
-- Update the toolchain packages.
-- Update the linux kernel build.
-- Add a target for my Toshiba.
-- Make the build system handle different targets cleanly.
+- Standalone system, ie 3-stage bootstrap
+- Testing system
+- Working on the Toshiba (v0.3.0)
+- Being able to build all the Arch Linux packages (maybe?)
 - Improve the documentation.
 - Update the Toshiba kernel config.
 - Shrink memory usage for the kernel and userspace.
-- Iterate towards a dependency-based rebuild script:
-  - Add support for removing uneeded packages.
-  - Add support for asynchronous builds.
-- Add a customised makepkg script that also handles a better selection of
-  dependencies.
 - Add tests!
-- Add a third stage; the 'final' stage, meant to be built on the target or in
-  an emulator.
 

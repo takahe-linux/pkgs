@@ -2,7 +2,7 @@
 
 ## v0.1.3 ##
 
-- Add file + zlib + gettext packages.
+- Add gettext packages.
 
 ## v0.1.4 ##
 

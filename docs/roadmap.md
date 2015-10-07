@@ -3,8 +3,8 @@
 ## Packages ##
 
 Packages to do:
-- gettext (v0.1.3)
-- make + binutils + gcc packages (v0.1.4)
+- patch + make + binutils (v0.1.4)
+- gcc packages (v0.1.4)
 - kernel + bootloader (v0.2.0)
 
 Packages to be updated:

@@ -112,5 +112,6 @@ Not that I expect anyone will for a while...
 
 # Contributing #
 
-TODO: Fill in
+Uhh, ping me an email? Send in patches? Tell me why you are interested?
+I'm not expecting anyone to contribute; if someone does, I'll be happy to help.
 

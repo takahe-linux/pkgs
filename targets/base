@@ -1,8 +1,6 @@
-packages/make
 packages/busybox
 packages/filesystem
 packages/bash
 packages/pacman
 packages/epoch
 packages/file
-packages/gettext

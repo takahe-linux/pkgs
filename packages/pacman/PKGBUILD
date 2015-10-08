@@ -16,8 +16,8 @@ license=('GPL')
 # Dependency information
 groups=('base')
 # Depends: targets/toolchain packages/musl packages/libarchive packages/bash
-# Depends: packages/zlib
-depends=('bash' 'libarchive>=3.1.2')
+# Depends: packages/zlib packages/gettext
+depends=('bash' 'libarchive>=3.1.2' 'gettext')
 makedepends=('asciidoc' 'zlib' 'libtool=2.4.5' 'libc')
 checkdepends=('python2' 'fakechroot')
 optdepends=('wget')

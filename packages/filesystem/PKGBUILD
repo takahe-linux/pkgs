@@ -76,6 +76,8 @@ package() {
     ln -s spool/mail var/mail
     ln -s ../run var/run
     ln -s ../run/lock var/lock
+    # Add /bin...
+    ln -s /usr/bin "${pkgdir}/bin"
 
     # Setup /usr hierarchy
     for d in bin include lib share/misc src; do

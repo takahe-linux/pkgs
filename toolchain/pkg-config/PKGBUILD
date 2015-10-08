@@ -6,7 +6,7 @@
 # Package information
 _pkgname='pkg-config'
 pkgname="${_target_triplet}-${_pkgname}"
-pkgver='0.28'
+pkgver='0.29'
 pkgrel=1
 pkgdesc="A system for managing library compile/link flags"
 
@@ -21,7 +21,7 @@ depends=('glib2')
 
 # Building information
 source=("http://pkgconfig.freedesktop.org/releases/${_pkgname}-${pkgver}.tar.gz")
-md5sums=('aa3c86e67551adc3ac865160e34a2a0d')
+md5sums=('77f27dce7ef88d0634d0d6f90e03a77f')
 
 
 prepare() {

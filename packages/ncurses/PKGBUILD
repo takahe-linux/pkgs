@@ -13,7 +13,7 @@ license=('MIT')
 
 # Dependency information
 depends=('sh')
-# Depends: packages/musl targets/toolchain
+# Depends: packages/musl packages/busybox targets/toolchain
 makedepends=('libc' 'make') #TODO: Fill in...
 
 # Building information

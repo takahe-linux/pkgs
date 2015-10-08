@@ -48,6 +48,7 @@ build() {
 
     ./configure --prefix="${_prefix}" \
         --host="${_target_triplet}" \
+        --bindir="${_bindir}" \
         --localstatedir='/var' \
         --sysconfdir="${_configdir}" \
         --enable-doc \

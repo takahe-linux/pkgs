@@ -1,3 +1,4 @@
+packages/make
 packages/busybox
 packages/filesystem
 packages/bash

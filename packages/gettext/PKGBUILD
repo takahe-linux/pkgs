@@ -18,7 +18,6 @@ makedepends=('libc' 'ncurses')
 
 # Building information
 options=(!docs)
-install=gettext.install
 source=(ftp://ftp.gnu.org/pub/gnu/gettext/${pkgname}-${pkgver}.tar.gz)
 md5sums=('6d1447f8c5c45c329371ef4bfe7d79a5')
 

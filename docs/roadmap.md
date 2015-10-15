@@ -40,11 +40,16 @@ Packages to be fixed:
 ## Misc ##
 
 - Standalone system, ie 3-stage bootstrap
-- Testing system
 - Working on the Toshiba (v0.3.0)
 - Being able to build all the Arch Linux packages (maybe?)
 - Improve the documentation.
 - Update the Toshiba kernel config.
 - Shrink memory usage for the kernel and userspace.
 - Add tests!
+
+## Testing system ##
+
+- Add some tests...
+- Test for borked symlinks, missing symlinks...
+- Basic sanity tests for various programs (eg pacman, ...)
 

@@ -2,8 +2,8 @@
 
 # Package information
 pkgname=('busybox' 'mdev' 'hush' 'bb-coreutils' 'bb-util-linux' 'bb-findutils')
-pkgver='1.23.2'
-pkgrel=2
+pkgver='1.24.0'
+pkgrel=0
 
 # Additional information...
 arch=('i586' 'mips')
@@ -20,13 +20,9 @@ _web_address="${url}/downloads"
 _patch_address="${_web_address}/fixes-${pkgver}"
 source=("${_web_address}/${pkgname}-${pkgver}.tar.bz2"
         "config"
-        *.patch
        )
-md5sums=('7925683d7dd105aabe9b6b618d48cc73'
-         'SKIP'
-         'b1f67463f918d0f7f9d1c26a8aeba32b'
-         '433fffbb43d6a837d162f2d0e01e3216'
-         'c07df6a724d05ed6957741a93d512816')
+md5sums=('2fa3110042e518e0e1225c799294664c'
+         'cdce3c3c4ef2712454e861c32145bf6f')
 
 
 prepare() {
@@ -37,12 +33,6 @@ prepare() {
         "${srcdir}/config"
     sed -i -e "/CONFIG_SYSROOT/s:=\"\":=\"${_sysroot}\":" "${srcdir}/config"
 
-
-    # Apply the patches
-    for patch_file in ${srcdir}/*.patch; do
-        echo "Applying patch ${patch_file}"
-        patch -p1 -i "${patch_file}"
-    done
 }
 
 
@@ -84,19 +74,22 @@ package_busybox() {
 
     #TODO: Figure out what here is actually provided by kbd
     KBD="deallocvt dumpkmap loadfont loadkmap openvt resize setconsole \
-        setfont setkeycodes setlogcons showkey vlock"
+        setfont setkeycodes setlogcons showkey vlock kbd_mode"
     WHICH="which"
 
-    APPLETS="gunzip gzip lzop tar bzip2 bunzip2 unxz"
+    APPLETS="gunzip gzip lzop tar bzip2 bunzip2 unxz bzcat lzcat lzopcat \
+        unlzma unlzop xzcat zcat [ [[ uevent"
     EDITORS="awk cmp diff patch sed vi"
-    SHADOW="adduser addgroup deluser delgroup passwd cryptpw"
+    SHADOW="adduser addgroup deluser delgroup passwd cryptpw mkpasswd"
     EXT2="chattr fsck lsattr tune2fs"
 
     MISC="less hdparm man"
-    NET="ping whois hostname ip dhpcd"
-    PROC="iostat lsof mpstat nmeter pmap powertop pstree top free fuser kill killall pgrep pidof pkill ps renice watch"
+    NET="ping whois hostname ip udhcpc ipaddr iplink iproute iprule iptunnel \
+        dnsdomainname"
+    PROC="iostat lsof mpstat nmeter pmap powertop pstree top free fuser kill \
+        killall pgrep pidof pkill ps renice watch sysctl"
 
-    _link_packages $KBD $NCURSES $WHICH $APPLETS $EDITORS $LOGIN $EXT2 $MISC $NET $PROC
+    _link_packages $KBD $NCURSES $WHICH $APPLETS $EDITORS $LOGIN $EXT2 $MISC $NET $PROC $SHADOW
 }
 
 package_mdev() {
@@ -128,13 +121,13 @@ package_bb-coreutils() {
     provides=('coreutils')
     conflicts=('coreutils')
 
-    COREUTILS="basename cat date id groups shuf test touch tr who users chgrp \
+    COREUTILS="basename cat date id groups shuf test touch tr who chgrp \
         chmod chown chroot cksum comm cp cut dd df dirname du echo env expand \
         expr false fold fsync head install ln logname ls md5sum mkdir mkfifo \
         mknod mv nice nohup printenv printf pwd readlink realpath rm rmdir seq \
         sha1sum sha256sum sha512sum sha3sum sleep sort split stat sync tac \
         tail tee true tty uname unexpand uniq usleep uudecode uuencode wc \
-        whoami yes timeout"
+        whoami yes timeout rev strings"
 
     _link_packages $COREUTILS
     
@@ -147,7 +140,8 @@ package_bb-util-linux() {
     provides=('util-linux')
     conflicts=('util-linux')
 
-    UTILLINUX="blockdev blkid dmesg fbset getopt hwclock losetup lspci lsusb mount swapon swapoff umount"
+    UTILLINUX="blockdev blkid dmesg fbset getopt hwclock losetup lspci lsusb \
+        mount swapon swapoff umount readprofile"
     LOGIN="getty login sulogin"
     MISC_UTILS="ionice mountpoint setsid time"
 

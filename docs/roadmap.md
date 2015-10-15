@@ -3,7 +3,7 @@
 ## Packages ##
 
 Packages to do:
-- patch + binutils (v0.1.4)
+- binutils (v0.1.4)
 - gcc packages (v0.1.4)
 - kernel + bootloader (v0.2.0)
 

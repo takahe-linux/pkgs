@@ -3,7 +3,7 @@
 # Package information
 _pkgname='binutils'
 pkgname="${_target_triplet}-${_pkgname}"
-pkgver='2.25'
+pkgver='2.25.1'
 pkgrel=1
 pkgdesc="A set of programs to assemble and manipulate binary and object files"
 
@@ -21,7 +21,7 @@ checkdepends=('dejagnu' 'bc')
 # Building information
 options=('staticlibs' '!distcc' '!ccache')
 source=("ftp://ftp.gnu.org/gnu/${_pkgname}/${_pkgname}-${pkgver}.tar.bz2")
-md5sums=('d9f3303f802a5b6b0bb73a335ab89d66')
+md5sums=('ac493a78de4fee895961d025b7905be4')
 
 
 prepare() {

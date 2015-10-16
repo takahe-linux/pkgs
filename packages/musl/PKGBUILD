@@ -44,9 +44,4 @@ package() {
 
     # Install musl
     make DESTDIR="${pkgdir}" install
-
-    # Add a ldd executable
-    install -dm755 "${pkgdir}${_bindir}"
-    ln -s "${_pkgdir}${_libdir}/libc.so" "${pkgdir}${_bindir}/ldd"
-
 }

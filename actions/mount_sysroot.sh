@@ -8,7 +8,7 @@ source "$(dirname $(realpath $0))"/../config.sh
 # Define some vars
 #TODO: Make this configurable...
 sysimage="/tmp/${_target_triplet}.img"
-sysimage_size=200
+sysimage_size=400
 
 
 # Define a cleanup function...

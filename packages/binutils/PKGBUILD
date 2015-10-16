@@ -1,0 +1,66 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='binutils'
+pkgver='2.25.1'
+pkgrel=1
+pkgdesc="A set of programs to assemble and manipulate binary and object files"
+
+# Additional information...
+arch=('mips')
+url="http://www.gnu.org/software/binutils/"
+license=('GPL')
+
+# Dependency information
+# Depends: packages/zlib packages/musl targets/toolchain
+groups=('base-devel')
+depends=('libc' 'zlib')
+
+# Building information
+options=('staticlibs' '!distcc' '!ccache')
+source=("ftp://ftp.gnu.org/gnu/${pkgname}/${pkgname}-${pkgver}.tar.bz2")
+md5sums=('ac493a78de4fee895961d025b7905be4')
+
+
+prepare() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" libiberty/configure
+
+    mkdir "${srcdir}/${pkgname}-build"
+}
+
+
+build() {
+    cd "${srcdir}/${pkgname}-build"
+
+    "${srcdir}/${pkgname}-${pkgver}/configure" \
+        --prefix="${_prefix}" \
+        --build="${_local_triplet}" \
+        --host="${_target_triplet}" \
+        --target="${_target_triplet}" \
+        --disable-nls --disable-multilib \
+        --enable-static --disable-werror \
+        --disable-shared \
+        --with-lib-path="${_libdir}" \
+        --enable-deterministic-archives
+
+    # Check the host environment and makes sure all the necessary tools are
+    # available
+    make configure-host
+
+    make
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}-build"
+
+    make prefix="${pkgdir}${_prefix}" install
+
+    # Remove manpages for MS Windows tools
+    rm "${pkgdir}${_prefix}/share/man/man1/"{dlltool,nlmconv,windres,windmc}*
+
+    # Remove the info files - I'm not using them
+    rm -r "${pkgdir}${_prefix}/share/info"
+}

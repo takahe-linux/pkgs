@@ -3,7 +3,6 @@
 ## Packages ##
 
 Packages to do:
-- binutils (v0.1.4)
 - gcc packages (v0.1.4)
 - kernel + bootloader (v0.2.0)
 
@@ -26,12 +25,13 @@ Packages to be fixed:
 - Add a nice way of running cleanup scripts (v0.1.5)
 - Add chroot support (v0.1.5)
 - Add 'strict' dependencies (via chroot?) (v0.1.5)
+- Add better recurisive dependencies (ie build and run deps) (v0.1.5)
 - Fix 'SATISFIED' hack (v0.1.5)
 - Remove remaining TODO's (v0.1.6)
-- Add rebuild support back in (v0.2.0)
 - Add signal handling (v0.1.6)
-- Add an activity monitor (v0.2.0)
 - Add logging (v0.1.6)
+- Add rebuild support back in (v0.2.0)
+- Add an activity monitor (v0.2.0)
 - Add target (toshiba, qemu-mips, etc) support (v0.2.0)
 - Add asynchronous build support (v0.3.0)
 - cross compile support in makepkg (v0.3.0)

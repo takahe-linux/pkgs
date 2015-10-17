@@ -4,6 +4,8 @@
 
 Packages to do:
 - gcc packages (v0.1.4)
+- openssl (v0.1.4 - required for makepkg)
+- curl + ca-certs + git (for bootstrapping)?
 - kernel + bootloader (v0.2.0)
 
 Packages to be updated:

@@ -1,0 +1,77 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='openssl'
+_ver='1.0.2d'
+# use a pacman compatible version scheme
+pkgver=${_ver/[a-z]/.${_ver//[0-9.]/}}
+pkgrel=1
+pkgdesc='The Open Source toolkit for Secure Sockets Layer and Transport Layer Security'
+
+# Additional information...
+arch=('mips')
+url='https://www.openssl.org'
+license=('custom:BSD')
+
+# Dependency information
+# Depends: packages/musl packages/zlib targets/toolchain
+makedepends=('zlib' 'libc')
+optdepends=('perl: for c_rehash script'
+            'ca-certificates')
+
+# Building information
+backup=('etc/ssl/openssl.cnf')
+options=('!makeflags')
+source=("https://www.openssl.org/source/${pkgname}-${_ver}.tar.gz"
+        'no-rpath.patch'
+        'ca-dir.patch')
+md5sums=('38dd619b2e77cbac69b99f52a053d25a'
+         'dc78d3d06baffc16217519242ce92478'
+         '3bf51be3a1bbd262be46dc619f92aa90')
+
+
+prepare() {
+    cd "${srcdir}/${pkgname}-${_ver}"
+
+    # remove rpath: http://bugs.archlinux.org/task/14367
+    patch -p0 -i $srcdir/no-rpath.patch
+    # set ca dir to /etc/ssl by default
+    patch -p0 -i $srcdir/ca-dir.patch
+}
+
+
+build() {
+    cd "${srcdir}/${pkgname}-${_ver}"
+
+    if [ "${_target_arch_alias}" == 'x86_64' ]; then
+        openssltarget='linux-x86_64'
+        optflags='enable-ec_nistp_64_gcc_128'
+    elif [ "${_target_arch_alias}" == 'i386' ]; then
+        openssltarget='linux-elf'
+        optflags=''
+    elif [ "${_target_arch_alias}" == 'mips' ]; then
+        openssltarget='linux-mips32'
+        optflags=''
+    fi
+
+    # mark stack as non-executable: http://bugs.archlinux.org/task/12434
+    ./Configure --prefix="${_prefix}" \
+        --openssldir="${_configdir}/ssl" \
+        --libdir="${_libdir}" \
+        no-shared zlib "${optflags}" \
+        "${openssltarget}" \
+        "-Wa,--noexecstack ${CFLAGS} ${LDFLAGS}"
+
+    #make depend
+    make
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}-${_ver}"
+
+    make INSTALL_PREFIX="${pkgdir}/" \
+        MANDIR="${_mandir}" \
+        MANSUFFIX='ssl' install
+    install -D -m644 LICENSE "${pkgdir}${_licensedir}/${pkgname}/LICENSE"
+}

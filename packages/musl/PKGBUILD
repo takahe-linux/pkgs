@@ -26,7 +26,6 @@ build() {
     cd "${srcdir}/${pkgname}-${pkgver}"
 
     CFLAGS="${_target_cflags}" CXXFLAGS="${CFLAGS}" \
-        CROSS_COMPILE="${CROSS_COMPILE}" CC="${CC}" AR="${AR}" AS="${AS}" \
     ./configure --target="${_target_triplet}" \
                 --prefix="${_prefix}" \
                 --syslibdir="${_libdir}" \
@@ -35,7 +34,7 @@ build() {
                 --includedir="${_includedir}" \
                 --disable-shared
 
-    make CC="${CC}" CROSS_COMPILE="${CROSS_COMPILE}"
+    make
 }
 
 

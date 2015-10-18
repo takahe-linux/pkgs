@@ -119,4 +119,6 @@ package() {
     cd "${srcdir}/${pkgname}-${_basever}"
 
     make DESTDIR="${pkgdir}/" install
+
+    rm -rf "${pkgdir}${_prefix}/share/info"
 }

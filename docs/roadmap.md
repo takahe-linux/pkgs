@@ -28,6 +28,7 @@ Packages to be fixed:
 - Add 'strict' dependencies (via chroot?) (v0.1.5)
 - Add better recurisive dependencies (ie build and run deps) (v0.1.5)
 - Fix 'SATISFIED' hack (v0.1.5)
+- Fix changes to the config not forcing a rebuild (v0.1.5)
 - Remove remaining TODO's (v0.1.6)
 - Add signal handling (v0.1.6)
 - Add logging (v0.1.6)
@@ -53,4 +54,6 @@ Packages to be fixed:
 - Add some tests...
 - Test for borked symlinks, missing symlinks...
 - Basic sanity tests for various programs (eg pacman, ...)
+- Check that some directories don't exist (ie share/info) - this might be better
+  somehow integrated with makepkg.
 

@@ -67,6 +67,6 @@ _sysroot="${_toolroot}/sysroot"
 
 # Target CFLAGS and ldflags
 _target_cflags="-g -Os -ffunction-sections -fdata-sections"
-_target_ldflags="-Wl,-rpath,${_sysroot}${_libdir},--sysroot,${_sysroot},--gc-sections,-dynamic-linker,${_libdir}/ld-musl-${_target_arch}.so.1"
+_target_ldflags="-Wl,-static,-rpath,${_sysroot}${_libdir},--sysroot,${_sysroot},--gc-sections"
 
 

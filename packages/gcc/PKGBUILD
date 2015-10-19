@@ -1,0 +1,105 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='gcc'
+pkgver='5.2.0'
+pkgrel=1
+pkgdesc="The GNU Compiler Collection"
+
+# Additional information...
+arch=('mips')
+url="http://gcc.gnu.org"
+license=('GPL' 'LGPL' 'FDL')
+
+# Dependency information
+groups=('base-devel')
+# Depends: packages/musl packages/gmp packages/mpfr packages/mpc
+# Depends: packages/binutils targets/toolchain
+makedepends=('libc' 'gmp' 'mpfr' 'mpc' 'binutils')
+
+# Building information
+options=('!emptydirs')
+source=("ftp://gcc.gnu.org/pub/gcc/releases/gcc-${pkgver}/gcc-${pkgver}.tar.bz2")
+md5sums=('a51bcfeb3da7dd4c623e27207ed43467')
+
+
+prepare() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    echo "${pkgver}" > gcc/BASE-VER
+
+    # hack! - some configure tests for header files using "$CPP $CPPFLAGS"
+    sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" {libiberty,gcc}/configure
+
+    # Disable fixincludes (could lead to header pollution)
+    sed -i 's@\./fixinc\.sh@-c true@' gcc/Makefile.in
+    
+    mkdir "${srcdir}/gcc-build"
+
+}
+
+
+build() {
+    cd "${srcdir}/gcc-build"
+
+    #TODO: Figure out a more suitable way of doing this... some of these
+    # flags break the build (CFLAGS, I think - because we still need to compile
+    # host binaries here)
+    unset CFLAGS CXXFLAGS CFLAGS_FOR_TARGET CXXFLAGS_FOR_TARGET LDFLAGS LDFLAGS_FOR_TARGET
+
+    "${srcdir}/${pkgname}-${pkgver}/configure" \
+        --build="${_local_triplet}" \
+        --host="${_target_triplet}" \
+        --target="${_target_triplet}" \
+        --prefix="${_prefix}" \
+        --libdir="${_libdir}" \
+        --libexecdir="${_libdir}" \
+        --mandir="${_mandir}" \
+        --enable-languages=c \
+        --enable-checking=release \
+        --enable-__cxa_atexit \
+        --enable-threads=posix \
+        --enable-libstdcxx-time \
+        --enable-static \
+        --disable-nls \
+        --disable-shared \
+        --disable-host-shared \
+        --disable-multilib \
+        --disable-werror \
+        --disable-libstdcxx-pch \
+        --disable-libatomic \
+        --disable-libgomp \
+        --disable-libquadmath \
+        --disable-libvtv \
+        --disable-libssp \
+        --disable-lto \
+        --disable-libunwind-exceptions \
+        --with-native-system-header-dir="${_sysroot}${_includedir}" \
+        --with-local-prefix="${_sysroot}${_prefix}" \
+        --with-gnu-as \
+        --with-gnu-ld \
+        --with-system-zlib
+
+    #TODO: Remove -j1 (for debugging only)
+    make AS_FOR_TARGET="${AS}" \
+        LD_FOR_TARGET="${LD}"
+}
+
+
+package() {
+    cd "${srcdir}/gcc-build"
+
+    make DESTDIR="${pkgdir}" install -j1
+
+    # strip target binaries
+    find "${pkgdir}${_libdir}/gcc/${_target_triplet}/" \
+         "${pkgdir}${_prefix}/lib" \
+         -type f -and \( -name \*.a -or -name \*.o \) \
+         -exec "${_prefix}/bin/${_target_triplet}-objcopy" \
+         -R .comment -R .note -R .debug_info -R .debug_aranges \
+         -R .debug_pubnames -R .debug_pubtypes -R .debug_abbrev -R .debug_line \
+         -R .debug_str -R .debug_ranges -R .debug_loc '{}' \;
+
+    # Remove info files (already existing)
+    rm -r "${pkgdir}${_toolroot}/share/info"
+}

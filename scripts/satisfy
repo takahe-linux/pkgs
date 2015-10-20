@@ -202,4 +202,4 @@ packagedate() {
 }
 
 
-satisfy $@ > /dev/null
+satisfy $@ #> /dev/null

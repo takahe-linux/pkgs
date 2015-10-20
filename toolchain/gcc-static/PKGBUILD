@@ -3,9 +3,7 @@
 # Package information
 _pkgname='gcc'
 pkgname="${_target_triplet}-${_pkgname}-static"
-pkgver='4.8.3'
-_islver='0.12.2'
-_cloogver='0.18.2'
+pkgver='5.2.0'
 pkgrel=1
 pkgdesc="The GNU Compiler Collection"
 
@@ -17,14 +15,12 @@ license=('GPL' 'LGPL' 'FDL')
 # Dependency information
 # Depends: packages/linux-api-headers toolchain/binutils
 depends=("${_target_triplet}-binutils" 'zlib' 'libmpc')
-makedepends=('gmp' 'mpfr')
+makedepends=('gmp' 'mpfr' 'mercurial')
 
 # Building information
 options=(!emptydirs !strip)
-source=("ftp://gcc.gnu.org/pub/gcc/releases/gcc-${pkgver}/gcc-${pkgver}.tar.bz2"
-        "gcc-4.8.3-musl.patch")
-sha256sums=('6a8e4f11b185f4fe2ed9d7fc053e80f8c7e73f800c045f51f9d8bea33f080f1e'
-            '0bcf4db18111be1942b9fde1ffe48d94c32ce008283bbce9dcde9333ea4fe8d7')
+source=("ftp://gcc.gnu.org/pub/gcc/releases/gcc-${pkgver}/gcc-${pkgver}.tar.bz2")
+sha256sums=('5f835b04b5f7dd4f4d2dc96190ec1621b8d89f2dc6f638f9f8bc1b1014ba8cad')
 
 
 prepare() {
@@ -37,8 +33,6 @@ prepare() {
 
     # Disable fixincludes (could lead to header pollution)
     sed -i 's@\./fixinc\.sh@-c true@' gcc/Makefile.in
-
-    patch -p1 < "${srcdir}"/*.patch
 
     mkdir "${srcdir}/gcc-build"
 }

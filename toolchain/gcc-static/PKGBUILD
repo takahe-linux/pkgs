@@ -14,8 +14,7 @@ license=('GPL' 'LGPL' 'FDL')
 
 # Dependency information
 # Depends: packages/linux-api-headers toolchain/binutils
-depends=("${_target_triplet}-binutils" 'zlib' 'libmpc')
-makedepends=('gmp' 'mpfr' 'mercurial')
+depends=("${_target_triplet}-binutils" 'zlib' 'libmpc' 'gmp' 'mpfr')
 
 # Building information
 options=(!emptydirs !strip)

@@ -15,8 +15,8 @@ license=('GPL' 'LGPL' 'FDL')
 # Dependency information
 # Depends: toolchain/gcc-static toolchain/binutils packages/musl
 groups=("${_target_triplet}")
-depends=("${_target_triplet}-binutils" 'zlib' 'libmpc')
-makedepends=("${_target_triplet}-gcc-static" 'gmp' 'mpfr')
+depends=("${_target_triplet}-binutils" 'zlib' 'libmpc' 'gmp' 'mpfr')
+makedepends=("${_target_triplet}-gcc-static")
 provides=("${_target_triplet}-gcc-static")
 conflicts=("${_target_triplet}-gcc-static")
 replaces=("${_target_triplet}-gcc-static")

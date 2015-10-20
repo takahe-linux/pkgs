@@ -8,7 +8,7 @@ Packages to do:
 - kernel + bootloader (v0.2.0)
 
 Packages to be updated:
-- toolchain + kernel
+- kernel
 
 Packages to be fixed:
 - file (currently segfaults after running)
@@ -36,7 +36,9 @@ Packages to be fixed:
 - Add an activity monitor (v0.2.0)
 - Add target (toshiba, qemu-mips, etc) support (v0.2.0)
 - Add asynchronous build support (v0.3.0)
-- cross compile support in makepkg (v0.3.0)
+- Cross compile support in makepkg (v0.3.0)
+- Add support for "farming out" build tasks to other machines on a network,
+  via the clean chroot support (v0.3.0)
 
 
 ## Misc ##
@@ -47,7 +49,6 @@ Packages to be fixed:
 - Improve the documentation.
 - Update the Toshiba kernel config.
 - Shrink memory usage for the kernel and userspace.
-- Add tests!
 
 ## Testing system ##
 
@@ -55,5 +56,5 @@ Packages to be fixed:
 - Test for borked symlinks, missing symlinks...
 - Basic sanity tests for various programs (eg pacman, ...)
 - Check that some directories don't exist (ie share/info) - this might be better
-  somehow integrated with makepkg.
+  somehow integrated with makepkg (libmakepkg?).
 

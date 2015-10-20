@@ -3,7 +3,6 @@
 ## Packages ##
 
 Packages to do:
-- gcc packages (v0.1.4)
 - curl + ca-certs + git (for bootstrapping)?
 - kernel + bootloader (v0.2.0)
 

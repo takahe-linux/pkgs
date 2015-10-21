@@ -43,7 +43,7 @@ package() {
 
     # Use libedit instead of readline...
     # Borrowed from Sabotage Linux
-    ln -s "${_libdir}/libedit.a" "${pkgdir}${_libdir}/libreadline.a"
+    ln -s "libedit.a" "${pkgdir}${_libdir}/libreadline.a"
     mkdir -p "${pkgdir}${_includedir}/readline"
     for file in "history" "tilde"; do
         touch "${pkgdir}${_includedir}/readline/${file}.h"

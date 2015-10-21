@@ -1,0 +1,79 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='gdb'
+pkgver='7.10'
+pkgrel=1
+pkgdesc='The GNU Debugger'
+
+# Additional information...
+arch=('mips')
+url='http://www.gnu.org/software/gdb/'
+license=('GPL3')
+
+# Dependency information
+groups=('base-devel')
+# Libedit is also (seemingly) too old...
+# Depends: packages/busybox packages/musl packages/ncurses targets/toolchain
+depends=('ncurses')
+makedepends=('libc')
+
+# Building information
+backup=('etc/gdb/gdbinit')
+source=("http://ftp.gnu.org/gnu/gdb/${pkgname}-${pkgver}.tar.xz"
+        "gdb-sgidefs.h"
+        "gdb-linux_nat.patch")
+sha1sums=('95338f65ae9f61ecb76592f2cbe336a7d948b905'
+          '20eb85f7adb77b894229998432caae530962316c'
+          '7a60c126b1a49cfb554b318a8d7aee1d79fe2bfe')
+
+
+prepare() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    # hack! - libiberty configure tests for header files using "$CPP $CPPFLAGS"
+    sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" libiberty/configure
+
+    cp "${srcdir}/gdb-sgidefs.h" "./gdb/sgidefs.h"
+
+    patch -p1 < "${srcdir}/gdb-linux_nat.patch"
+}
+
+
+build() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    #TODO: Add --with-system-readline, once I've actually *packaged* readline.
+
+    ./configure --prefix="${_prefix}" \
+        --prefix="${_prefix}" \
+        --build="${_local_triplet}" \
+        --host="${_target_triplet}" \
+        --target="${_target_triplet}" \
+        --disable-multilib \
+        --enable-static \
+        --disable-werror \
+        --disable-shared \
+        --disable-nls \
+        --with-system-gdbinit=/etc/gdb/gdbinit
+    make
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    make DESTDIR="${pkgdir}/" install
+
+    # install "custom" system gdbinit
+    install -dm755 "${pkgdir}/etc/gdb"
+    touch "${pkgdir}/etc/gdb/gdbinit"
+
+    # resolve conflicts with binutils
+    rm "${pkgdir}${_includedir}"/{ansidecl,bfd,bfdlink,dis-asm,plugin-api,symcat}.h
+    rm -r "${pkgdir}${_prefix}/share/info"
+    rm "${pkgdir}${_libdir}"/{libbfd,libopcodes}.a
+
+    # resolve conflicts with gettext...
+    rm "${pkgdir}${_libdir}/charset.alias"
+}

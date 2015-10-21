@@ -2,7 +2,7 @@
 
 # Package information
 pkgname='musl'
-pkgver='1.1.11'
+pkgver='1.1.12'
 pkgrel=1
 pkgdesc="Lightweight libc implementation"
 
@@ -20,7 +20,7 @@ conflicts=('libc')
 
 # Building information
 source=("http://www.musl-libc.org/releases/${pkgname}-${pkgver}.tar.gz")
-md5sums=('48be0777e32f374d387e9cf85e36ec4d')
+md5sums=('42875e0c111aa1cb9d08663f8d42c799')
 
 build() {
     cd "${srcdir}/${pkgname}-${pkgver}"

@@ -1,3 +1,4 @@
+packages/gdb
 packages/gcc
 packages/make
 packages/binutils

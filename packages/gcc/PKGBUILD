@@ -1,5 +1,7 @@
 # Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
 
+# This needs more than 1.4GB of spare space to build!
+
 # Package information
 pkgname='gcc'
 pkgver='5.2.0'
@@ -67,7 +69,7 @@ build() {
         --libdir="${_libdir}" \
         --libexecdir="${_libdir}" \
         --mandir="${_mandir}" \
-        --enable-languages=c \
+        --enable-languages=c,c++ \
         --enable-checking=release \
         --enable-__cxa_atexit \
         --enable-threads=posix \
@@ -86,8 +88,8 @@ build() {
         --disable-libssp \
         --disable-lto \
         --disable-libunwind-exceptions \
-        --with-native-system-header-dir="${_sysroot}${_includedir}" \
-        --with-local-prefix="${_sysroot}${_prefix}" \
+        --with-native-system-header-dir="${_includedir}" \
+        --with-local-prefix="${_prefix}" \
         --with-gnu-as \
         --with-gnu-ld \
         --with-system-zlib

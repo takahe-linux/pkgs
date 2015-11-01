@@ -2,7 +2,7 @@
 
 # Package information
 pkgname=('busybox' 'mdev' 'hush' 'bb-coreutils' 'bb-util-linux' 'bb-findutils')
-pkgver='1.24.0'
+pkgver='1.24.1'
 pkgrel=2
 
 # Additional information...
@@ -20,11 +20,9 @@ _web_address="${url}/downloads"
 _patch_address="${_web_address}/fixes-${pkgver}"
 source=("${_web_address}/${pkgname}-${pkgver}.tar.bz2"
         "config"
-        *.patch
        )
-md5sums=('2fa3110042e518e0e1225c799294664c'
-         'ab7d52b7fb2a1538b6f4707ab5532583'
-         '87a08b978a130a4d236458d2045c39df')
+md5sums=('be98a40cadf84ce2d6b05fa41a275c6a'
+        'ab7d52b7fb2a1538b6f4707ab5532583')
 
 
 prepare() {
@@ -35,10 +33,6 @@ prepare() {
         "${srcdir}/config"
     sed -i -e "/CONFIG_SYSROOT/s:=\"\":=\"${_sysroot}\":" "${srcdir}/config"
 
-    # Patch sort
-    for p in ${srcdir}/*.patch; do
-        patch -p1 -i "${p}"
-    done
 }
 
 

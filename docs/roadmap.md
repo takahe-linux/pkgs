@@ -8,6 +8,8 @@ Packages to do:
 
 Packages to be updated:
 - kernel
+- toolchain (Arch is using gcc 5.3.0)
+- others?
 
 Packages to be fixed:
 - file (currently segfaults after running)

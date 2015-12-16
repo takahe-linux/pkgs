@@ -11,9 +11,13 @@ Packages to be updated:
 - others?
 
 Packages to be fixed:
-- file (currently segfaults after running)
 - make (tries to use /bin/sh)
 - epoch's config is currently broken
+
+Note that file is currently broken (segfaults after running), but that is
+fixed in git (checked 142c984) so should be fixed in the next release.
+I'm not packaging file as a git snapshot because file currently needs
+file-git on the host to cross compile (seems to, anyway).
 
 
 ## Build system ##
@@ -49,6 +53,7 @@ Packages to be fixed:
 - Improve the documentation.
 - Update the Toshiba kernel config.
 - Shrink memory usage for the kernel and userspace.
+
 
 ## Testing system ##
 

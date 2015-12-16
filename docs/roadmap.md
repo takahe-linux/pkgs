@@ -8,7 +8,6 @@ Packages to do:
 
 Packages to be updated:
 - kernel
-- toolchain (Arch is using gcc 5.3.0)
 - others?
 
 Packages to be fixed:
@@ -33,13 +32,13 @@ Packages to be fixed:
 - Remove remaining TODO's (v0.1.6)
 - Add signal handling (v0.1.6)
 - Add logging (v0.1.6)
+- Add support for "farming out" build tasks to other machines on a network,
+  via the clean chroot support (v0.2.0)
 - Add rebuild support back in (v0.2.0)
 - Add an activity monitor (v0.2.0)
 - Add target (toshiba, qemu-mips, etc) support (v0.2.0)
 - Add asynchronous build support (v0.3.0)
 - Cross compile support in makepkg (v0.3.0)
-- Add support for "farming out" build tasks to other machines on a network,
-  via the clean chroot support (v0.3.0)
 
 
 ## Misc ##
@@ -53,9 +52,5 @@ Packages to be fixed:
 
 ## Testing system ##
 
-- Add some tests...
-- Test for borked symlinks, missing symlinks...
-- Basic sanity tests for various programs (eg pacman, ...)
-- Check that some directories don't exist (ie share/info) - this might be better
-  somehow integrated with makepkg (libmakepkg?).
+See docs/testing.md.
 

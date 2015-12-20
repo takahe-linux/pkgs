@@ -16,6 +16,8 @@ Packages to be fixed:
 - All packages using ${_licensedir} currently use /usr/share/license; they
   should use /usr/share/licenses. This needs to be changed during the next full
   rebuild (ie GCC version bump).
+- sudo's build system doesn't make a distinction between the host and target
+  systems, so a hacky workaround is required.
 
 Note that file is currently broken (segfaults after running), but that is
 fixed in git (checked 142c984) so should be fixed in the next release.

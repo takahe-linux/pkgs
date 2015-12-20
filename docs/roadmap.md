@@ -13,6 +13,9 @@ Packages to be updated:
 Packages to be fixed:
 - make (tries to use /bin/sh)
 - epoch's config is currently broken
+- All packages using ${_licensedir} currently use /usr/share/license; they
+  should use /usr/share/licenses. This needs to be changed during the next full
+  rebuild (ie GCC version bump).
 
 Note that file is currently broken (segfaults after running), but that is
 fixed in git (checked 142c984) so should be fixed in the next release.

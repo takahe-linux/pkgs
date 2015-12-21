@@ -23,7 +23,7 @@ if [ "z${_sysroot}" != "z/" ] && [ "z${_sysroot}" != "z" ]; then
             exit 1
         fi
     else
-        echo "Sysroot does not exist... leaving"
+        echo "Sysroot does not exist."
     fi
 else
     error "Sysroot '${_sysroot}' is not valid!"

@@ -23,7 +23,7 @@ md5sums=('7cf6b9b76d0478a572432bed481dd7b5')
 
 
 build() {
-    cd "${srcdir}/${pkgname}-${pkgver}"
+    cd "${srcdir}/${pkgname}-${_sudover}"
 
     ./configure \
         --host="${_target_triplet}" \
@@ -39,6 +39,7 @@ build() {
         --with-env-editor \
         --disable-shared \
         --disable-shared-libutil \
+        --disable-tmpfiles.d \
         --enable-static-sudoers \
         --with-passprompt="[sudo] password for %p: "
 
@@ -64,5 +65,5 @@ package() {
 
     make DESTDIR="${pkgdir}/" install
 
-    install -Dm644 doc/LICENSE "${pkgdir}${licensedir}/sudo/LICENSE"
+    install -Dm644 doc/LICENSE "${pkgdir}${_licensedir}/sudo/LICENSE"
 }

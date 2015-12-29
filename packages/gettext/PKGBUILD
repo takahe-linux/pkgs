@@ -2,7 +2,7 @@
 
 # Package information
 pkgname='gettext'
-pkgver='0.19.6'
+pkgver='0.19.7'
 pkgrel=1
 pkgdesc="GNU internationalization library"
 
@@ -19,7 +19,7 @@ makedepends=('libc' 'ncurses')
 # Building information
 options=(!docs)
 source=(ftp://ftp.gnu.org/pub/gnu/gettext/${pkgname}-${pkgver}.tar.gz)
-md5sums=('6d1447f8c5c45c329371ef4bfe7d79a5')
+md5sums=('87c4ab267c4dce8a75db5d057bb3c92f')
 
 
 build() {

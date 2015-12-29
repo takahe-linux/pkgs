@@ -4,13 +4,13 @@
 
 # Package information
 pkgname='filesystem'
-pkgver='2015.3'
+pkgver='2015.12'
 pkgrel=1
 pkgdesc='Base filesystem'
 
 # Additional information...
 arch=('any')
-url=''
+url='https://bitbucket.org/Alastair_Hughes/takahe-linux'
 license=('GPL') # Can I change this?
 
 # Dependency information
@@ -18,8 +18,8 @@ groups=('base')
 depends=() # iana-etc in the Arch Linux PKGBUILD...
 
 # Building information
-backup=(
-        'etc/group'
+backup=('etc/group'
+        'etc/gshadow'
         'etc/passwd'
         'etc/shadow'
         'etc/motd'
@@ -27,6 +27,7 @@ backup=(
         'etc/profile'
         'etc/issue')
 source=('group'
+        'gshadow'
         'issue'
         'passwd'
         'shadow'
@@ -35,12 +36,13 @@ source=('group'
         'profile'
         'locale.sh')
 md5sums=('96ac8b97d60f21957b65be52cecf0160'
+         '9958873fc22f6d7323f3568f96ea15ed'
          '58233879530afb7b1c6a8e51a14d3433'
          'a9d43e66298f11c8e997268f6746b99b'
          '7a4d75479bc052c6dbe44ac957cb19d3'
          'd41d8cd98f00b204e9800998ecf8427e'
          'eef6376b9b624b4aa0e2963f38597228'
-         '203dbcc864f3e8e68e5da5eb5cfb663c'
+         '84b7313dbe8233362324423eac03ba85'
          '7fd1a7398ccfa02172a12b0f6511e2fc')
 
 package() {
@@ -61,7 +63,7 @@ package() {
     done
 
     ln -s "/proc/self/mounts" "${pkgdir}${_configdir}/mtab"
-    for file in shadow; do
+    for file in shadow gshadow; do
         install -m600 "${srcdir}/${file}" "${pkgdir}${_configdir}"
     done
 

@@ -1,6 +1,6 @@
 # /etc/profile
 
-#Set our umask
+# Set our umask
 umask 022
 
 # Set our default path
@@ -16,8 +16,8 @@ if test -d /etc/profile.d/; then
 fi
 
 # Source global bash config
-if test "$PS1" && test "$BASH" && test -r /etc/bash.bashrc; then
-	. /etc/bash.bashrc
+if test "$PS1" && test "$BASH" && test -r /etc/bash/bash.conf; then
+	. /etc/bash/bash.conf
 fi
 
 # Termcap is outdated, old, and crusty, kill it.

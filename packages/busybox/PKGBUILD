@@ -22,7 +22,7 @@ source=("${_web_address}/${pkgname}-${pkgver}.tar.bz2"
         "config"
        )
 md5sums=('be98a40cadf84ce2d6b05fa41a275c6a'
-        'ab7d52b7fb2a1538b6f4707ab5532583')
+         'd0c2c02256872fad895a7becd408811d')
 
 
 prepare() {
@@ -73,21 +73,19 @@ package_busybox() {
 
 
     #TODO: Figure out what here is actually provided by kbd
-    KBD="deallocvt dumpkmap loadfont loadkmap openvt resize setconsole \
-        setfont setkeycodes setlogcons showkey vlock kbd_mode"
+    KBD="deallocvt dumpkmap loadkmap setconsole setkeycodes showkey kbd_mode"
     WHICH="which"
 
     APPLETS="gunzip gzip lzop tar bzip2 bunzip2 unxz bzcat lzcat lzopcat \
         unlzma unlzop xzcat zcat [ [[ uevent"
     EDITORS="awk cmp diff patch sed vi"
-    SHADOW="adduser addgroup deluser delgroup passwd cryptpw mkpasswd"
+    SHADOW="adduser addgroup deluser delgroup passwd"
     EXT2="chattr fsck lsattr tune2fs"
 
     MISC="less hdparm man"
-    NET="ping whois hostname ip udhcpc ipaddr iplink iproute iprule iptunnel \
-        dnsdomainname"
-    PROC="iostat lsof mpstat nmeter pmap powertop pstree top free fuser kill \
-        killall pgrep pidof pkill ps renice watch sysctl"
+    NET="ping hostname ip udhcpc ipaddr iplink dnsdomainname"
+    PROC="iostat lsof nmeter pmap pstree top free fuser kill killall pgrep \
+        pidof pkill ps renice watch sysctl"
 
     _link_packages $KBD $NCURSES $WHICH $APPLETS $EDITORS $LOGIN $EXT2 $MISC $NET $PROC $SHADOW
 }
@@ -123,11 +121,11 @@ package_bb-coreutils() {
 
     COREUTILS="basename cat date id groups shuf test touch tr who chgrp \
         chmod chown chroot cksum comm cp cut dd df dirname du echo env expand \
-        expr false fold fsync head install ln logname ls md5sum mkdir mkfifo \
-        mknod mv nice nohup printenv printf pwd readlink realpath rm rmdir seq \
-        sha1sum sha256sum sha512sum sha3sum sleep sort split stat sync tac \
+        expr false fsync head install ln logname ls md5sum mkdir mkfifo \
+        mknod mv nice nohup printf pwd readlink realpath rm rmdir seq \
+        sha1sum sha256sum sha512sum sha3sum sleep sort stat sync tac \
         tail tee true tty uname unexpand uniq usleep uudecode uuencode wc \
-        whoami yes timeout rev"
+        whoami yes timeout rev mktemp"
 
     _link_packages $COREUTILS
     
@@ -141,8 +139,8 @@ package_bb-util-linux() {
     conflicts=('util-linux')
 
     UTILLINUX="blockdev blkid dmesg fbset getopt hwclock losetup lspci lsusb \
-        mount swapon swapoff umount readprofile"
-    LOGIN="getty login sulogin"
+        mount swapon swapoff umount su"
+    LOGIN="getty login"
     MISC_UTILS="ionice mountpoint setsid time"
 
     _link_packages $UTILLINUX $LOGIN $MISC_UTILS

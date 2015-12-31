@@ -1,0 +1,46 @@
+From 127ba5ec7b59a5dc571c323045e5814996e02995 Mon Sep 17 00:00:00 2001
+From: Alastair Hughes <hobbitalastair@gmail.com>
+Date: Thu, 31 Dec 2015 12:14:52 +1300
+Subject: [PATCH] Use a bashism instead of mktemp's --tmpdir option.
+
+bacman and updpkgsums used GNU mktemp's --tmpdir option, which is not
+supported by some other implementations (including busybox). Replace that
+with a bashism, as used in the other scripts.
+
+Signed-off-by: Alastair Hughes <hobbitalastair@gmail.com>
+---
+ contrib/bacman.sh.in     | 2 +-
+ contrib/updpkgsums.sh.in | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/contrib/bacman.sh.in b/contrib/bacman.sh.in
+index fcee6a0..b4bbbbb 100644
+--- a/contrib/bacman.sh.in
++++ b/contrib/bacman.sh.in
+@@ -147,7 +147,7 @@ fi
+ # Begin
+ #
+ msg "Package: ${pkg_namver}"
+-work_dir=$(mktemp -d --tmpdir bacman.XXXXXXXXXX)
++work_dir=$(mktemp -d "${TMPDIR:-/tmp}/bacman.XXXXXXXXXX")
+ cd "$work_dir" || exit 1
+ 
+ #
+diff --git a/contrib/updpkgsums.sh.in b/contrib/updpkgsums.sh.in
+index 7b92efe..aaed700 100644
+--- a/contrib/updpkgsums.sh.in
++++ b/contrib/updpkgsums.sh.in
+@@ -79,8 +79,8 @@ if [[ ! -w . ]]; then
+ fi
+ 
+ # Generate the new sums
+-export BUILDDIR=$(mktemp -d --tmpdir updpkgsums.XXXXXX)
+-newbuildfile=$(mktemp --tmpdir updpkgsums.XXXXXX)
++export BUILDDIR=$(mktemp -d  "${TMPDIR:-/tmp}/updpkgsums.XXXXXX")
++newbuildfile=$(mktemp "${TMPDIR:-/tmp}/updpkgsums.XXXXXX")
+ 
+ trap "rm -rf '$BUILDDIR' '$newbuildfile'" EXIT
+ newsums=$(makepkg -g -p "$buildfile") || die 'Failed to generate new checksums'
+-- 
+2.6.4
+

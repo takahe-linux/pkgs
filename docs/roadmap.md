@@ -5,6 +5,8 @@
 Packages to do:
 - curl + ca-certs + git (for bootstrapping)?
 - kernel + bootloader (v0.2.0)
+- fakefakeroot
+- tests
 
 Packages to be updated:
 - kernel
@@ -16,8 +18,9 @@ Packages to be fixed:
 - All packages using ${_licensedir} currently use /usr/share/license; they
   should use /usr/share/licenses. This needs to be changed during the next full
   rebuild (ie GCC version bump).
-- sudo's build system doesn't make a distinction between the host and target
-  systems, so a hacky workaround is required.
+- /dev/fd -> /proc/self/fd symlink is not created - this needs to be
+  dynamically created, so probably in the mdev or epoch config.
+- The build system's fix_bugs.sh script should be renamed.
 
 Note that file is currently broken (segfaults after running), but that is
 fixed in git (checked 142c984) so should be fixed in the next release.

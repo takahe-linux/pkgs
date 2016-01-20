@@ -22,7 +22,7 @@ source=("${_web_address}/${pkgname}-${pkgver}.tar.bz2"
         "config"
        )
 md5sums=('be98a40cadf84ce2d6b05fa41a275c6a'
-         'd0c2c02256872fad895a7becd408811d')
+         'fbacc1cb7cfaa72363dc52a9dde968d1')
 
 
 prepare() {
@@ -125,7 +125,7 @@ package_bb-coreutils() {
         mknod mv nice nohup printf pwd readlink realpath rm rmdir seq \
         sha1sum sha256sum sha512sum sha3sum sleep sort stat sync tac \
         tail tee true tty uname unexpand uniq usleep uudecode uuencode wc \
-        whoami yes timeout rev mktemp"
+        whoami yes timeout rev mktemp od"
 
     _link_packages $COREUTILS
     

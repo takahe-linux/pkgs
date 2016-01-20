@@ -2,4 +2,3 @@ packages/gdb
 packages/gcc
 packages/make
 packages/binutils
-packages/sudo

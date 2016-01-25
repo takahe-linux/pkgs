@@ -4,13 +4,12 @@
 pkgname='NAME'
 pkgver='VERSION'
 pkgrel=1
-epoch=
 pkgdesc=""
 
 # Additional information...
-arch=('i586')
+arch=('mips')
 url=""
-license=('GPL')
+license=()
 
 # Dependency information
 groups=()
@@ -30,7 +29,7 @@ changelog=
 source=($pkgname-$pkgver.tar.gz
         $pkgname-$pkgver.patch)
 noextract=()
-md5sums=() #generate with 'makepkg -g'
+md5sums=()
 
 
 prepare() {

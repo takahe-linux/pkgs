@@ -15,9 +15,6 @@ Packages to be updated:
 Packages to be fixed:
 - make (tries to use /bin/sh)
 - epoch's config is currently broken
-- All packages using ${_licensedir} currently use /usr/share/license; they
-  should use /usr/share/licenses. This needs to be changed during the next full
-  rebuild (ie GCC version bump).
 - /dev/fd -> /proc/self/fd symlink is not created - this needs to be
   dynamically created, so probably in the mdev or epoch config.
 - The build system's fix_bugs.sh script should be renamed.

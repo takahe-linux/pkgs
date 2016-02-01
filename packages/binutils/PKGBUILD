@@ -2,7 +2,7 @@
 
 # Package information
 pkgname='binutils'
-pkgver='2.25.1'
+pkgver='2.26'
 pkgrel=1
 pkgdesc="A set of programs to assemble and manipulate binary and object files"
 
@@ -19,7 +19,7 @@ makedepends=('libc' 'zlib')
 # Building information
 options=('staticlibs' '!distcc' '!ccache')
 source=("ftp://ftp.gnu.org/gnu/${pkgname}/${pkgname}-${pkgver}.tar.bz2")
-md5sums=('ac493a78de4fee895961d025b7905be4')
+md5sums=('64146a0faa3b411ba774f47d41de239f')
 
 
 prepare() {

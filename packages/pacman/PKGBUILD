@@ -4,12 +4,12 @@
 
 # Package information
 pkgname='pacman'
-pkgver='4.2.1'
+pkgver='5.0.0'
 pkgrel=1
 pkgdesc="Arch Linux's simple package manager"
 
 # Additional information...
-arch=('i586' 'mips')
+arch=('i586' 'mips' 'x86_64')
 url="http://www.archlinux.org/pacman/"
 license=('GPL')
 
@@ -28,8 +28,8 @@ source=("https://sources.archlinux.org/other/pacman/${pkgname}-${pkgver}.tar.gz"
         *.patch
         pacman.conf
         makepkg.conf)
-md5sums=('2a596fc8f723e99660c0869a74afcf47'
-         'b4c4e28cb7f3a56bd8957865405c830f'
+md5sums=('9ecf8a5b659c0e02232c945ab198e6e1'
+         '6d068025eb54914f343656ed38c33271'
          '6b40bff8bd90882a7d3f6b3024f74d38'
          '03d578816b56852d803cbafac85b9f09')
 

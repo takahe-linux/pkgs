@@ -1,0 +1,28 @@
+From ccac8de3099b61c0faf84baebc8d67253b88b0d1 Mon Sep 17 00:00:00 2001
+From: Alastair Hughes <hobbitalastair@gmail.com>
+Date: Tue, 2 Feb 2016 20:32:09 +1300
+Subject: [PATCH] Add the missing limits.h include to hook.c
+
+PATH_MAX is only defined in limits.h in musl libc, so ensure that it is
+included. Presumably this is also required on other platforms.
+
+Signed-off-by: Alastair Hughes <hobbitalastair@gmail.com>
+---
+ lib/libalpm/hook.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/lib/libalpm/hook.c b/lib/libalpm/hook.c
+index ed79fdd..00d999b 100644
+--- a/lib/libalpm/hook.c
++++ b/lib/libalpm/hook.c
+@@ -20,6 +20,7 @@
+ #include <ctype.h>
+ #include <dirent.h>
+ #include <errno.h>
++#include <limits.h>
+ #include <string.h>
+ 
+ #include "handle.h"
+-- 
+2.7.0
+

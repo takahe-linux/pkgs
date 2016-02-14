@@ -38,6 +38,7 @@ file-git on the host to cross compile (seems to, anyway).
 - Add better recurisive dependencies (ie build and run deps) (v0.1.5)
 - Fix 'SATISFIED' hack (v0.1.5)
 - Fix changes to the config not forcing a rebuild (v0.1.5)
+- Check for updates script support (v0.1.5)
 - Remove remaining TODO's (v0.1.6)
 - Add signal handling (v0.1.6)
 - Add logging (v0.1.6)

@@ -16,18 +16,17 @@ safe_source() {
     fi
 }
 
-safe_source "${rootdir}/${prefix}/makepkg.conf" # Source the config.
-safe_source "${rootdir}/${prefix}/${_name}/PKGBUILD" # Source the actual package.
+# Change to that directory.
+pushd "${rootdir}/${prefix}/${_name}" > /dev/null
 
-# Generate the names...
-for name in "${pkgname[@]}"; do
+safe_source "../makepkg.conf" # Source the config.
 
-    if [ "${arch}" == "any" ]; then
-        actual_arch="any"
-    else
-        actual_arch="${CARCH}"
-    fi
-
-    echo "${rootdir}/${prefix}/${_name}/${name}-${pkgver}-${pkgrel}-${actual_arch}${PKGEXT}"
+# Print the names and paths. Ignore any non-relevant architectures.
+for name in $(makepkg --packagelist --config ../makepkg.conf | \
+    grep -e '-any$' -e "-${CARCH}$"); do
+    printf "%s\n" "${rootdir}/${prefix}/${_name}/${name}${PKGEXT}"
 done
+
+# Head back up again.
+popd > /dev/null
 

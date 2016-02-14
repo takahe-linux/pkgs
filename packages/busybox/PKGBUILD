@@ -61,8 +61,8 @@ package_busybox() {
     _pkg_list=('kbd' 'ncurses' 'which' 'gzip' 'tar' 'bzip2' 'awk' \
         'diffutils' 'sed' 'vi' 'patch' 'shadow' 'e2fsprogs' 'less' 'hdparm' \
         'man' 'inetutils' 'ip2route' 'iputils' 'dhcpcd' 'procps-ng')
-    provides=${_pkg_list}
-    conflicts=${_pkg_list}
+    provides=(${_pkg_list}[@])
+    conflicts=(${_pkg_list}[@])
 
     cd "${srcdir}/${pkgname}-${pkgver}"
 
@@ -92,7 +92,7 @@ package_busybox() {
 
 package_mdev() {
     pkgdesc="Lightweight udev alternative, from busybox"
-    depends="busybox"
+    depends=("busybox")
     groups=('bb')
 
     MDEV="mdev"
@@ -102,10 +102,10 @@ package_mdev() {
 
 package_hush() {
     pkgdesc="Simple busybox shell"
-    depends="busybox"
+    depends=("busybox")
     groups=('bb')
-    provides='sh'
-    conflicts='sh'
+    provides=('sh')
+    conflicts=('sh')
 
     SHELLS="hush sh"
 
@@ -144,6 +144,22 @@ package_bb-util-linux() {
     MISC_UTILS="ionice mountpoint setsid time"
 
     _link_packages $UTILLINUX $LOGIN $MISC_UTILS
+
+    # Add a custom nologin script.
+    # There is a nologin shell script provided with busybox, which we ignore
+    # (it is pretty basic, and uses /bin/sh, not /usr/bin/sh).
+    cat > "${pkgdir}${_bindir}/nologin" << EOF
+#!/usr/bin/sh
+if [ -f /etc/nologin.conf ]; then
+    cat /etc/nologin.conf
+else
+    echo 'login not enabled'
+fi
+
+exit 1
+EOF
+    chmod 0755 "${pkgdir}${_bindir}/nologin"
+
 }
 
 package_bb-findutils() {

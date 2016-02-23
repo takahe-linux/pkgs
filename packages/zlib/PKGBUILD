@@ -32,7 +32,7 @@ prepare() {
 build() {
     cd "${srcdir}/${pkgname}-${pkgver}"
 
-    ./configure --prefix="${_prefix}"
+    ./configure --prefix="${_prefix}" --static
     make
 }
 

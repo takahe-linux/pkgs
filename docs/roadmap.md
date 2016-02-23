@@ -5,7 +5,6 @@
 Packages to do:
 - curl + ca-certs + git (for bootstrapping)?
 - kernel + bootloader (v0.2.0)
-- fakefakeroot
 - tests
 
 Packages to be updated:

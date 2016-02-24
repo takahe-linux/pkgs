@@ -2,7 +2,7 @@
 
 # Package information
 pkgname='gdb'
-pkgver='7.10.1'
+pkgver='7.11'
 pkgrel=1
 pkgdesc='The GNU Debugger'
 
@@ -23,7 +23,7 @@ backup=('etc/gdb/gdbinit')
 source=("http://ftp.gnu.org/gnu/gdb/${pkgname}-${pkgver}.tar.xz"
         "gdb-sgidefs.h"
         "gdb-linux_nat.patch")
-sha1sums=('7d67703b31444ae41d8b8707455b97d3fac4ad65'
+sha1sums=('466208d771d97d3dfcf965d5c835a669cff8d847'
           '20eb85f7adb77b894229998432caae530962316c'
           '7a60c126b1a49cfb554b318a8d7aee1d79fe2bfe')
 

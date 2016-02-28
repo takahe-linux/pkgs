@@ -3,7 +3,7 @@
 ## Packages ##
 
 Packages to do:
-- curl + ca-certs + git (for bootstrapping)?
+- ca-certs + git (for bootstrapping)?
 - kernel + bootloader (v0.2.0)
 - tests
 
@@ -22,6 +22,8 @@ Note that file is currently broken (segfaults after running), but that is
 fixed in git (checked 142c984) so should be fixed in the next release.
 I'm not packaging file as a git snapshot because file currently needs
 file-git on the host to cross compile (seems to, anyway).
+
+I should also run namcap on the remaining packages, and fix any warnings...
 
 
 ## Build system ##

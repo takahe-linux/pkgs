@@ -134,7 +134,7 @@ package_bb-coreutils() {
 package_bb-util-linux() {
     pkgdesc="util linux symlinks for busybox"
     groups=('bb')
-    depends=('busybox')
+    depends=('busybox' 'sh')
     provides=('util-linux')
     conflicts=('util-linux')
 

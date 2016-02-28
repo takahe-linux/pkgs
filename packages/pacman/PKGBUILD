@@ -5,7 +5,7 @@
 # Package information
 pkgname='pacman'
 pkgver='5.0.1'
-pkgrel=1
+pkgrel=2
 pkgdesc="Arch Linux's simple package manager"
 
 # Additional information...
@@ -29,7 +29,7 @@ source=("https://sources.archlinux.org/other/pacman/${pkgname}-${pkgver}.tar.gz"
         makepkg.conf)
 md5sums=('377a2664d6007d72d6d8a126add83bcf'
          '6b40bff8bd90882a7d3f6b3024f74d38'
-         '03d578816b56852d803cbafac85b9f09')
+         'd49dde683f55476414e3376ca0db3919')
 
 
 prepare() {

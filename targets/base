@@ -1,3 +1,4 @@
+packages/curl
 packages/busybox
 packages/filesystem
 packages/bash

@@ -1,0 +1,47 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='curl'
+pkgver='7.47.1'
+pkgrel=1
+pkgdesc="An URL retrieval utility and library"
+
+# Additional information...
+arch=('mips')
+url="http://curl.haxx.se"
+license=('MIT')
+
+# Dependency information
+groups=('base')
+# Depends: packages/musl targets/toolchain packages/openssl packages/zlib
+makedepends=('openssl' 'zlib')
+
+# Building information
+source=("http://curl.haxx.se/download/${pkgname}-${pkgver}.tar.gz")
+md5sums=('3f9d1be7bf33ca4b8c8602820525302b')
+
+
+build() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    ./configure \
+        --prefix="${_prefix}" \
+        --build="${_local_triplet}" \
+        --host="${_target_triplet}" \
+        --target="${_target_triplet}" \
+        --mandir="${_mandir}" \
+        --disable-ldap \
+        --without-libidn \
+        --with-ssl \
+        --disable-shared \
+        --enable-static
+    make
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    make DESTDIR="${pkgdir}/" install
+    install -Dm644 COPYING "${pkgdir}${_licensedir}/${pkgname}/COPYING"
+}

@@ -57,7 +57,7 @@ build() {
     # mark stack as non-executable: http://bugs.archlinux.org/task/12434
     ./Configure --prefix="${_prefix}" \
         --openssldir="${_configdir}/ssl" \
-        --libdir="${_libdir}" \
+        --libdir="lib" \
         no-shared zlib "${optflags}" \
         "${openssltarget}" \
         "-Wa,--noexecstack ${CFLAGS} ${LDFLAGS}"

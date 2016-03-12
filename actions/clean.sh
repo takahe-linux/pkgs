@@ -6,7 +6,8 @@ set -e
 
 actiondir="$(dirname "$0")"
 
-# Depends: actions/fix_bugs.sh actions/strip.sh actions/unmount_sysroot.sh
+# Depends: path/src/actions/fix_bugs.sh path/src/actions/strip.sh
+# Depends: path/src/actions/unmount_sysroot.sh
 actions="fix_bugs.sh \
     strip.sh \
     unmount_sysroot.sh"

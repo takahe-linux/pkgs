@@ -31,7 +31,6 @@ I should also run namcap on the remaining packages, and fix any warnings...
 - Fix packages in a target changing not forcing a rebuild for everything
   depending on that target (v0.1.5)
 - Add better cleanup/teardown support, eg install/remove targets (v0.1.5)
-- Fix relying on ordered dependencies (v0.1.5)
 - Fix relying on date and time (v0.1.5)
 - Add a nice way of running cleanup scripts (v0.1.5)
 - Add chroot support (v0.1.5)

@@ -66,14 +66,14 @@ build() {
     # --enable-cxx-flags is a hack, because currently libstdc++ uses CXXFLAGS,
     # not CXXFLAGS_FOR_TARGET. See GCC bug 53579...
     # Sigh...
-    #TODO: Figure out exactly how the build systems _works_ (or doesn't) so
+    # TODO: Figure out exactly how the build systems _works_ (or doesn't) so
     # that I can patch it instead of applying this hack...
     # WARNING: To use -Os or -O2, you need more than 2GB of space (tmp if you
     # are using /tmp for compiling). It also failed with -g... for the same
     # reason. I might need to set up virtual swap?
-    export CXXFLAGS=""
+    export CXXFLAGS="-Os"
 
-    # Also, disable libmudflap and mudflap (they do not build)
+    # Also, disable libatomic, libmudflap, and mudflap (they do not build)
     LDFLAGS="-Wl,-rpath,${_toolroot}/lib" \
     "${srcdir}/${_pkgname}-${pkgver}/configure" \
         --build="${_local_triplet}" \
@@ -95,6 +95,7 @@ build() {
         --disable-multilib \
         --disable-libmudflap \
         --disable-mudflap \
+        --disable-libatomic \
         --with-gnu-as \
         --with-gnu-ld \
         --with-system-zlib

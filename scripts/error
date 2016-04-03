@@ -1,4 +1,0 @@
-#!/usr/bin/env sh
-# Print out a message, in error form.
-# We can not exit, because this will be run in a subshell.
-echo "!!! $@" > /dev/stderr

@@ -1,5 +1,0 @@
-#!/usr/bin/env sh
-# Print out the given arguments to stderr; this is a message to the user.
-
-echo ">>> $@" > /dev/stderr
-

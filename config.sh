@@ -43,22 +43,11 @@ _logdir="/var/log"
 
 
 #
-# Makepkg preferences
-#
-
-_pkgroot="${_homedir}/ash/distro"
-PKGDEST="${_pkgroot}/pkgs"
-SRCDEST="${_pkgroot}/sources"
-LOGDEST="${_pkgroot}/logs"
-
-
-#
 # Toolchain location preferences
 #
 
 _toolroot="/opt/${_target_triplet}"
 _sysroot="${_toolroot}/sysroot"
-
 
 
 #

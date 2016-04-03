@@ -107,7 +107,11 @@ build_package() {
         message "Rebuilding ${prefix}/${name}!"
 
         # Build the package
-        "${noop}" || yes 'y' | makepkg --config ../makepkg.conf -cC \
+        conf="$(mktemp "${TMPDIR:-/tmp}/${prefix}-makepkg-conf.XXXX")" || \
+            error "$?" "Failed to generate a makepkg.conf!"
+        trap "rm -f '${conf}'" EXIT
+        cat /etc/makepkg.conf ../../config.sh ../makepkg.conf > "${conf}"
+        "${noop}" || yes 'y' | makepkg --config "${conf}" -cC \
             ${makepkg_args} 2> /dev/stdout || \
             error "$?" \
             "Build failed! Please check the build log for more information."

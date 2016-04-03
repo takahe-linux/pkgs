@@ -19,14 +19,17 @@ safe_source() {
 # Change to that directory.
 pushd "${rootdir}/${prefix}/${_name}" > /dev/null
 
-safe_source "../makepkg.conf" # Source the config.
+conf="$(mktemp "${TMPDIR:-/tmp}/${prefix}-makepkg-conf.XXXX")" || \
+    error "$?" "Failed to generate a makepkg.conf!"
+trap "rm -f '${conf}'" EXIT
+cat /etc/makepkg.conf ../../config.sh ../makepkg.conf > "${conf}"
+safe_source "${conf}" # Source the config.
 
 # Print the names and paths. Ignore any non-relevant architectures.
-for name in $(makepkg --packagelist --config ../makepkg.conf | \
+for name in $(makepkg --packagelist --config "${conf}" | \
     grep -e '-any$' -e "-${CARCH}$"); do
     printf "%s\n" "${rootdir}/${prefix}/${_name}/${name}${PKGEXT}"
 done
 
 # Head back up again.
 popd > /dev/null
-

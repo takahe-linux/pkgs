@@ -28,12 +28,7 @@ I should also run namcap on the remaining packages, and fix any warnings...
 
 ## Build system ##
 
-- Add better cleanup/teardown support, eg install/remove targets (v0.1.5)
-- Add a nice way of running cleanup scripts (v0.1.5)
-- Add chroot support (v0.1.5)
-- Add 'strict' dependencies (via chroot?) (v0.1.5)
 - Add better recurisive dependencies (ie build and run deps) (v0.1.5)
-- Fix changes to the config not forcing a rebuild (v0.1.5)
 - Check for updates script support (v0.1.5)
 - Remove remaining TODO's (v0.1.6)
 - Add signal handling (v0.1.6)

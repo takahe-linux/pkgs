@@ -40,7 +40,7 @@ build() {
     "${srcdir}/${_pkgname}-${pkgver}/configure" \
         --prefix="${_toolroot}" \
         --target="${_target_triplet}" \
-        --with-sysroot="${_sysroot}" \
+        --with-sysroot="/sysroot" \
         --disable-nls --disable-multilib \
         --disable-static --disable-werror \
         --with-lib-path="${_toolroot}/lib"

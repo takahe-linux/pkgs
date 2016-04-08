@@ -26,7 +26,7 @@ sha1sums=('c5bf50b433ea35f9fc883400cde674556c44af30')
 build() {
     cd "${srcdir}/${pkgname}-${_pkgver}"
 
-    ./configure --prefix="${_prefix}" --enable-widec \
+    ./configure --prefix="/usr" --enable-widec \
         --host="${_target_triplet}" \
         --build="${_local_triplet}" \
         --disable-shared
@@ -43,16 +43,16 @@ package() {
 
     # Use libedit instead of readline...
     # Borrowed from Sabotage Linux
-    ln -s "libedit.a" "${pkgdir}${_libdir}/libreadline.a"
-    mkdir -p "${pkgdir}${_includedir}/readline"
+    ln -s "libedit.a" "${pkgdir}/usr/lib/libreadline.a"
+    mkdir -p "${pkgdir}/usr/include/readline"
     for file in "history" "tilde"; do
-        touch "${pkgdir}${_includedir}/readline/${file}.h"
+        touch "${pkgdir}/usr/include/readline/${file}.h"
     done
-    ln -s "${_includedir}/editline/readline.h" \
-        "${pkgdir}${_includedir}/readline/readline.h"
+    ln -s "/usr/include/editline/readline.h" \
+        "${pkgdir}/usr/include/readline/readline.h"
 
-    cp "${pkgdir}${_mandir}/man3/editline.3" \
-        "${pkgdir}${_mandir}/man3/el.3"
+    cp "${pkgdir}/usr/share/man/man3/editline.3" \
+        "${pkgdir}/usr/share/man/man3/el.3"
     install -Dm644 COPYING \
-        "${pkgdir}${_licensedir}/libedit/LICENSE"
+        "${pkgdir}/usr/share/licenses/libedit/LICENSE"
 }

@@ -21,7 +21,7 @@ provides=("init")
 conflicts=("init")
 
 # Building information
-#TODO: Make the backup file ${_configdir}/... minus the leading /
+#TODO: Make the backup file /etc/... minus the leading /
 backup=("etc/epoch/epoch.conf")
 source=("http://universe2.us/${pkgname}_${pkgver}.tar.gz"
     "epoch.conf")
@@ -32,26 +32,26 @@ md5sums=('30bfaeee48a42fa22a83bef57e3b15c7'
 package() {
     cd "${srcdir}/${pkgname}_${pkgver}"
 
-    EPOCH_OPTS="--configdir ${_configdir}/epoch/ \
-        --logdir ${_logdir} \
-        --binarypath ${_bindir}/epoch \
+    EPOCH_OPTS="--configdir /etc/epoch/ \
+        --logdir /var/log \
+        --binarypath /usr/bin/epoch \
         --ldflags ${_target_ldflags} \
         --cc ${CC} \
-        --shellpath ${_bindir}/sh \
+        --shellpath /usr/bin/sh \
         --disable-backtraces"
 
     CFLAGS="${_target_cflags} -static" ./buildepoch.sh $EPOCH_OPTS
 
     # Install the built programs and symlinks
-    install -d -m0755 "${pkgdir}${_bindir}"
-    mv built/sbin/* "${pkgdir}${_bindir}"
+    install -d -m0755 "${pkgdir}/usr/bin"
+    mv built/sbin/* "${pkgdir}/usr/bin"
     # Add a new wall symlink
-    ln -s "${_bindir}/epoch" "${pkgdir}${_bindir}/wall"
+    ln -s "/usr/bin/epoch" "${pkgdir}/usr/bin/wall"
 
     # Copy the license file across
-    install -D -m644 UNLICENSE.TXT "${pkgdir}${_licensedir}/${pkgname}/LICENSE"
+    install -D -m644 UNLICENSE.TXT "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 
     # Install the default config
-    install -D -m644 "${srcdir}/epoch.conf" "${pkgdir}${_configdir}/epoch/epoch.conf"
+    install -D -m644 "${srcdir}/epoch.conf" "${pkgdir}/etc/epoch/epoch.conf"
 
 }

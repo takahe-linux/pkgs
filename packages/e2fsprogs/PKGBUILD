@@ -39,10 +39,10 @@ build() {
 
     ./configure CC="${CC}" HOSTCC="${CC}" \
                 CFLAGS="${CFLAGS}" LDFLAGS="${LDFLAGS}" \
-                --prefix="${_prefix}" \
-                --libdir="${_libdir}" \
-                --bindir="${_bindir}" \
-                --sbindir="${_bindir}" \
+                --prefix="/usr" \
+                --libdir="/usr/lib" \
+                --bindir="/usr/bin" \
+                --sbindir="/usr/bin" \
                 --build="${_local_triplet}" \
                 --host="${_target_triplet}" \
                 --without-ncurses --disable-nls --disable-fsck

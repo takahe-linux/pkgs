@@ -27,7 +27,7 @@ prepare() {
     cd "${srcdir}"
 
     sed -i fakefakeroot.sh \
-        -e "s:@SH_PATH:${_bindir}/sh:" \
+        -e "s:@SH_PATH:/usr/bin/sh:" \
         -e "s:@VERSION:${pkgver}:" \
         -e "s:@KEY:fakefakeroot key:"
 }
@@ -35,5 +35,5 @@ prepare() {
 package() {
     cd "${srcdir}"
 
-    install -Dm0755 fakefakeroot.sh "${pkgdir}${_bindir}/fakeroot"
+    install -Dm0755 fakefakeroot.sh "${pkgdir}/usr/bin/fakeroot"
 }

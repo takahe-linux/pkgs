@@ -43,13 +43,13 @@ prepare() {
 build() {
     cd "${srcdir}/${pkgname}-${pkgver}"
 
-    ./configure --prefix="${_prefix}" \
+    ./configure --prefix="/usr" \
         --host="${_target_triplet}" \
-        --bindir="${_bindir}" \
+        --bindir="/usr/bin" \
         --localstatedir='/var' \
-        --sysconfdir="${_configdir}" \
+        --sysconfdir="/etc" \
         --enable-doc \
-        --with-scriptlet-shell="${_bindir}/bash" \
+        --with-scriptlet-shell="/usr/bin/bash" \
         --without-gpgme \
         --without-openssl \
         --without-curl \
@@ -73,26 +73,26 @@ package() {
     make DESTDIR="${pkgdir}/" -C contrib install
 
     # Install the configuration files
-    install -dm755 "${pkgdir}${_configdir}"
-    install -m644 "${srcdir}/pacman.conf" "${pkgdir}${_configdir}/pacman.conf"
+    install -dm755 "${pkgdir}/etc"
+    install -m644 "${srcdir}/pacman.conf" "${pkgdir}/etc/pacman.conf"
 
     # Install and update the makepkg config file
-    install -m644 "${srcdir}/makepkg.conf" "${pkgdir}${_configdir}/makepkg.conf"
-    sed -i "${pkgdir}${_configdir}/makepkg.conf" \
+    install -m644 "${srcdir}/makepkg.conf" "${pkgdir}/etc/makepkg.conf"
+    sed -i "${pkgdir}/etc/makepkg.conf" \
         -e "s|@CARCH[@]|${_target_arch}|g" \
         -e "s|@CHOST[@]|${_target_triplet}|g" \
         -e "s|@CARCHFLAGS[@]|-march=${_target_arch}|g"
 
     # Install the bash completion files
-    install -dm755 "${pkgdir}${_bashcompletiondir}"
-    mv "${pkgdir}${_configdir}/bash_completion.d/pacman" \
-        "${pkgdir}${_bashcompletiondir}"
-    rmdir "${pkgdir}${_configdir}/bash_completion.d"
+    install -dm755 "${pkgdir}/usr/share/bash-completion/completions"
+    mv "${pkgdir}/etc/bash_completion.d/pacman" \
+        "${pkgdir}/usr/share/bash-completion/completions"
+    rmdir "${pkgdir}/etc/bash_completion.d"
 
     for file in makepkg pacman-key; do
-        ln -s 'pacman' "${pkgdir}${_bashcompletiondir}/${file}"
+        ln -s 'pacman' "${pkgdir}/usr/share/bash-completion/completions/${file}"
     done
 
     install -Dm644 'contrib/PKGBUILD.vim' \
-        "${pkgdir}${_vimdir}/vimfiles/syntax/PKGBUILD.vim"
+        "${pkgdir}/usr/share/vim/vimfiles/syntax/PKGBUILD.vim"
 }

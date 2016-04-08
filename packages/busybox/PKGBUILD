@@ -22,16 +22,16 @@ source=("${_web_address}/${pkgname}-${pkgver}.tar.bz2"
         "config"
        )
 md5sums=('2eaae519cac1143bcf583636a745381f'
-         'fbacc1cb7cfaa72363dc52a9dde968d1')
+         'fe6c3c25eb2b87d70e551922e7db728f')
 
 
 prepare() {
     cd "${srcdir}/${pkgname}-${pkgver}"
 
     # Adjust the config for the current settings
-    sed -i -e "/CONFIG_CROSS_COMPILER_PREFIX/s:=\"\":=\"${CROSS_COMPILE}\":" \
+    sed -i -e "/CONFIG_CROSS_COMPILER_PREFIX/s:=\".*\":=\"${_target_triplet}-\":" \
         "${srcdir}/config"
-    sed -i -e "/CONFIG_SYSROOT/s:=\"\":=\"${_sysroot}\":" "${srcdir}/config"
+    sed -i -e "/CONFIG_SYSROOT/s:=\".*\":=\"/sysroot\":" "${srcdir}/config"
 
 }
 
@@ -69,7 +69,7 @@ package_busybox() {
     ARCH="${_target_arch}" make DESTDIR="${pkgdir}/" install
 
     # Copy the busybox binary into place
-    install -Dm755 "_install/bin/busybox" "${pkgdir}${_bindir}/busybox"
+    install -Dm755 "_install/bin/busybox" "${pkgdir}/usr/bin/busybox"
 
 
     #TODO: Figure out what here is actually provided by kbd
@@ -148,7 +148,7 @@ package_bb-util-linux() {
     # Add a custom nologin script.
     # There is a nologin shell script provided with busybox, which we ignore
     # (it is pretty basic, and uses /bin/sh, not /usr/bin/sh).
-    cat > "${pkgdir}${_bindir}/nologin" << EOF
+    cat > "${pkgdir}/usr/bin/nologin" << EOF
 #!/usr/bin/sh
 if [ -f /etc/nologin.conf ]; then
     cat /etc/nologin.conf
@@ -158,7 +158,7 @@ fi
 
 exit 1
 EOF
-    chmod 0755 "${pkgdir}${_bindir}/nologin"
+    chmod 0755 "${pkgdir}/usr/bin/nologin"
 
 }
 
@@ -176,9 +176,9 @@ package_bb-findutils() {
 
 _link_packages() {
 
-    install -dm755 "${pkgdir}${_bindir}"
+    install -dm755 "${pkgdir}/usr/bin"
     
     for package in $@; do
-        ln -s "${_bindir}/busybox" "${pkgdir}${_bindir}/${package}"
+        ln -s "/usr/bin/busybox" "${pkgdir}/usr/bin/${package}"
     done
 }

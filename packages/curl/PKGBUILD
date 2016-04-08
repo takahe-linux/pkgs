@@ -25,11 +25,11 @@ build() {
     cd "${srcdir}/${pkgname}-${pkgver}"
 
     ./configure \
-        --prefix="${_prefix}" \
+        --prefix="/usr" \
         --build="${_local_triplet}" \
         --host="${_target_triplet}" \
         --target="${_target_triplet}" \
-        --mandir="${_mandir}" \
+        --mandir="/usr/share/man" \
         --disable-ldap \
         --without-libidn \
         --with-ssl \
@@ -43,5 +43,5 @@ package() {
     cd "${srcdir}/${pkgname}-${pkgver}"
 
     make DESTDIR="${pkgdir}/" install
-    install -Dm644 COPYING "${pkgdir}${_licensedir}/${pkgname}/COPYING"
+    install -Dm644 COPYING "${pkgdir}/usr/share/licenses/${pkgname}/COPYING"
 }

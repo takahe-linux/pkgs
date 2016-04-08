@@ -42,7 +42,7 @@ prepare() {
 build() {
     cd "${srcdir}/${pkgname}-${pkgver}"
 
-    ./configure --prefix="${_prefix}"
+    ./configure --prefix="/usr"
     make
 }
 

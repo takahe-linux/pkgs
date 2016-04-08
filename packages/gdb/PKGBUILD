@@ -45,8 +45,8 @@ build() {
 
     #TODO: Add --with-system-readline, once I've actually *packaged* readline.
 
-    ./configure --prefix="${_prefix}" \
-        --prefix="${_prefix}" \
+    ./configure --prefix="/usr" \
+        --prefix="/usr" \
         --build="${_local_triplet}" \
         --host="${_target_triplet}" \
         --target="${_target_triplet}" \
@@ -70,10 +70,10 @@ package() {
     touch "${pkgdir}/etc/gdb/gdbinit"
 
     # resolve conflicts with binutils
-    rm "${pkgdir}${_includedir}"/{ansidecl,bfd,bfdlink,dis-asm,plugin-api,symcat}.h
-    rm -r "${pkgdir}${_prefix}/share/info"
-    rm "${pkgdir}${_libdir}"/{libbfd,libopcodes}.a
+    rm "${pkgdir}/usr/include"/{ansidecl,bfd,bfdlink,dis-asm,plugin-api,symcat}.h
+    rm -r "${pkgdir}/usr/share/info"
+    rm "${pkgdir}/usr/lib"/{libbfd,libopcodes}.a
 
     # resolve conflicts with gettext...
-    rm "${pkgdir}${_libdir}/charset.alias"
+    rm "${pkgdir}/usr/lib/charset.alias"
 }

@@ -83,12 +83,12 @@ build() {
         then
         # Modules are enabled
         #make ${MAKEFLAGS} bzImage modules ARCH="${_target_arch_alias}"
-        LDFLAGS="-rpath ${_sysroot}${_libdir}" \
+        LDFLAGS="-rpath /sysroot/usr/lib" \
         make V=1 ${MAKEFLAGS} ARCH="${_target_arch_alias}" CROSS_COMPILE="${CROSS_COMPILE}"
     else
         # Modules are not enabled
         #make ${MAKEFLAGS} bzImage ARCH="${_target_arch_alias}"
-        LDFLAGS="-rpath ${_sysroot}${_libdir}" \
+        LDFLAGS="-rpath /sysroot/usr/lib" \
         make V=1 ${MAKEFLAGS} ARCH="${_target_arch_alias}" CROSS_COMPILE="${CROSS_COMPILE}"
     fi
 }

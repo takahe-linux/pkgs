@@ -35,11 +35,11 @@ package() {
   cd "${srcdir}/${pkgname}-${pkgver}"
 
   #TODO: Auto-change arch as required
-  make ARCH="${_target_arch_alias}" INSTALL_HDR_PATH="${pkgdir}${_prefix}" \
+  make ARCH="${_target_arch_alias}" INSTALL_HDR_PATH="${pkgdir}/usr" \
       headers_install
 
   # Use headers from libdrm for drm support
-  rm -r "${pkgdir}${_includedir}/drm"
+  rm -r "${pkgdir}/usr/include/drm"
   
   # Clean-up unnecessary files generated during install
   find ${pkgdir} \( -name .install -o -name ..install.cmd \) -delete

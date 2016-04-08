@@ -29,11 +29,11 @@ build() {
     export CXXFLAGS="${CFLAGS}"
 
     ./configure --target="${_target_triplet}" \
-                --prefix="${_prefix}" \
-                --syslibdir="${_libdir}" \
-                --libdir="${_libdir}" \
-                --bindir="${_bindir}" \
-                --includedir="${_includedir}" \
+                --prefix="/usr" \
+                --syslibdir="/usr/lib" \
+                --libdir="/usr/lib" \
+                --bindir="/usr/bin" \
+                --includedir="/usr/include" \
                 --disable-shared
 
     make

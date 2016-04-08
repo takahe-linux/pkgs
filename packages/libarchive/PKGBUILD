@@ -45,11 +45,11 @@ build() {
 
     export LDFLAGS="${LDFLAGS} -static"
 
-    ./configure --prefix="${_prefix}" \
+    ./configure --prefix="/usr" \
         --host="${_target_triplet}" \
-        --libdir="${_libdir}" \
-        --bindir="${_bindir}" \
-        --includedir="${_includedir}" \
+        --libdir="/usr/lib" \
+        --bindir="/usr/bin" \
+        --includedir="/usr/include" \
         --without-xml2 \
         --without-iconv \
         --without-nettle \

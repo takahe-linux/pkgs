@@ -3,7 +3,7 @@
 source "$(dirname $(realpath $0))"/../config.sh
 
 # Create a system image, partition the device, and setup a loop device.
-# Finally, mount the image on "${_sysroot}"
+# Finally, mount the image on "/sysroot"
 
 # Define some vars
 #TODO: Make this configurable...
@@ -85,12 +85,12 @@ sudo mkfs.ext2 "${loop}p1" -L "Takahe Linux" 2> /dev/stdout
 echo "Created a new filesystem on '${loop}p1'"
 
 # Make the new sysroot directory
-if [ -e "${_sysroot}" ]; then
-    die "Sysroot dir ${_sysroot} already exists!" "${sysimage}" "${loop}" ""
+if [ -e "/sysroot" ]; then
+    die "Sysroot dir /sysroot already exists!" "${sysimage}" "${loop}" ""
 fi
-sudo mkdir -p "${_sysroot}"
+sudo mkdir -p "/sysroot"
 
 # Mount the new filesystem on the sysroot
-sudo mount "${loop}p1" "${_sysroot}"
-echo "Mounted the loop device on ${_sysroot}"
+sudo mount "${loop}p1" "/sysroot"
+echo "Mounted the loop device on /sysroot"
 

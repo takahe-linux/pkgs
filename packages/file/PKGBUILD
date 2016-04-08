@@ -25,7 +25,7 @@ build() {
     cd "${srcdir}/${pkgname}-${pkgver}"
 
     #TODO: Fix workaround here (patch upstream?)
-    ./configure --prefix="${_prefix}" \
+    ./configure --prefix="/usr" \
         --host="$(echo "${_target_triplet}" | sed 's:musl:gnu:')" \
         --build="${_local_triplet}" \
         --disable-shared

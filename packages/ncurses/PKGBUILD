@@ -33,9 +33,9 @@ prepare() {
 build() {
     cd "${srcdir}/${pkgname}-${pkgver}"
 
-    ./configure --prefix="${_prefix}" --mandir="${_mandir}" --disable-shared \
+    ./configure --prefix="/usr" --mandir="/usr/share/man" --disable-shared \
         --host="${_target_triplet}" \
-        --without-debug --without-ada --enable-overwrite --with-build-cc="${_cc}" \
+        --without-debug --without-ada --enable-overwrite --with-build-cc="gcc" \
         --without-cxx-binding --without-cxx
     make
 }

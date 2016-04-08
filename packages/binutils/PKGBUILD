@@ -35,14 +35,14 @@ build() {
     cd "${srcdir}/${pkgname}-build"
 
     "${srcdir}/${pkgname}-${pkgver}/configure" \
-        --prefix="${_prefix}" \
+        --prefix="/usr" \
         --build="${_local_triplet}" \
         --host="${_target_triplet}" \
         --target="${_target_triplet}" \
         --disable-nls --disable-multilib \
         --enable-static --disable-werror \
         --disable-shared \
-        --with-lib-path="${_libdir}" \
+        --with-lib-path="/usr/lib" \
         --enable-deterministic-archives
 
     # Check the host environment and makes sure all the necessary tools are
@@ -56,11 +56,11 @@ build() {
 package() {
     cd "${srcdir}/${pkgname}-build"
 
-    make prefix="${pkgdir}${_prefix}" install
+    make prefix="${pkgdir}/usr" install
 
     # Remove manpages for MS Windows tools
-    rm "${pkgdir}${_prefix}/share/man/man1/"{dlltool,nlmconv,windres,windmc}*
+    rm "${pkgdir}/usr/share/man/man1/"{dlltool,nlmconv,windres,windmc}*
 
     # Remove the info files - I'm not using them
-    rm -r "${pkgdir}${_prefix}/share/info"
+    rm -r "${pkgdir}/usr/share/info"
 }

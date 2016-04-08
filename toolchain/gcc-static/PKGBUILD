@@ -48,10 +48,10 @@ build() {
         --host="${_local_triplet}" \
         --target="${_target_triplet}" \
         --prefix="${_toolroot}" \
-        --with-sysroot="${_sysroot}" \
-        --with-native-system-header-dir="${_sysroot}${_includedir}" \
-        --with-local-prefix="${_sysroot}" \
-        --libexecdir="${_libdir}" \
+        --with-sysroot="/sysroot" \
+        --with-native-system-header-dir="/sysroot/usr/include" \
+        --with-local-prefix="/sysroot" \
+        --libexecdir="/usr/lib" \
         --enable-languages=c \
         --enable-plugins \
         --disable-decimal-float \

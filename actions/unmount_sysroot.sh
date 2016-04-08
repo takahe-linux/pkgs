@@ -6,10 +6,10 @@ source "$(dirname $(realpath $0))"/../config.sh
 # which one is the final device.
 
 
-loopdev="$(mount | grep -e "/dev/loop.* on ${_sysroot} " | cut -d' ' -f'1')"
+loopdev="$(mount | grep -e "/dev/loop.* on /sysroot " | cut -d' ' -f'1')"
 
 if [ "z${loopdev}" == "z" ]; then
-    error "Cannot find a loopdevice mounted on ${_sysroot}!"
+    error "Cannot find a loopdevice mounted on /sysroot!"
     exit 1
 fi
 
@@ -18,7 +18,7 @@ sudo umount "${loopdev}"
 echo "Unmounted ${loopdev}"
 
 # Kill the sysroot dir
-sudo rmdir "${_sysroot}"
+sudo rmdir "/sysroot"
 
 # Remove the loopdev
 sudo losetup -d "$(echo ${loopdev} | sed -e 's:p1$::')"

@@ -66,10 +66,10 @@ build() {
         --build="${_local_triplet}" \
         --host="${_target_triplet}" \
         --target="${_target_triplet}" \
-        --prefix="${_prefix}" \
-        --libdir="${_libdir}" \
-        --libexecdir="${_libdir}" \
-        --mandir="${_mandir}" \
+        --prefix="/usr" \
+        --libdir="/usr/lib" \
+        --libexecdir="/usr/lib" \
+        --mandir="/usr/share/man" \
         --enable-languages=c,c++ \
         --enable-checking=release \
         --enable-__cxa_atexit \
@@ -89,8 +89,8 @@ build() {
         --disable-libssp \
         --disable-lto \
         --disable-libunwind-exceptions \
-        --with-native-system-header-dir="${_includedir}" \
-        --with-local-prefix="${_prefix}" \
+        --with-native-system-header-dir="/usr/include" \
+        --with-local-prefix="/usr" \
         --with-gnu-as \
         --with-gnu-ld \
         --with-system-zlib
@@ -106,14 +106,14 @@ package() {
     make DESTDIR="${pkgdir}" install -j1
 
     # strip target binaries
-    find "${pkgdir}${_libdir}/gcc/${_target_triplet}/" \
-         "${pkgdir}${_prefix}/lib" \
+    find "${pkgdir}/usr/lib/gcc/${_target_triplet}/" \
+         "${pkgdir}/usr/lib" \
          -type f -and \( -name \*.a -or -name \*.o \) \
-         -exec "${_tooldir}/bin/${_target_triplet}-objcopy" \
+         -exec "${_toolroot}/bin/${_target_triplet}-objcopy" \
          -R .comment -R .note -R .debug_info -R .debug_aranges \
          -R .debug_pubnames -R .debug_pubtypes -R .debug_abbrev -R .debug_line \
          -R .debug_str -R .debug_ranges -R .debug_loc '{}' \;
 
     # Remove info files (already existing)
-    rm -r "${pkgdir}${_prefix}/share/info"
+    rm -r "${pkgdir}/usr/share/info"
 }

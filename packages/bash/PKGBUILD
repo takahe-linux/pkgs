@@ -115,7 +115,7 @@ gt_cv_int_divbyzero_sigfpe=yes
 EOF
 
     # Build bash!
-    ./configure --prefix="${_prefix}" \
+    ./configure --prefix="/usr" \
         --host="${_target_triplet}" \
         --build="${_local_triplet}" \
         --with-curses \
@@ -140,5 +140,5 @@ package() {
 
     make DESTDIR="${pkgdir}/" install
 
-    rm -rf "${pkgdir}${_prefix}/share/info"
+    rm -rf "${pkgdir}/usr/share/info"
 }

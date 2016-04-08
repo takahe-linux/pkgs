@@ -25,7 +25,7 @@ md5sums=('d6a1d5f8ddea3abd2cc3e98f58352d26')
 build() {
     cd "${srcdir}/${pkgname}-${pkgver}"
 
-    ./configure --prefix="${_prefix}" \
+    ./configure --prefix="/usr" \
         --build="${_local_triplet}" \
         --host="${_target_triplet}" \
         --disable-shared
@@ -40,5 +40,5 @@ package() {
     make DESTDIR="${pkgdir}/" install
 
     # Remove info files 
-    rm -rf "${pkgdir}${_prefix}/share/info"
+    rm -rf "${pkgdir}/usr/share/info"
 }

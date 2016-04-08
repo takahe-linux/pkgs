@@ -39,7 +39,7 @@ prepare() {
 build() {
     cd "${srcdir}/${pkgname}-${_pkgver}"
 
-    ./configure --prefix="${_prefix}" \
+    ./configure --prefix="/usr" \
         --build="${_local_triplet}" \
         --host="${_target_triplet}" \
         --disable-shared
@@ -54,5 +54,5 @@ package() {
     make DESTDIR="${pkgdir}/" install
 
     # Remove info files 
-    rm -rf "${pkgdir}${_prefix}/share/info"
+    rm -rf "${pkgdir}/usr/share/info"
 }

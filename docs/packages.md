@@ -3,12 +3,10 @@
 I would like all of the below; however, I also to intend to have 100 packages
 or less. So...
 
-- coreutils
-- util-linux
 - file
-- gcc + friends (or generally a toolchain)
+- gcc-based toolchain
 - ssh
-- web browser (lynx? webkit-based)
+- web browser (lynx? netsurf?)
 - go
 - vim
 - tex (pdflatex, at least)
@@ -19,19 +17,6 @@ or less. So...
 - pacman
 - git
 - unison
-- diffutils
 - patch
 
 This list is very incomplete!
-
-# Packages and dependencies #
-
-bash: readline, ncurses, libc
-coreutils: libc, gmp
-diffutils: bash
-file: zlib
-git: curl, perl, openssl, expat, perl-error, pcre
-
-readline: libc
-ncurses: libc
-zlib: libc

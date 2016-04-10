@@ -11,7 +11,7 @@ pkgrel=1
 pkgdesc="Multiple-precision floating-point library"
 
 # Additional information...
-arch=('mips')
+arch=('mips' 'i586')
 url="http://www.mpfr.org/"
 license=('LGPL')
 

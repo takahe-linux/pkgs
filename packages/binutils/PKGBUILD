@@ -7,7 +7,7 @@ pkgrel=1
 pkgdesc="A set of programs to assemble and manipulate binary and object files"
 
 # Additional information...
-arch=('mips')
+arch=('mips' 'i586')
 url="http://www.gnu.org/software/binutils/"
 license=('GPL')
 

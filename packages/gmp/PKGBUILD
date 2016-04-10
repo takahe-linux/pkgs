@@ -7,7 +7,7 @@ pkgrel=1
 pkgdesc="A free library for arbitrary precision arithmetic"
 
 # Additional information...
-arch=('mips')
+arch=('mips' 'i586')
 url="http://gmplib.org/"
 license=('LGPL3' 'GPL')
 

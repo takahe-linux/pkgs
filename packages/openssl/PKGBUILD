@@ -9,7 +9,7 @@ pkgrel=1
 pkgdesc='The Open Source toolkit for Secure Sockets Layer and Transport Layer Security'
 
 # Additional information...
-arch=('mips')
+arch=('mips' 'i586')
 url='https://www.openssl.org'
 license=('custom:BSD')
 

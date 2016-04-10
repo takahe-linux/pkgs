@@ -7,7 +7,7 @@ pkgrel=1
 pkgdesc="An URL retrieval utility and library"
 
 # Additional information...
-arch=('mips')
+arch=('mips' 'i586')
 url="http://curl.haxx.se"
 license=('MIT')
 

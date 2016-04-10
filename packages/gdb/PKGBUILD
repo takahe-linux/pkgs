@@ -7,7 +7,7 @@ pkgrel=1
 pkgdesc='The GNU Debugger'
 
 # Additional information...
-arch=('mips')
+arch=('mips' 'i586')
 url='http://www.gnu.org/software/gdb/'
 license=('GPL3')
 
@@ -22,10 +22,12 @@ makedepends=('libc')
 backup=('etc/gdb/gdbinit')
 source=("http://ftp.gnu.org/gnu/gdb/${pkgname}-${pkgver}.tar.xz"
         "gdb-sgidefs.h"
-        "gdb-linux_nat.patch")
+        "gdb-linux_nat.patch"
+        "gnulib-configure.patch")
 sha1sums=('466208d771d97d3dfcf965d5c835a669cff8d847'
           '20eb85f7adb77b894229998432caae530962316c'
-          '7a60c126b1a49cfb554b318a8d7aee1d79fe2bfe')
+          '7a60c126b1a49cfb554b318a8d7aee1d79fe2bfe'
+          'abb3f47ae79c825f8aa76bbb9628afd864a26442')
 
 
 prepare() {
@@ -37,6 +39,9 @@ prepare() {
     cp "${srcdir}/gdb-sgidefs.h" "./gdb/sgidefs.h"
 
     patch -p1 < "${srcdir}/gdb-linux_nat.patch"
+
+    # Work around gnulib trying to use rpl_gettimeofday, which is undefined.
+    patch gdb/gnulib/configure < "${srcdir}/gnulib-configure.patch"
 }
 
 

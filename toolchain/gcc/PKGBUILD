@@ -28,6 +28,7 @@ source=("ftp://gcc.gnu.org/pub/gcc/releases/gcc-${pkgver}/gcc-${pkgver}.tar.bz2"
 sha256sums=('b84f5592e9218b73dbae612b5253035a7b34a9a1f7688d2e1bfaaf7267d5c4db'
             '0b3a2ca007dda01583b4a4d22e9060f5f771deb7099312a2f0dab679f676386d'
             'fe3334cffd41d3becfe3e57bea38822678b463a0947a3141195d953aab8d26e8'
+            'dddd08b5097ffc0008e36a3bcfe00a54fbc46684b265b7ff6e683d9396a6c6d0'
             '7ad65c8a8613b34b7ffdf0dcee15659ba12a21ed0b65052644d6ca73653d337a'
             '9854b80d6b4854f48438f6784e86411fbc607763a6be80faae5a36c508c3cf9e'
             'e0f0c2d556ab5e0367f579307db1b1b5abfc4533ccf423597eabcefae52430af'
@@ -73,7 +74,8 @@ build() {
     # reason. I might need to set up virtual swap?
     export CXXFLAGS="-Os"
 
-    # Also, disable libatomic, libmudflap, and mudflap (they do not build)
+    # Also, disable libsanitizer, libatomic, libmudflap, and mudflap
+    # (they do not build).
     LDFLAGS="-Wl,-rpath,${_toolroot}/lib" \
     "${srcdir}/${_pkgname}-${pkgver}/configure" \
         --build="${_local_triplet}" \
@@ -96,6 +98,7 @@ build() {
         --disable-libmudflap \
         --disable-mudflap \
         --disable-libatomic \
+        --disable-libsanitizer \
         --with-gnu-as \
         --with-gnu-ld \
         --with-system-zlib

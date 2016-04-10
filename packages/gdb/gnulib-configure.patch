@@ -1,0 +1,5 @@
+13523c13523,13524
+<                 # Guess all is fine on glibc systems.
+---
+>                 # Guess all is fine on glibc and musl systems.
+>         *-musl*) gl_cv_func_gettimeofday_clobber="guessing no" ;;

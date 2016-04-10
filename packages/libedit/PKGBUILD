@@ -8,7 +8,7 @@ pkgrel=1
 pkgdesc="Command line editing library"
 
 # Additional information...
-arch=('mips')
+arch=('mips' 'i586')
 url='http://www.thrysoee.dk/editline/'
 license=('BSD')
 

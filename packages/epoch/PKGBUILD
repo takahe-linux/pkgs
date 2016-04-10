@@ -7,7 +7,7 @@ pkgrel=1
 pkgdesc="Basic init system with minimal dependencies"
 
 # Additional information...
-arch=('mips')
+arch=('mips' 'i586')
 url="http://universe2.us/epoch.html"
 license=('custom') # Public domain
 

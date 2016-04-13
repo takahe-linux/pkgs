@@ -5,3 +5,4 @@ packages/bash
 packages/pacman
 packages/epoch
 packages/file
+packages/linux

@@ -45,12 +45,12 @@ prepare() {
     # Clean up the kernel tree.
     make mrproper
 
-    # Update the config to use the proper toolchain.
-    sed -i -e "/CONFIG_CROSS_COMPILE/s:=\".*\":=\"${_target_triplet}-\":" \
-        "${srcdir}/config.${_target_config}"
-
     # Make the default config.
     make defconfig ARCH="${_target_arch_alias}"
+
+    # Update the config to use the proper toolchain.
+    sed -i -e "/CONFIG_CROSS_COMPILE/s:=\".*\":=\"${_target_triplet}-\":" \
+        "${srcdir}/.config"
 }
 
 
@@ -80,7 +80,7 @@ package() {
 
     # Copy the image to the end location
     cp "arch/${_target_arch_alias}/boot/bzImage" \
-       "${pkgdir}/boot/vmlinuz-${_target_config}"
+       "${pkgdir}/boot/vmlinuz"
 
     # Install the modules and firmware, if required
     if modules; then

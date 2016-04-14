@@ -45,12 +45,27 @@ prepare() {
     # Clean up the kernel tree.
     make mrproper
 
-    # Make the default config.
-    make defconfig ARCH="${_target_arch_alias}"
+    # Pick a config that will work with qemu.
+    case "${_target_arch_alias}" in
+        mips) cp "arch/mips/configs/malta_defconfig" .config
+            # We build a big endian kernel; userspace is big endian.
+            sed -i .config \
+                -e 's:CONFIG_CPU_LITTLE_ENDIAN=y:CONFIG_CPU_BIG_ENDIAN=y:'
+            # We assume that devtmpfs is mounted.
+            cat >> .config << EOF
+CONFIG_DEVTMPFS=y
+CONFIG_DEVTMPFS_MOUNT=y
+EOF
+            ;;
+        *) make defconfig ARCH="${_target_arch_alias}";;
+    esac
+
+    # Run oldconfig.
+    yes "" | make oldconfig ARCH="${_target_arch_alias}" > /dev/null
 
     # Update the config to use the proper toolchain.
-    sed -i -e "/CONFIG_CROSS_COMPILE/s:=\".*\":=\"${_target_triplet}-\":" \
-        "${srcdir}/.config"
+    sed -i .config -e '\CONFIG_CROSS_COMPILE\d'
+    printf 'CONFIG_CROSS_COMPILE="%s-"\n' "${_target_triplet}" >> .config
 }
 
 
@@ -58,13 +73,24 @@ build() {
     cd "${srcdir}/${_srcname}"
 
     # Make the kernel image and modules, if needed
-    targets="bzImage"
+    case "${_target_arch_alias}" in
+        i386) targets="bzImage";;
+        *) targets="vmlinuz";;
+    esac
     if modules; then
         # Modules are enabled
         targets+=" modules"
     fi
 
-    make ${MAKEFLAGS} ${targets} ARCH="${_target_arch_alias}"
+    # Unset some uneeded variables.
+    # TODO: Figure out how to say that we don't need (or want!) these set
+    #       in the first place...
+    #       We do want some of them, though.
+    unset CFLAGS
+    unset LDFLAGS
+    unset CXXFLAGS
+
+    make ${targets} ARCH="${_target_arch_alias}"
 }
 
 
@@ -73,19 +99,24 @@ package() {
     cd "${srcdir}/${_srcname}"
 
     # Find the kernel version
-    _kernver="$(make kernelrelease)"
+    _kernver="$(make kernelrelease ARCH="${_target_arch_alias}")"
 
     # Make the boot directory
     mkdir -p "${pkgdir}/boot"
 
     # Copy the image to the end location
-    cp "arch/${_target_arch_alias}/boot/bzImage" \
-       "${pkgdir}/boot/vmlinuz"
+    if [ -e "arch/${_target_arch_alias}/boot/bzImage" ]; then
+        cp "arch/${_target_arch_alias}/boot/bzImage" \
+           "${pkgdir}/boot/vmlinuz"
+    else
+        cp "vmlinuz" "${pkgdir}/boot/vmlinuz"
+    fi
 
     # Install the modules and firmware, if required
     if modules; then
         mkdir -p "${pkgdir}"/{/usr/lib/modules,/usr/lib/firmware}
-        make INSTALL_MOD_PATH="${pkgdir}/" modules_install
+        make INSTALL_MOD_PATH="${pkgdir}/" modules_install \
+            ARCH="${_target_arch_alias}"
         # Remove the kernel source tree
         rm -f "${pkgdir}/lib/modules/${_kernver}"/{source,build}
         # Add vmlinux

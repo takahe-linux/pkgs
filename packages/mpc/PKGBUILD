@@ -12,10 +12,8 @@ url="http://www.multiprecision.org/"
 license=('LGPL')
 
 # Dependency information
-# Depends: packages/mpfr packages/musl targets/toolchain
-makedepends=('mpfr' 'libc')
-provides=('libmpc')
-conflicts=('libmpc')
+makedepends=('mpfr' 'musl')
+hostdepends=('toolchain')
 
 # Building information
 source=("http://www.multiprecision.org/mpc/download/mpc-${pkgver}.tar.gz")

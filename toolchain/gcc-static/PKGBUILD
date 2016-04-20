@@ -13,8 +13,8 @@ url='http://gcc.gnu.org/'
 license=('GPL' 'LGPL' 'FDL')
 
 # Dependency information
-# Depends: packages/linux-api-headers toolchain/binutils
 depends=("${_target_triplet}-binutils" 'zlib' 'libmpc' 'gmp' 'mpfr')
+targetdepends=("linux-api-headers")
 
 # Building information
 options=(!emptydirs !strip)

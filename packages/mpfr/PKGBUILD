@@ -16,8 +16,8 @@ url="http://www.mpfr.org/"
 license=('LGPL')
 
 # Dependency information
-# Depends: packages/gmp targets/toolchain packages/musl
-makedepends=('gmp>=5.0' 'libc')
+makedepends=('gmp' 'musl')
+hostdepends=('toolchain')
 
 # Building information
 source=("http://www.mpfr.org/mpfr-current/${pkgname}-${_pkgver}.tar.xz")

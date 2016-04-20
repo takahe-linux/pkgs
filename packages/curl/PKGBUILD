@@ -13,8 +13,8 @@ license=('MIT')
 
 # Dependency information
 groups=('base')
-# Depends: packages/musl targets/toolchain packages/openssl packages/zlib
-makedepends=('openssl' 'zlib')
+makedepends=('openssl' 'zlib' 'musl')
+hostdepends=('toolchain')
 
 # Building information
 source=("http://curl.haxx.se/download/${pkgname}-${pkgver}.tar.gz")

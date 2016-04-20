@@ -13,9 +13,9 @@ license=('GPL3')
 
 # Dependency information
 groups=('base-devel')
-# Depends: packages/musl packages/busybox targets/toolchain
-depends=('sh')
-makedepends=('libc')
+depends=('hush')
+makedepends=('musl')
+hostdepends=('toolchain')
 
 # Building information
 source=("ftp://ftp.gnu.org/gnu/${pkgname}/${pkgname}-${pkgver}.tar.bz2")

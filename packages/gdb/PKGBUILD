@@ -13,10 +13,9 @@ license=('GPL3')
 
 # Dependency information
 groups=('base-devel')
-# Libedit is also (seemingly) too old...
-# Depends: packages/busybox packages/musl packages/ncurses targets/toolchain
 depends=('ncurses')
-makedepends=('libc')
+makedepends=('musl')
+hostdepends=('toolchain')
 
 # Building information
 backup=('etc/gdb/gdbinit')

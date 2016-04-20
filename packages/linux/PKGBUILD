@@ -15,13 +15,11 @@ license=('GPL2')
 
 # Dependency information
 groups=('base')
-# Depends: toolchain/gcc-static toolchain/binutils
-# HostDepends: bc inetutils
-# TODO: Expand and update!
-makedepends=('bc' 'gcc')
+hostdepends=('bc' 'inetutils' "${_target_triplet}-gcc-static"
+    "${_target_triplet}-binutils")
 
 # Building information
-options=('!strip')
+options=('!buildflags')
 source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz")
 md5sums=('9a78fa2eb6c68ca5a40ed5af08142599'
@@ -81,14 +79,6 @@ build() {
         # Modules are enabled
         targets+=" modules"
     fi
-
-    # Unset some uneeded variables.
-    # TODO: Figure out how to say that we don't need (or want!) these set
-    #       in the first place...
-    #       We do want some of them, though.
-    unset CFLAGS
-    unset LDFLAGS
-    unset CXXFLAGS
 
     make ${targets} ARCH="${_target_arch_alias}"
 }

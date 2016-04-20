@@ -15,10 +15,9 @@ license=('GPL')
 
 # Dependency information
 groups=('base')
-# Depends: packages/musl packages/ncurses targets/toolchain
-makedepends=('ncurses' 'libc') # Doesn't use libedit for now; too old apparently...
-# optdepends=('bash-completion: for tab completion')
-# provides=('sh') Doesn't for now.
+depends=('ncurses')
+makedepends=('musl') # Doesn't use libedit for now; too old...
+hostdepends=('toolchain')
 
 # Building information
 _stripped_basever="$(echo ${_basever} | tr -d '.')"

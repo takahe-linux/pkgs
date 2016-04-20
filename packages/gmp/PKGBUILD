@@ -12,10 +12,8 @@ url="http://gmplib.org/"
 license=('LGPL3' 'GPL')
 
 # Dependency information
-makedepends=('libc')
-# Depends: packages/musl targets/toolchain
-#depends=('gcc-libs') A hostdep...
-#makedepends=('m4') # Another hostdep...
+makedepends=('musl')
+hostdepends=('toolchain')
 
 # Building information
 source=("ftp://ftp.gmplib.org/pub/${pkgname}-${pkgver}/${pkgname}-${pkgver}.tar.xz")

@@ -13,7 +13,7 @@ url='http://www.thrysoee.dk/editline/'
 license=('BSD')
 
 # Dependency information
-# Depends: packages/musl packages/ncurses targets/toolchain
+# Depends: packages/musl packages/ncurses toolchain/toolchain
 makedepends=('ncurses' 'libc')
 provides=('readline')
 conflicts=('readline')

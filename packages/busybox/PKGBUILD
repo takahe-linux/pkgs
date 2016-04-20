@@ -12,8 +12,8 @@ license=('GPL') # Busybox; not sure about the service files, which
                 # are from sabotage linux
 
 # Dependency information
-# Depends: packages/musl targets/toolchain
-makedepends=('libc') #TODO: Fill in
+makedepends=('musl')
+hostdepends=('toolchain')
 
 # Building information
 _web_address="${url}/downloads"
@@ -134,7 +134,7 @@ package_bb-coreutils() {
 package_bb-util-linux() {
     pkgdesc="util linux symlinks for busybox"
     groups=('bb')
-    depends=('busybox' 'sh')
+    depends=('busybox' 'hush')
     provides=('util-linux')
     conflicts=('util-linux')
 

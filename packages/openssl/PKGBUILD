@@ -14,10 +14,10 @@ url='https://www.openssl.org'
 license=('custom:BSD')
 
 # Dependency information
-# Depends: packages/musl packages/zlib targets/toolchain
-makedepends=('zlib' 'libc')
-optdepends=('perl: for c_rehash script'
-            'ca-certificates')
+makedepends=('zlib' 'musl')
+hostdepends=('toolchain')
+# optdepends=('perl: for c_rehash script'
+#             'ca-certificates')
 
 # Building information
 backup=('etc/ssl/openssl.cnf')

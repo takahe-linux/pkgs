@@ -13,15 +13,11 @@ license=('custom') # Public domain
 
 # Dependency information
 groups=('base')
-# Depends: packages/musl packages/bash packages/linux-api-headers
-# Depends: targets/toolchain
-depends=('sh')
-makedepends=('libc' 'linux-api-headers')
-provides=("init")
-conflicts=("init")
+depends=('hush')
+makedepends=('musl' 'linux-api-headers')
+hostdepends=('toolchain')
 
 # Building information
-#TODO: Make the backup file /etc/... minus the leading /
 backup=("etc/epoch/epoch.conf")
 source=("http://universe2.us/${pkgname}_${pkgver}.tar.gz"
     "epoch.conf")

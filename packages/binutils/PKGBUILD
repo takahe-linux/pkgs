@@ -12,9 +12,9 @@ url="http://www.gnu.org/software/binutils/"
 license=('GPL')
 
 # Dependency information
-# Depends: packages/zlib packages/musl targets/toolchain
 groups=('base-devel')
-makedepends=('libc' 'zlib')
+makedepends=('musl' 'zlib')
+hostdepends=('toolchain')
 
 # Building information
 options=('staticlibs' '!distcc' '!ccache')

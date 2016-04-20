@@ -1,5 +1,0 @@
-packages/linux-api-headers
-toolchain/binutils
-packages/musl
-toolchain/gcc
-toolchain/pkg-config

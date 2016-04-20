@@ -13,8 +13,8 @@ license=('custom')
 
 # Dependency information
 groups=('base')
-# Depends: packages/musl packages/zlib targets/toolchain
-makedepends=('zlib' 'libc')
+makedepends=('zlib' 'musl')
+hostdepends=('toolchain')
 
 # Building information
 source=("ftp://ftp.astron.com/pub/$pkgname/$pkgname-$pkgver.tar.gz")

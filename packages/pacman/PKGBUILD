@@ -14,11 +14,10 @@ url="http://www.archlinux.org/pacman/"
 license=('GPL')
 
 # Dependency information
-groups=('base')
-# Depends: targets/toolchain packages/musl packages/libarchive packages/bash
-# Depends: packages/zlib packages/gettext packages/openssl
-depends=('bash' 'libarchive>=3.1.2' 'gettext' 'openssl')
-makedepends=('asciidoc' 'zlib' 'libtool=2.4.5' 'libc')
+groups=('base' 'base-devel')
+depends=('bash' 'libarchive' 'gettext' 'openssl')
+makedepends=('zlib' 'musl')
+hostdepends=('asciidoc' 'libtool' 'toolchain')
 checkdepends=('python2' 'fakechroot')
 optdepends=('wget')
 

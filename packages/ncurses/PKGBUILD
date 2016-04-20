@@ -12,9 +12,9 @@ url='http://invisible-island.net/ncurses/ncurses.html'
 license=('MIT')
 
 # Dependency information
-depends=('sh')
-# Depends: packages/musl packages/busybox targets/toolchain
-makedepends=('libc' 'make') #TODO: Fill in...
+depends=('hush')
+makedepends=('musl')
+hostdepends=('toolchain')
 
 # Building information
 source=(ftp://invisible-island.net/ncurses/ncurses-${pkgver}.tar.gz)

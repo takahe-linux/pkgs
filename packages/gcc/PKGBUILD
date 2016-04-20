@@ -15,9 +15,8 @@ license=('GPL' 'LGPL' 'FDL')
 
 # Dependency information
 groups=('base-devel')
-# Depends: packages/musl packages/gmp packages/mpfr packages/mpc
-# Depends: packages/binutils targets/toolchain
-makedepends=('libc' 'gmp' 'mpfr' 'mpc' 'binutils')
+makedepends=('musl' 'gmp' 'mpfr' 'mpc' 'binutils')
+hostdepends=('toolchain')
 
 # Building information
 options=('!emptydirs')

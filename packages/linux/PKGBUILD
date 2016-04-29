@@ -54,6 +54,10 @@ prepare() {
 CONFIG_DEVTMPFS=y
 CONFIG_DEVTMPFS_MOUNT=y
 EOF
+            # Currently the kernel will not build with -Werror; I haven't
+            # figured out a way to neatly disable this, so sed it out of
+            # the Kbuild file for mips.
+            sed -i arch/mips/Kbuild -e '/subdir-ccflags-y/d'
             ;;
         *) make defconfig ARCH="${_target_arch_alias}";;
     esac

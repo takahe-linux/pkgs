@@ -1,88 +1,33 @@
-# My distro ideas! #
+# Distro overview #
 
-Like arch, but different :)
+Differences from Arch:
 
-Well, not really.
-
-Main differences:
-
-- Different coreutils (?)
-- Different libraries (musl vs glibc)
-- i586
-- Lighter...
-- Wayland only (no X... unless Wayland doesn't really work.)
-- Simpler - hopefully!
-- Meta package: system (not a group - base). Only essentials...
-- No initcpio!
-- ???
-- Statically compiled?
-- Trying to avoid bash at all costs; go for more advanced shells or better
-  intepreters/other languages.
-- Using my defaults...
+- Different core userspace (busybox, musl libc, (currently) epoch init, ...)
+- Statically compiled.
+- Supports different architectures (currently, mips).
+- No initcpio.
 
 Similarities:
 
-- systemd (was going to; now not so sure... doesn't work with musl?)
 - pacman
-- syslinux
-- Simple...
-
-
-I'd also like to avoid anything with excess dependencies, mostly for ease of
-maintence.
-
-Part of the idea is that it is ideally suited to cross compiling - modifying
-makepkg is key to this idea! I'd like to create a database of computers +
-specs that makepkg could use to determine what flags, etc, etc.
-
-A future idea, anyway.
 
 
 # Coreutils and Util-Linux #
 
-Mmm...
-
-It all depends...
-
-The main reason is to try to cut down on the number of packages I have to
-maintain!
-
-Well, here are the options so far:
-
-- Busybox: Nice, works, but is a bit... basic. And not the easiest thing to
-  compile; it also limits flexibility in program selection!
-- suckless utils: Not tried; seem alright
-- Plan 9: Well, these are probably more out there. And not well-suited to
-  linux.
-- Other?
-
-TODO: Research which coreutils to use...
+Busybox, but other alternatives include the suckless, heirloom, plan 9, and
+toybox versions.
 
 
 # libc #
 
 Musl wins here, hands down!
 
-The only possible other option is uclibc, but only for a non-mmu unit (palm
-pilot?)
-
 
 # Compiler #
 
-I've had bad experiences with building a gcc toolchain, so I'd prefer clang.
-The real issue is figuring out how to build clang... without gcc.
-
-I can compile the kernel with GCC, without a cross compiler (check?).
-Since the hardware isn't able to do a self-hosted kernel compile, this would be
-preferable.
-
-I also would need to figure out how to get rid of gcc-libs... which could be
-challenging, given what requires them! (Perl, for one)
-
-Issues:
-
-- I need to figure out, either how to build a cross-gcc, or how to get rid of
-  the gcc-libs dependencies.
+gcc is complex, but is widely supported.
+If someone makes a simpler cc, I might use that on the system, as it is likely
+only going to be used to compile 'toy' projects.
 
 
 # Supported HW #
@@ -105,11 +50,7 @@ an initcpio is a waste of time and resources.
 
 # Bash #
 
-Bash is a ridiculous language; I'd prefer to get rid of it entirely. There is
-also better shells, in my opinion...
-It's also not the easiest thing to build!
-
-Issues:
-
-- Bash is required for makepkg, which is... crucial.
+Bash is required for makepkg.
+It has a few too many features for my liking, but I'm resigned to having it at
+this point...
 

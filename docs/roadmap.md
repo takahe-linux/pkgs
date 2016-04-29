@@ -2,15 +2,6 @@
 
 ## Packages ##
 
-Packages to do:
-- ca-certs + git (for bootstrapping)?
-- kernel + bootloader (v0.2.0)
-- tests
-
-Packages to be updated:
-- kernel
-- others?
-
 Packages to be fixed:
 - make (tries to use /bin/sh)
 - epoch's config is currently broken

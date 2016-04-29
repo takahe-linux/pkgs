@@ -84,6 +84,7 @@ build() {
         --disable-libsanitizer \
         --disable-libgomp \
         --disable-libquadmath \
+        --disable-libmpx \
         --disable-libvtv \
         --disable-libssp \
         --disable-lto \

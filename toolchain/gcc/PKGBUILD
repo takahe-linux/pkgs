@@ -70,7 +70,7 @@ build() {
     # reason. I might need to set up virtual swap?
     export CXXFLAGS="-Os"
 
-    # Also, disable libsanitizer, libatomic, libmudflap, and mudflap
+    # Also, disable libsanitizer, libatomic, libmudflap, libmpx, and mudflap
     # (they do not build).
     LDFLAGS="-Wl,-rpath,${_toolroot}/lib" \
     "${srcdir}/${_pkgname}-${pkgver}/configure" \
@@ -95,6 +95,7 @@ build() {
         --disable-mudflap \
         --disable-libatomic \
         --disable-libsanitizer \
+        --disable-libmpx \
         --with-gnu-as \
         --with-gnu-ld \
         --with-system-zlib

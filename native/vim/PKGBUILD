@@ -1,0 +1,80 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='vim'
+pkgver='7.4.1830'
+_versiondir=74
+pkgrel=1
+pkgdesc='An improved version of the vi text editor'
+
+# Additional information...
+arch=('mips' 'i586')
+url="http://www.vim.org"
+license=('custom:vim')
+
+# Dependency information
+depends=('ncurses')
+makedepends=('musl')
+
+# Building information
+backup=('/etc/vim.conf')
+source=("${pkgname}-${pkgver}.tar.gz::http://github.com/vim/vim/archive/v${pkgver}.tar.gz"
+        vim.conf)
+md5sums=()
+
+
+prepare() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    # Define the place for the vimrc files.
+    sed -i 's|^.*\(#define SYS_VIMRC_FILE\).*$|\1 "/etc/vim.conf"|' feature.h
+    sed -i 's|^.*\(#define VIMRC_FILE.*"\) .*$|\1|' feature.h
+    sed -i 's|^.*(#define USR_VIMRC_FILE\).*$|\1 "~/.config/vim.conf"|' feature.h
+
+    autoconf
+}
+
+
+build() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    ./configure --prefix="/usr" \
+        --localstatdir="/var/lib/vim" \
+        --with-compiledby="Takahe Linux" \
+        --with-features=normal \
+        --disable-gpm \
+        --disable-acl \
+        --with-x=no \
+        --disable-gui
+    make
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    make VIMRCLOC=/etc DESTDIR="${pkgdir}/" install
+
+    # FS#17216 fix?
+    sed -i 's|messages,/var|messages,/var/log/messages.log,/var|' \
+        "${pkgdir}/usr/share/vim/vim${_versiondir}/filetype.vim"
+
+    # patch filetype.vim for better handling of pacman related files
+    sed -i "s/rpmsave/pacsave/;s/rpmnew/pacnew/;s/,\*\.ebuild/\0,PKGBUILD*,*.install/" \
+        "${pkgdir}/usr/share/vim/vim${_versiondir}/filetype.vim"
+    sed -i "/find the end/,+3{s/changelog_date_entry_search/changelog_date_end_entry_search/}" \
+        "${pkgdir}/usr/share/vim/vim${_versiondir}/ftplugin/changelog.vim"
+
+    # Config
+    install -Dm644 "${srcdir}"/vimrc "${pkgdir}"/etc/vimrc
+
+    # rgb.txt file?
+    install -Dm644 runtime/rgb.txt \
+        "${pkgdir}/usr/share/vim/vim${_versiondir}/rgb.txt"
+    
+    # license
+    install -Dm644 runtime/doc/uganda.txt \
+        "${pkgdir}/usr/share/licenses/${pkgname}/license.txt"
+}
+
+

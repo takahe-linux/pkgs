@@ -14,13 +14,11 @@ license=('custom:vim')
 
 # Dependency information
 depends=('ncurses')
-makedepends=('musl')
 
 # Building information
-backup=('/etc/vim.conf')
-source=("${pkgname}-${pkgver}.tar.gz::http://github.com/vim/vim/archive/v${pkgver}.tar.gz"
-        vim.conf)
-md5sums=()
+backup=('etc/vim.conf')
+source=("${pkgname}-${pkgver}.tar.gz::http://github.com/vim/vim/archive/v${pkgver}.tar.gz")
+md5sums=('83344d673aa76c2da4124dc034cb82fc')
 
 
 prepare() {

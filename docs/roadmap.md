@@ -11,19 +11,6 @@ Packages to be fixed:
 I should also run namcap on the remaining packages, and fix any warnings...
 
 
-## Build system ##
-
-- Check for updates script support (v0.1.5)
-- Remove remaining TODO's (v0.1.6)
-- Add signal handling (v0.1.6)
-- Add support for "farming out" build tasks to other machines on a network,
-  via the clean chroot support (v0.2.0)
-- Add rebuild support back in (v0.2.0)
-- Add an activity monitor (v0.2.0)
-- Add asynchronous build support (v0.3.0)
-- Cross compile support in makepkg (v0.3.0)
-
-
 ## Misc ##
 
 - Standalone system, ie 3-stage bootstrap

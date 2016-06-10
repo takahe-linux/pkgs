@@ -16,7 +16,7 @@ license=('GPL' 'LGPL' 'FDL')
 groups=("${_target_triplet}")
 depends=("${_target_triplet}-binutils" 'zlib' 'libmpc' 'gmp' 'mpfr')
 makedepends=("${_target_triplet}-gcc-static")
-targetdepends=("musl")
+targetdepends=("musl" "linux-api-headers")
 conflicts=("${_target_triplet}-gcc-static")
 
 # Building information
@@ -56,9 +56,11 @@ build() {
 
     export CFLAGS_FOR_TARGET="${_target_cflags}"
     export CXXFLAGS_FOR_TARGET="${CFLAGS_FOR_TARGET}"
+    export CPPFLAGS_FOR_TARGET="${_target_cppflags}"
 
     export CFLAGS_FOR_BUILD="${CFLAGS}"
     export CXXFLAGS_FOR_BUILD="${CXXFLAGS}"
+    export CPPFLAGS_FOR_BUILD="${CPPFLAGS}"
 
     # --enable-cxx-flags is a hack, because currently libstdc++ uses CXXFLAGS,
     # not CXXFLAGS_FOR_TARGET. See GCC bug 53579...
@@ -66,8 +68,7 @@ build() {
     # TODO: Figure out exactly how the build systems _works_ (or doesn't) so
     # that I can patch it instead of applying this hack...
     # WARNING: To use -Os or -O2, you need more than 2GB of space (tmp if you
-    # are using /tmp for compiling). It also failed with -g... for the same
-    # reason. I might need to set up virtual swap?
+    # are using /tmp for compiling).
     export CXXFLAGS="-Os"
 
     # Also, disable libsanitizer, libatomic, libmudflap, libmpx, and mudflap

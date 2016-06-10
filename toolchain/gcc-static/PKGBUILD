@@ -42,6 +42,7 @@ build() {
 
     export CFLAGS_FOR_TARGET="${_target_cflags}"
     export CXXFLAGS_FOR_TARGET="${CFLAGS_FOR_TARGET}"
+    export CPPFLAGS_FOR_TARGET="${_target_cppflags}"
 
     "${srcdir}/${_pkgname}-${pkgver}/configure" \
         --build="${_local_triplet}" \

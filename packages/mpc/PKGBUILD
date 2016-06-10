@@ -12,7 +12,7 @@ url="http://www.multiprecision.org/"
 license=('LGPL')
 
 # Dependency information
-makedepends=('mpfr' 'musl')
+makedepends=('mpfr' 'gmp' 'musl')
 hostdepends=('toolchain')
 
 # Building information

@@ -14,7 +14,7 @@ license=('GPL3')
 # Dependency information
 groups=('base-devel')
 depends=('ncurses')
-makedepends=('musl')
+makedepends=('musl' 'linux-api-headers')
 hostdepends=('toolchain')
 
 # Building information

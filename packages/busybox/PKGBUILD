@@ -12,7 +12,7 @@ license=('GPL') # Busybox; not sure about the service files, which
                 # are from sabotage linux
 
 # Dependency information
-makedepends=('musl')
+makedepends=('musl' 'linux-api-headers')
 hostdepends=('toolchain')
 
 # Building information

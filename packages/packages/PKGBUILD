@@ -23,7 +23,7 @@ depends=(
     'filesystem'
     # Deps just required for booting.
     'epoch'
-    'linux'
+    'linux-qemu'
     )
 
 package() {

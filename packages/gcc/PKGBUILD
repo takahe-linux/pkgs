@@ -15,7 +15,7 @@ license=('GPL' 'LGPL' 'FDL')
 
 # Dependency information
 groups=('base-devel')
-makedepends=('musl' 'gmp' 'mpfr' 'mpc' 'binutils')
+makedepends=('musl' 'gmp' 'mpfr' 'mpc' 'binutils' 'zlib' 'linux-api-headers')
 hostdepends=('toolchain')
 
 # Building information
@@ -54,11 +54,19 @@ prepare() {
 build() {
     cd "${srcdir}/gcc-build"
 
-    #TODO: Figure out a more suitable way of doing this... some of these
-    # flags break the build (CFLAGS, I think - because we still need to compile
-    # host binaries here)
-    unset CFLAGS CXXFLAGS CFLAGS_FOR_TARGET CXXFLAGS_FOR_TARGET LDFLAGS \
-        LDFLAGS_FOR_TARGET
+    CFLAGS_FOR_TARGET="${_target_cflags}"
+    CXXFLAGS_FOR_TARGET="${CXXFLAGS}"
+    CPPFLAGS_FOR_TARGET="${_target_cppflags}"
+    LDFLAGS_FOR_TARGET="${_target_ldflags}"
+
+    CFLAGS_FOR_BUILD="${HOSTCFLAGS}"
+    CPPFLAGS_FOR_BUILD="${HOSTCPPFLAGS}"
+    CXXFLAGS_FOR_BUILD="${HOSTCXXFLAGS}"
+    LDFLAGS_FOR_BUILD="${HOSTLDFLAGS}"
+
+    # GCC doesn't seem to sanely use plain *FLAGS as build or target flags;
+    # unset these for now (they are set to be target flags by default).
+    unset CFLAGS CXXFLAGS CPPFLAGS LDFLAGS
 
     "${srcdir}/${pkgname}-${pkgver}/configure" \
         --build="${_local_triplet}" \

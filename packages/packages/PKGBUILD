@@ -1,0 +1,31 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='packages'
+pkgver='1.0'
+pkgrel=1
+pkgdesc="Meta-package for the cross-compiled packages"
+
+# Additional information...
+arch=('any')
+
+# Dependency information
+depends=(
+    # Deps required for building.
+    'gcc'
+    'make'
+    'binutils'
+    'pacman'
+    'fakefakeroot'
+    'busybox'
+    'bash'
+    'file'
+    'filesystem'
+    # Deps just required for booting.
+    'epoch'
+    'linux'
+    )
+
+package() {
+    :
+}

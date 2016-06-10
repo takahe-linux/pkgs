@@ -1,8 +1,2 @@
 packages/curl
-packages/busybox
-packages/filesystem
-packages/bash
-packages/pacman
-packages/epoch
-packages/file
-packages/linux
+packages/packages

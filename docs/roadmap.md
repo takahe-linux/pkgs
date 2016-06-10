@@ -10,12 +10,11 @@ Packages to be fixed:
 - busybox does not get installed suid
 - busybox man requires nroff
 - MANPATH is not set correctly for busybox?
+- toolchain/gcc runs strip on some files of the wrong arch
+- gcc packages contain references to $srcdir
+- file build needs musl replaced with gnu in the triplet
 
 I should also run namcap on the remaining packages, and fix any warnings...
-
-Currently, curl complains because the -I and -L CFLAGS are not in CPPFLAGS
-and LDFLAGS, respectively. I could fix that, but I'll save it for the next big
-rebuild.
 
 
 ## Misc ##

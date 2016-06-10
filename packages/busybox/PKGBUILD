@@ -179,6 +179,6 @@ _link_packages() {
     install -dm755 "${pkgdir}/usr/bin"
     
     for package in $@; do
-        ln -s "/usr/bin/busybox" "${pkgdir}/usr/bin/${package}"
+        ln -s "busybox" "${pkgdir}/usr/bin/${package}"
     done
 }

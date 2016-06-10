@@ -42,7 +42,7 @@ package() {
     install -d -m0755 "${pkgdir}/usr/bin"
     mv built/sbin/* "${pkgdir}/usr/bin"
     # Add a new wall symlink
-    ln -s "/usr/bin/epoch" "${pkgdir}/usr/bin/wall"
+    ln -s "epoch" "${pkgdir}/usr/bin/wall"
 
     # Copy the license file across
     install -D -m644 UNLICENSE.TXT "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"

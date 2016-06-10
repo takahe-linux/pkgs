@@ -18,7 +18,6 @@ groups=('base' 'base-devel')
 depends=('bash' 'libarchive' 'gettext' 'openssl')
 makedepends=('zlib' 'musl')
 hostdepends=('asciidoc' 'libtool' 'toolchain')
-checkdepends=('python2' 'fakechroot')
 optdepends=('wget')
 
 # Building information
@@ -57,11 +56,6 @@ build() {
 
     make LIBS="-lz"
     make -C contrib LIBS="-lz"
-}
-
-
-check() {
-    make -C "${srcdir}/${pkgname}-${pkgver}" check
 }
 
 

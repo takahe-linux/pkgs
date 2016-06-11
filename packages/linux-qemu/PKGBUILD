@@ -43,45 +43,96 @@ prepare() {
     # Clean up the kernel tree.
     make mrproper
 
+    # Generate the default config.
+    make allnoconfig ARCH="${_target_arch_alias}"
+
     # Pick a config that will work with qemu.
     case "${_target_arch}" in
-        mips) cp "arch/mips/configs/malta_defconfig" .config
-            # We build a big endian kernel; userspace is big endian.
-            sed -i .config \
-                -e 's:CONFIG_CPU_LITTLE_ENDIAN=y:CONFIG_CPU_BIG_ENDIAN=y:'
-            # We assume that devtmpfs is mounted.
+        mips)
+            # Generate the config.
             cat >> .config << EOF
-CONFIG_DEVTMPFS=y
-CONFIG_DEVTMPFS_MOUNT=y
+CONFIG_MIPS_MALTA=y
+CONFIG_CPU_BIG_ENDIAN=y
+CONFIG_CPU_MIPS32_R2=y
+CONFIG_PAGE_SIZE_16KB=y
+CONFIG_MIPS_MT_SMP=y
+CONFIG_HZ_100=y
+CONFIG_NO_HZ=y
+CONFIG_HIGH_RES_TIMERS=y
 EOF
+
             # Currently the kernel will not build with -Werror; I haven't
             # figured out a way to neatly disable this, so sed it out of
             # the Kbuild file for mips.
             sed -i arch/mips/Kbuild -e '/subdir-ccflags-y/d'
             ;;
-        i586) make defconfig ARCH="${_target_arch_alias}"
-            # Ensure that the built kernel supports i586.
+        i586)
+            # Generate the config.
             cat >> .config << EOF
-CONFIG_M586
+CONFIG_M586=y
 EOF
             ;;
         *) make defconfig ARCH="${_target_arch_alias}";;
     esac
 
-    # Enable 9P virtio.
+    # Enable standard options.
     cat >> .config << EOF
+# Generic options.
+CONFIG_PCI=y
+CONFIG_PRINTK=y
+CONFIG_TTY=y
+CONFIG_SLOB=y
+CONFIG_BINFMT_ELF=y
+CONFIG_BINFMT_SCRIPT=y
+CONFIG_CROSS_COMPILE="${_target_triplet}-"
+CONFIG_DEFAULT_HOSTNAME="qemu"
+
+# We don't enable this; it is broken on mips.
+# TODO: Bug report?
+#CONFIG_CC_OPTIMIZE_FOR_SIZE=y
+
+# We use devtmp, sys, tmp, and proc filesystems.
+# We also assume that devtmpfs is mounted.
+CONFIG_PROC_FS=y
+CONFIG_SYSFS=y
+CONFIG_TMPFS=y
+CONFIG_DEVTMPFS=y
+CONFIG_DEVTMPFS_MOUNT=y
+
+# Enable serial; disable a graphical console.
+# CONFIG_INPUT_KEYBOARD is not set
+# CONFIG_INPUT_MOUSE is not set
+# CONFIG_SERIO_I8042 is not set
+CONFIG_SERIAL_8250=y
+CONFIG_SERIAL_8250_CONSOLE=y
+# CONFIG_HWMON is not set
+# CONFIG_VGA_CONSOLE is not set
+
+# Enable 9p and virtio.
+CONFIG_VIRTIO=y
+CONFIG_VIRTIO_PCI=y
+CONFIG_VIRTIO_PCI_LEGACY=y
 CONFIG_NET_9P=y
+CONFIG_NET_9P_DEBUG=y
 CONFIG_NET_9P_VIRTIO=y
 CONFIG_9P_FS=y
-CONFIG_9P_FS_POSIX_ACL=y
+
+CONFIG_NET=y
+CONFIG_NETDEVICES=y
+
+# Enable block devices.
+CONFIG_BLOCK=y
+
+# Disable uneeded options.
+# CONFIG_ETHERNET is not set
+# CONFIG_INPUT_MOUSEDEV is not set
+# CONFIG_HID is not set
+# CONFIG_PCSPKR_PLATFORM is not set
+# CONFIG_UNIX98_PTYS is not set
 EOF
 
     # Run oldconfig.
-    yes "" | make oldconfig ARCH="${_target_arch_alias}" > /dev/null
-
-    # Update the config to use the proper toolchain.
-    sed -i .config -e '\CONFIG_CROSS_COMPILE\d'
-    printf 'CONFIG_CROSS_COMPILE="%s-"\n' "${_target_triplet}" >> .config
+    yes '' | make oldconfig ARCH="${_target_arch_alias}"
 }
 
 

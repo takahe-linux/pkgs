@@ -119,27 +119,15 @@ CONFIG_NET_9P_VIRTIO=y
 CONFIG_9P_FS=y
 CONFIG_9P_FS_POSIX_ACL=y
 
-CONFIG_NETWORK_FILESYSTEMS=y
 CONFIG_BLK_DEV=y
+CONFIG_BLK_DEV_INITRD=y
 CONFIG_NET=y
+CONFIG_INET=y
 CONFIG_NETDEVICES=y
 CONFIG_NET_CORE=y
-CONFIG_VIRTIO_BLK=y
+CONFIG_NETWORK_FILESYSTEMS=y
 CONFIG_VIRTIO_NET=y
-CONFIG_VIRT_DRIVERS=y
-CONFIG_PARAVIRT_GUEST=y
-CONFIG_VHOST_NET=y
-CONFIG_UNIX=y
-CONFIG_SYSCTL=y
-CONFIG_NAMESPACES=y
-# CONFIG_UTS_NS is not set
-# CONFIG_USER_NS is not set
-# CONFIG_PID_NS is not set
-CONFIG_NET_NS=y
 CONFIG_BLOCK_COMPAT=y
-CONFIG_PCI_DIRECT=y
-CONFIG_PCI_LABEL=y
-CONFIG_PCI_DOMAINS=y
 
 # Enable block devices.
 CONFIG_BLOCK=y
@@ -167,6 +155,7 @@ build() {
     # Make the kernel image and modules, if needed
     case "${_target_arch_alias}" in
         i386) targets="bzImage";;
+        mips) targets="vmlinux";;
         *) targets="vmlinuz";;
     esac
     if modules; then
@@ -192,8 +181,10 @@ package() {
     if [ -e "arch/${_target_arch_alias}/boot/bzImage" ]; then
         cp "arch/${_target_arch_alias}/boot/bzImage" \
            "${pkgdir}/boot/vmlinuz"
-    else
+    elif [ -e "vmlinuz" ]; then
         cp "vmlinuz" "${pkgdir}/boot/vmlinuz"
+    else
+        cp "vmlinux" "${pkgdir}/boot/vmlinuz"
     fi
 
     # Install the modules and firmware, if required

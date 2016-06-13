@@ -18,6 +18,8 @@ groups=('base')
 depends=('ncurses')
 makedepends=('musl') # Doesn't use libedit for now; too old...
 hostdepends=('toolchain')
+provides=('sh')
+conflicts=('sh')
 
 # Building information
 _stripped_basever="$(echo ${_basever} | tr -d '.')"
@@ -138,6 +140,8 @@ package() {
     cd "${srcdir}/${pkgname}-${_basever}"
 
     make DESTDIR="${pkgdir}/" install
+
+    ln -s bash "${pkgdir}/usr/bin/sh"
 
     rm -rf "${pkgdir}/usr/share/info"
 }

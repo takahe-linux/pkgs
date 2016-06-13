@@ -104,10 +104,8 @@ package_hush() {
     pkgdesc="Simple busybox shell"
     depends=("busybox")
     groups=('bb')
-    provides=('sh')
-    conflicts=('sh')
 
-    SHELLS="hush sh"
+    SHELLS="hush"
 
     _link_packages $SHELLS
 }

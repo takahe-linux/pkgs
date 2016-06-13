@@ -27,7 +27,7 @@ source=("https://sources.archlinux.org/other/pacman/${pkgname}-${pkgver}.tar.gz"
         makepkg.conf)
 md5sums=('377a2664d6007d72d6d8a126add83bcf'
          '6b40bff8bd90882a7d3f6b3024f74d38'
-         'd49dde683f55476414e3376ca0db3919')
+         '99acb0e7ec4c35f7d01bdb62447957bb')
 
 
 prepare() {

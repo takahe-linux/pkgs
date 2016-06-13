@@ -13,8 +13,8 @@ url="http://www.vim.org"
 license=('custom:vim')
 
 # Dependency information
-depends=('ncurses')
-makedepends=('packages')
+#depends=('ncurses')
+makedepends=('autoconf' 'ncurses' 'packages')
 
 # Building information
 backup=('etc/vim.conf')
@@ -25,12 +25,14 @@ md5sums=('83344d673aa76c2da4124dc034cb82fc')
 prepare() {
     cd "${srcdir}/${pkgname}-${pkgver}"
 
-    # Define the place for the vimrc files.
-    sed -i 's|^.*\(#define SYS_VIMRC_FILE\).*$|\1 "/etc/vim.conf"|' feature.h
-    sed -i 's|^.*\(#define VIMRC_FILE.*"\) .*$|\1|' feature.h
-    sed -i 's|^.*(#define USR_VIMRC_FILE\).*$|\1 "~/.config/vim.conf"|' feature.h
-
     autoconf
+
+    # Define the place for the vimrc files.
+    sed -i 's|^.*\(#define SYS_VIMRC_FILE\).*$|\1 "/etc/vim.conf"|' \
+        src/feature.h
+    sed -i 's|^.*\(#define VIMRC_FILE.*"\) .*$|\1|' src/feature.h
+    sed -i 's|^.*(#define USR_VIMRC_FILE\).*$|\1 "~/.config/vim.conf"|' \
+        src/feature.h
 }
 
 

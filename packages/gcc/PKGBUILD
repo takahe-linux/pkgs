@@ -98,7 +98,6 @@ build() {
         --disable-lto \
         --disable-libunwind-exceptions \
         --with-native-system-header-dir="/usr/include" \
-        --with-local-prefix="/usr" \
         --with-gnu-as \
         --with-gnu-ld \
         --with-system-zlib

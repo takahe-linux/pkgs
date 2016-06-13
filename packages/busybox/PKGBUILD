@@ -22,7 +22,7 @@ source=("${_web_address}/${pkgname}-${pkgver}.tar.bz2"
         "config"
        )
 md5sums=('2eaae519cac1143bcf583636a745381f'
-         'fe6c3c25eb2b87d70e551922e7db728f')
+         '1077b807254484f8ee2b5e2ff84e7024')
 
 
 prepare() {
@@ -60,7 +60,7 @@ package_busybox() {
     groups=('bb')
     _pkg_list=('kbd' 'ncurses' 'which' 'gzip' 'tar' 'bzip2' 'awk' \
         'diffutils' 'sed' 'vi' 'patch' 'shadow' 'e2fsprogs' 'less' 'hdparm' \
-        'man' 'inetutils' 'ip2route' 'iputils' 'dhcpcd' 'procps-ng')
+        'man' 'inetutils' 'ip2route' 'iputils' 'dhcpcd' 'procps-ng' 'xz')
     provides=(${_pkg_list}[@])
     conflicts=(${_pkg_list}[@])
 
@@ -77,7 +77,7 @@ package_busybox() {
     WHICH="which"
 
     APPLETS="gunzip gzip lzop tar bzip2 bunzip2 unxz bzcat lzcat lzopcat \
-        unlzma unlzop xzcat zcat [ [[ uevent"
+        unlzma unlzop xzcat zcat [ [[ uevent xz"
     EDITORS="awk cmp diff patch sed vi"
     SHADOW="adduser addgroup deluser delgroup passwd"
     EXT2="chattr fsck lsattr tune2fs"

@@ -1,0 +1,36 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='m4'
+pkgver='1.4.17'
+pkgrel=1
+pkgdesc="The GNU macro processor"
+
+# Additional information...
+arch=('mips' 'i586')
+url="http://www.gnu.org/software/m4"
+license=('GPL3')
+
+# Dependency information
+groups=('base-devel')
+depends=('bash')
+makedepends=('packages')
+
+# Building information
+source=("ftp://ftp.gnu.org/gnu/m4/${pkgname}-${pkgver}.tar.xz")
+md5sums=('12a3c829301a4fd6586a57d3fcf196dc')
+
+
+build() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    ./configure --prefix=/usr
+    make
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    make DESTDIR="${pkgdir}/" install
+}

@@ -40,10 +40,6 @@ prepare() {
 build() {
     cd "${srcdir}/gcc-build"
 
-    export CFLAGS_FOR_TARGET="${_target_cflags} --sysroot=/sysroot"
-    export CXXFLAGS_FOR_TARGET="${CFLAGS_FOR_TARGET}"
-    export CPPFLAGS_FOR_TARGET="${_target_cppflags} -I/sysroot/usr/include"
-
     "${srcdir}/${_pkgname}-${pkgver}/configure" \
         --build="${_local_triplet}" \
         --host="${_local_triplet}" \
@@ -83,8 +79,6 @@ build() {
 
 package() {
     cd "${srcdir}/gcc-build"
-
-    #TODO: Split this into two packages, one for each architecture.
 
     make DESTDIR="${pkgdir}" install-gcc install-target-libgcc -j1
 

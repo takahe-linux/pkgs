@@ -54,14 +54,6 @@ prepare() {
 build() {
     cd "${srcdir}/gcc-build"
 
-    export CFLAGS_FOR_TARGET="${_target_cflags} --sysroot=/sysroot"
-    export CXXFLAGS_FOR_TARGET="${CFLAGS_FOR_TARGET}"
-    export CPPFLAGS_FOR_TARGET="${_target_cppflags} -I/sysroot/usr/include"
-
-    export CFLAGS_FOR_BUILD="${CFLAGS}"
-    export CXXFLAGS_FOR_BUILD="${CXXFLAGS}"
-    export CPPFLAGS_FOR_BUILD="${CPPFLAGS}"
-
     # --enable-cxx-flags is a hack, because currently libstdc++ uses CXXFLAGS,
     # not CXXFLAGS_FOR_TARGET. See GCC bug 53579...
     # Sigh...

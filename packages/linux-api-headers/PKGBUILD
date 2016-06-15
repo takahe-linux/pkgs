@@ -22,14 +22,12 @@ md5sums=('633a0ff5b4d321d8e553133dcc2df36c')
 build() {
     mv "${srcdir}/kernel-headers-${pkgver}-${_header_version}" \
        "${srcdir}/${pkgname}-${pkgver}"
-
 }
 
 
 package() {
   cd "${srcdir}/${pkgname}-${pkgver}"
 
-  #TODO: Auto-change arch as required
   make ARCH="${_target_arch_alias}" INSTALL_HDR_PATH="${pkgdir}/usr" \
       headers_install
 

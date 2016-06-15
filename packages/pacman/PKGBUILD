@@ -74,7 +74,9 @@ package() {
     sed -i "${pkgdir}/etc/makepkg.conf" \
         -e "s|@CARCH[@]|${_target_arch}|g" \
         -e "s|@CHOST[@]|${_target_triplet}|g" \
-        -e "s|@CARCHFLAGS[@]|${_target_cflags}|g"
+        -e "s|@CFLAGS[@]|${_target_cflags}|g" \
+        -e "s|@CPPFLAGS[@]|${_target_cppflags}|g" \
+        -e "s|@LDFLAGS[@]|-Wl${_target_ldflags}|g"
 
     # Install the bash completion files
     install -dm755 "${pkgdir}/usr/share/bash-completion/completions"

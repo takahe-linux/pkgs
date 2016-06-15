@@ -54,9 +54,9 @@ prepare() {
 build() {
     cd "${srcdir}/gcc-build"
 
-    export CFLAGS_FOR_TARGET="${_target_cflags}"
+    export CFLAGS_FOR_TARGET="${_target_cflags} --sysroot=/sysroot"
     export CXXFLAGS_FOR_TARGET="${CFLAGS_FOR_TARGET}"
-    export CPPFLAGS_FOR_TARGET="${_target_cppflags}"
+    export CPPFLAGS_FOR_TARGET="${_target_cppflags} -I/sysroot/usr/include"
 
     export CFLAGS_FOR_BUILD="${CFLAGS}"
     export CXXFLAGS_FOR_BUILD="${CXXFLAGS}"

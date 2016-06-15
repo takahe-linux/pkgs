@@ -54,10 +54,10 @@ prepare() {
 build() {
     cd "${srcdir}/gcc-build"
 
-    CFLAGS_FOR_TARGET="${_target_cflags}"
+    CFLAGS_FOR_TARGET="${CFLAGS}"
     CXXFLAGS_FOR_TARGET="${CXXFLAGS}"
-    CPPFLAGS_FOR_TARGET="${_target_cppflags}"
-    LDFLAGS_FOR_TARGET="${_target_ldflags}"
+    CPPFLAGS_FOR_TARGET="${CPPFLAGS}"
+    LDFLAGS_FOR_TARGET="${LDFLAGS}"
 
     CFLAGS_FOR_BUILD="${HOSTCFLAGS}"
     CPPFLAGS_FOR_BUILD="${HOSTCPPFLAGS}"

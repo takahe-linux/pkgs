@@ -22,7 +22,7 @@ source=("${_web_address}/${pkgname}-${pkgver}.tar.bz2"
         "config"
        )
 md5sums=('2eaae519cac1143bcf583636a745381f'
-         '1077b807254484f8ee2b5e2ff84e7024')
+         'd2b81637ac1eeba9ee92a83f4e63b965')
 
 
 prepare() {
@@ -82,7 +82,7 @@ package_busybox() {
     SHADOW="adduser addgroup deluser delgroup passwd"
     EXT2="chattr fsck lsattr tune2fs"
 
-    MISC="less hdparm man"
+    MISC="less hdparm man halt poweroff reboot"
     NET="ping hostname ip udhcpc ipaddr iplink dnsdomainname"
     PROC="iostat lsof nmeter pmap pstree top free fuser kill killall pgrep \
         pidof pkill ps renice watch sysctl"

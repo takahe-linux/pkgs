@@ -21,8 +21,9 @@ depends=(
     'bash'
     'file'
     'filesystem'
+    'musl'
     # Deps just required for booting.
-    'epoch'
+    'sinit'
     'linux-qemu'
     )
 

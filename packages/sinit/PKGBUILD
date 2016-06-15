@@ -1,0 +1,45 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='sinit'
+pkgver='1.0'
+pkgrel=1
+pkgdesc="A simple init"
+
+# Additional information...
+arch=('mips' 'i586')
+url="http://core.suckless.org/sinit/"
+license=('i586' 'mips')
+
+# Dependency information
+groups=('base')
+makedepends=('musl')
+hostdepends=('toolchain')
+
+# Building information
+source=("http://dl.suckless.org/sinit/${pkgname}-${pkgver}.tar.gz")
+md5sums=('9a15ec492278e2a2b29f8b25eda10286')
+
+
+prepare() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    cat > config.h << EOF
+static char *const rcinitcmd[]     = { "/etc/init/init", NULL };
+static char *const rcrebootcmd[]   = { "/etc/init/shutdown", "reboot", NULL };
+static char *const rcpoweroffcmd[] = { "/etc/init/shutdown", "poweroff", NULL };
+EOF
+}
+
+build() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+    make CC="${_target_triplet}-gcc" CFLAGS="${CFLAGS}" LDFLAGS="${LDFLAGS}" \
+        CPPFLAGS="${CPPFLAGS}"
+}
+
+package() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+    make PREFIX="/usr" DESTDIR="${pkgdir}/" install
+    install -m644 -D LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+    install -m644 -D README "${pkgdir}/usr/share/doc/${pkgname}/README"
+}

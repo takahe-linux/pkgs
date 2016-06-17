@@ -13,26 +13,22 @@ url="http://www.vim.org"
 license=('custom:vim')
 
 # Dependency information
-#depends=('ncurses')
-makedepends=('autoconf' 'ncurses' 'packages')
+depends=('ncurses')
+makedepends=('packages')
 
 # Building information
-backup=('etc/vim.conf')
 source=("${pkgname}-${pkgver}.tar.gz::http://github.com/vim/vim/archive/v${pkgver}.tar.gz")
 md5sums=('83344d673aa76c2da4124dc034cb82fc')
 
 
 prepare() {
-    cd "${srcdir}/${pkgname}-${pkgver}"
-
-    autoconf
+    cd "${srcdir}/${pkgname}-${pkgver}/src"
 
     # Define the place for the vimrc files.
-    sed -i 's|^.*\(#define SYS_VIMRC_FILE\).*$|\1 "/etc/vim.conf"|' \
-        src/feature.h
-    sed -i 's|^.*\(#define VIMRC_FILE.*"\) .*$|\1|' src/feature.h
-    sed -i 's|^.*(#define USR_VIMRC_FILE\).*$|\1 "~/.config/vim.conf"|' \
-        src/feature.h
+    sed -i 's|^.*\(#define SYS_VIMRC_FILE\).*$|\1 "/etc/vim.conf"|' feature.h
+    sed -i 's|^.*\(#define VIMRC_FILE.*"\) .*$|\1|' feature.h
+    sed -i 's|^.*\(#define USR_VIMRC_FILE\).*$|\1 "~/.config/vim.conf"|' \
+        feature.h
 }
 
 
@@ -40,7 +36,7 @@ build() {
     cd "${srcdir}/${pkgname}-${pkgver}"
 
     ./configure --prefix="/usr" \
-        --localstatdir="/var/lib/vim" \
+        --localstatedir="/var/lib/vim" \
         --with-compiledby="Takahe Linux" \
         --with-features=normal \
         --disable-gpm \
@@ -66,9 +62,6 @@ package() {
     sed -i "/find the end/,+3{s/changelog_date_entry_search/changelog_date_end_entry_search/}" \
         "${pkgdir}/usr/share/vim/vim${_versiondir}/ftplugin/changelog.vim"
 
-    # Config
-    install -Dm644 "${srcdir}"/vimrc "${pkgdir}"/etc/vimrc
-
     # rgb.txt file?
     install -Dm644 runtime/rgb.txt \
         "${pkgdir}/usr/share/vim/vim${_versiondir}/rgb.txt"
@@ -77,5 +70,4 @@ package() {
     install -Dm644 runtime/doc/uganda.txt \
         "${pkgdir}/usr/share/licenses/${pkgname}/license.txt"
 }
-
 

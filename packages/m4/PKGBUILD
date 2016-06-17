@@ -14,7 +14,8 @@ license=('GPL3')
 # Dependency information
 groups=('base-devel')
 depends=('bash')
-makedepends=('packages')
+makedepends=('musl')
+hostdepends=('toolchain')
 
 # Building information
 source=("ftp://ftp.gnu.org/gnu/m4/${pkgname}-${pkgver}.tar.xz")
@@ -23,8 +24,9 @@ md5sums=('12a3c829301a4fd6586a57d3fcf196dc')
 
 build() {
     cd "${srcdir}/${pkgname}-${pkgver}"
-
-    ./configure --prefix=/usr
+    ./configure --prefix=/usr \
+        --build="${_local_triplet}" \
+        --host="${_target_triplet}"
     make
 }
 
@@ -33,4 +35,10 @@ package() {
     cd "${srcdir}/${pkgname}-${pkgver}"
 
     make DESTDIR="${pkgdir}/" install
+
+    # Remove the redundant charset.alias (provided by gettext).
+    rm -f "${pkgdir}/usr/lib/charset.alias"
+    rmdir "${pkgdir}/usr/lib"
+
+    rm -rf "${pkgdir}/usr/share/info"
 }

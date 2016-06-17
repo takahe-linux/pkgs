@@ -13,12 +13,24 @@ license=('GPL2' 'GPL3' 'custom')
 
 # Dependency information
 groups=('base-devel')
-depends=('m4')
-makedepends=('packages')
+depends=('m4' 'bash' 'busybox')
 
 # Building information
-source=("ftp://ftp.gnu.org/pub/gnu/${pkgname}/${pkgname}-${pkgver}.tar.xz")
-md5sums=('50f97f4159805e374639a73e2636f22e')
+source=("ftp://ftp.gnu.org/pub/gnu/${pkgname}/${pkgname}-${pkgver}.tar.xz"
+        "autoconf-2.69-perl-5.22-autoscan.patch"
+        "autoconf-2.69-libtool-compatibility.patch")
+md5sums=('50f97f4159805e374639a73e2636f22e'
+         'aa07afe5a671df25bf1878831702d5b9'
+         '87bceda7922ebc2a453568b2ae179e1b')
+
+
+prepare() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    for patch in "${srcdir}"/*.patch; do
+        patch -p1 -i "${patch}"
+    done
+}
 
 
 build() {
@@ -32,13 +44,12 @@ build() {
 package() {
     cd "${srcdir}/${pkgname}-${pkgver}"
 
-    make DESTDIR="${pkgdir}" install
+    make DESTDIR="${pkgdir}/" install
 
     # license exception
     install -Dm644 COPYING.EXCEPTION \
         "${pkgdir}/usr/share/licenses/autoconf/COPYING.EXCEPTION"
 
     # remove unwanted file
-    rm -f "${pkgdir}/usr/share/info/standards.info"
-        make DESTDIR="${pkgdir}/" install
+    rm -f "${pkgdir}/usr/share/info"
 }

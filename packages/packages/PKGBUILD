@@ -15,7 +15,6 @@ depends=(
     'gcc'
     'make'
     'binutils'
-    'autoconf'
     'm4'
     'musl'
 

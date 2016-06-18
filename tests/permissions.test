@@ -1,0 +1,36 @@
+#!/usr/bin/bash
+
+set -e
+export failed="false"
+finish() {
+    if [ "${failed}" != "false" ]; then
+        echo "Fail!"; exit 1
+    else
+        echo "Success!"; exit 0
+    fi
+}
+fail() { printf "%s\n" "$1"; failed="true"; }
+
+find /etc /usr | while read file; do
+    perm="$(stat -c "%#a" "${file}")"
+    other="${perm:3}"
+    if [ -h "${file}" ]; then
+        if [ "${perm}" -ne 0777 ]; then
+            fail "Symlink '${file}' has permissions '${perm}'!"
+        fi 
+    elif [ -f "${file}" ]; then
+        if [ "${perm}" -ne 0644 ] && [ "${perm}" -ne 0755 ] && \
+            [ "${perm}" -ne 0444 ] && [ "${perm}" -ne 0640 ] && \
+            [ "${perm}" -ne 0750 ] && [ "${perm}" -ne 0440 ] && \
+            [ "${perm}" -ne 0600 ] && [ "${perm}" -ne 0 ]; then
+            fail "File '${file}' has permissions '${perm}'!"
+        fi
+    elif [ -d "${file}" ]; then
+        if [ "${perm}" -ne 0755 ] && [ "${perm}" -ne 0750 ] && \
+            [ "${perm}" -ne 0700 ] && [ "${perm}" -ne 0555 ]; then
+            fail "Dir '${file}' has permissions '${perm}'!"
+        fi
+    fi
+done
+
+finish

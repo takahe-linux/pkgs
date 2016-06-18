@@ -1,0 +1,41 @@
+#!/usr/bin/sh
+
+set -e
+finish() { echo "Success!"; exit 0; }
+fail() { printf "%s\n" "$1"; echo "Fail!"; exit 1; }
+
+exists() {
+    if [ ! -e "$1" ]; then
+        fail "'$1' does not exist!"
+    fi
+}
+
+void() {
+    if [ -e "$1" ]; then
+        fail "'$1' exists!"
+    fi
+}
+
+# Check basic paths.
+exists /usr
+exists /proc
+exists /sys
+exists /proc
+exists /boot
+exists /etc
+exists /usr/bin
+exists /usr/lib
+exists /usr/share
+
+# Check basic binaries.
+exists /usr/bin/pacman
+exists /usr/bin/busybox
+exists /usr/bin/gcc
+exists /usr/bin/vi
+
+# Check that some files do not exist.
+void /usr/share/info
+void /lib
+#void /bin # It would be nice to get rid of this, but not likely at this point.
+
+finish

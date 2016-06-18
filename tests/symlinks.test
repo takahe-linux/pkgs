@@ -1,0 +1,31 @@
+#!/usr/bin/sh
+
+set -e
+export failed="false"
+finish() {
+    if [ "${failed}" != "false" ]; then
+        echo "Fail!"; exit 1
+    else
+        echo "Success!"; exit 0
+    fi
+}
+fail() { printf "%s\n" "$1"; failed="true"; }
+
+# Check that all symbolic links actually point to something.
+find /usr /etc /var -type l | \
+while read file; do
+    dir="$(dirname "${file}")" || \
+        echo "File '${file}' has no basename?"
+    link="$(readlink "${file}")" || \
+        echo "File '${file}' is not a symlink!"
+    if [ "${link:0:1}" == '/' ]; then
+        target="${link}"
+    else
+        target="${dir}/${link}"
+    fi
+    if [ ! -e "${target}" ]; then
+        fail "Symlink '${file}' is broken (points to '${target}', owned by $(pacman -Qqo "${file}" 2> /dev/null || printf 'unowned'))!"
+    fi
+done
+
+finish

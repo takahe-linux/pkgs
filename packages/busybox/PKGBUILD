@@ -167,7 +167,7 @@ package_bb-findutils() {
     provides=('findutils')
     conflicts=('findutils')
 
-    FIND="find grep xargs"
+    FIND="find grep xargs fgrep egrep"
 
     _link_packages $FIND
 }

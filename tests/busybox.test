@@ -26,7 +26,8 @@ done < "${links}"
 for link in /usr/bin/*; do
     if target="$(readlink "${link}")" && \
         [ "${target##*/}" == "busybox" ]; then
-        if ! grep "${links}" -e "^${link##*/}\$" > /dev/null; then
+        if [ "${link##*/}" != "[" ] && [ "${link##*/}" != "[[" ] && \
+            ! grep "${links}" -e "^${link##*/}\$" > /dev/null; then
             fail "'${link}' points to busybox, but no applet exists!"
         fi
     fi

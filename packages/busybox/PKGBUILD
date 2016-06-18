@@ -117,7 +117,7 @@ package_bb-coreutils() {
     provides=('coreutils')
     conflicts=('coreutils')
 
-    COREUTILS="basename cat date id groups shuf test touch tr who chgrp \
+    COREUTILS="basename cat date id groups shuf test touch tr chgrp \
         chmod chown chroot cksum comm cp cut dd df dirname du echo env expand \
         expr false fsync head install ln logname ls md5sum mkdir mkfifo \
         mknod mv nice nohup printf pwd readlink realpath rm rmdir seq \

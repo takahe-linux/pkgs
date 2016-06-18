@@ -13,7 +13,7 @@ finish() {
 fail() { printf "%s\n" "$1"; failed="true"; }
 
 # Generate the list and check that all applets exist.
-links="$(mktemp "${TMPDIR:-/tmp}/busybox_links.XXXX")"
+links="$(mktemp "${TMPDIR:-/tmp}/busybox_links.XXXXXX")"
 trap "rm -f '${links}'" EXIT
 busybox --list > "${links}"
 while IFS= read link; do

@@ -2,7 +2,7 @@
 
 # Package information
 pkgname='make'
-pkgver='4.2'
+pkgver='4.2.1'
 pkgrel=1
 pkgdesc="GNU make utility to maintain groups of programs"
 
@@ -19,7 +19,7 @@ hostdepends=('toolchain')
 
 # Building information
 source=("ftp://ftp.gnu.org/gnu/${pkgname}/${pkgname}-${pkgver}.tar.bz2")
-md5sums=('85ad14d08766201ffe71efa866f4fb91')
+md5sums=('15b012617e7c44c0ed482721629577ac')
 
 
 build() {

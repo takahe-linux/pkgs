@@ -58,11 +58,12 @@ build() {
 package_busybox() {
     pkgdesc="Main busybox binary and symlinks"
     groups=('bb')
-    _pkg_list=('kbd' 'ncurses' 'which' 'gzip' 'tar' 'bzip2' 'awk' \
-        'diffutils' 'sed' 'vi' 'patch' 'shadow' 'e2fsprogs' 'less' 'hdparm' \
-        'man' 'inetutils' 'ip2route' 'iputils' 'dhcpcd' 'procps-ng' 'xz')
-    provides=(${_pkg_list}[@])
-    conflicts=(${_pkg_list}[@])
+    provides=('kbd' 'which' 'gzip' 'tar' 'bzip2' 'awk' 'diffutils' \
+        'sed' 'vi' 'patch' 'shadow' 'e2fsprogs' 'less' 'hdparm' 'man' \
+        'inetutils' 'ip2route' 'iputils' 'dhcpcd' 'procps-ng' 'xz')
+    conflicts=('kbd' 'which' 'gzip' 'tar' 'bzip2' 'awk' 'diffutils' \
+        'sed' 'vi' 'patch' 'shadow' 'e2fsprogs' 'less' 'hdparm' 'man' \
+        'inetutils' 'ip2route' 'iputils' 'dhcpcd' 'procps-ng' 'xz')
 
     cd "${srcdir}/${pkgname}-${pkgver}"
 

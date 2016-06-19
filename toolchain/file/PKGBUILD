@@ -7,14 +7,13 @@ pkgrel=1
 pkgdesc='File type identification utility'
 
 # Additional information...
-arch=('mips' 'i586')
+arch=('i686' 'x86_64')
 url='http://www.darwinsys.com/file/'
 license=('custom')
 
 # Dependency information
-groups=('base')
-makedepends=('zlib' 'musl')
-hostdepends=('toolchain' "${_target_triplet}-file")
+depends=('glibc' 'zlib')
+provides=("${_target_triplet}-${pkgname}")
 
 # Building information
 source=("ftp://ftp.astron.com/pub/${pkgname}/${pkgname}-${pkgver}.tar.gz")
@@ -23,12 +22,7 @@ md5sums=('3f7771424aa855f32094b49571e19b33')
 
 build() {
     cd "${srcdir}/${pkgname}-${pkgver}"
-
-    #TODO: Fix workaround here (patch upstream?)
-    ./configure --prefix="/usr" \
-        --host="$(echo "${_target_triplet}" | sed 's:musl:gnu:')" \
-        --build="${_local_triplet}" \
-        --disable-shared
+    ./configure --prefix="/usr"
     make
 }
 

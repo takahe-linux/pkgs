@@ -54,19 +54,7 @@ Also, there is a minimal devd implementation in both C and shell
 
 ## Init ##
 
-Highly important :)
-
-There are many choices, see
-[here](https://www.troubleshooters.com/linux/init/features_and_benefits.htm)
-for a (biased against systemd) overview.
-Personally, I like some features of systemd, so have gone for Epoch.
-Epoch suffers from some of the issues of mdev, ie it appears to be harder to
-install default service files (to use some systemd vocabulary) with packages,
-but otherwise it's fairly good.
-There are a few 'missing' features, but it's better than the alternatives...
-
-Note: Epoch, as it turns out, has a few bugs. The 'custom' IPC system is flaky,
-      for instance...
+I'm using [sinit](http://core.suckless.org/sinit), with some custom scripts.
 
 ## Cron ##
 

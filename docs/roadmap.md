@@ -7,8 +7,8 @@ Packages to be fixed:
 - sinit does not come with any init scripts (probably create a new package with
   some instead of adding them to sinit; rename sinit binary to init?)
 - /dev/fd -> /proc/self/fd symlink is not created - this needs to be
-  dynamically created, so probably in the mdev or epoch config
-- busybox does not get installed suid
+  dynamically created, so probably in the mdev or sinit config
+- busybox does not get installed suid (due to fakeroot usage)
 - busybox man requires nroff
 - MANPATH is not set correctly for busybox?
 - toolchain/gcc runs strip on some files of the wrong arch
@@ -25,9 +25,4 @@ Otherwise, grep for TODO's in the PKGBUILDs.
 - Improve the documentation.
 - Update the Toshiba kernel config.
 - Shrink memory usage for the kernel and userspace.
-
-
-## Testing system ##
-
-See docs/testing.md.
 

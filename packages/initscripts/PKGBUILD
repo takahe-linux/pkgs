@@ -1,0 +1,30 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='initscripts'
+pkgver='0.1'
+pkgrel=1
+pkgdesc="Startup and shutdown scripts"
+
+# Additional information...
+arch=('any')
+url="https://bitbucket.org/Alastair_Hughes/takahe-linux/"
+license=('MIT')
+
+# Dependency information
+groups=('base')
+depends=('busybox' 'mdev' 'sh')
+
+# Building information
+backup=('etc/init/init' 'etc/init/shutdown')
+source=('init.sh'
+        'shutdown.sh')
+md5sums=('cf4332e3768ed6a171744ed4101f4e15'
+         'b6d6ba862a24cc809376af41df058f82')
+
+
+package() {
+    cd "${srcdir}"
+    install -Dm0755 "init.sh" "${pkgdir}/etc/init/init"
+    install -Dm0755 "shutdown.sh" "${pkgdir}/etc/init/shutdown"
+}

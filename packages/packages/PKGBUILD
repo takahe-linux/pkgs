@@ -27,6 +27,7 @@ depends=(
 
     # Deps just required for booting.
     'sinit'
+    'initscripts'
     'linux-qemu'
     )
 

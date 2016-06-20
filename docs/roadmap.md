@@ -12,6 +12,7 @@ Packages to be fixed:
 - busybox man requires nroff
 - MANPATH is not set correctly for busybox?
 - toolchain/gcc runs strip on some files of the wrong arch
+- ncurses built for i586 does not properly install the terminfo database
 
 I should also run namcap on the remaining packages, and fix any warnings...
 

@@ -9,7 +9,7 @@ mount -a
 hostname -F /etc/hostname
 
 # Initialise the devices.
-mdev -s
+# TODO: Actually use mdev...
 ln -s /proc/self/fd /dev/fd
 
 # Run the helper script.

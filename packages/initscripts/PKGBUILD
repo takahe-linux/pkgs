@@ -13,13 +13,13 @@ license=('MIT')
 
 # Dependency information
 groups=('base')
-depends=('busybox' 'mdev' 'sh')
+depends=('busybox' 'sh')
 
 # Building information
 backup=('etc/init/init' 'etc/init/shutdown')
 source=('init.sh'
         'shutdown.sh')
-md5sums=('cf4332e3768ed6a171744ed4101f4e15'
+md5sums=('6deccda97998ee099f74f8ad8312c886'
          'b6d6ba862a24cc809376af41df058f82')
 
 

@@ -1,0 +1,39 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='lynx'
+pkgver='2.8.8rel.2'
+_pkgver='2-8-8'
+pkgrel=1
+pkgdesc="A text WWW browser"
+
+# Additional information...
+arch=('mips' 'i586')
+url="http://lynx.invisible-island.net/"
+license=('GPL')
+
+# Dependency information
+makedepends=('openssl' 'packages' 'zlib')
+
+# Building information
+backup=('etc/lynx.cfg')
+source=("http://invisible-mirror.net/archives/lynx/tarballs/${pkgname}${pkgver}.tar.bz2")
+md5sums=('b231c2aa34dfe7ca25681ef4e55ee7e8')
+
+
+build() {
+    cd "${srcdir}/${pkgname}${_pkgver}"
+    ./configure --prefix="/usr" \
+        --sysconfdir="/etc" \
+        --mandir="/usr/share/man" \
+        --with-ssl="/usr" \
+        --with-zlib
+   
+    make
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}${_pkgver}"
+    make DESTDIR="${pkgdir}/" install
+}

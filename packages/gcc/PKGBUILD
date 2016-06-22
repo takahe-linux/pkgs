@@ -110,17 +110,8 @@ build() {
 package() {
     cd "${srcdir}/gcc-build"
 
-    make DESTDIR="${pkgdir}" install -j1
+    make DESTDIR="${pkgdir}" install-strip -j1
 
-    # strip target binaries
-    find "${pkgdir}/usr/lib/gcc/${_target_triplet}/" \
-         "${pkgdir}/usr/lib" \
-         -type f -and \( -name \*.a -or -name \*.o \) \
-         -exec "$(which "${_target_triplet}-objcopy")" \
-         -R .comment -R .note -R .debug_info -R .debug_aranges \
-         -R .debug_pubnames -R .debug_pubtypes -R .debug_abbrev -R .debug_line \
-         -R .debug_str -R .debug_ranges -R .debug_loc '{}' \;
-
-    # Remove info files (already existing)
+    # Remove info files.
     rm -r "${pkgdir}/usr/share/info"
 }

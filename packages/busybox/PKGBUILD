@@ -2,7 +2,7 @@
 
 # Package information
 pkgname=('busybox' 'mdev' 'hush' 'bb-coreutils' 'bb-util-linux' 'bb-findutils')
-pkgver='1.24.2'
+pkgver='1.25.0'
 pkgrel=1
 
 # Additional information...
@@ -21,8 +21,8 @@ _patch_address="${_web_address}/fixes-${pkgver}"
 source=("${_web_address}/${pkgname}-${pkgver}.tar.bz2"
         "config"
        )
-md5sums=('2eaae519cac1143bcf583636a745381f'
-         'd2b81637ac1eeba9ee92a83f4e63b965')
+md5sums=('b05af9645076f75429a8683f8afcbdb3'
+         '30ae1ac84b9e1ad229942ea29b51e819')
 
 
 prepare() {
@@ -41,9 +41,6 @@ build() {
 
     # Install the default config
     cp "${srcdir}/config" ".config"
-
-    # ???
-    sed '1,1i#include <sys/resource.h>' -i include/libbb.h
 
     # If you want to run menuconfig uncomment the following line:
     #make menuconfig; return 1
@@ -85,7 +82,7 @@ package_busybox() {
 
     MISC="less hdparm man halt poweroff reboot"
     NET="ping hostname ip udhcpc ipaddr iplink dnsdomainname"
-    PROC="iostat lsof nmeter pmap pstree top free fuser kill killall pgrep \
+    PROC="iostat lsof nmeter pstree top free fuser kill pgrep \
         pidof pkill ps renice watch sysctl"
 
     _link_packages $KBD $NCURSES $WHICH $APPLETS $EDITORS $LOGIN $EXT2 $MISC $NET $PROC $SHADOW
@@ -122,7 +119,7 @@ package_bb-coreutils() {
         chmod chown chroot cksum comm cp cut dd df dirname du echo env expand \
         expr false fsync head install ln logname ls md5sum mkdir mkfifo \
         mknod mv nice nohup printf pwd readlink realpath rm rmdir seq \
-        sha1sum sha256sum sha512sum sha3sum sleep sort stat sync tac \
+        sha1sum sha256sum sha512sum sha3sum sleep sort stat stty sync tac \
         tail tee true tty uname unexpand uniq usleep uudecode uuencode wc \
         whoami yes timeout rev mktemp od"
 
@@ -138,9 +135,9 @@ package_bb-util-linux() {
     conflicts=('util-linux')
 
     UTILLINUX="blockdev blkid dmesg fbset getopt hwclock losetup lspci lsusb \
-        mount swapon swapoff umount su"
+        mount umount su nsenter unshare"
     LOGIN="getty login"
-    MISC_UTILS="ionice mountpoint setsid time"
+    MISC_UTILS="mountpoint setsid time"
 
     _link_packages $UTILLINUX $LOGIN $MISC_UTILS
 

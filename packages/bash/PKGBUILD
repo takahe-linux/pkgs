@@ -3,7 +3,7 @@
 # Package information
 pkgname='bash'
 _basever='4.3'
-_patchlevel='042'
+_patchlevel='046'
 pkgver="${_basever}.${_patchlevel}"
 pkgrel=1
 pkgdesc='The GNU Bourne Again shell'
@@ -72,7 +72,11 @@ md5sums=('81348932d5da294953e15d4814c74dd1'
          'a4775487abe958536751c8ce53cdf6f9'
          '80d3587c58854e226055ef099ffeb535'
          '20bf63eef7cb441c0b1cc49ef3191d03'
-         '4150846ca72b8ab3aa83f276726e6b09')
+         '4150846ca72b8ab3aa83f276726e6b09'
+         '855a46955cb251534e80b4732b748e37'
+         '29623d3282fcbb37e1158136509b5bb8'
+         '4473244ca5abfd4b018ea26dc73e7412'
+         '7e5fb09991c077076b86e0e057798913')
 
 
 prepare() {

@@ -24,10 +24,12 @@ optdepends=('wget')
 backup=('etc/pacman.conf' 'etc/makepkg.conf')
 source=("https://sources.archlinux.org/other/pacman/${pkgname}-${pkgver}.tar.gz"
         pacman.conf
-        makepkg.conf)
+        makepkg.conf
+        *.patch)
 md5sums=('377a2664d6007d72d6d8a126add83bcf'
          '6b40bff8bd90882a7d3f6b3024f74d38'
-         'fefa873b52d15f08a1d32cb469ec6018')
+         'fefa873b52d15f08a1d32cb469ec6018'
+         '9c7f88dc3e02be3495ab97f0027241e3')
 
 
 prepare() {
@@ -35,7 +37,12 @@ prepare() {
 
     # Remove AC_FUNC_MALLOC - this is autodetected at runtime so causes a
     # build failure!
+    # TODO: Override using a config.site or similar.
     sed -i -e '/AC_FUNC_MALLOC/d' 'configure.ac'
+
+    for p in ../*.patch; do
+        patch -p1 < "${p}"
+    done
 }
 
 build() {
@@ -47,12 +54,13 @@ build() {
         --localstatedir='/var' \
         --sysconfdir="/etc" \
         --enable-doc \
+        --disable-shared \
         --with-scriptlet-shell="/usr/bin/bash" \
         --without-gpgme \
         --without-openssl \
         --without-curl \
         --without-libcurl \
-        --disable-shared
+        DUFLAGS="-sk" # For busybox du
 
     make LIBS="-lz"
     make -C contrib LIBS="-lz"

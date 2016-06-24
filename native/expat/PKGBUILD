@@ -1,0 +1,36 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='expat'
+pkgver='2.2.0'
+pkgrel=1
+pkgdesc="a stream orientated XML parser"
+
+# Additional information...
+arch=('mips' 'i586')
+url="http://expat.sourceforge.net/"
+license=('custom')
+
+# Dependency information
+makedepends=('packages')
+
+# Building information
+source=("http://downloads.sourceforge.net/sourceforge/expat/${pkgname}-${pkgver}.tar.bz2")
+md5sums=('2f47841c829facb346eb6e3fab5212e2')
+
+
+build() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    ./configure --prefix="/usr" \
+        --disable-shared
+    make
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    make DESTDIR="${pkgdir}/" install
+    install -Dm0644 COPYING "${pkgdir}/usr/share/licenses/${pkgname}/COPYING"
+}

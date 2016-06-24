@@ -1,0 +1,48 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='git'
+pkgver='2.9.0'
+pkgrel=1
+pkgdesc="A fast distributed version control system"
+
+# Additional information...
+arch=('mips' 'i586')
+url="https://git-scm.com"
+license=('GPL2')
+
+# Dependency information
+depends=('curl' 'openssl')
+makedepends=('packages' 'zlib' 'expat')
+
+# Building information
+source=("https://www.kernel.org/pub/software/scm/git/git-${pkgver}.tar.xz")
+md5sums=('118ef1e3108ef0b858cd13b74395a59c')
+
+build() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    make prefix="/usr/" gitexecdir="/usr/lib/git" \
+        CC=gcc NEEDS_SSL_WITH_CURL="y" NO_PERL="y" \
+        CFLAGS="${CFLAGS}" LDFLAGS="${LDFLAGS}" CPPFLAGS="${CPPFLAGS}" \
+        NO_CROSS_DIRECTORY_HARDLINKS=1 \
+        MAN_BOLD_LITERAL=1 \
+        all
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    make prefix="/usr/" gitexecdir="/usr/lib/git" \
+        CC=gcc NEEDS_SSL_WITH_CURL="y" NO_PERL="y" \
+        CFLAGS="${CFLAGS}" LDFLAGS="${LDFLAGS}" CPPFLAGS="${CPPFLAGS}" \
+        NO_CROSS_DIRECTORY_HARDLINKS=1 \
+        MAN_BOLD_LITERAL=1 \
+        DESTDIR="${pkgdir}/" install
+
+    # Bash completion.
+    mkdir -p "${pkgdir}/usr/share/bash-completion/completions/"
+    install -m644 ./contrib/completion/git-completion.bash \
+        "${pkgdir}/usr/share/bash-completion/completions/git"
+}

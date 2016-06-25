@@ -16,8 +16,12 @@ depends=(
     'make'
     'binutils'
     'm4'
+    'bison'
+    'flex'
     'musl'
+    'linux-api-headers'
 
+    # Required utilities.
     'pacman'
     'fakefakeroot'
     'busybox'

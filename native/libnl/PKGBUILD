@@ -1,0 +1,38 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='libnl'
+pkgver='3.2.27'
+pkgrel=1
+pkgdesc="Library for applications dealing with netlink sockets"
+
+# Additional information...
+arch=('mips' 'i586')
+url="http://www.infradead.org/~tgr/libnl/"
+license=('GPL')
+
+# Dependency information
+makedepends=('packages' 'linux-api-headers')
+
+# Building information
+backup=('etc/libnl/classid' 'etc/libnl/pktloc')
+source=("https://github.com/thom311/libnl/releases/download/libnl${pkgver//./_}/${pkgname}-${pkgver}.tar.gz")
+md5sums=('cec19f941b79a38d9eb92dbc171d6dbd')
+
+
+build() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    ./configure --prefix="/usr" \
+        --sysconfdir="/etc" \
+        --sbindir="/usr/bin" \
+        --disable-shared
+    make
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    make DESTDIR="${pkgdir}/" install
+}

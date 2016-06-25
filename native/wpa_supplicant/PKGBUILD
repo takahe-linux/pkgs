@@ -1,0 +1,86 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='wpa_supplicant'
+pkgver='2.5'
+pkgrel=1
+pkgdesc="Utility for key negotiation for WPA networks"
+
+# Additional information...
+arch=('mips' 'i586')
+url="http://hostap.epitest.fi/wpa_supplicant"
+license=('BSD') # No readline (otherwise GPL)
+
+# Dependency information
+depends=('openssl')
+makedepends=('packages' 'libnl' 'pkg-config' 'zlib')
+
+# Building information
+source=("http://w1.fi/releases/${pkgname}-${pkgver}.tar.gz")
+md5sums=('96ff75c3a514f1f324560a2376f13110')
+
+prepare() {
+    cd "${srcdir}/${pkgname}-${pkgver}/${pkgname}"
+    
+    # Generate the config file.
+    cat > .config << EOF
+# Enable the NL80211 driver.
+CONFIG_DRIVER_NL80211=y
+CONFIG_LIBNL32=y
+
+# Enable some selected EAP options.
+CONFIG_EAP_PEAP=y
+CONFIG_EAP_TTLS=y
+
+# Enable readline.
+# TODO: Enable readline and change license.
+#CONFIG_READLINE=y
+# Alternative:
+CONFIG_WPA_CLI_EDIT=y
+
+# Enable the control interface.
+CONFIG_CTRL_IFACE=y
+
+# Disable debug output; reduces binary size.
+CONFIG_NO_STDOUT_DEBUG=y
+
+# Set the config backend.
+CONFIG_BACKEND=file
+CONFIG_NO_CONFIG_BLOBS=y
+
+# We use openssl.
+CONFIG_TLS=openssl
+EXTRALIBS += -lz # We need to link to zlib as well.
+
+# Add the flags.
+# TODO: Apparently, the makefile does not pick up the CPPFLAGS.
+CFLAGS += ${CFLAGS} ${CPPFLAGS}
+LDFLAGS += ${LDFLAGS}
+# Set the default paths.
+LIBDIR = /usr/lib
+INCDIR = /usr/include
+BINDIR = /usr/bin
+# Set the cc.
+CC = gcc
+EOF
+}
+
+build() {
+    cd "${srcdir}/${pkgname}-${pkgver}/${pkgname}"
+    make
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}-${pkgver}/${pkgname}"
+    
+    make DESTDIR="${pkgdir}/" install
+
+    # Install/clean the man pages.
+    for i in 5 8; do
+        install -dm0755 "${pkgdir}/usr/share/man/man${i}"
+        install -m0644 doc/docbook/*."${i}" \
+            "${pkgdir}/usr/share/man/man${i}"
+    done
+    rm -f "${pkgdir}/usr/share/man/man8/wpa_"{priv,gui}.8
+}

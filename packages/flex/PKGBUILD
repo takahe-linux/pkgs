@@ -28,6 +28,8 @@ build() {
     ./configure --prefix="/usr" \
         --host="${_target_triplet}" \
         --build="${_local_triplet}"
+    # Disable tests; we can't run these while cross compiling.
+    printf 'all:\n\ttrue\n\ninstall:\n\ttrue\n\n' > tests/Makefile.in
     make
 }
 

@@ -43,4 +43,5 @@ package() {
 
     # Remove the redundant charset.alias (provided by gettext).
     rm -f "${pkgdir}/usr/lib/charset.alias"
+    rm -rf "${pkgdir}/usr/share/info"
 }

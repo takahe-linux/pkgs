@@ -14,7 +14,7 @@ license=('GPL3')
 # Dependency information
 groups=('base-devel')
 depends=('ncurses')
-makedepends=('musl' 'linux-api-headers')
+makedepends=('musl' 'linux-api-headers' 'readline')
 hostdepends=('toolchain')
 
 # Building information
@@ -47,8 +47,6 @@ prepare() {
 build() {
     cd "${srcdir}/${pkgname}-${pkgver}"
 
-    #TODO: Add --with-system-readline, once I've actually *packaged* readline.
-
     ./configure --prefix="/usr" \
         --prefix="/usr" \
         --build="${_local_triplet}" \
@@ -59,7 +57,8 @@ build() {
         --disable-werror \
         --disable-shared \
         --disable-nls \
-        --with-system-gdbinit=/etc/gdb/gdbinit
+        --with-system-gdbinit=/etc/gdb/gdbinit \
+        --with-system-readline
     make
 }
 
@@ -69,15 +68,16 @@ package() {
 
     make DESTDIR="${pkgdir}/" install
 
-    # install "custom" system gdbinit
+    # Install "custom" system gdbinit.
     install -dm755 "${pkgdir}/etc/gdb"
     touch "${pkgdir}/etc/gdb/gdbinit"
 
-    # resolve conflicts with binutils
+    # Resolve conflicts with binutils.
     rm "${pkgdir}/usr/include"/{ansidecl,bfd,bfdlink,dis-asm,plugin-api,symcat}.h
     rm -r "${pkgdir}/usr/share/info"
     rm "${pkgdir}/usr/lib"/{libbfd,libopcodes}.a
 
-    # resolve conflicts with gettext...
-    rm "${pkgdir}/usr/lib/charset.alias"
+    # Remove /usr/lib as we don't need the remaining library, and charset.alias
+    # conflicts with gettext.
+    rm -rf "${pkgdir}/usr/lib"
 }

@@ -16,7 +16,7 @@ license=('GPL')
 # Dependency information
 groups=('base')
 depends=('ncurses')
-makedepends=('musl') # Doesn't use libedit for now; too old...
+makedepends=('musl' 'readline')
 hostdepends=('toolchain')
 provides=('sh')
 conflicts=('sh')

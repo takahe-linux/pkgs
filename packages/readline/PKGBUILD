@@ -1,0 +1,70 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='readline'
+_basever='6.3'
+_patchlevel='008'
+pkgver="${_basever}.${_patchlevel}"
+pkgrel=1
+pkgdesc="GNU line editing library"
+
+# Additional information...
+arch=('mips' 'i586')
+url="https://cnswww.cns.cwru.edu/php/chet/readline/rltop.html"
+license=('GPL')
+
+# Dependency information
+depends=('ncurses')
+makedepends=('musl')
+hostdepends=('toolchain')
+
+# Building information
+source=("ftp://ftp.cwru.edu/pub/bash/${pkgname}-${_basever}.tar.gz")
+_stripped_basever="$(echo ${_basever} | tr -d '.')"
+for _patch in $(seq 1 ${_patchlevel}); do
+    source+=("ftp://ftp.cwru.edu/pub/bash/${pkgname}-${_basever}-patches/${pkgname}${_stripped_basever}-$(printf "%03d" "${_patch}")")
+done
+md5sums=('33c8fb279e981274f485fd91da77e94a'
+         '4343f5ea9b0f42447f102fb61576b398'
+         '700295212f7e2978577feaee584afddb'
+         'af4963862f5156fbf9111c2c6fa86ed7'
+         '11f9def89803a5052db3ba72394ce14f'
+         '93721c31cd225393f80cb3aadb165544'
+         '71dc6ecce66d1489b96595f55d142a52'
+         '062a08ed60679d3c4878710b3d595b65'
+         'ee1c04072154826870848d8b218d7b04')
+
+
+prepare() {
+    cd "${srcdir}/${pkgname}-${_basever}"
+
+    for _patch in $(seq 1 ${_patchlevel}); do
+        patch -p0 -i "${srcdir}/${pkgname}${_stripped_basever}-$(printf "%03d" "${_patch}")"
+    done
+
+    # The configure script supplied with the tarball is old; regenerate.
+    autoconf
+}
+
+
+build() {
+    cd "${srcdir}/${pkgname}-${_basever}"
+
+    ./configure --prefix="/usr" \
+        --host="${_target_triplet}" \
+        --build="${_local_triplet}" \
+        --enable-curses \
+        --disable-shared
+
+    make
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}-${_basever}"
+
+    make DESTDIR="${pkgdir}/" install
+    rm -rf "${pkgdir}/usr/share/info"
+    # Remove the examples as well.
+    rm -rf "${pkgdir}/usr/share/readline"
+}

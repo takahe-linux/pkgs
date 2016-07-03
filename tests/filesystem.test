@@ -36,6 +36,7 @@ exists /usr/bin/vi
 # Check that some files do not exist.
 void /usr/share/info
 void /lib
+void /usr/lib/*.so # We statically link; no .so required.
 #void /bin # It would be nice to get rid of this, but not likely at this point.
 
 finish

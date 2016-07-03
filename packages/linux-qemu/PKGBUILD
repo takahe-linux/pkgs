@@ -5,7 +5,7 @@ pkgname="linux-qemu"
 _major_version='4.6'
 _srcname="linux-${_major_version}"
 pkgdesc="qemu kernel"
-pkgver="${_major_version}.2"
+pkgver="${_major_version}.3"
 pkgrel=1
 
 # Additional information...
@@ -23,7 +23,7 @@ options=('!buildflags')
 source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz")
 md5sums=('d2927020e24a76da4ab482a8bc3e9ef3'
-         'c064bbe8108b8e5304f3db2130a96845')
+         '0d59cb81eb7c0daf0f5019deda65af90')
 
 modules() {
     # true if modules are enabled, false otherwise

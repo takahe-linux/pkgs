@@ -2,7 +2,7 @@
 
 # Package information
 pkgname='libnl'
-pkgver='3.2.27'
+pkgver='3.2.28'
 pkgrel=1
 pkgdesc="Library for applications dealing with netlink sockets"
 
@@ -17,7 +17,7 @@ makedepends=('packages' 'linux-api-headers')
 # Building information
 backup=('etc/libnl/classid' 'etc/libnl/pktloc')
 source=("https://github.com/thom311/libnl/releases/download/libnl${pkgver//./_}/${pkgname}-${pkgver}.tar.gz")
-md5sums=('cec19f941b79a38d9eb92dbc171d6dbd')
+md5sums=('bab12db1eb94a42129f712a44be91a67')
 
 
 build() {

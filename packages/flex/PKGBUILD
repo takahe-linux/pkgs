@@ -18,8 +18,11 @@ makedepends=('musl' 'bison' 'm4')
 hostdepends=('toolchain')
 
 # Building information
-source=("${url}/releases/download/v${pkgver}/${pkgname}-${pkgver}.tar.xz")
-md5sums=('cd3c86290fc2676a641aefafeb10848a')
+source=("${url}/releases/download/v${pkgver}/${pkgname}-${pkgver}.tar.xz"
+        "stage1flex.patch" # https://github.com/westes/flex/issues/78
+        )
+md5sums=('cd3c86290fc2676a641aefafeb10848a'
+         '915321d31ef144e0c01886c3cf564c36')
 
 
 build() {
@@ -31,6 +34,10 @@ build() {
         --disable-shared
     # Disable tests; we can't run these while cross compiling.
     printf 'all:\n\ttrue\n\ninstall:\n\ttrue\n\n' > tests/Makefile.in
+
+    # Patch the makefile.
+    patch src/Makefile < "${srcdir}/stage1flex.patch"
+
     make
 }
 

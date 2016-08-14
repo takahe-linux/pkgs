@@ -89,6 +89,7 @@ build() {
         --disable-libatomic \
         --disable-libsanitizer \
         --disable-libmpx \
+        --disable-libcc1 \
         --with-gnu-as \
         --with-gnu-ld \
         --with-system-zlib

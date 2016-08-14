@@ -95,6 +95,7 @@ build() {
         --disable-libmpx \
         --disable-libvtv \
         --disable-libssp \
+        --disable-libcc1 \
         --disable-lto \
         --disable-libunwind-exceptions \
         --with-native-system-header-dir="/usr/include" \

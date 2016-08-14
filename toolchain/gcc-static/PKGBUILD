@@ -65,6 +65,7 @@ build() {
         --disable-threads \
         --disable-multilib \
         --disable-tls \
+        --disable-libcc1 \
         --with-gnu-as \
         --with-gnu-ld \
         --with-system-zlib \

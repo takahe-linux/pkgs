@@ -42,6 +42,7 @@ build() {
         --disable-nls --disable-multilib \
         --enable-static --disable-werror \
         --disable-shared \
+        --disable-host-shared \
         --with-lib-path="/usr/lib" \
         --enable-deterministic-archives
 

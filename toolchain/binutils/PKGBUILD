@@ -43,6 +43,7 @@ build() {
         --with-sysroot="/sysroot" \
         --disable-nls --disable-multilib \
         --disable-static --disable-werror \
+        --disable-host-shared \
         --with-lib-path="${_toolroot}/lib"
 
     # Check the host environment and makes sure all the necessary tools are

@@ -16,7 +16,6 @@ license=('GPL')
 # Depends: packages/linux-api-headers
 groups=("${_target_triplet}")
 depends=('glibc>=2.20' 'zlib')
-checkdepends=('dejagnu' 'bc')
 
 # Building information
 options=('staticlibs' '!distcc' '!ccache')

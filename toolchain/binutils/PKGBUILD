@@ -20,8 +20,10 @@ checkdepends=('dejagnu' 'bc')
 
 # Building information
 options=('staticlibs' '!distcc' '!ccache')
-source=("ftp://ftp.gnu.org/gnu/${_pkgname}/${_pkgname}-${pkgver}.tar.bz2")
-md5sums=('2869c9bf3e60ee97c74ac2a6bf4e9d68')
+source=("ftp://ftp.gnu.org/gnu/${_pkgname}/${_pkgname}-${pkgver}.tar.bz2"
+        "0001-Revert-Always-create-dynamic-sections-for-E-dynamic-.patch")
+md5sums=('2869c9bf3e60ee97c74ac2a6bf4e9d68'
+         '36a43b3257e7b4329bb2fef213e016ac')
 
 
 prepare() {
@@ -29,6 +31,9 @@ prepare() {
 
     # hack! - libiberty configure tests for header files using "$CPP $CPPFLAGS"
     sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" libiberty/configure
+
+    # Fix cross-compiled GCC
+    patch -p1 < ../*.patch
 
     mkdir "${srcdir}/${_pkgname}-build"
 }
@@ -43,7 +48,7 @@ build() {
         --with-sysroot="/sysroot" \
         --disable-nls --disable-multilib \
         --disable-static --disable-werror \
-        --disable-host-shared \
+        --disable-host-shared --disable-doc \
         --with-lib-path="${_toolroot}/lib"
 
     # Check the host environment and makes sure all the necessary tools are
@@ -51,13 +56,6 @@ build() {
     make configure-host
 
     make
-}
-
-
-check() {
-    cd "${srcdir}/${_pkgname}-build"
-
-    make -k LDFLAGS="" check || true
 }
 
 

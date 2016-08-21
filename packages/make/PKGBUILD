@@ -27,7 +27,8 @@ build() {
 
     ./configure --prefix="/usr" \
         --host="${_target_triplet}" \
-        --build="${_local_triplet}"
+        --build="${_local_triplet}" \
+        --disable-load
     make
 }
 

@@ -3,7 +3,7 @@
 # Package information
 _pkgname='gcc'
 pkgname="${_target_triplet}-${_pkgname}-static"
-pkgver='6.1.0'
+pkgver='6.2.0'
 pkgrel=1
 pkgdesc="The GNU Compiler Collection"
 
@@ -19,7 +19,7 @@ targetdepends=("linux-api-headers")
 # Building information
 options=(!emptydirs !strip)
 source=("ftp://gcc.gnu.org/pub/gcc/releases/gcc-${pkgver}/gcc-${pkgver}.tar.bz2")
-sha256sums=('09c4c85cabebb971b1de732a0219609f93fc0af5f86f6e437fd8d7f832f1a351')
+sha256sums=('9944589fc722d3e66308c0ce5257788ebd7872982a718aa2516123940671b7c5')
 
 
 prepare() {

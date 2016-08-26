@@ -16,6 +16,7 @@ Packages to be fixed:
 - gdb is currently broken (builds a dynamic binary)
 - snownews is also broken (segfaults)
 - openssl 1.1.0 breaks lynx, wpa\_supplicant, snownews builds
+- flex does not cross compile
 
 I should also run namcap on the remaining packages, and fix any warnings...
 

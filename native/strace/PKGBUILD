@@ -1,0 +1,43 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='strace'
+pkgver='4.13'
+pkgrel=1
+pkgdesc="syscall tracer"
+
+# Additional information...
+arch=('mips' 'i586')
+url="http://sourceforge.net/projects/strace/"
+license=('custom')
+
+# Dependency information
+makedepends=('packages')
+
+# Building information
+source=("http://downloads.sourceforge.net/${pkgname}/${pkgname}-${pkgver}.tar.xz")
+md5sums=('4b78c7febdd24c79d5147824d1a080a3')
+
+
+prepare() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    # Use the kernel's sgidefs.h on mips.
+    sed -e 's:<sgidefs.h>:<asm/sgidefs.h>:' -i configure
+}
+
+
+build() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    ./configure --prefix="/usr"
+    make
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    make DESTDIR="${pkgdir}/" install
+    install -Dm644 COPYING "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+}

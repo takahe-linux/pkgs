@@ -2,7 +2,7 @@
 
 # Package information
 pkgname='openssl'
-_ver='1.0.2h'
+_ver='1.1.0'
 # use a pacman compatible version scheme
 pkgver=${_ver/[a-z]/.${_ver//[0-9.]/}}
 pkgrel=1
@@ -14,7 +14,7 @@ url='https://www.openssl.org'
 license=('custom:BSD')
 
 # Dependency information
-makedepends=('zlib' 'musl')
+makedepends=('zlib' 'musl' 'linux-api-headers')
 hostdepends=('toolchain')
 # optdepends=('perl: for c_rehash script'
 #             'ca-certificates')
@@ -23,20 +23,16 @@ hostdepends=('toolchain')
 backup=('etc/ssl/openssl.cnf')
 options=('!makeflags')
 source=("https://www.openssl.org/source/${pkgname}-${_ver}.tar.gz"
-        'no-rpath.patch'
         'ca-dir.patch')
-md5sums=('9392e65072ce4b614c1392eefc1f23d0'
-         'dc78d3d06baffc16217519242ce92478'
-         '3bf51be3a1bbd262be46dc619f92aa90')
+md5sums=('dbef70de4a1a4bdd78ab7c6547e5211d'
+         '81a2fb21ea97050ad5efb96a697d627e')
 
 
 prepare() {
     cd "${srcdir}/${pkgname}-${_ver}"
 
-    # remove rpath: http://bugs.archlinux.org/task/14367
-    patch -p0 -i $srcdir/no-rpath.patch
     # set ca dir to /etc/ssl by default
-    patch -p0 -i $srcdir/ca-dir.patch
+    patch -p0 -i "${srcdir}/ca-dir.patch"
 }
 
 
@@ -58,11 +54,10 @@ build() {
     ./Configure --prefix="/usr" \
         --openssldir="/etc/ssl" \
         --libdir="lib" \
-        no-shared zlib "${optflags}" \
+        no-shared no-async zlib "${optflags}" \
         "${openssltarget}" \
         "-Wa,--noexecstack ${CFLAGS} ${LDFLAGS}"
 
-    #make depend
     make
 }
 
@@ -70,7 +65,9 @@ build() {
 package() {
     cd "${srcdir}/${pkgname}-${_ver}"
 
-    make INSTALL_PREFIX="${pkgdir}/" \
+    # We need PATH to include the perl directories for pod2man.
+    PATH="${PATH}:/usr/bin/core_perl:/usr/bin/site_perl:/usr/bin/vendor_perl" \
+    make DESTDIR="${pkgdir}/" \
         MANDIR="/usr/share/man" \
         MANSUFFIX='ssl' install
     install -D -m644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"

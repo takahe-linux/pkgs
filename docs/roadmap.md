@@ -13,6 +13,9 @@ Packages to be fixed:
 - MANPATH is not set correctly for busybox?
 - toolchain/gcc runs strip on some files of the wrong arch
 - ncurses built for i586 does not properly install the terminfo database
+- gdb is currently broken (builds a dynamic binary)
+- snownews is also broken (segfaults)
+- openssl 1.1.0 breaks lynx, wpa\_supplicant, snownews builds
 
 I should also run namcap on the remaining packages, and fix any warnings...
 
@@ -23,7 +26,7 @@ Otherwise, grep for TODO's in the PKGBUILDs.
 
 - Working on the Toshiba (v0.3.0)
 - Being able to build all the Arch Linux packages (maybe?)
-- Improve the documentation.
-- Update the Toshiba kernel config.
-- Shrink memory usage for the kernel and userspace.
+- Improve the documentation
+- Update the Toshiba kernel config
+- Shrink memory usage for the kernel and userspace
 

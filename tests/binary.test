@@ -1,20 +1,33 @@
 #!/usr/bin/bash
 
 set -e
-finish() { echo "Success!"; exit 0; }
-fail() { printf "%s\n" "$1"; echo "Fail!"; exit 1; }
+
+export failed="false"
+finish() {
+    if [ "${failed}" != "false" ]; then
+        echo "Fail!"; exit 1
+    else
+        echo "Success!"; exit 0
+    fi
+}
+fail() { printf "%s\n" "$1"; failed="true"; }
 
 get_arch() {
     # Print the arch of the given binary.
     readelf -h "$1" | sed -n -e '/Machine:/p' | sed -e 's/.*:[ \t]*//'
 }
 
-arch="$(get_arch /usr/bin/busybox)"
+is_elf() {
+    file "${i}" | grep -e 'ELF' > /dev/null 2>&1
+    return "$?"
+}
+
+arch="$(get_arch /usr/bin/bash)"
 for i in /usr/bin/* /usr/lib/*; do
-    if [ -x "${i}" ]; then
+    if [ -x "${i}" ] && is_elf "${i}"; then
         # Check arch.
         if [ "$(get_arch "${i}")" != "${arch}" ]; then
-            fail "Got two different architectures: $(get_arch "${i}"), ${arch}!"
+            fail "Got two different architectures for ${i}: $(get_arch "${i}"), ${arch}!"
         fi
         # Check that this is not dynamically linked.
         readelf -d "${i}" | grep 'Shared library' && \

@@ -2,4 +2,5 @@ native/vim
 native/wpa_supplicant
 native/git
 native/lynx
+native/openssh
 native/snownews

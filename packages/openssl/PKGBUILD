@@ -60,7 +60,7 @@ build() {
         --libdir="lib" \
         no-shared zlib "${optflags}" \
         "${openssltarget}" \
-        "-Wa,--noexecstack ${CFLAGS} ${LDFLAGS}"
+        "-Wa,--noexecstack ${CFLAGS} -fPIC ${LDFLAGS}"
 
     #make depend
     make

@@ -1,0 +1,49 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='openssh'
+pkgver='7.3p1'
+pkgrel=1
+pkgdesc="Secure shell implementation"
+
+# Additional information...
+arch=('mips' 'i586')
+url="http://www.openssh.org/portable.html"
+license=('custom:BSD')
+
+# Dependency information
+makedepends=('linux-api-headers' 'openssl' 'packages' 'zlib')
+
+# Building information
+backup=('etc/ssh/ssh_config' 'etc/ssh/sshd_config')
+source=("http://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/${pkgname}-${pkgver}.tar.gz")
+md5sums=('dfadd9f035d38ce5d58a3bf130b86d08')
+
+
+build() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    ./configure --prefix="/usr" \
+        --sbindir="/usr/bin" \
+        --libexecdir="/usr/lib/ssh" \
+        --sysconfdir="/etc/ssh" \
+        --disable-shared \
+        --enable-static \
+	--with-privsep-user=nobody \
+        --with-pid-dir="/run" \
+        --with-mantype=man \
+        --without-pie
+    make
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    make DESTDIR="${pkgdir}/" install
+    ln -sf ssh.1.gz "${pkgdir}/usr/share/man/man1/slogin.1.gz"
+    install -Dm644 LICENCE "${pkgdir}/usr/share/licenses/${pkgname}/LICENCE"
+    install -Dm755 contrib/ssh-copy-id "${pkgdir}/usr/bin/ssh-copy-id"
+    install -Dm644 contrib/ssh-copy-id.1 \
+        "${pkgdir}/usr/share/man/man1/ssh-copy-id.1"
+}

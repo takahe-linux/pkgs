@@ -14,7 +14,7 @@ license=('GPL3')
 # Dependency information
 groups=('base-devel')
 depends=('ncurses')
-makedepends=('musl' 'linux-api-headers' 'readline')
+makedepends=('musl' 'linux-api-headers' 'readline' 'zlib')
 hostdepends=('toolchain')
 
 # Building information
@@ -41,6 +41,9 @@ prepare() {
 
     # Work around gnulib trying to use rpl_gettimeofday, which is undefined.
     patch gdb/gnulib/configure < "${srcdir}/gnulib-configure.patch"
+
+    # Stop using --dynamic-list as this produces a dynamic executable.
+    sed -i -e "s:['\"]-Wl,--dynamic-list.*['\"]:'-Wl,-static':" gdb/configure
 }
 
 
@@ -48,17 +51,20 @@ build() {
     cd "${srcdir}/${pkgname}-${pkgver}"
 
     ./configure --prefix="/usr" \
-        --prefix="/usr" \
         --build="${_local_triplet}" \
         --host="${_target_triplet}" \
         --target="${_target_triplet}" \
-        --disable-multilib \
         --enable-static \
-        --disable-werror \
         --disable-shared \
+        --disable-plugins \
+        --disable-multilib \
+        --disable-werror \
         --disable-nls \
+        --disable-gdbserver \
         --with-system-gdbinit=/etc/gdb/gdbinit \
-        --with-system-readline
+        --with-system-readline \
+        --with-system-zlib
+
     make
 }
 
@@ -73,7 +79,7 @@ package() {
     touch "${pkgdir}/etc/gdb/gdbinit"
 
     # Resolve conflicts with binutils.
-    rm "${pkgdir}/usr/include"/{ansidecl,bfd,bfdlink,dis-asm,plugin-api,symcat}.h
+    rm "${pkgdir}/usr/include"/{ansidecl,bfd,bfdlink,dis-asm,symcat}.h
     rm -r "${pkgdir}/usr/share/info"
     rm "${pkgdir}/usr/lib"/{libbfd,libopcodes}.a
 

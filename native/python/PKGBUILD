@@ -1,0 +1,83 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='python'
+pkgver='3.5.2'
+_basever='3.5'
+pkgrel=1
+pkgdesc="High level scripting language"
+
+# Additional information...
+arch=('mips' 'i586')
+url="http://www.python.org"
+license=('custom')
+
+# Dependency information
+makedepends=('packages' 'expat' 'libffi' 'mpdecimal' 'zlib' 'readline')
+
+# Building information
+source=("http://www.python.org/ftp/python/${pkgver}/Python-${pkgver}.tar.xz"
+        'setup')
+sha1sums=('4843aabacec5bc0cdd3e1f778faa926e532794d2'
+          '66b296a76ee0a230aa3197dbc00cbc900d5ebe8d')
+
+
+prepare() {
+    cd "${srcdir}/Python-${pkgver}"
+
+    # We build in some modules (since we are statically linking, we can't load
+    # modules dynamically; this is now or never!).
+    cat "${srcdir}/setup" >> "Modules/Setup.local"
+
+    # Fix modules not building.
+    # TODO: Narrow down and get fixed upstream.
+    sed -e 's/self.use_system_libffi = False/self.use_system_libffi = True/' \
+        -i setup.py
+
+    # Look in the right place for python.
+    sed -e 's|^#.* /usr/local/bin/python|#!/usr/bin/python|' -i Lib/cgi.py
+
+    # TODO: Get this upstreamed in some form; assuming shared libraries...
+    sed -e 's/:libmpdec.so.2/mpdec/' -i setup.py
+
+    # Ensure that we use the system versions.
+    rm -r Modules/{expat,zlib,_decimal/libmpdec}
+    rm -r Modules/_ctypes/{darwin,libffi}*
+}
+
+
+build() {
+    cd "${srcdir}/Python-${pkgver}"
+
+    ./configure --prefix="/usr" \
+        --disable-shared \
+        --with-system-expat \
+        --with-system-ffi \
+        --with-system-libmpdec \
+        --without-ensurepip
+
+    # LINKFORSHARED needs to be set to ensure that python builds statically;
+    # the actual contents are arbitary...
+    make LINKFORSHARED=" "
+}
+
+
+package() {
+    cd "${srcdir}/Python-${pkgver}"
+
+    make DESTDIR="${pkgdir}/" install maninstall
+    install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+    rm -f "${pkgdir}/usr/bin/"idle*
+
+    # Avoid duplicating libpython.
+    ln -sf "../../libpython${_basever}m.a" \
+        "${pkgdir}/usr/lib/python${_basever}/config-${_basever}m/libpython${_basever}m.a"
+
+    # Provide python.
+    ln -s python3 "${pkgdir}/usr/bin/python"
+    ln -s python3-config "${pkgdir}/usr/bin/python-config"
+    ln -s pydoc3 "${pkgdir}/usr/bin/pydoc"
+
+    # rm failed dynamically linked libraries.
+    rm -rf "${pkgdir}/usr/lib/python3.5/lib-dynload/*"
+}

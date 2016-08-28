@@ -5,4 +5,5 @@ native/git
 native/lynx
 native/strace
 native/openssh
+native/python
 native/snownews

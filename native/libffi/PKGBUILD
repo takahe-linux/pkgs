@@ -1,0 +1,46 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='libffi'
+pkgver='3.2.1'
+pkgrel=1
+pkgdesc="Portable foreign function interface library"
+
+# Additional information...
+arch=('mips' 'i586')
+url="http://sourceware.org/libffi/"
+license=('MIT')
+
+# Dependency information
+makedepends=('packages')
+
+# Building information
+source=("ftp://sourceware.org/pub/libffi/libffi-${pkgver}.tar.gz")
+sha1sums=('280c265b789e041c02e5c97815793dfc283fb1e6')
+
+
+build() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    ./configure --prefix="/usr" \
+        --disable-shared \
+        --enable-static
+    make
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    make DESTDIR="${pkgdir}/" install
+
+    # Install puts the header files into an odd place; move them so the python
+    # build finds them.
+    mv "${pkgdir}/usr/lib/${pkgname}-${pkgver}/include" "${pkgdir}/usr/"
+    rmdir "${pkgdir}/usr/lib/${pkgname}-${pkgver}/"
+    sed -i -e 's:includedir=.*:includedir=${exec_prefix}/include:' \
+        "${pkgdir}/usr/lib/pkgconfig/libffi.pc"
+
+    install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+    rm -rf /usr/share/info # We don't use info files.
+}

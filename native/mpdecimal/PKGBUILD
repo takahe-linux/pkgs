@@ -1,0 +1,38 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='mpdecimal'
+pkgver='2.4.2'
+pkgrel=1
+pkgdesc="Implements arbitary precision decimal arithmetic"
+
+# Additional information...
+arch=('mips' 'i586')
+url="http://www.bytereef.org/mpdecimal/index.html"
+license=('custom')
+
+# Dependency information
+makedepends=('packages')
+
+# Building information
+source=("http://www.bytereef.org/software/${pkgname}/releases/${pkgname}-${pkgver}.tar.gz")
+md5sums=('aa63cab5d06a96855a44da2db90a29d9')
+
+
+build() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    ./configure --prefix="/usr"
+    make
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    make DESTDIR="${pkgdir}/" install
+    install -Dm644 LICENSE.txt \
+        "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE.txt"
+    # Remove dynamically linked libraries.
+    rm -rf "${pkgdir}/usr/lib/"*.so*
+}

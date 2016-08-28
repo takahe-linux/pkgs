@@ -1,14 +1,11 @@
 # Packages that I intend to build #
 
-I would like all of the below; however, I also to intend to have 100 packages
-or less. So...
+Remaining packages that I can think of:
 
-- ssh
-- go
 - tex (pdflatex, at least)
-- fbv
 - qemu
-- python3
 - unison
+- netsurf
+- ca-certs
+- fbpdf
 
-This list is very incomplete!

@@ -17,6 +17,7 @@ Packages to be fixed:
 - snownews is also broken (segfaults)
 - openssl 1.1.0 breaks lynx, wpa\_supplicant, snownews builds
 - flex does not cross compile
+- linux-qemu is in the 'base' group
 
 I should also run namcap on the remaining packages, and fix any warnings...
 

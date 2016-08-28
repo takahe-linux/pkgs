@@ -1,0 +1,35 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='nasm'
+pkgver='2.11.08'
+pkgrel=1
+pkgdesc="A 80x86 assembler designed for portability and modularity"
+
+# Additional information...
+arch=('mips' 'i586')
+url="http://www.nasm.us"
+license=('BSD')
+
+# Dependency information
+makedepends=('packages')
+
+# Building information
+source=("http://www.nasm.us/pub/nasm/releasebuilds/${pkgver}/${pkgname}-${pkgver}.tar.xz")
+sha1sums=('6908296ac437b3ade79fadfaad0efcfd99582f70')
+
+
+build() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    ./configure --prefix="/usr"
+    make
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    make INSTALLROOT="${pkgdir}/" install
+    install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+}

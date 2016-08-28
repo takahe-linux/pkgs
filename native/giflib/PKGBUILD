@@ -1,0 +1,38 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='giflib'
+pkgver='5.1.4'
+pkgrel=1
+pkgdesc="A library for reading and writing gif images"
+
+# Additional information...
+arch=('mips' 'i586')
+url="http://sourceforge.net/projects/giflib"
+license=('MIT')
+
+# Dependency information
+makedepends=('packages')
+
+# Building information
+source=("http://downloads.sourceforge.net/sourceforge/giflib/${pkgname}-${pkgver}.tar.bz2")
+md5sums=('2c171ced93c0e83bb09e6ccad8e3ba2b')
+
+
+build() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    ./configure --prefix="/usr" \
+        --disable-shared \
+        --enable-static \
+        --disable-doc
+    make
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    make DESTDIR="${pkgdir}/" install
+    install -Dm644 COPYING "${pkgdir}/usr/share/licenses/${pkgname}/COPYING"
+}

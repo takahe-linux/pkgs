@@ -13,7 +13,8 @@ license=('GPL')
 
 # Dependency information
 depends=('openssl')
-makedepends=('packages' 'libnl' 'pkg-config' 'zlib' 'readline')
+makedepends=('packages' 'libnl' 'pkg-config' 'zlib' 'readline' 'ncurses'
+    'linux-api-headers')
 
 # Building information
 source=("http://w1.fi/releases/${pkgname}-${pkgver}.tar.gz")
@@ -61,6 +62,10 @@ BINDIR = /usr/bin
 # Set the cc.
 CC = gcc
 EOF
+
+    # TODO: fix -lncurses coming before -lreadline.
+    sed -i Makefile \
+        -e 's:LIBS_c += -lncurses -lreadline:LIBS_c += -lreadline -lncurses:'
 }
 
 build() {

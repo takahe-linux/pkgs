@@ -1,0 +1,56 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='autoconf'
+pkgver='2.69'
+pkgrel=1
+pkgdesc="A GNU tool for automatically configuring source code"
+
+# Additional information...
+arch=('any')
+url="http://www.gnu.org/software/autoconf"
+license=('GPL2' 'GPL3' 'custom')
+
+# Dependency information
+groups=('base-devel')
+depends=('m4' 'bash' 'busybox' 'perl')
+makedepends=('packages')
+
+# Building information
+source=("ftp://ftp.gnu.org/pub/gnu/${pkgname}/${pkgname}-${pkgver}.tar.xz"
+        "autoconf-2.69-perl-5.22-autoscan.patch"
+        "autoconf-2.69-libtool-compatibility.patch")
+md5sums=('50f97f4159805e374639a73e2636f22e'
+         'aa07afe5a671df25bf1878831702d5b9'
+         '87bceda7922ebc2a453568b2ae179e1b')
+
+
+prepare() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    for patch in "${srcdir}"/*.patch; do
+        patch -p1 -i "${patch}"
+    done
+}
+
+
+build() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    ./configure --prefix="/usr"
+    make
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    make DESTDIR="${pkgdir}/" install
+
+    # License exception.
+    install -Dm644 COPYING.EXCEPTION \
+        "${pkgdir}/usr/share/licenses/autoconf/COPYING.EXCEPTION"
+
+    # Remove unwanted info dir.
+    rm -rf "${pkgdir}/usr/share/info"
+}

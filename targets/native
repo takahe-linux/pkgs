@@ -1,9 +1,10 @@
-native/vim
-native/wpa_supplicant
 native/fbv
 native/git
 native/lynx
-native/strace
 native/openssh
+native/perl
 native/python
 native/snownews
+native/strace
+native/vim
+native/wpa_supplicant

@@ -13,7 +13,7 @@ license=('MIT')
 
 # Dependency information
 groups=('base')
-depends=('busybox' 'sh')
+depends=('busybox' 'coreutils' 'util-linux' 'sh')
 
 # Building information
 backup=('etc/init/init' 'etc/init/shutdown')

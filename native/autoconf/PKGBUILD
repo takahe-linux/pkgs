@@ -12,7 +12,6 @@ url="http://www.gnu.org/software/autoconf"
 license=('GPL2' 'GPL3' 'custom')
 
 # Dependency information
-groups=('base-devel')
 depends=('m4' 'bash' 'busybox' 'perl')
 makedepends=('packages')
 

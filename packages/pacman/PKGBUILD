@@ -14,7 +14,7 @@ url="http://www.archlinux.org/pacman/"
 license=('GPL')
 
 # Dependency information
-groups=('base' 'base-devel')
+groups=('base')
 depends=('bash' 'libarchive' 'gettext' 'openssl')
 makedepends=('zlib' 'musl')
 hostdepends=('asciidoc' 'libtool' 'toolchain')
@@ -34,12 +34,6 @@ md5sums=('377a2664d6007d72d6d8a126add83bcf'
 
 prepare() {
     cd "${srcdir}/${pkgname}-${pkgver}"
-
-    # Remove AC_FUNC_MALLOC - this is autodetected at runtime so causes a
-    # build failure!
-    # TODO: Override using a config.site or similar.
-    sed -i -e '/AC_FUNC_MALLOC/d' 'configure.ac'
-
     for p in ../*.patch; do
         patch -p1 < "${p}"
     done

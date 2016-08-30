@@ -12,7 +12,6 @@ url="http://curl.haxx.se"
 license=('MIT')
 
 # Dependency information
-groups=('base')
 makedepends=('openssl' 'zlib' 'musl')
 hostdepends=('toolchain')
 

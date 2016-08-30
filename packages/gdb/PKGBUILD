@@ -12,7 +12,6 @@ url='http://www.gnu.org/software/gdb/'
 license=('GPL3')
 
 # Dependency information
-groups=('base-devel')
 depends=('ncurses')
 makedepends=('musl' 'linux-api-headers' 'readline' 'zlib')
 hostdepends=('toolchain')

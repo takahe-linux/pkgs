@@ -1,0 +1,52 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='xz'
+pkgver='5.2.2'
+pkgrel=1
+pkgdesc="Library for dealing with XZ and LZMA compressed files"
+
+# Additional information...
+arch=('mips' 'i586')
+url="http://tukaani.org/xz"
+license=('GPL' 'LGPL' 'custom')
+
+# Dependency information
+groups=('base-devel')
+makedepends=('musl')
+hostdepends=('toolchain')
+
+# Building information
+source=("http://tukaani.org/${pkgname}/${pkgname}-${pkgver}.tar.gz")
+md5sums=('7cf6a8544a7dae8e8106fdf7addfa28c')
+
+
+build() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    ./configure --prefix="/usr" \
+        --host="${_target_triplet}" \
+        --build="${_local_triplet}" \
+        --disable-rpath \
+        --disable-shared \
+        --enable-static
+    make
+}
+
+
+check() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+    make check
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    make DESTDIR="${pkgdir}/" install
+    install -dm755 "${pkgdir}/usr/share/licenses/${pkgname}/"
+    ln -sf "/usr/share/doc/${pkgname}/COPYING" \
+        "${pkgdir}/usr/share/licenses/${pkgname}/"
+    ln -sf "/usr/share/licenses/common/GPL2/license.txt" \
+        "${pkgdir}/usr/share/doc/${pkgname}/COPYING.GPLv2"
+}

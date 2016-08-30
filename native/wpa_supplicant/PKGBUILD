@@ -9,11 +9,11 @@ pkgdesc="Utility for key negotiation for WPA networks"
 # Additional information...
 arch=('mips' 'i586')
 url="http://hostap.epitest.fi/wpa_supplicant"
-license=('BSD') # No readline (otherwise GPL)
+license=('GPL')
 
 # Dependency information
 depends=('openssl')
-makedepends=('packages' 'libnl' 'pkg-config' 'zlib')
+makedepends=('packages' 'libnl' 'pkg-config' 'zlib' 'readline')
 
 # Building information
 source=("http://w1.fi/releases/${pkgname}-${pkgver}.tar.gz")
@@ -33,8 +33,7 @@ CONFIG_EAP_PEAP=y
 CONFIG_EAP_TTLS=y
 
 # Enable readline.
-# TODO: Enable readline and change license.
-#CONFIG_READLINE=y
+CONFIG_READLINE=y
 # Alternative:
 CONFIG_WPA_CLI_EDIT=y
 
@@ -53,8 +52,7 @@ CONFIG_TLS=openssl
 EXTRALIBS += -lz # We need to link to zlib as well.
 
 # Add the flags.
-# TODO: Apparently, the makefile does not pick up the CPPFLAGS.
-CFLAGS += ${CFLAGS} ${CPPFLAGS}
+CFLAGS += ${CFLAGS}
 LDFLAGS += ${LDFLAGS}
 # Set the default paths.
 LIBDIR = /usr/lib

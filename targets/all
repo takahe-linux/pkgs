@@ -8,3 +8,6 @@ native/snownews
 native/strace
 native/vim
 native/wpa_supplicant
+packages/curl
+packages/gdb
+packages/packages

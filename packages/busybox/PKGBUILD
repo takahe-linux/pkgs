@@ -8,8 +8,7 @@ pkgrel=1
 # Additional information...
 arch=('i586' 'mips')
 url="https://www.busybox.net"
-license=('GPL') # Busybox; not sure about the service files, which 
-                # are from sabotage linux
+license=('GPL')
 
 # Dependency information
 makedepends=('musl' 'linux-api-headers')
@@ -22,7 +21,7 @@ source=("${_web_address}/${pkgname}-${pkgver}.tar.bz2"
         "config"
        )
 md5sums=('b05af9645076f75429a8683f8afcbdb3'
-         '30ae1ac84b9e1ad229942ea29b51e819')
+         '75e675b316ea97755e50374dc15e81bb')
 
 
 prepare() {
@@ -31,8 +30,6 @@ prepare() {
     # Adjust the config for the current settings
     sed -i -e "/CONFIG_CROSS_COMPILER_PREFIX/s:=\".*\":=\"${_target_triplet}-\":" \
         "${srcdir}/config"
-    sed -i -e "/CONFIG_SYSROOT/s:=\".*\":=\"/sysroot\":" "${srcdir}/config"
-
 }
 
 
@@ -54,13 +51,13 @@ build() {
 
 package_busybox() {
     pkgdesc="Main busybox binary and symlinks"
-    groups=('bb')
+    groups=('bb' 'base')
     provides=('kbd' 'which' 'gzip' 'tar' 'bzip2' 'awk' 'diffutils' \
         'sed' 'vi' 'patch' 'shadow' 'e2fsprogs' 'less' 'hdparm' 'man' \
-        'inetutils' 'ip2route' 'iputils' 'dhcpcd' 'procps-ng' 'xz')
+        'inetutils' 'ip2route' 'iputils' 'dhcpcd' 'procps-ng')
     conflicts=('kbd' 'which' 'gzip' 'tar' 'bzip2' 'awk' 'diffutils' \
         'sed' 'vi' 'patch' 'shadow' 'e2fsprogs' 'less' 'hdparm' 'man' \
-        'inetutils' 'ip2route' 'iputils' 'dhcpcd' 'procps-ng' 'xz')
+        'inetutils' 'ip2route' 'iputils' 'dhcpcd' 'procps-ng')
 
     cd "${srcdir}/${pkgname}-${pkgver}"
 
@@ -70,12 +67,11 @@ package_busybox() {
     install -Dm755 "_install/bin/busybox" "${pkgdir}/usr/bin/busybox"
 
 
-    #TODO: Figure out what here is actually provided by kbd
-    KBD="deallocvt dumpkmap loadkmap setconsole setkeycodes showkey kbd_mode"
+    KBD="deallocvt setkeycodes showkey kbd_mode"
+    KEYBOARD="dumpkmap loadkmap setconsole"
     WHICH="which"
 
-    APPLETS="gunzip gzip lzop tar bzip2 bunzip2 unxz bzcat lzcat lzopcat \
-        unlzma unlzop xzcat zcat [ [[ uevent xz"
+    APPLETS="gunzip gzip tar bzip2 bunzip2 bzcat zcat [ [[ uevent"
     EDITORS="awk cmp diff patch sed vi"
     SHADOW="adduser addgroup deluser delgroup passwd"
     EXT2="chattr fsck lsattr tune2fs"
@@ -85,13 +81,14 @@ package_busybox() {
     PROC="iostat lsof nmeter pstree top free fuser kill pgrep \
         pidof pkill ps renice watch sysctl"
 
-    _link_packages $KBD $NCURSES $WHICH $APPLETS $EDITORS $LOGIN $EXT2 $MISC $NET $PROC $SHADOW
+    _link_packages $KBD $KEYBOARD $NCURSES $WHICH $APPLETS $EDITORS $LOGIN \
+        $EXT2 $MISC $NET $PROC $SHADOW
 }
 
 package_mdev() {
     pkgdesc="Lightweight udev alternative, from busybox"
     depends=("busybox")
-    groups=('bb')
+    groups=('bb' 'base')
 
     MDEV="mdev"
 
@@ -110,7 +107,7 @@ package_hush() {
 
 package_bb-coreutils() {
     pkgdesc="Coreutils symlinks for busybox"
-    groups=('bb')
+    groups=('bb' 'base')
     depends=('busybox')
     provides=('coreutils')
     conflicts=('coreutils')
@@ -129,7 +126,7 @@ package_bb-coreutils() {
 
 package_bb-util-linux() {
     pkgdesc="util linux symlinks for busybox"
-    groups=('bb')
+    groups=('bb' 'base')
     depends=('busybox' 'hush')
     provides=('util-linux')
     conflicts=('util-linux')
@@ -160,7 +157,7 @@ EOF
 
 package_bb-findutils() {
     pkgdesc="findutils symlinks for busybox"
-    groups=('bb')
+    groups=('bb' 'base')
     depends=('busybox')
     provides=('findutils')
     conflicts=('findutils')

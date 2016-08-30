@@ -34,6 +34,12 @@ md5sums=('377a2664d6007d72d6d8a126add83bcf'
 
 prepare() {
     cd "${srcdir}/${pkgname}-${pkgver}"
+
+    # TODO: Building without GNU malloc fails...
+    cat > config.cache << EOF
+ac_cv_func_malloc_0_nonnull=yes
+EOF
+
     for p in ../*.patch; do
         patch -p1 < "${p}"
     done
@@ -49,12 +55,14 @@ build() {
         --sysconfdir="/etc" \
         --enable-doc \
         --disable-shared \
+        --cache-file=config.cache \
         --with-scriptlet-shell="/usr/bin/bash" \
         --without-gpgme \
         --without-openssl \
         --without-curl \
         --without-libcurl \
-        DUFLAGS="-sk" # For busybox du
+        DUFLAGS="-sk" \
+        LIBS="-lz"
 
     make LIBS="-lz"
     make -C contrib LIBS="-lz"

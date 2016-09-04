@@ -29,8 +29,9 @@ Remaining packages that I can think of:
 
 ## Misc ##
 
-- Release system working (live CD and system
+- Release system working (live CD)
 - Mirror set up
+- Website published
 - Xorg up and running
 - All remaining packages built
 - Working on the Toshiba (v0.3.0)

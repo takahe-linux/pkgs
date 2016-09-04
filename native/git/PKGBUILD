@@ -2,7 +2,7 @@
 
 # Package information
 pkgname='git'
-pkgver='2.9.3'
+pkgver='2.10.0'
 pkgrel=1
 pkgdesc="A fast distributed version control system"
 
@@ -17,7 +17,7 @@ makedepends=('packages' 'zlib' 'expat')
 
 # Building information
 source=("https://www.kernel.org/pub/software/scm/git/git-${pkgver}.tar.xz")
-md5sums=('3d32cb5cb5b4f29bd2eb1cde596fc542')
+md5sums=('d99fdf256e7c7bc5d2cb428b48d4e038')
 
 build() {
     cd "${srcdir}/${pkgname}-${pkgver}"

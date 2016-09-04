@@ -15,51 +15,20 @@ Linux](https://www.archlinux.org) is the way to go!
 
 # Status #
 
-Currently, I have managed to build the toolchain, and a basic system bootable
-in [Qemu](https://wiki.qemu.org/Main_Page).
+I have created most of the packages I want to build, and the system works on my
+target machine (a toshiba laptop).
+The system is also bootable in [Qemu](https://wiki.qemu.org/Main_Page).
 
-I plan to work from here, until I get to a workable stage.
+Remaining targets are listed in docs/roadmap.md.
 
 
 # Testing #
 
-Since I have no working bootloader, testing is a little difficult...
+I intend to make a live CD available for i586 machines in the near future.
 
-I plan to upload a working system image to Bitbucket, but only once I've added
-a bootloader and generally made a working system.
-
-Until then, I am using the kernel and append options for qemu to test images.
-
-I also want to have an end-to-end build script. Currently, this is messy, but
-I'm giving it a go in the form of shell scripts. The main issue is that
-the tools I'm using do not handle cross-compiling well...
-
-
-# Future plans #
-
-I've got some ideas of where to go from here!
-
-## Toolchain ##
-
-Currently, everything is good here. However, I'd like to make it less dependent
-on the host system (read: building it's own mpfr/mpc and so on).
-
-## System ##
-
-I'd like to add some automation here. The current script is a good start, but
-is still missing some 'key' functionality, and it's pretty dumb.
-I also need to add a bootloader, and prove to myself that it boots on my test 
-machine, as well as in Qemu.
-
-The eventual goal is to make the system capable of then building itself - with
-the system created by the cross-compile toolchain becoming a 'temporary' system
-between architectures.
-
-Of course, such a system would also be able to bootstrap other architectures,
-and generally do everything I'd like it to do...
-
-I'd also like to hack makepkg to ensure that it works better with a distinction
-between the host and target systems, but that's a job for another day.
+Building from scratch is achievable using the
+[build utilities](https://bitbucket.org/Alastair_Hughes/takahe-build) and this
+repository.
 
 
 # Goals #
@@ -69,9 +38,7 @@ the musl libc, the Linux kernel, and some userspace tools.
 
 I would also like it to be self-hosting: a system running Takahe Linux can
 build another system, also running Takahe Linux.
-Preferably, it would also be easy to bootstrap to new architetures (at least
-those supported by Linux and Musl - at the moment, realistically that means
-ARM and x86-64 as I have hardware for both.
+Preferably, it would also be easy to bootstrap to new architectures.
 
 In the future, I'd love to be building and maintaining a Linux distro
 entirely from 'vintage' computers - but I'd need something a bit more grunty
@@ -98,20 +65,14 @@ Wikipedia (again) has [an article](https://en.wikipedia.org/wiki
 listing them.
 
 
-# Who am I? #
+# Caveat #
 
-I am myself!
-
-Who else :)
-
-More seriously, I am not a distro maintainer, developer, or any other such
-title. Experimenter, really. Keep that in mind if you decide to try this distro!
-
-Not that I expect anyone will for a while...
+I am just experimenting here, so there will be rough edges, broken packages,
+security holes, and other issues. Feel free to contribute and help fix them!
 
 
 # Contributing #
 
-Uhh, ping me an email? Send in patches? Tell me why you are interested?
-I'm not expecting anyone to contribute; if someone does, I'll be happy to help.
+Feel free to send patches or pull requests! I'll be happy to take a look at
+them.
 

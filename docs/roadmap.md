@@ -1,6 +1,6 @@
 # Roadmap #
 
-## Packages ##
+## Issues ##
 
 Packages to be fixed:
 - make (tries to use /bin/sh)
@@ -15,8 +15,24 @@ I should also run namcap on the remaining packages, and fix any warnings...
 Otherwise, grep for TODO's in the PKGBUILDs.
 
 
+## Packages ##
+
+Remaining packages that I can think of:
+
+- tex (pdflatex, at least)
+- qemu
+- unison
+- netsurf
+- ca-certs
+- fbpdf
+
+
 ## Misc ##
 
+- Release system working (live CD and system
+- Mirror set up
+- Xorg up and running
+- All remaining packages built
 - Working on the Toshiba (v0.3.0)
 - Being able to build all the Arch Linux packages (maybe?)
 - Improve the documentation

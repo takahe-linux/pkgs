@@ -14,7 +14,7 @@ license=('custom:vim')
 
 # Dependency information
 depends=('ncurses')
-makedepends=('packages')
+
 
 # Building information
 source=("${pkgname}-${pkgver}.tar.gz::http://github.com/vim/vim/archive/v${pkgver}.tar.gz")

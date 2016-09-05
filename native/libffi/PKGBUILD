@@ -12,7 +12,7 @@ url="http://sourceware.org/libffi/"
 license=('MIT')
 
 # Dependency information
-makedepends=('packages' 'linux-api-headers')
+makedepends=('linux-api-headers')
 
 # Building information
 source=("ftp://sourceware.org/pub/libffi/libffi-${pkgver}.tar.gz")

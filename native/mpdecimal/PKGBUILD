@@ -12,7 +12,7 @@ url="http://www.bytereef.org/mpdecimal/index.html"
 license=('custom')
 
 # Dependency information
-makedepends=('packages')
+
 
 # Building information
 source=("http://www.bytereef.org/software/${pkgname}/releases/${pkgname}-${pkgver}.tar.gz")

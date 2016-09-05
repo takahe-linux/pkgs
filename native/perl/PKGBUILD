@@ -12,7 +12,7 @@ url="https://www.perl.org"
 license=('GPL' 'PerlArtistic')
 
 # Dependency information
-makedepends=('packages')
+
 
 # Building information
 source=("http://www.cpan.org/src/5.0/${pkgname}-${pkgver}.tar.bz2")

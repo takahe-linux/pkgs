@@ -12,7 +12,7 @@ url="http://sourceforge.net/projects/strace/"
 license=('custom')
 
 # Dependency information
-makedepends=('packages' 'linux-api-headers')
+makedepends=('linux-api-headers')
 
 # Building information
 source=("http://downloads.sourceforge.net/${pkgname}/${pkgname}-${pkgver}.tar.xz")

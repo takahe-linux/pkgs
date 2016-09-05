@@ -12,7 +12,7 @@ url="http://expat.sourceforge.net/"
 license=('custom')
 
 # Dependency information
-makedepends=('packages')
+
 
 # Building information
 source=("http://downloads.sourceforge.net/sourceforge/expat/${pkgname}-${pkgver}.tar.bz2")

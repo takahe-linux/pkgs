@@ -12,7 +12,7 @@ url="https://www.xmlsoft.org/"
 license=('MIT')
 
 # Dependency information
-makedepends=('packages')
+
 
 # Building information
 source=("ftp://xmlsoft.org/libxml2/${pkgname}-${pkgver}.tar.gz")

@@ -13,7 +13,7 @@ url="http://lynx.invisible-island.net/"
 license=('GPL')
 
 # Dependency information
-makedepends=('packages' 'openssl' 'zlib')
+makedepends=('openssl' 'zlib')
 
 # Building information
 backup=('etc/lynx.cfg')

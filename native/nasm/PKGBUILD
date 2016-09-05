@@ -12,7 +12,7 @@ url="http://www.nasm.us"
 license=('BSD')
 
 # Dependency information
-makedepends=('packages')
+
 
 # Building information
 source=("http://www.nasm.us/pub/nasm/releasebuilds/${pkgver}/${pkgname}-${pkgver}.tar.xz")

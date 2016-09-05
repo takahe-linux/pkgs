@@ -13,7 +13,7 @@ url="http://www.python.org"
 license=('custom')
 
 # Dependency information
-makedepends=('packages' 'expat' 'libffi' 'mpdecimal' 'zlib' 'readline'
+makedepends=('expat' 'libffi' 'mpdecimal' 'zlib' 'readline'
             'linux-api-headers')
 
 # Building information

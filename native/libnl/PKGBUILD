@@ -12,7 +12,7 @@ url="http://www.infradead.org/~tgr/libnl/"
 license=('GPL')
 
 # Dependency information
-makedepends=('packages' 'linux-api-headers')
+makedepends=('linux-api-headers')
 
 # Building information
 backup=('etc/libnl/classid' 'etc/libnl/pktloc')

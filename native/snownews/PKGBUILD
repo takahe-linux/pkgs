@@ -12,7 +12,7 @@ url="http://kiza.kcore.de/software/snownews"
 license=('GPL')
 
 # Dependency information
-makedepends=('packages' 'libxml2' 'zlib')
+makedepends=('libxml2' 'zlib')
 
 # Building information
 source=("http://kiza.kcore.de/software/snownews/download/${pkgname}-${pkgver}.tar.gz")

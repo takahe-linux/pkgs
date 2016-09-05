@@ -12,7 +12,7 @@ url="https://github.com/${pkgname}/${pkgname}"
 license=('custom')
 
 # Dependency information
-makedepends=('packages')
+
 provides=('pkg-config')
 conflicts=('pkg-config')
 

@@ -13,7 +13,7 @@ license=('GPL')
 
 # Dependency information
 depends=('openssl')
-makedepends=('packages' 'libnl' 'pkg-config' 'zlib' 'readline' 'ncurses'
+makedepends=('libnl' 'pkg-config' 'zlib' 'readline' 'ncurses'
     'linux-api-headers')
 
 # Building information

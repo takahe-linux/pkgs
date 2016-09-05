@@ -12,7 +12,7 @@ url="http://s-tech.elsat.net.pl/fbv/"
 license=('GPL')
 
 # Dependency information
-makedepends=('packages' 'libpng' 'giflib' 'libjpeg' 'zlib' 'linux-api-headers')
+makedepends=('libpng' 'giflib' 'libjpeg' 'zlib' 'linux-api-headers')
 
 # Building information
 source=("http://s-tech.elsat.net.pl/fbv/${pkgname}-${pkgver}.tar.gz"

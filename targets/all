@@ -8,7 +8,7 @@ pkg/native/snownews
 pkg/native/strace
 pkg/native/vim
 pkg/native/wpa_supplicant
-pkg/packages/curl
-pkg/packages/gdb
-pkg/packages/linux-generic
-pkg/packages/packages
+pkg/cross/curl
+pkg/cross/gdb
+pkg/cross/linux-generic
+pkg/cross/packages

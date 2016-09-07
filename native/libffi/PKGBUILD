@@ -42,5 +42,5 @@ package() {
         "${pkgdir}/usr/lib/pkgconfig/libffi.pc"
 
     install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
-    rm -rf /usr/share/info # We don't use info files.
+    rm -rf "${pkgdir}/usr/share/info" # We don't use info files.
 }

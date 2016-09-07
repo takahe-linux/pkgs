@@ -1,0 +1,128 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname="linux-generic"
+_major_version='4.7'
+_srcname="linux-${_major_version}"
+pkgdesc="generic kernel"
+pkgver="${_major_version}.2"
+pkgrel=1
+
+# Additional information...
+arch=('i586' 'mips')
+url='http://www.kernel.org'
+license=('GPL2')
+
+# Dependency information
+groups=('base')
+hostdepends=('bc' 'inetutils' "${_target_triplet}-gcc-static"
+    "${_target_triplet}-binutils")
+
+# Building information
+options=('!buildflags')
+source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
+        "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz")
+md5sums=('5276563eb1f39a048e4a8a887408c031'
+         '64e8a8969536c5d700c9e6a591d28dad')
+
+modules() {
+    # true if modules are enabled, false otherwise
+    grep ".config" -e 'CONFIG_MODULES=y' > /dev/null
+    return "$?"
+}
+
+prepare() {
+    cd "${srcdir}/${_srcname}"
+
+    # Add upstream patch.
+    patch -p1 -i "${srcdir}/patch-${pkgver}"
+
+    # Set extraversion to pkgrel.
+    sed -ri "s|^(EXTRAVERSION =).*|\1 -${pkgrel}|" Makefile
+
+    # Clean up the kernel tree.
+    make mrproper
+
+    # Make the default config.
+    make defconfig ARCH="${_target_arch_alias}" \
+        CROSS_COMPILE="${_target_triplet}-"
+
+    case "${_target_arch}" in
+        mips) # We want a big-endian kernel.
+            cat >> .config << EOF
+CONFIG_MIPS_MALTA=y
+CONFIG_CPU_BIG_ENDIAN=y
+CONFIG_CPU_MIPS32_R2=y
+EOF
+
+            # Currently the kernel will not build with -Werror; I haven't
+            # figured out a way to neatly disable this, so sed it out of
+            # the Kbuild file for mips.
+            sed -i arch/mips/Kbuild -e '/subdir-ccflags-y/d'
+            ;;
+        i586)
+            # Ensure that we actually use i586.
+            # We also add in a bunch of extra legacy drivers in the hope that
+            # at least one of them works.
+            cat >> .config << EOF
+CONFIG_M586=y
+CONFIG_ATA_SFF=y
+CONFIG_PATA_PLATFORM=y
+CONFIG_PATA_LEGACY=y
+CONFIG_PATA_ACPI=y
+EOF
+            ;;
+        *) echo "Using default...";;
+    esac
+}
+
+
+build() {
+    cd "${srcdir}/${_srcname}"
+
+    # Make the kernel image and modules, if needed
+    case "${_target_arch_alias}" in
+        i386) targets="bzImage";;
+        mips) targets="vmlinux";;
+        *) targets="vmlinuz";;
+    esac
+    if modules; then
+        # Modules are enabled
+        targets+=" modules"
+    fi
+
+    make ${targets} ARCH="${_target_arch_alias}"
+}
+
+
+package() {
+    # Main Linux kernel package
+    cd "${srcdir}/${_srcname}"
+
+    # Find the kernel version
+    _kernver="$(make kernelrelease)"
+
+    # Make the boot directory
+    mkdir -p "${pkgdir}/boot"
+
+    # Copy the image to the end location
+    if [ -e "arch/${_target_arch_alias}/boot/bzImage" ]; then
+        cp "arch/${_target_arch_alias}/boot/bzImage" \
+           "${pkgdir}/boot/vmlinuz"
+    elif [ -e "vmlinuz" ]; then
+        cp "vmlinuz" "${pkgdir}/boot/vmlinuz"
+    else
+        cp "vmlinux" "${pkgdir}/boot/vmlinuz"
+    fi
+
+    # Install the modules and firmware, if required
+    if modules; then
+        mkdir -p "${pkgdir}"/{/usr/lib/modules,/usr/lib/firmware}
+        make INSTALL_MOD_PATH="${pkgdir}/usr" modules_install
+        # Remove the kernel source tree
+        rm -f "${pkgdir}/usr/lib/modules/${_kernver}"/{source,build}
+        # Add vmlinux
+        install -D -m644 'vmlinux' \
+            "${pkgdir}/usr/lib/modules/${_kernver}/build/vmlinux" 
+    fi
+}

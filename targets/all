@@ -10,4 +10,5 @@ pkg/native/vim
 pkg/native/wpa_supplicant
 pkg/packages/curl
 pkg/packages/gdb
+pkg/packages/linux-generic
 pkg/packages/packages

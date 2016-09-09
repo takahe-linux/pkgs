@@ -17,6 +17,8 @@ license=('GPL2')
 groups=('base')
 hostdepends=('bc' 'inetutils' "${_target_triplet}-gcc-static"
     "${_target_triplet}-binutils")
+provides=('linux')
+conflicts=('linux')
 
 # Building information
 options=('!buildflags')
@@ -46,6 +48,10 @@ prepare() {
     # Make the default config.
     make defconfig ARCH="${_target_arch_alias}" \
         CROSS_COMPILE="${_target_triplet}-"
+
+    cat >> .config << EOF
+CONFIG_DEFAULT_HOSTNAME="takahe"
+EOF
 
     case "${_target_arch}" in
         mips)

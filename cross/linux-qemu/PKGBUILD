@@ -16,6 +16,8 @@ license=('GPL2')
 # Dependency information
 hostdepends=('bc' 'inetutils' "${_target_triplet}-gcc-static"
     "${_target_triplet}-binutils")
+provides=('linux')
+conflicts=('linux')
 
 # Building information
 options=('!buildflags')

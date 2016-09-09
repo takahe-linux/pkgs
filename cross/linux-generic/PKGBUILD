@@ -48,17 +48,20 @@ prepare() {
         CROSS_COMPILE="${_target_triplet}-"
 
     case "${_target_arch}" in
-        mips) # We want a big-endian kernel.
-            cat >> .config << EOF
-CONFIG_MIPS_MALTA=y
-CONFIG_CPU_BIG_ENDIAN=y
-CONFIG_CPU_MIPS32_R2=y
-EOF
+        mips)
+            # Use the malta config.
+            cp -f "arch/mips/configs/malta_defconfig" ".config"
+            # We want a big-endian kernel.
+            sed -i -e 's:CONFIG_CPU_LITTLE_ENDIAN:CONFIG_CPU_BIG_ENDIAN:' \
+                .config
 
             # Currently the kernel will not build with -Werror; I haven't
             # figured out a way to neatly disable this, so sed it out of
             # the Kbuild file for mips.
             sed -i arch/mips/Kbuild -e '/subdir-ccflags-y/d'
+
+           yes '' | make oldconfig ARCH="${_target_arch_alias}" \
+               CROSS_COMPILE="${_target_triplet}-"
             ;;
         i586)
             # Ensure that we actually use i586.
@@ -91,7 +94,8 @@ build() {
         targets+=" modules"
     fi
 
-    make ${targets} ARCH="${_target_arch_alias}"
+   yes '' | make ${targets} ARCH="${_target_arch_alias}" \
+       CROSS_COMPILE="${_target_triplet}-"
 }
 
 

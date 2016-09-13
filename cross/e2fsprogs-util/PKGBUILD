@@ -4,7 +4,7 @@
 # This is named e2fsprogs-util as busybox provides e2fsprogs.
 pkgname='e2fsprogs-util'
 _pkgname='e2fsprogs'
-pkgver='1.43.1'
+pkgver='1.43.3'
 pkgrel=1
 pkgdesc='Ext2/3/4 filesystem utilities'
 
@@ -20,7 +20,7 @@ hostdepends=('toolchain')
 # Building information
 backup=('etc/mke2fs.conf')
 source=("http://downloads.sourceforge.net/sourceforge/${_pkgname}/${_pkgname}-${pkgver}.tar.gz")
-sha1sums=('26b75c27ba434e72ef630b160782a01b4d992b7a')
+sha1sums=('927cb79c6399c559a83b4fa528ec8912a82d122f')
 
 
 build() {

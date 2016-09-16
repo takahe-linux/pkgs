@@ -29,9 +29,6 @@ for i in /usr/bin/* /usr/lib/*; do
         if [ "$(get_arch "${i}")" != "${arch}" ]; then
             fail "Got two different architectures for ${i}: $(get_arch "${i}"), ${arch}!"
         fi
-        # Check that this is not dynamically linked.
-        readelf -d "${i}" | grep 'Shared library' && \
-            fail "'${i}' is dynamically linked!"
         # Check that binaries are stripped.
         objdump -t "${i}" | grep 'debug' && \
             fail "'${i}' has debug information!"

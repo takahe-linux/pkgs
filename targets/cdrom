@@ -1,0 +1,5 @@
+groups/base
+pkg/cross/linux-generic
+pkg/native/lynx
+pkg/native/syslinux
+pkg/native/vim

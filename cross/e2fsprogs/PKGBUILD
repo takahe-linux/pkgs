@@ -1,9 +1,7 @@
 # Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
 
 # Package information
-# This is named e2fsprogs-util as busybox provides e2fsprogs.
-pkgname='e2fsprogs-util'
-_pkgname='e2fsprogs'
+pkgname='e2fsprogs'
 pkgver='1.43.3'
 pkgrel=1
 pkgdesc='Ext2/3/4 filesystem utilities'
@@ -19,40 +17,41 @@ hostdepends=('toolchain')
 
 # Building information
 backup=('etc/mke2fs.conf')
-source=("http://downloads.sourceforge.net/sourceforge/${_pkgname}/${_pkgname}-${pkgver}.tar.gz")
+source=("http://downloads.sourceforge.net/sourceforge/${_pkgname}/${pkgname}-${pkgver}.tar.gz")
 sha1sums=('927cb79c6399c559a83b4fa528ec8912a82d122f')
 
 
+prepare() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    # TODO: We can't build statically due to -rdynamic...
+    sed -i -e 's:-rdynamic::' configure
+}
+
+
 build() {
-    cd "${srcdir}/${_pkgname}-${pkgver}"
+    cd "${srcdir}/${pkgname}-${pkgver}"
 
     ./configure --prefix="/usr" \
         --build="${_local_triplet}" \
         --host="${_target_triplet}" \
         --sbindir="/usr/bin" \
-        --sysconfdir="/etc"
+        --sysconfdir="/etc" \
+        --disable-fsck
     make
 }
 
 
 package() {
-    cd "${srcdir}/${_pkgname}-${pkgver}"
+    cd "${srcdir}/${pkgname}-${pkgver}"
 
     make DESTDIR="${pkgdir}/" install install-libs
     install -Dm644 "NOTICE" "${pkgdir}/usr/share/licenses/${pkgname}/NOTICE"
 
-    # Make sure awk is awk
+    # Make sure awk is awk.
     sed -i -e 's/^AWK=.*/AWK=awk/' "${pkgdir}/usr/bin/compile_et"
-    # Remove references to build directory
-    sed -i -e 's:^SS_DIR=.*:SS_DIR="/usr/share/ss":' \
-        "${pkgdir}/usr/bin/mk_cmds"
-    sed -i -e 's:^ET_DIR=.*:ET_DIR="/usr/share/et":' \
-        "${pkgdir}/usr/bin/compile_et"
 
     # Remove redundant files.
     rm -rf "${pkgdir}/usr/share/info"
     rm -f "${pkgdir}/usr/lib/charset.alias"
-
-    # Remove applets busybox provides.
-    rm -f "${pkgdir}/usr/bin/"{fsck,chattr,lsattr,tune2fs,blkid}
 }

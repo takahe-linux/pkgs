@@ -14,7 +14,6 @@ url='http://www.kernel.org'
 license=('GPL2')
 
 # Dependency information
-groups=('base')
 hostdepends=('bc' 'inetutils' "${_target_triplet}-gcc-static"
     "${_target_triplet}-binutils")
 provides=('linux')

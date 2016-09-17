@@ -80,5 +80,5 @@ package() {
     ln -s pydoc3 "${pkgdir}/usr/bin/pydoc"
 
     # rm failed dynamically linked libraries.
-    rm -rf "${pkgdir}/usr/lib/python3.5/lib-dynload/*"
+    rm -rf "${pkgdir}/usr/lib/python${_basever}/lib-dynload/"*
 }

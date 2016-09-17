@@ -21,7 +21,7 @@ source=("${_web_address}/${pkgname}-${pkgver}.tar.bz2"
         "config"
        )
 md5sums=('b05af9645076f75429a8683f8afcbdb3'
-         '75e675b316ea97755e50374dc15e81bb')
+         '87ae7f5a02c1035dac768b371d14def0')
 
 
 prepare() {
@@ -53,11 +53,11 @@ package_busybox() {
     pkgdesc="Main busybox binary and symlinks"
     groups=('bb' 'base')
     provides=('kbd' 'which' 'gzip' 'tar' 'bzip2' 'awk' 'diffutils' \
-        'sed' 'vi' 'patch' 'shadow' 'e2fsprogs' 'less' 'hdparm' 'man' \
-        'inetutils' 'ip2route' 'iputils' 'dhcpcd' 'procps-ng')
+        'sed' 'vi' 'patch' 'shadow' 'less' 'hdparm' 'man' 'inetutils' \
+        'ip2route' 'iputils' 'dhcpcd' 'procps-ng')
     conflicts=('kbd' 'which' 'gzip' 'tar' 'bzip2' 'awk' 'diffutils' \
-        'sed' 'vi' 'patch' 'shadow' 'e2fsprogs' 'less' 'hdparm' 'man' \
-        'inetutils' 'ip2route' 'iputils' 'dhcpcd' 'procps-ng')
+        'sed' 'vi' 'patch' 'shadow' 'less' 'hdparm' 'man' 'inetutils' \
+        'ip2route' 'iputils' 'dhcpcd' 'procps-ng')
 
     cd "${srcdir}/${pkgname}-${pkgver}"
 
@@ -74,7 +74,6 @@ package_busybox() {
     APPLETS="gunzip gzip tar bzip2 bunzip2 bzcat zcat [ [[ uevent"
     EDITORS="awk cmp diff patch sed vi"
     SHADOW="adduser addgroup deluser delgroup passwd"
-    EXT2="chattr fsck lsattr tune2fs"
 
     MISC="less hdparm man halt poweroff reboot"
     NET="ping hostname ip udhcpc ipaddr iplink dnsdomainname"
@@ -82,7 +81,7 @@ package_busybox() {
         pidof pkill ps renice watch sysctl"
 
     _link_packages $KBD $KEYBOARD $NCURSES $WHICH $APPLETS $EDITORS $LOGIN \
-        $EXT2 $MISC $NET $PROC $SHADOW
+        $MISC $NET $PROC $SHADOW
 }
 
 package_mdev() {
@@ -131,10 +130,10 @@ package_bb-util-linux() {
     provides=('util-linux')
     conflicts=('util-linux')
 
-    UTILLINUX="blockdev blkid dmesg fbset getopt hwclock losetup lspci lsusb \
+    UTILLINUX="blockdev dmesg fbset getopt hwclock losetup lspci lsusb \
         mount umount su nsenter unshare"
     LOGIN="getty login"
-    MISC_UTILS="mountpoint setsid time"
+    MISC_UTILS="mountpoint setsid time fsck"
 
     _link_packages $UTILLINUX $LOGIN $MISC_UTILS
 

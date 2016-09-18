@@ -4,7 +4,7 @@
 
 # Package information
 pkgname='filesystem'
-pkgver='2015.12'
+pkgver='2016.09'
 pkgrel=1
 pkgdesc='Base filesystem'
 
@@ -49,7 +49,7 @@ package() {
     cd ${pkgdir}
 
     # Setup root filesystem
-    for d in boot dev etc home usr var run; do
+    for d in boot dev etc home mnt usr var run; do
         install -d -m755 ${d}
     done
     install -d -m555 proc

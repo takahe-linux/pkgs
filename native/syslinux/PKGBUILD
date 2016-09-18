@@ -1,0 +1,69 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='syslinux'
+pkgver='6.0.3'
+pkgrel=1
+pkgdesc="Collection of boot loaders for i386 and x86_64"
+
+# Additional information...
+arch=('i586')
+url="http://www.syslinux.org"
+license=('GPL2')
+
+# Dependency information
+makedepends=('git' 'nasm' 'perl' 'python' 'xz' 'linux-api-headers' 'e2fsprogs')
+
+# Building information
+backup=('boot/syslinux/syslinux.cfg')
+options=('!makeflags')
+source=(git://git.kernel.org/pub/scm/boot/syslinux/syslinux.git#tag=$_tag
+        syslinux.cfg
+        gcc-fix-alignment.patch::http://repo.or.cz/syslinux.git/patch/e5f2b577ded109291c9632dacb6eaa621d8a59fe?hp=8dc6d758b564a1ccc44c3ae11f265d43628219ce
+        dont-guess-alignment.patch::http://repo.or.cz/syslinux.git/patch/0cc9a99e560a2f52bcf052fd85b1efae35ee812f?hp=e5f2b577ded109291c9632dacb6eaa621d8a59fe
+)
+sha1sums=('SKIP'
+          '9dbd3189391dc1155e426c9d3ce89b416ab1d97e'
+          '74b976dd3ce28a619c2e9ef69a33fd455dc4bd4c'
+          'b6ef5a7cdd4b7c714fd78c174e93ae6e854ae1ee')
+
+
+prepare() {
+    cd "${srcdir}/${pkgname}"
+
+    # FS#48253
+    patch -p1 < ../gcc-fix-alignment.patch
+    patch -p1 < ../dont-guess-alignment.patch
+
+    # Disable debug and development flags.
+    : > mk/devel.mk
+
+    # Fix usage of "-n" flags for gzip (not in busybox).
+    sed -i -e 's:$(GZIPPROG) -9:$(GZIPPROG):' \
+        diag/geodsp/Makefile
+}
+
+
+build() {
+    cd "${srcdir}/${pkgname}"
+    unset LDFLAGS
+    make bios
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}"
+
+    make bios install INSTALLROOT="${pkgdir}/" SBINDIR="/usr/bin" \
+        MANDIR="/usr/share/man" AUXDIR="/usr/lib/syslinux"
+
+    rm -r "${pkgdir}/usr/lib/syslinux"/{com32,dosutil,syslinux.com}
+    install -Dm644 COPYING "${pkgdir}/usr/share/licenses/syslinux/COPYING"
+
+    install -d "${pkgdir}/usr/lib/syslinux/bios"
+    mv "${pkgdir}/usr/lib/syslinux"/{*.bin,*.c32,*.0,memdisk} \
+        "${pkgdir}/usr/lib/syslinux/bios"
+
+    install -Dm644 "${srcdir}/syslinux.cfg" \
+        "${pkgdir}/boot/syslinux/syslinux.cfg"
+}

@@ -2,7 +2,7 @@
 
 # Package information
 pkgname='initscripts'
-pkgver='0.1'
+pkgver='0.2'
 pkgrel=1
 pkgdesc="Startup and shutdown scripts"
 
@@ -19,7 +19,7 @@ depends=('busybox' 'coreutils' 'util-linux' 'sh')
 backup=('etc/init/init' 'etc/init/shutdown')
 source=('init.sh'
         'shutdown.sh')
-md5sums=('6deccda97998ee099f74f8ad8312c886'
+md5sums=('317a61d140bcbd151f110668b01dd917'
          'b6d6ba862a24cc809376af41df058f82')
 
 

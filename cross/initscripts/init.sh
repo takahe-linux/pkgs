@@ -3,6 +3,7 @@
 # Mount the expected filesystems.
 mount -t proc proc /proc
 mount -t sysfs sys /sys
+mount -t tmpfs tmp /tmp
 mount -a
 
 # Apply the hostname.

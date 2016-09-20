@@ -1,5 +1,6 @@
 base
 linux-generic
 lynx
+parted
 syslinux
 vim

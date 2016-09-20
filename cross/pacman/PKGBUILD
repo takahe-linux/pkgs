@@ -16,7 +16,7 @@ license=('GPL')
 # Dependency information
 groups=('base')
 depends=('bash' 'libarchive' 'gettext' 'openssl' 'xz')
-makedepends=('zlib' 'musl')
+makedepends=('zlib' 'musl' 'curl')
 hostdepends=('asciidoc' 'libtool' 'toolchain')
 optdepends=('wget')
 
@@ -58,14 +58,13 @@ build() {
         --cache-file=config.cache \
         --with-scriptlet-shell="/usr/bin/bash" \
         --without-gpgme \
-        --without-openssl \
-        --without-curl \
-        --without-libcurl \
         DUFLAGS="-sk" \
-        LIBS="-lz"
+        LIBSSL_LIBS="-lcrypto -lz" \
+        LIBARCHIVE_LIBS="-larchive -lz" \
+        LIBCURL_LIBS="-lcurl -lssl"
 
-    make LIBS="-lz"
-    make -C contrib LIBS="-lz"
+    make
+    make -C contrib
 }
 
 

@@ -1,0 +1,48 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='parted'
+pkgver='3.2'
+pkgrel=1
+pkgdesc="A program for creating, destroying, resizing, checking and copying partitions"
+
+# Additional information...
+arch=('mips' 'i586')
+url="http://www.gnu.org/software/parted/parted.html"
+license=('GPL3')
+
+# Dependency information
+makedepends=('musl' 'e2fsprogs' 'readline' 'ncurses')
+hostdepends=('toolchain')
+
+# Building information
+source=("http://ftp.gnu.org/gnu/${pkgname}/${pkgname}-${pkgver}.tar.xz"
+        "fix-includes.patch")
+md5sums=('0247b6a7b314f8edeb618159fa95f9cb'
+         'e87ffa1171acbebfa9d2475a093e7e64')
+
+
+prepare() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+    patch -p1 < "${srcdir}/fix-includes.patch"
+}
+
+
+build() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    ./configure --prefix="/usr" \
+        --sbindir="/usr/bin" \
+        --disable-debug \
+        --disable-rpath \
+        --disable-device-mapper
+    make
+}
+
+
+
+package() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    make DESTDIR="${pkgdir}/" install
+}

@@ -1,4 +1,5 @@
 base
+e2fsprogs
 linux-generic
 lynx
 parted

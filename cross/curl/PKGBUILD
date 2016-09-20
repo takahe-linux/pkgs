@@ -17,7 +17,7 @@ hostdepends=('toolchain')
 
 # Building information
 source=("http://curl.haxx.se/download/${pkgname}-${pkgver}.tar.gz")
-md5sums=('185360d036683812622c63c157d91c03')
+md5sums=('870e16fd88a88b52e26a4f04dfc161db')
 
 
 build() {

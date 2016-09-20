@@ -12,19 +12,26 @@ url="http://www.gnu.org/software/parted/parted.html"
 license=('GPL3')
 
 # Dependency information
-makedepends=('musl' 'e2fsprogs' 'readline' 'ncurses')
+makedepends=('musl' 'e2fsprogs' 'readline' 'ncurses' 'linux-api-headers')
 hostdepends=('toolchain')
 
 # Building information
 source=("http://ftp.gnu.org/gnu/${pkgname}/${pkgname}-${pkgver}.tar.xz"
-        "fix-includes.patch")
+        "fix-includes.patch"
+        "devmapper.patch")
 md5sums=('0247b6a7b314f8edeb618159fa95f9cb'
-         'e87ffa1171acbebfa9d2475a093e7e64')
+         'e87ffa1171acbebfa9d2475a093e7e64'
+         '83d297bd20a11b47a4239b101bc26ad2')
 
 
 prepare() {
     cd "${srcdir}/${pkgname}-${pkgver}"
+
+    # fix-includes from Alpine Linux.
     patch -p1 < "${srcdir}/fix-includes.patch"
+
+    # devmapper patch from Funtoo Linux (from LFS site...).
+    patch -p1 < "${srcdir}/devmapper.patch"
 }
 
 
@@ -33,6 +40,8 @@ build() {
 
     ./configure --prefix="/usr" \
         --sbindir="/usr/bin" \
+        --host="${_target_triplet}" \
+        --build="${_local_triplet}" \
         --disable-debug \
         --disable-rpath \
         --disable-device-mapper
@@ -45,4 +54,8 @@ package() {
     cd "${srcdir}/${pkgname}-${pkgver}"
 
     make DESTDIR="${pkgdir}/" install
+
+    # We don't include info files.
+    rm -rf "${pkgdir}/usr/share/info"
+    rm -f "${pkgdir}/usr/lib/charset.alias"
 }

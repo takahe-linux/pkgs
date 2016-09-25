@@ -16,8 +16,18 @@ license=('custom')
 makedepends=('nasm')
 
 # Building information
-source=("http://downloads.sourceforge.net/project/${_pkgname}/${pkgver}/${_pkgname}-${pkgver}.tar.gz")
-sha1sums=('ebb3f9e94044c77831a3e8c809c7ea7506944622')
+source=("http://downloads.sourceforge.net/project/${_pkgname}/${pkgver}/${_pkgname}-${pkgver}.tar.gz"
+        "mips-simd.patch")
+sha1sums=('ebb3f9e94044c77831a3e8c809c7ea7506944622'
+          '3d47c73c71583e346ef8ef10b86f54fef2fe5668')
+
+
+prepare() {
+    cd "${srcdir}/${_pkgname}-${pkgver}"
+
+    # Fix build on mips. (TODO: Upstream).
+    patch -p0 < "${srcdir}/mips-simd.patch"
+}
 
 
 build() {

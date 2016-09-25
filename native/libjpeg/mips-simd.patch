@@ -1,0 +1,11 @@
+--- simd/jsimd_mips-old.c	2016-09-25 11:57:18.631958238 +1300
++++ simd/jsimd_mips.c	2016-09-25 11:58:02.180711020 +1300
+@@ -63,6 +63,8 @@
+ LOCAL(void)
+ init_simd (void)
+ {
++  char* env = NULL;
++
+   if (simd_support != ~0U)
+     return;
+ 

@@ -4,7 +4,7 @@
 
 # Package information
 pkgname='mpfr'
-_pkgver='3.1.4'
+_pkgver='3.1.5'
 _patchlevel='p0'
 pkgver="${_pkgver}.${_patchlevel}"
 pkgrel=1
@@ -21,7 +21,7 @@ hostdepends=('toolchain')
 
 # Building information
 source=("http://www.mpfr.org/mpfr-current/${pkgname}-${_pkgver}.tar.xz")
-md5sums=('064b2c18185038e404a401b830d59be8')
+md5sums=('c4ac246cf9795a4491e7766002cd528f')
 
 
 prepare() {

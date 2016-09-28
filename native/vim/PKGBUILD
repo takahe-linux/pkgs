@@ -2,8 +2,8 @@
 
 # Package information
 pkgname='vim'
-pkgver='7.4.1830'
-_versiondir=74
+pkgver='8.0.0013'
+_versiondir=80
 pkgrel=1
 pkgdesc='An improved version of the vi text editor'
 
@@ -18,7 +18,7 @@ depends=('ncurses')
 
 # Building information
 source=("${pkgname}-${pkgver}.tar.gz::http://github.com/vim/vim/archive/v${pkgver}.tar.gz")
-md5sums=('83344d673aa76c2da4124dc034cb82fc')
+md5sums=('63e286fa9ecab9e5dfbd51f2d1d52d54')
 
 
 prepare() {

@@ -2,7 +2,7 @@
 
 # Package information
 pkgname='wpa_supplicant'
-pkgver='2.5'
+pkgver='2.6'
 pkgrel=1
 pkgdesc="Utility for key negotiation for WPA networks"
 
@@ -18,7 +18,7 @@ makedepends=('libnl' 'pkg-config' 'zlib' 'readline' 'ncurses'
 
 # Building information
 source=("http://w1.fi/releases/${pkgname}-${pkgver}.tar.gz")
-md5sums=('96ff75c3a514f1f324560a2376f13110')
+md5sums=('091569eb4440b7d7f2b4276dbfc03c3c')
 
 prepare() {
     cd "${srcdir}/${pkgname}-${pkgver}/${pkgname}"

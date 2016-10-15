@@ -2,7 +2,7 @@
 
 # Package information
 pkgname=('busybox' 'mdev' 'hush' 'bb-coreutils' 'bb-util-linux' 'bb-findutils')
-pkgver='1.25.0'
+pkgver='1.25.1'
 pkgrel=1
 
 # Additional information...
@@ -20,8 +20,8 @@ _patch_address="${_web_address}/fixes-${pkgver}"
 source=("${_web_address}/${pkgname}-${pkgver}.tar.bz2"
         "config"
        )
-md5sums=('b05af9645076f75429a8683f8afcbdb3'
-         '87ae7f5a02c1035dac768b371d14def0')
+md5sums=('4f4c5de50b479b11ff636d7d8eb902a2'
+         '3f720fd67abf1abbc4c2c4c10ff045fe')
 
 
 prepare() {
@@ -76,7 +76,7 @@ package_busybox() {
     SHADOW="adduser addgroup deluser delgroup passwd"
 
     MISC="less hdparm man halt poweroff reboot"
-    NET="ping hostname ip udhcpc ipaddr iplink dnsdomainname"
+    NET="ping hostname ip udhcpc ipaddr iplink iproute dnsdomainname"
     PROC="iostat lsof nmeter pstree top free fuser kill pgrep \
         pidof pkill ps renice watch sysctl"
 
@@ -111,7 +111,7 @@ package_bb-coreutils() {
     provides=('coreutils')
     conflicts=('coreutils')
 
-    COREUTILS="basename cat date id groups shuf test touch tr chgrp \
+    COREUTILS="basename base64 cat date id groups shuf test touch tr chgrp \
         chmod chown chroot cksum comm cp cut dd df dirname du echo env expand \
         expr false fsync head install ln logname ls md5sum mkdir mkfifo \
         mknod mv nice nohup printf pwd readlink realpath rm rmdir seq \

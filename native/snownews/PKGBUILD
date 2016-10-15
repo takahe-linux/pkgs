@@ -38,7 +38,7 @@ build() {
 
     cat > platform_settings << EOF
 PREFIX= /usr
-CFLAGS= ${CFLAGS} $(xml2-config --cflags) -DOS=linux -DLOCALEPATH="\"\""
+CFLAGS= ${CFLAGS} $(xml2-config --cflags) -DOS="\"linux\"" -DLOCALEPATH="\"\""
 LDFLAGS= ${LDFLAGS} -lncurses -lcrypto -lz $(xml2-config --libs)
 EOF
 

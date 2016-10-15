@@ -6,7 +6,6 @@ Packages to be fixed:
 - make (tries to use /bin/sh)
 - busybox man requires nroff
 - MANPATH is not set correctly for busybox?
-- snownews is also broken (segfaults)
 - openssl 1.1.0 breaks lynx, wpa\_supplicant, snownews builds
 - flex does not cross compile
 - wpa\_supplicant config should be o-r.

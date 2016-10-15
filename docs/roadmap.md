@@ -7,8 +7,7 @@ Packages to be fixed:
 - busybox man requires nroff
 - MANPATH is not set correctly for busybox?
 - openssl 1.1.0 breaks lynx, wpa\_supplicant, snownews builds
-- flex does not cross compile
-- wpa\_supplicant config should be o-r.
+- flex does not cross compile (see issue #78)
 
 I should also run namcap on the remaining packages, and fix any warnings...
 

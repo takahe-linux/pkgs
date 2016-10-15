@@ -1,0 +1,81 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='ca-certificates'
+pkgver='20160104'
+pkgrel=1
+pkgdesc="Trusted CA certificates from Debian"
+
+# Additional information...
+arch=('any')
+url="http://ftp.debian.org/debian"
+license=('custom')
+
+# Dependency information
+depends=('openssl')
+makedepends=('zlib')
+
+# Building information
+backup=('etc/ca-certificates.conf')
+source=("http://ftp.debian.org/debian/pool/main/c/${pkgname}/${pkgname}_${pkgver}.tar.xz"
+        'update-ca-certificates.hook'
+        'certdata2pem.c'
+        'c_rehash.c')
+md5sums=('d9665a83d0d3ef8176a38e6aa20458e9'
+         'dff703d85ca3e8adade734e59ca0b41f'
+         '1c759bac40fcae93119696ae24144ee2'
+         'eba0f9b8d993f21c900a12ca03301344')
+
+
+prepare() {
+    cd "${srcdir}/${pkgname}"
+
+    # We use quite a bit of the Sabotage Linux build script to avoid excessive
+    # dependencies.
+
+    # Use sbindir.
+    cat > sbin/Makefile << EOF
+install:
+	install -Dm755 update-ca-certificates \$(DESTDIR)\$(SBINDIR)/update-ca-certificates
+EOF
+
+    # Adjust for C version of certdata2pem (from Sabotage Linux).
+    mv "${srcdir}/certdata2pem.c" "mozilla/certdata2pem.c"
+    cat > mozilla/Makefile << EOF
+all:
+	gcc -Wall certdata2pem.c -o certdata2pem
+	./certdata2pem
+clean:
+	-rm -f *.crt
+install:
+	for p in *.crt; do \
+	    install -Dm0644 \$\$p \$(CERTSDIR)/\$\$p ; \
+	done
+EOF
+}
+
+
+build() {
+    cd "${srcdir}/${pkgname}"
+    make
+
+    gcc "${srcdir}/c_rehash.c" -o "${srcdir}/c_rehash" -lssl -lcrypto -lz
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}"
+    make DESTDIR="${pkgdir}" SBINDIR="/usr/bin" install
+
+    # Generate an initial ca-certificates.conf.
+    mkdir "${pkgdir}/etc/"
+    find "${pkgdir}/usr/share/${pkgname}/" -name '*.crt' | \
+        rev | cut -d/ -f1-2 | rev | sort > "${pkgdir}/etc/ca-certificates.conf"
+
+    # Install the hook.
+    install -Dm644 "${srcdir}/update-ca-certificates.hook" \
+        "${pkgdir}/usr/share/libalpm/hooks/update-ca-certificates.hook"
+
+    # Use the alternative c_rehash from Sabotage Linux.
+    install -Dm0755 "${srcdir}/c_rehash" "${pkgdir}/usr/bin/c_rehash"
+}

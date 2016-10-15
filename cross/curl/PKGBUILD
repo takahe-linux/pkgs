@@ -33,7 +33,9 @@ build() {
         --without-libidn \
         --with-ssl \
         --disable-shared \
-        --enable-static
+        --enable-static \
+        --with-ca-bundle="/etc/ssl/certs/ca-certificates.crt" \
+        --with-ca-path="/etc/ssl/certs"
     make
 }
 

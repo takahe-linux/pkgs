@@ -25,7 +25,7 @@ build() {
     make prefix="/usr/" gitexecdir="/usr/lib/git" \
         CC=gcc NEEDS_SSL_WITH_CURL="y" NO_PERL="y" \
         CFLAGS="${CFLAGS}" LDFLAGS="${LDFLAGS}" CPPFLAGS="${CPPFLAGS}" \
-        NO_CROSS_DIRECTORY_HARDLINKS=1 \
+        NO_CROSS_DIRECTORY_HARDLINKS=1 NO_REGEX="NeedsStartEnd" \
         MAN_BOLD_LITERAL=1 \
         all
 }
@@ -37,7 +37,7 @@ package() {
     make prefix="/usr/" gitexecdir="/usr/lib/git" \
         CC=gcc NEEDS_SSL_WITH_CURL="y" NO_PERL="y" \
         CFLAGS="${CFLAGS}" LDFLAGS="${LDFLAGS}" CPPFLAGS="${CPPFLAGS}" \
-        NO_CROSS_DIRECTORY_HARDLINKS=1 \
+        NO_CROSS_DIRECTORY_HARDLINKS=1 NO_REGEX="NeedsStartEnd" \
         MAN_BOLD_LITERAL=1 \
         DESTDIR="${pkgdir}/" install
 

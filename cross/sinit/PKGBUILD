@@ -25,9 +25,9 @@ prepare() {
     cd "${srcdir}/${pkgname}-${pkgver}"
 
     cat > config.h << EOF
-static char *const rcinitcmd[]     = { "/etc/init/init", NULL };
-static char *const rcrebootcmd[]   = { "/etc/init/shutdown", "reboot", NULL };
-static char *const rcpoweroffcmd[] = { "/etc/init/shutdown", "poweroff", NULL };
+static char *const rcinitcmd[]     = { "/etc/init.d/init", NULL };
+static char *const rcrebootcmd[]   = { "/etc/init.d/shutdown", "reboot", NULL };
+static char *const rcpoweroffcmd[] = { "/etc/init.d/shutdown", "poweroff", NULL };
 EOF
 }
 

@@ -16,7 +16,7 @@ groups=('base')
 depends=('busybox' 'coreutils' 'util-linux' 'sh')
 
 # Building information
-backup=('etc/init/init' 'etc/init/shutdown')
+backup=('etc/init.d/init' 'etc/init.d/shutdown')
 source=('init.sh'
         'shutdown.sh')
 md5sums=('317a61d140bcbd151f110668b01dd917'
@@ -25,6 +25,6 @@ md5sums=('317a61d140bcbd151f110668b01dd917'
 
 package() {
     cd "${srcdir}"
-    install -Dm0755 "init.sh" "${pkgdir}/etc/init/init"
-    install -Dm0755 "shutdown.sh" "${pkgdir}/etc/init/shutdown"
+    install -Dm0755 "init.sh" "${pkgdir}/etc/init.d/init"
+    install -Dm0755 "shutdown.sh" "${pkgdir}/etc/init.d/shutdown"
 }

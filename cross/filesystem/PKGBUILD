@@ -79,6 +79,9 @@ package() {
     # Add /bin...
     ln -s /usr/bin "${pkgdir}/bin"
 
+    # Basically everything needs at least /bin/sh; add the /bin symlink.
+    ln -s usr/bin bin
+
     # Setup /usr hierarchy
     for d in bin include lib share/misc; do
         install -d -m755 usr/${d}

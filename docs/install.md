@@ -82,8 +82,8 @@ Starting a terminal on /dev/console:
 The system should now be bootable. However, some additional things should be
 set up before using the install.
 
-Other things to consider not listed here include timezones, the system
-daemons, and locale settings.
+Other things to consider not listed here include timezones and the system
+daemons.
 
 ### Hostname ###
 
@@ -102,4 +102,8 @@ Set the root password:
 Add a new user:
 
 ``# adduser ${username}``
+
+### Locale ###
+
+musl does not currently support locales.
 

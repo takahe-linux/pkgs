@@ -31,16 +31,14 @@ source=('group'
         'passwd'
         'shadow'
         'shells'
-        'profile'
-        'locale.sh')
+        'profile')
 md5sums=('96ac8b97d60f21957b65be52cecf0160'
          '9958873fc22f6d7323f3568f96ea15ed'
          '58233879530afb7b1c6a8e51a14d3433'
          'a9d43e66298f11c8e997268f6746b99b'
          '7a4d75479bc052c6dbe44ac957cb19d3'
          'eef6376b9b624b4aa0e2963f38597228'
-         '0db5e301beabf821ce4619187a8df325'
-         '7fd1a7398ccfa02172a12b0f6511e2fc')
+         '0db5e301beabf821ce4619187a8df325')
 
 package() {
     cd ${pkgdir}
@@ -64,8 +62,6 @@ package() {
     for file in shadow gshadow; do
         install -m600 "${srcdir}/${file}" "${pkgdir}/etc"
     done
-
-    install -m755 "${srcdir}/locale.sh" "${pkgdir}/etc/profile.d/locale.sh"
 
     # Setup /var
     for d in log/old; do

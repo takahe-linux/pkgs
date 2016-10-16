@@ -22,7 +22,6 @@ backup=('etc/group'
         'etc/gshadow'
         'etc/passwd'
         'etc/shadow'
-        'etc/motd'
         'etc/shells'
         'etc/profile'
         'etc/issue')
@@ -31,7 +30,6 @@ source=('group'
         'issue'
         'passwd'
         'shadow'
-        'motd'
         'shells'
         'profile'
         'locale.sh')
@@ -40,9 +38,8 @@ md5sums=('96ac8b97d60f21957b65be52cecf0160'
          '58233879530afb7b1c6a8e51a14d3433'
          'a9d43e66298f11c8e997268f6746b99b'
          '7a4d75479bc052c6dbe44ac957cb19d3'
-         'd41d8cd98f00b204e9800998ecf8427e'
          'eef6376b9b624b4aa0e2963f38597228'
-         '84b7313dbe8233362324423eac03ba85'
+         '0db5e301beabf821ce4619187a8df325'
          '7fd1a7398ccfa02172a12b0f6511e2fc')
 
 package() {
@@ -59,7 +56,7 @@ package() {
 
     # Setup /etc
     install -d ${pkgdir}/etc/profile.d
-    for file in group issue motd passwd shells profile; do
+    for file in group issue passwd shells profile; do
         install -m644 "${srcdir}/${file}" "${pkgdir}/etc"
     done
 

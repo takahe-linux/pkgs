@@ -20,8 +20,8 @@ if test "$PS1" && test "$BASH" && test -r /etc/bash/bash.conf; then
 	. /etc/bash/bash.conf
 fi
 
-# Termcap is outdated, old, and crusty, kill it.
+# Termcap is outdated, old, and crusty, kill it
 unset TERMCAP
 
-# Man is much better than us at figuring this out
-unset MANPATH
+# Set the MANPATH for busybox man
+MANPATH="/usr/share/man/"

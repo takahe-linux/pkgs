@@ -69,7 +69,8 @@ Edit fstab as required.
 
 ### Create a default run script ###
 
-Starting a terminal on /dev/console:
+/etc/init.d/init runs /etc/init.d/run.
+A sensible default is starting a terminal on /dev/console:
 
 ```
 #!/usr/bin/sh

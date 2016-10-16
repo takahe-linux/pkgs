@@ -15,5 +15,5 @@ ln -s /proc/self/fd /dev/fd
 
 # Run the helper script.
 while true; do
-    /etc/init/run
+    /etc/init.d/run
 done

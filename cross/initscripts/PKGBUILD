@@ -19,7 +19,7 @@ depends=('busybox' 'coreutils' 'util-linux' 'sh')
 backup=('etc/init.d/init' 'etc/init.d/shutdown')
 source=('init.sh'
         'shutdown.sh')
-md5sums=('317a61d140bcbd151f110668b01dd917'
+md5sums=('570da713411f054f4d8c979c3f0d6919'
          'b6d6ba862a24cc809376af41df058f82')
 
 

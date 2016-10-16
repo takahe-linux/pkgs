@@ -25,7 +25,7 @@ sha1sums=('ebb3f9e94044c77831a3e8c809c7ea7506944622'
 prepare() {
     cd "${srcdir}/${_pkgname}-${pkgver}"
 
-    # Fix build on mips. (TODO: Upstream).
+    # Fix build on mips - remove with next release.
     patch -p0 < "${srcdir}/mips-simd.patch"
 }
 

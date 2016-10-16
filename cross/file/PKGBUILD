@@ -3,7 +3,6 @@
 # Package information
 pkgname='file'
 pkgver='5.28'
-# TODO: Remove workaround for config.guess in next update.
 pkgrel=1
 pkgdesc='File type identification utility'
 
@@ -25,6 +24,7 @@ md5sums=('3f7771424aa855f32094b49571e19b33')
 build() {
     cd "${srcdir}/${pkgname}-${pkgver}"
 
+    # Remove workaround for config.guess in next update.
     ./configure --prefix="/usr" \
         --host="$(echo "${_target_triplet}" | sed 's:musl:gnu:')" \
         --build="${_local_triplet}" \

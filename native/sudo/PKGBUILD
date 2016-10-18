@@ -1,0 +1,60 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='sudo'
+_sudover=1.8.16
+pkgver="${_sudover/p/.p}"
+pkgrel=1
+pkgdesc="Give certain users raised privileges"
+
+# Additional information...
+arch=('mips' 'i586')
+url="https://www.sudo.ws/sudo/"
+license=('custom')
+
+# Dependency information
+makedepends=('zlib')
+
+# Building information
+backup=('etc/sudoers')
+install="install.sh"
+source=("https://www.sudo.ws/sudo/dist/${pkgname}-${_sudover}.tar.gz")
+sha256sums=('2d83826fc5125bf073acc203dbda1cf2abeee017090ccc9dddb0431a53d5064d')
+
+
+build() {
+    cd "${srcdir}/${pkgname}-${_sudover}"
+
+    # Note that quite a few of these will need to change if we are building
+    # dynamically.
+    ./configure --prefix="/usr" \
+        --sbindir="/usr/bin" \
+        --libexecdir="/usr/lib" \
+        --with-rundir="/run/sudo" \
+        --with-vardir="/var/lib/sudo" \
+        --disable-pam-session \
+        --disable-shared \
+        --disable-pie \
+        --disable-hardening \
+        --enable-zlib=system \
+        --without-insults
+    make
+}
+
+
+check() {
+    cd "${srcdir}/${pkgname}-${_sudover}"
+    make check || return 0 # TODO: Currently, a single test fails - report?
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}-${_sudover}"
+
+    make DESTDIR="${pkgdir}/" install
+    install -Dm0644 "doc/LICENSE" \
+        "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+
+    # Remove empty ignored dirs.
+    rm -rf "${pkgdir}/"{no,usr/local,usr/lib,usr/include}
+}

@@ -3,7 +3,7 @@
 # Package information
 pkgname='sinit'
 pkgver='1.0'
-pkgrel=1
+pkgrel=2
 pkgdesc="A simple init"
 
 # Additional information...
@@ -26,7 +26,7 @@ prepare() {
 
     cat > config.h << EOF
 static char *const rcinitcmd[]     = { "/etc/init.d/init", NULL };
-static char *const rcrebootcmd[]   = { "/etc/init.d/shutdown", "reboot", NULL };
+static char *const rcrebootcmd[]   = { "/etc/init.d/reboot", "reboot", NULL };
 static char *const rcpoweroffcmd[] = { "/etc/init.d/shutdown", "poweroff", NULL };
 EOF
 }

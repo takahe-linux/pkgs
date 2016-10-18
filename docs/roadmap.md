@@ -20,7 +20,6 @@ Remaining packages that I can think of:
 - qemu
 - unison
 - netsurf
-- ca-certs
 - fbpdf
 
 

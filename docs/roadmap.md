@@ -14,24 +14,19 @@ Otherwise, grep for TODO's in the PKGBUILDs.
 
 ## Packages ##
 
-Remaining packages that I can think of:
+Remaining packages:
 
-- tex (pdflatex, at least)
-- qemu
-- unison
 - netsurf
 - fbpdf
 
 
 ## Misc ##
 
-- Mirror set up
-- Website published
-- Xorg up and running
-- All remaining packages built
 - Working on the Toshiba (v0.3.0)
+- Update the Toshiba kernel config (v0.3.1)
+- All remaining packages built (v0.3.2)
+- Mirror set up (v0.4.0)
+- Website published (v0.4.0)
 - Being able to build all the Arch Linux packages (maybe?)
-- Improve the documentation
-- Update the Toshiba kernel config
 - Shrink memory usage for the kernel and userspace
 

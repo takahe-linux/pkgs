@@ -25,7 +25,6 @@ Remaining packages that I can think of:
 
 ## Misc ##
 
-- Release system working (live CD)
 - Mirror set up
 - Website published
 - Xorg up and running

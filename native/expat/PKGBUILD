@@ -3,7 +3,7 @@
 # Package information
 pkgname='expat'
 pkgver='2.2.0'
-pkgrel=2
+pkgrel=3
 pkgdesc="a stream orientated XML parser"
 
 # Additional information...

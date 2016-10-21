@@ -18,6 +18,7 @@ Remaining packages:
 
 - netsurf
 - fbpdf
+- linux-toshiba
 
 
 ## Misc ##

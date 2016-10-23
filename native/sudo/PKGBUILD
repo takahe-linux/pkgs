@@ -2,9 +2,9 @@
 
 # Package information
 pkgname='sudo'
-_sudover=1.8.16
+_sudover="1.8.18p1"
 pkgver="${_sudover/p/.p}"
-pkgrel=3
+pkgrel=1
 pkgdesc="Give certain users raised privileges"
 
 # Additional information...
@@ -19,7 +19,7 @@ makedepends=('zlib')
 backup=('etc/sudoers')
 install="install.sh"
 source=("https://www.sudo.ws/sudo/dist/${pkgname}-${_sudover}.tar.gz")
-sha256sums=('2d83826fc5125bf073acc203dbda1cf2abeee017090ccc9dddb0431a53d5064d')
+sha256sums=('e5a0471c721281a693025bbde33ebd9d3db43245d83ab8516bbfc23980379434')
 
 
 build() {

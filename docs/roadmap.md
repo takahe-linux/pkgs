@@ -3,7 +3,6 @@
 ## Issues ##
 
 Packages to be fixed:
-- busybox man requires nroff
 - openssl 1.1.0 breaks lynx, wpa\_supplicant, snownews builds
 - flex does not cross compile (see issue #78)
 

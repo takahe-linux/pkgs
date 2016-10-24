@@ -1,0 +1,68 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='heirloom-doctools'
+pkgver='160217'
+pkgrel=1
+pkgdesc="troff, nroff, and related utilities from the Heirloom project"
+
+# Additional information...
+arch=('mips' 'i586')
+url="https://github.com/n-t-roff/heirloom-doctools"
+license=('CDDL' 'LGPL2' 'LPPL' 'custom')
+
+# Dependency information
+groups=('base')
+
+# Building information
+source=("${pkgname}-${pkgver}.tar.gz::https://github.com/n-t-roff/${pkgname}/archive/${pkgver}.tar.gz")
+md5sums=('0ece3bd6be8601cb64bc4aec7833b4ad')
+
+
+prepare() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    cat > mk.config << EOF
+# Custom mk.config
+
+# File locations.
+PREFIX=/usr
+BINDIR=\$(PREFIX)/bin
+LIBDIR=\$(PREFIX)/lib/${pkgname}
+PUBDIR=\$(PREFIX)/share/pub
+MANDIR=\$(PREFIX)/share/man
+MACDIR=\$(PREFIX)/share/doctools/tmac
+FNTDIR=\$(PREFIX)/share/doctools/font
+PSTDIR=\$(PREFIX)/share/doctools/ps
+TABDIR=\$(PREFIX)/share/doctools/term
+HYPDIR=\$(PREFIX)/share/doctools/hypen
+REFDIR=\$(PREFIX)/share/doctools/refdir
+
+# Build utilities.
+INSTALL=install
+SHELL=/usr/bin/sh
+CC=gcc
+CXX=g++
+RANLIB=ranlib
+STRIP=strip
+EOF
+}
+
+
+build() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+    make
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    make ROOT="${pkgdir}/" install
+
+    # Install the licenses...
+    install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+    for l in LICENSE.d/*; do
+        install -m644 "${l}" "${pkgdir}/usr/share/licenses/${pkgname}/${l##*/}"
+    done
+}

@@ -24,4 +24,4 @@ fi
 unset TERMCAP
 
 # Set the MANPATH for busybox man
-MANPATH="/usr/share/man/"
+export MANPATH="/usr/share/man/"

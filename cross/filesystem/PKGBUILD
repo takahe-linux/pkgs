@@ -38,7 +38,7 @@ md5sums=('96ac8b97d60f21957b65be52cecf0160'
          'a9d43e66298f11c8e997268f6746b99b'
          '7a4d75479bc052c6dbe44ac957cb19d3'
          'eef6376b9b624b4aa0e2963f38597228'
-         '0db5e301beabf821ce4619187a8df325')
+         '076c5a63b5285b233f19642e7c6bcc58')
 
 package() {
     cd ${pkgdir}

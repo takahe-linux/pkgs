@@ -7,45 +7,33 @@ pkgrel=1
 pkgdesc="A tool for generating text-scanning programs"
 
 # Additional information...
-arch=('mips' 'i586')
+arch=('i686' 'x86_64')
 url="https://github.com/westes/flex"
 license=('custom')
 
 # Dependency information
-groups=('base-devel')
-depends=('sh')
-makedepends=('musl' 'bison' 'm4')
-hostdepends=('toolchain' "${_target_triplet}-flex")
+depends=('sh' 'glibc' 'bison' 'm4')
+provides=("${_target_triplet}-${pkgname}")
 
 # Building information
 source=("${url}/releases/download/v${pkgver}/${pkgname}-${pkgver}.tar.gz"
-        "stage1flex.patch" # https://github.com/westes/flex/issues/78
         "keep-man.patch" # https://github.com/westes/flex/issues/108
-        )
+       )
 md5sums=('cc6d76c333db7653d5caf423a3335239'
-         '759bb084df57d871261ea0359625b7f9'
          '9b01769868001b84b1c99a9869e50116')
 
 
 prepare() {
     cd "${srcdir}/${pkgname}-${pkgver}"
-    patch -p1 < "${srcdir}/stage1flex.patch"
     patch -p1 < "${srcdir}/keep-man.patch"
     ./autogen.sh
-    touch "doc/flex.1" # Use the provided man page.
 }
 
 
 build() {
     cd "${srcdir}/${pkgname}-${pkgver}"
 
-    ./configure --prefix="/usr" \
-        --host="${_target_triplet}" \
-        --build="${_local_triplet}" \
-        --disable-shared
-    # TODO: Disable tests (can't run while cross compiling, see issue #49)
-    printf 'all:\n\ttrue\n\ninstall:\n\ttrue\n\n' > tests/Makefile.in
-
+    ./configure --prefix="/usr"
     make
 }
 
@@ -57,8 +45,4 @@ package() {
     ln -s flex "${pkgdir}/usr/bin/lex"
     install -Dm644 COPYING \
         "${pkgdir}/usr/share/licenses/${pkgname}/COPYING"
-
-    # Remove the redundant charset.alias (provided by gettext).
-    rm -f "${pkgdir}/usr/lib/charset.alias"
-    rm -rf "${pkgdir}/usr/share/info"
 }

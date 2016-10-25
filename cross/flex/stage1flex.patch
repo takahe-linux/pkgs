@@ -1,32 +1,84 @@
-94d93
-< noinst_PROGRAMS = stage1flex$(EXEEXT)
-170,173d168
-< am_stage1flex_OBJECTS = scan.$(OBJEXT) $(am__objects_1)
-< stage1flex_OBJECTS = $(am_stage1flex_OBJECTS)
-< stage1flex_LDADD = $(LDADD)
-< stage1flex_DEPENDENCIES = ../lib/libcompat.la
-225,226c220
-< SOURCES = $(libfl_la_SOURCES) $(libfl_pic_la_SOURCES) $(flex_SOURCES) \
-< 	$(stage1flex_SOURCES)
+From e5710376cd36a36b3f743068dbd77036105090a4 Mon Sep 17 00:00:00 2001
+From: Alastair Hughes <hobbitalastair@gmail.com>
+Date: Thu, 27 Oct 2016 08:49:14 +1300
+Subject: [PATCH] Fix cross compiling
+
+Detect if the build lex is sufficient. If not, build stage1flex but warn
+if we are cross compiling as we may not be able to run the result.
 ---
-> SOURCES = $(libfl_la_SOURCES) $(libfl_pic_la_SOURCES) $(flex_SOURCES)
-228c222
-< 	$(flex_SOURCES) $(stage1flex_SOURCES)
----
-> 	$(flex_SOURCES)
-415,418d408
-< stage1flex_SOURCES = \
-< 	scan.l \
-< 	$(COMMON_SOURCES)
-< 
-683,686d672
-< stage1flex$(EXEEXT): $(stage1flex_OBJECTS) $(stage1flex_DEPENDENCIES) $(EXTRA_stage1flex_DEPENDENCIES) 
-< 	@rm -f stage1flex$(EXEEXT)
-< 	$(AM_V_CCLD)$(LINK) $(stage1flex_OBJECTS) $(stage1flex_LDADD) $(LIBS)
-< 
-1007,1008c993,994
-< stage1scan.c: stage1scan.l stage1flex$(EXEEXT)
-< 	$(top_builddir)/src/stage1flex$(EXEEXT) -o $@ $<
----
-> stage1scan.c: stage1scan.l
-> 	flex -o $@ $<
+ configure.ac    | 10 ++++++++++
+ src/Makefile.am | 13 +++++++++++--
+ 2 files changed, 21 insertions(+), 2 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 666b69f..3013d39 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -101,6 +101,16 @@ else
+    AC_MSG_WARN(no indent program found: make indent target will not function)
+ fi
+ 
++# Check for a modern flex.
++
++AC_MSG_CHECKING(if $LEX is $PACKAGE $PACKAGE_VERSION)
++AM_CONDITIONAL([STAGE1FLEX], [test "`$LEX --version`" != "$PACKAGE $PACKAGE_VERSION"])
++AM_COND_IF([STAGE1FLEX],
++           [AC_MSG_RESULT(no); \
++            test "x$build" != "x$host" && \
++            AC_MSG_WARN("cross compiling but using stage1flex")],
++           [AC_MSG_RESULT(yes)])
++
+ # checks for headers
+ 
+ AC_CHECK_HEADERS([inttypes.h libintl.h limits.h locale.h malloc.h netinet/in.h regex.h unistd.h])
+diff --git a/src/Makefile.am b/src/Makefile.am
+index 77ddf4b..f03fa52 100644
+--- a/src/Makefile.am
++++ b/src/Makefile.am
+@@ -6,16 +6,19 @@ LIBS = @LIBS@
+ m4 = @M4@
+ 
+ bin_PROGRAMS = flex
+-noinst_PROGRAMS = stage1flex
+ lib_LTLIBRARIES = \
+ 	libfl.la \
+ 	libfl_pic.la
+ 
++if STAGE1FLEX
++noinst_PROGRAMS = stage1flex
++
+ stage1flex_SOURCES = \
+ 	scan.l \
+ 	$(COMMON_SOURCES)
+ 
+ stage1flex_CFLAGS = $(AM_CFLAGS)
++endif
+ 
+ flex_SOURCES = \
+ 	$(COMMON_SOURCES)
+@@ -89,15 +92,21 @@ skel.c: flex.skl mkskel.sh flexint.h tables_shared.h tables_shared.c
+ 	  $(SHELL) $(srcdir)/mkskel.sh > $@.tmp
+ 	mv $@.tmp $@
+ 
++if STAGE1FLEX
+ stage1scan.c: scan.l stage1flex$(EXEEXT)
+ 	./stage1flex$(EXEEXT) -o $@ $<
++stage1scan.c : parse.h
++else
++stage1scan.c: scan.l
++	$(LEX) -o $@ $<
++stage1scan.c : parse.h
++endif
+ 
+ # make needs to be told to make parse.h so that parallelized runs will
+ # not fail.
+ 
+ main.c : parse.h
+ scan.c : parse.h
+-stage1scan.c : parse.h
+ yylex.c : parse.h
+ 
+ # Run GNU indent on sources. Don't run this unless all the sources compile cleanly.
+-- 
+2.10.1
+

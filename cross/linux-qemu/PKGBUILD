@@ -6,7 +6,7 @@ _major_version='4.8'
 _srcname="linux-${_major_version}"
 pkgdesc="qemu kernel"
 pkgver="${_major_version}.4"
-pkgrel=1
+pkgrel=2
 
 # Additional information...
 arch=('i586' 'mips')
@@ -87,10 +87,7 @@ CONFIG_BINFMT_ELF=y
 CONFIG_BINFMT_SCRIPT=y
 CONFIG_CROSS_COMPILE="${_target_triplet}-"
 CONFIG_DEFAULT_HOSTNAME="qemu"
-
-# We don't enable this; it is broken on mips.
-# TODO: Bug report?
-#CONFIG_CC_OPTIMIZE_FOR_SIZE=y
+CONFIG_CC_OPTIMIZE_FOR_SIZE=y
 
 # We use devtmp, sys, tmp, and proc filesystems.
 # We also assume that devtmpfs is mounted.

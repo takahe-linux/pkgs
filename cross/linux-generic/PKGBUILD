@@ -6,7 +6,7 @@ _major_version='4.8'
 _srcname="linux-${_major_version}"
 pkgdesc="generic kernel"
 pkgver="${_major_version}.4"
-pkgrel=1
+pkgrel=2
 
 # Additional information...
 arch=('i586' 'mips')
@@ -99,8 +99,8 @@ build() {
         targets+=" modules"
     fi
 
-   yes '' | make ${targets} ARCH="${_target_arch_alias}" \
-       CROSS_COMPILE="${_target_triplet}-"
+    yes '' | make ${targets} ARCH="${_target_arch_alias}" \
+        CROSS_COMPILE="${_target_triplet}-"
 }
 
 

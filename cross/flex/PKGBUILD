@@ -3,7 +3,7 @@
 # Package information
 pkgname='flex'
 pkgver='2.6.2'
-pkgrel=1
+pkgrel=2
 pkgdesc="A tool for generating text-scanning programs"
 
 # Additional information...

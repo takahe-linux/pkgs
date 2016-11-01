@@ -5,8 +5,8 @@ pkgname="linux-generic"
 _major_version='4.8'
 _srcname="linux-${_major_version}"
 pkgdesc="generic kernel"
-pkgver="${_major_version}.4"
-pkgrel=2
+pkgver="${_major_version}.6"
+pkgrel=1
 
 # Additional information...
 arch=('i586' 'mips')
@@ -24,7 +24,7 @@ options=('!buildflags')
 source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz")
 md5sums=('c1af0afbd3df35c1ccdc7a5118cd2d07'
-         '4d85e2c59ec33dd7766e18d079e75114')
+         '666753363fd69ac2c1a94f4349a7197e')
 
 modules() {
     # true if modules are enabled, false otherwise

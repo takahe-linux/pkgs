@@ -4,8 +4,7 @@
 umask 022
 
 # Set our default path
-PATH="/usr/bin"
-export PATH
+export PATH="/usr/bin"
 
 # Load profiles from /etc/profile.d
 if test -d /etc/profile.d/; then
@@ -22,6 +21,3 @@ fi
 
 # Termcap is outdated, old, and crusty, kill it
 unset TERMCAP
-
-# Set the MANPATH for busybox man
-export MANPATH="/usr/share/man/"

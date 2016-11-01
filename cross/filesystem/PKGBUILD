@@ -5,7 +5,7 @@
 # Package information
 pkgname='filesystem'
 pkgver='2016.09'
-pkgrel=1
+pkgrel=2
 pkgdesc='Base filesystem'
 
 # Additional information...
@@ -38,7 +38,7 @@ md5sums=('96ac8b97d60f21957b65be52cecf0160'
          'a9d43e66298f11c8e997268f6746b99b'
          '7a4d75479bc052c6dbe44ac957cb19d3'
          'eef6376b9b624b4aa0e2963f38597228'
-         '076c5a63b5285b233f19642e7c6bcc58')
+         '0312230344b4795fb8fc1b660a9d25d4')
 
 package() {
     cd ${pkgdir}

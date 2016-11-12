@@ -2,8 +2,8 @@
 
 # Package information
 pkgname='flex'
-pkgver='2.6.2'
-pkgrel=2
+pkgver='2.6.1'
+pkgrel=1
 pkgdesc="A tool for generating text-scanning programs"
 
 # Additional information...
@@ -15,25 +15,14 @@ license=('custom')
 groups=('base-devel')
 depends=('sh')
 makedepends=('musl' 'bison' 'm4')
-hostdepends=('toolchain' "${_target_triplet}-flex")
+hostdepends=('toolchain')
 
 # Building information
-source=("${url}/releases/download/v${pkgver}/${pkgname}-${pkgver}.tar.gz"
+source=("${url}/releases/download/v${pkgver}/${pkgname}-${pkgver}.tar.xz"
         "stage1flex.patch" # https://github.com/westes/flex/issues/78
-        "keep-man.patch" # https://github.com/westes/flex/issues/108
         )
-md5sums=('cc6d76c333db7653d5caf423a3335239'
-         '759bb084df57d871261ea0359625b7f9'
-         '9b01769868001b84b1c99a9869e50116')
-
-
-prepare() {
-    cd "${srcdir}/${pkgname}-${pkgver}"
-    patch -p1 < "${srcdir}/stage1flex.patch"
-    patch -p1 < "${srcdir}/keep-man.patch"
-    ./autogen.sh
-    touch "doc/flex.1" # Use the provided man page.
-}
+md5sums=('cd3c86290fc2676a641aefafeb10848a'
+         '915321d31ef144e0c01886c3cf564c36')
 
 
 build() {
@@ -43,12 +32,14 @@ build() {
         --host="${_target_triplet}" \
         --build="${_local_triplet}" \
         --disable-shared
-    # TODO: Disable tests (can't run while cross compiling, see issue #49)
+    # Disable tests; we can't run these while cross compiling.
     printf 'all:\n\ttrue\n\ninstall:\n\ttrue\n\n' > tests/Makefile.in
+
+    # Patch the makefile.
+    patch src/Makefile < "${srcdir}/stage1flex.patch"
 
     make
 }
-
 
 package() {
     cd "${srcdir}/${pkgname}-${pkgver}"

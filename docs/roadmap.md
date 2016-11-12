@@ -15,7 +15,6 @@ Otherwise, grep for TODO's in the PKGBUILDs.
 
 Remaining packages:
 
-- netsurf
 - fbpdf
 - linux-toshiba
 

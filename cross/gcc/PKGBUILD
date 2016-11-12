@@ -5,7 +5,7 @@
 # Package information
 pkgname='gcc'
 pkgver='6.2.0'
-pkgrel=2
+pkgrel=3
 pkgdesc="The GNU Compiler Collection"
 
 # Additional information...
@@ -116,4 +116,7 @@ package() {
 
     # Remove info files.
     rm -r "${pkgdir}/usr/share/info"
+
+    # Add a link to cc
+    ln -s gcc "${pkgdir}/usr/bin/cc"
 }

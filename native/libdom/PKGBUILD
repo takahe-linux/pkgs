@@ -1,0 +1,37 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='libdom'
+pkgver='0.3.0'
+pkgrel=1
+pkgdesc="DOM library from the Netsurf project"
+
+# Additional information...
+arch=('mips' 'i586')
+url="http://www.netsurf-browser.org/"
+license=('MIT' 'GPL2')
+
+# Dependency information
+makedepends=('git' 'netsurf-buildsystem' 'pkg-config'
+    'libwapcaplet' 'libparserutils' 'expat' 'libhubbub'
+    )
+
+# Building information
+source=("git://git.netsurf-browser.org/${pkgname}.git#tag=release/${pkgver}")
+md5sums=('SKIP')
+
+
+build() {
+    cd "${srcdir}/${pkgname}"
+    make LIBDIR=lib INCLUDEDIR=include PREFIX=/usr
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}"
+
+    make LIBDIR=lib INCLUDEDIR=include PREFIX=/usr \
+        DESTDIR="${pkgdir}/" install
+    install -Dm644 COPYING \
+        "${pkgdir}/usr/share/licenses/${pkgname}/COPYING"
+}

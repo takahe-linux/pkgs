@@ -4,7 +4,7 @@
 pkgname='lynx'
 pkgver='2.8.8rel.2'
 _pkgver='2-8-8'
-pkgrel=7
+pkgrel=8
 pkgdesc="A text WWW browser"
 
 # Additional information...

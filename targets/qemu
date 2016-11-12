@@ -3,6 +3,7 @@ base-devel
 gdb
 linux-qemu
 lynx
+netsurf
 openssh
 snownews
 strace

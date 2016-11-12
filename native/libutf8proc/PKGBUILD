@@ -1,0 +1,39 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='libutf8proc'
+pkgver='2.0.2'
+pkgrel=1
+pkgdesc="A simple UTF8 processing library"
+
+# Additional information...
+arch=('mips' 'i586')
+url="http://julialang.org/utf8proc/"
+license=('MIT')
+
+# Building information
+source=("${pkgname}-${pkgver}.tar.gz::https://github.com/JuliaLang/utf8proc/archive/v${pkgver}.tar.gz"
+        "${pkgname}.pc")
+md5sums=('46bc948faddf0d23063c490e2a14feac'
+         'eac32d19e3ea069934ea070755ca294d')
+
+
+build() {
+    cd "${srcdir}/utf8proc-${pkgver}"
+    make libutf8proc.a
+}
+
+
+package() {
+    cd "${srcdir}/utf8proc-${pkgver}"
+
+    make prefix=/usr libdir=/usr/lib includedir=/usr/include \
+        DESTDIR="${pkgdir}/" install
+    install -Dm644 LICENSE.md \
+        "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE.md"
+    rm -f "${pkgdir}/usr/lib/${pkgname}.so"*
+
+    # TODO: Look at upstreaming the pkg-config file
+    install -Dm644 "${srcdir}/${pkgname}.pc" \
+        "${pkgdir}/usr/lib/pkgconfig/${pkgname}.pc"
+}

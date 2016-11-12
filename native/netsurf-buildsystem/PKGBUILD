@@ -1,0 +1,34 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='netsurf-buildsystem'
+pkgver='1.5'
+pkgrel=1
+pkgdesc="Build system from the netsurf project"
+
+# Additional information...
+arch=('mips' 'i586')
+url="http://www.netsurf-browser.org/"
+license=('MIT' 'GPL2')
+
+# Dependency information
+makedepends=('git')
+
+# Building information
+source=("git://git.netsurf-browser.org/buildsystem.git#tag=release/${pkgver}")
+md5sums=('SKIP')
+
+
+build() {
+    cd "${srcdir}/buildsystem"
+    make PREFIX=/usr COMPONENT_TYPE="lib-static"
+}
+
+
+package() {
+    cd "${srcdir}/buildsystem"
+
+    make PREFIX="/usr" DESTDIR="${pkgdir}/" install
+    install -Dm644 COPYING \
+        "${pkgdir}/usr/share/licenses/${pkgname}/COPYING"
+}

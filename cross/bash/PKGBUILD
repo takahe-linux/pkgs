@@ -3,9 +3,9 @@
 # Package information
 pkgname='bash'
 _basever='4.4'
-_patchlevel='000'
+_patchlevel='005'
 pkgver="${_basever}.${_patchlevel}"
-pkgrel=2
+pkgrel=1
 pkgdesc='The GNU Bourne Again shell'
 
 # Additional information...
@@ -27,7 +27,12 @@ source=("http://ftp.gnu.org/gnu/bash/bash-${_basever}.tar.gz")
 for _patch in $(seq 1 ${_patchlevel}); do
     source=(${source[@]} "http://ftp.gnu.org/gnu/bash/bash-${_basever}-patches/bash${_stripped_basever}-$(printf "%03d" ${_patch})")
 done
-md5sums=('148888a7c95ac23705559b6f477dfe25')
+md5sums=('148888a7c95ac23705559b6f477dfe25'
+         '817d01a6c0af6f79308a8b7b649e53d8'
+         '765e14cff12c7284009772e8e24f2fe0'
+         '49e7da93bf07f510a2eb6bb43ac3e5a2'
+         '4557d674ab5831a5fa98052ab19edaf4'
+         'cce96dd77cdd1d293beec10848f6cbb5')
 
 
 prepare() {

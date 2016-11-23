@@ -2,8 +2,8 @@
 
 # Package information
 pkgname='pkgconf'
-pkgver='0.9.12'
-pkgrel=9
+pkgver='1.0.1'
+pkgrel=1
 pkgdesc="A drop-in replacement for pkg-config"
 
 # Additional information...
@@ -18,7 +18,7 @@ conflicts=('pkg-config')
 
 # Building information
 source=("http://rabbit.dereferenced.org/~nenolod/distfiles/${pkgname}-${pkgver}.tar.gz")
-md5sums=('7c716e0c05ccf6fe54c616ca0a593de2')
+md5sums=('e50254f2f2df97b4f38f9109a869e7e6')
 
 build() {
     cd "${srcdir}/${pkgname}-${pkgver}"

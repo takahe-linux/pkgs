@@ -1,0 +1,53 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='fbpdf'
+pkgver='0.r91.43ca240'
+pkgrel=1
+pkgdesc="A small framebuffer PDF viewer, built against poppler"
+
+# Additional information...
+arch=('mips' 'i586')
+url="http://litcave.rudi.ir/"
+license=('custom:BSD')
+
+# Dependency information
+makedepends=('git' 'linux-api-headers' 'pkg-config'
+    'poppler' 'libpng' 'libjpeg' 'zlib' 'fontconfig' 'freetype' 'expat')
+
+# Building information
+source=("${pkgname}-git::git+git://repo.or.cz/fbpdf.git"
+        'fbpdf.1')
+md5sums=('SKIP'
+        'ae7299de0fcd8e945940b014ba335c1b')
+
+
+pkgver() {
+    cd "${srcdir}/${pkgname}-git"
+    printf "0.r%s.%s" "$(git rev-list --count HEAD)" \
+        "$(git rev-parse --short HEAD)"
+}
+
+prepare() {
+    cd "${srcdir}/${pkgname}-git"
+    # TODO: Upstream doesn't support this
+    # TODO: Linking with poppler-cpp statically fails because it doesn't have
+    #       a Libs.private dependency on fontconfig.
+    sed -i Makefile -e 's:pkg-config:pkg-config --static:' \
+        -e 's:\(`pkg-config.*`\):\1 `pkg-config --static --libs fontconfig` -ljpeg:'
+}
+
+
+build() {
+    cd "${srcdir}/${pkgname}-git"
+    make fbpdf2
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}-git"
+    install -Dm0755 "fbpdf2" "${pkgdir}/usr/bin/fbpdf"
+    install -Dm0644 "README" "${pkgdir}/usr/share/doc/${pkgname}/README"
+    install -Dm0644 "${srcdir}/fbpdf.1" "${pkgdir}/usr/share/man/man1/fbpdf.1"
+    install -Dm0644 "LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+}

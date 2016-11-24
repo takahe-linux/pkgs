@@ -18,7 +18,6 @@ Otherwise, grep for TODO's in the PKGBUILDs.
 
 Remaining packages:
 
-- fbpdf
 - linux-toshiba
 
 

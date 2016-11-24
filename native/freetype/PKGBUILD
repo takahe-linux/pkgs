@@ -1,0 +1,40 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='freetype'
+pkgver='2.7'
+pkgrel=1
+pkgdesc="TrueType font rendering library"
+
+# Additional information...
+arch=('mips' 'i586')
+url="https://www.freetype.org"
+license=('GPL')
+
+# Dependency information
+makedepends=('zlib' 'libpng')
+
+# Building information
+source=("http://download.savannah.gnu.org/releases/${pkgname}/${pkgname}-${pkgver}.tar.bz2")
+md5sums=('be4601619827b7935e1d861745923a68')
+
+
+build() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    ./configure --prefix="/usr" \
+        --disable-shared
+    make
+}
+
+
+check() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+    make -k check
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+    make DESTDIR="${pkgdir}/" install
+}

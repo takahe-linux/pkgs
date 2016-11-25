@@ -2,7 +2,7 @@
 
 # Package information
 pkgname='heirloom-doctools'
-pkgver='160217'
+pkgver='160308'
 pkgrel=7
 pkgdesc="troff, nroff, and related utilities from the Heirloom project"
 
@@ -16,7 +16,7 @@ groups=('base')
 
 # Building information
 source=("${pkgname}-${pkgver}.tar.gz::https://github.com/n-t-roff/${pkgname}/archive/${pkgver}.tar.gz")
-md5sums=('0ece3bd6be8601cb64bc4aec7833b4ad')
+md5sums=('f9759a099fca6b3021da33b94b1f37a9')
 
 
 prepare() {

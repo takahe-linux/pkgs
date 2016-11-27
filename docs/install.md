@@ -77,6 +77,11 @@ A sensible default is starting a terminal on /dev/console:
 /usr/bin/getty -l /usr/bin/login 0 /dev/console
 ```
 
+Don't forget to make the script executable!
+
+```
+# chmod +x /etc/init.d/run
+```
 
 ## Adjusting the install ##
 

@@ -23,7 +23,6 @@ Remaining packages:
 
 ## Misc ##
 
-- Working on the Toshiba (v0.3.0)
 - Update the Toshiba kernel config (v0.3.1)
 - All remaining packages built (v0.3.2)
 - Mirror set up (v0.4.0)

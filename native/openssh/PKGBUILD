@@ -2,8 +2,8 @@
 
 # Package information
 pkgname='openssh'
-pkgver='7.3p1'
-pkgrel=10
+pkgver='7.4p1'
+pkgrel=1
 pkgdesc="Secure shell implementation"
 
 # Additional information...
@@ -17,7 +17,7 @@ makedepends=('linux-api-headers' 'zlib')
 # Building information
 backup=('etc/ssh/ssh_config' 'etc/ssh/sshd_config')
 source=("http://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/${pkgname}-${pkgver}.tar.gz")
-md5sums=('dfadd9f035d38ce5d58a3bf130b86d08')
+md5sums=('b2db2a83caf66a208bb78d6d287cdaa3')
 
 
 build() {

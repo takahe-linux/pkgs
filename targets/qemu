@@ -1,7 +1,7 @@
 base
 base-devel
 gdb
-linux-qemu
+linux
 lynx
 netsurf
 openssh

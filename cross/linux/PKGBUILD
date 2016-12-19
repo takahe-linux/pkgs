@@ -1,11 +1,11 @@
 # Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
 
 # Package information
-pkgname="linux-qemu"
+pkgname="linux"
 _major_version='4.8'
 _srcname="linux-${_major_version}"
-pkgdesc="qemu kernel"
-pkgver="${_major_version}.10"
+pkgdesc="generic kernel"
+pkgver="${_major_version}.13"
 pkgrel=1
 
 # Additional information...
@@ -16,15 +16,13 @@ license=('GPL2')
 # Dependency information
 hostdepends=('bc' 'inetutils' "${_target_triplet}-gcc-static"
     "${_target_triplet}-binutils")
-provides=('linux')
-conflicts=('linux')
 
 # Building information
 options=('!buildflags')
 source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz")
 md5sums=('c1af0afbd3df35c1ccdc7a5118cd2d07'
-         '37eadcdaefae51ced736747cb817aa58')
+         'bc208ac66340464839ee61a4621d9384')
 
 modules() {
     # true if modules are enabled, false otherwise
@@ -44,39 +42,11 @@ prepare() {
     # Clean up the kernel tree.
     make mrproper
 
-    # Generate the default config.
-    make allnoconfig ARCH="${_target_arch_alias}"
+    # Make the default config.
+    make defconfig ARCH="${_target_arch_alias}" \
+        CROSS_COMPILE="${_target_triplet}-"
 
-    # Pick a config that will work with qemu.
-    case "${_target_arch}" in
-        mips)
-            # Generate the config.
-            cat >> .config << EOF
-CONFIG_MIPS_MALTA=y
-CONFIG_CPU_BIG_ENDIAN=y
-CONFIG_CPU_MIPS32_R2=y
-CONFIG_PAGE_SIZE_16KB=y
-CONFIG_MIPS_MT_SMP=y
-CONFIG_HZ_100=y
-CONFIG_NO_HZ=y
-CONFIG_HIGH_RES_TIMERS=y
-EOF
-
-            # Currently the kernel will not build with -Werror; I haven't
-            # figured out a way to neatly disable this, so sed it out of
-            # the Kbuild file for mips.
-            sed -i arch/mips/Kbuild -e '/subdir-ccflags-y/d'
-            ;;
-        i586)
-            # Generate the config.
-            cat >> .config << EOF
-CONFIG_M586=y
-EOF
-            ;;
-        *) make defconfig ARCH="${_target_arch_alias}";;
-    esac
-
-    # Enable standard options.
+    # Add everything for using with qemu.
     cat >> .config << EOF
 # Generic options.
 CONFIG_PCI=y
@@ -97,14 +67,9 @@ CONFIG_TMPFS=y
 CONFIG_DEVTMPFS=y
 CONFIG_DEVTMPFS_MOUNT=y
 
-# Enable serial; disable a graphical console.
-# CONFIG_INPUT_KEYBOARD is not set
-# CONFIG_INPUT_MOUSE is not set
-# CONFIG_SERIO_I8042 is not set
 CONFIG_SERIAL_8250=y
 CONFIG_SERIAL_8250_CONSOLE=y
 # CONFIG_HWMON is not set
-# CONFIG_VGA_CONSOLE is not set
 
 # Enable 9p and virtio.
 CONFIG_VIRTIO=y
@@ -127,19 +92,38 @@ CONFIG_BLOCK=y
 # CONFIG_LBDAF is not set
 # CONFIG_BLK_DEV_BSG is not set
 # CONFIG_IOSCHED_CFQ is not set
-# CONFIG_IOSCHED_DEADLINE is not set
-
-# Disable uneeded options.
-# CONFIG_ETHERNET is not set
-# CONFIG_INPUT_MOUSEDEV is not set
-# CONFIG_HID is not set
-# CONFIG_PCSPKR_PLATFORM is not set
-# CONFIG_UNIX98_PTYS is not set
-# CONFIG_LEGACY_PTYS is not set
 EOF
 
-    # Run oldconfig.
-    yes '' | make oldconfig ARCH="${_target_arch_alias}"
+    case "${_target_arch}" in
+        mips)
+            # Use the malta config.
+            cp -f "arch/mips/configs/malta_defconfig" ".config"
+            # We want a big-endian kernel.
+            sed -i -e 's:CONFIG_CPU_LITTLE_ENDIAN:CONFIG_CPU_BIG_ENDIAN:' \
+                .config
+
+            # Currently the kernel will not build with -Werror; I haven't
+            # figured out a way to neatly disable this, so sed it out of
+            # the Kbuild file for mips.
+            sed -i arch/mips/Kbuild -e '/subdir-ccflags-y/d'
+            ;;
+        i586)
+            # Ensure that we actually use i586.
+            # We also add in a bunch of extra legacy drivers in the hope that
+            # at least one of them works.
+            cat >> .config << EOF
+CONFIG_M586=y
+CONFIG_ATA_SFF=y
+CONFIG_PATA_PLATFORM=y
+CONFIG_PATA_LEGACY=y
+CONFIG_PATA_ACPI=y
+EOF
+            ;;
+        *) echo "Using default...";;
+    esac
+
+    yes '' | make oldconfig ARCH="${_target_arch_alias}" \
+        CROSS_COMPILE="${_target_triplet}-"
 }
 
 
@@ -157,7 +141,8 @@ build() {
         targets+=" modules"
     fi
 
-    make ${targets} ARCH="${_target_arch_alias}"
+    yes '' | make ${targets} ARCH="${_target_arch_alias}" \
+        CROSS_COMPILE="${_target_triplet}-"
 }
 
 
@@ -166,7 +151,7 @@ package() {
     cd "${srcdir}/${_srcname}"
 
     # Find the kernel version
-    _kernver="$(make kernelrelease ARCH="${_target_arch_alias}")"
+    _kernver="$(make kernelrelease)"
 
     # Make the boot directory
     mkdir -p "${pkgdir}/boot"
@@ -183,8 +168,8 @@ package() {
 
     # Install the modules and firmware, if required
     if modules; then
-        make INSTALL_MOD_PATH="${pkgdir}/usr" modules_install \
-            ARCH="${_target_arch_alias}"
+        mkdir -p "${pkgdir}"/{/usr/lib/modules,/usr/lib/firmware}
+        make INSTALL_MOD_PATH="${pkgdir}/usr" modules_install
         # Remove the kernel source tree
         rm -f "${pkgdir}/usr/lib/modules/${_kernver}"/{source,build}
         # Add vmlinux

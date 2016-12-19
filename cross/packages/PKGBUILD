@@ -39,7 +39,7 @@ depends=(
     'sinit'
 
     # kernel:
-    'linux-qemu'
+    'linux'
     )
 
 package() {

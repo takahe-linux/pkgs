@@ -2,8 +2,8 @@
 
 # Package information
 pkgname=('busybox' 'mdev' 'hush' 'bb-coreutils' 'bb-util-linux' 'bb-findutils')
-pkgver='1.25.1'
-pkgrel=4
+pkgver='1.26.0'
+pkgrel=1
 
 # Additional information...
 arch=('i586' 'mips')
@@ -19,20 +19,15 @@ _web_address="${url}/downloads"
 _patch_address="${_web_address}/fixes-${pkgver}"
 source=("${_web_address}/${pkgname}-${pkgver}.tar.bz2"
         "config"
-        "man-format.patch"
         "man.conf"
        )
-md5sums=('4f4c5de50b479b11ff636d7d8eb902a2'
+md5sums=('362acc60bd94343aa36d98beb1f0831f'
          'cdf1349acbe85c917056f09730739d9d'
-         '51e8d508940449e9152cb2883262a7b1'
          'e9245e5f55f004e3598cc90e2e86de30')
 
 
 prepare() {
     cd "${srcdir}/${pkgname}-${pkgver}"
-
-    # Patch man so that we can specify the command man uses.
-    patch -p1 < "${srcdir}/man-format.patch"
 
     # Adjust the config for the current settings
     sed -i -e "/CONFIG_CROSS_COMPILER_PREFIX/s:=\".*\":=\"${_target_triplet}-\":" \

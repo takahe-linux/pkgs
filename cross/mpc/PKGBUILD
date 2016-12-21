@@ -3,7 +3,7 @@
 # Package information
 pkgname='mpc'
 pkgver='1.0.3'
-pkgrel=3
+pkgrel=4
 pkgdesc="Library for the arithmetic of complex numbers with arbitrarily high precision"
 
 # Additional information...

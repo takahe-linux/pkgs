@@ -22,7 +22,7 @@ source=("${_web_address}/${pkgname}-${pkgver}.tar.bz2"
         "man.conf"
        )
 md5sums=('362acc60bd94343aa36d98beb1f0831f'
-         'cdf1349acbe85c917056f09730739d9d'
+         'f68ddf6ec457133818c66938dcd8a1a4'
          'e9245e5f55f004e3598cc90e2e86de30')
 
 
@@ -78,7 +78,7 @@ package_busybox() {
     SHADOW="adduser addgroup deluser delgroup passwd"
 
     MISC="less hdparm man halt poweroff reboot"
-    NET="ping hostname ip udhcpc ipaddr iplink iproute dnsdomainname"
+    NET="ping hostname ip udhcpc ipaddr iplink iproute"
     PROC="iostat lsof nmeter pstree top free fuser kill pgrep \
         pidof pkill ps renice watch sysctl"
 
@@ -165,7 +165,7 @@ package_bb-findutils() {
     provides=('findutils')
     conflicts=('findutils')
 
-    FIND="find grep xargs fgrep egrep"
+    FIND="find grep xargs egrep fgrep"
 
     _link_packages $FIND
 }

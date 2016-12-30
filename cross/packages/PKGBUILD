@@ -3,7 +3,7 @@
 # Package information
 pkgname='packages'
 pkgver='1.0'
-pkgrel=13
+pkgrel=14
 pkgdesc="Meta-package for the cross-compiled packages"
 
 # Additional information...

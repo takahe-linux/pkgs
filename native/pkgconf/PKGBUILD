@@ -3,7 +3,7 @@
 # Package information
 pkgname='pkgconf'
 pkgver='1.0.1'
-pkgrel=6
+pkgrel=7
 pkgdesc="A drop-in replacement for pkg-config"
 
 # Additional information...

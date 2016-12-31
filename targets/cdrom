@@ -1,6 +1,6 @@
 base
 e2fsprogs
-linux-generic
+linux
 lynx
 parted
 syslinux

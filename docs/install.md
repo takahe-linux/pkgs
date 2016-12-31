@@ -35,7 +35,7 @@ Make a directory pacman needs:
 ``# mkdir -p /mnt/var/lib/pacman``
 
 Now run pacman:
-``# pacman --root /mnt --cachedir /repo -Syu base syslinux linux-generic``
+``# pacman --root /mnt --cachedir /repo -Syu base syslinux linux``
 
 ### Chroot ###
 

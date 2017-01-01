@@ -3,7 +3,7 @@
 # Package information
 pkgname=('busybox' 'mdev' 'hush' 'bb-coreutils' 'bb-util-linux' 'bb-findutils')
 pkgver='1.26.0'
-pkgrel=2
+pkgrel=3
 
 # Additional information...
 arch=('i586' 'mips')

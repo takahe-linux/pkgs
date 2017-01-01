@@ -2,8 +2,8 @@
 
 # Package information
 pkgname='m4'
-pkgver='1.4.17'
-pkgrel=4
+pkgver='1.4.18'
+pkgrel=1
 pkgdesc="The GNU macro processor"
 
 # Additional information...
@@ -19,7 +19,7 @@ hostdepends=('toolchain')
 
 # Building information
 source=("ftp://ftp.gnu.org/gnu/m4/${pkgname}-${pkgver}.tar.xz")
-md5sums=('12a3c829301a4fd6586a57d3fcf196dc')
+md5sums=('730bb15d96fffe47e148d1e09235af82')
 
 
 build() {

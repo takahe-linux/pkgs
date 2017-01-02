@@ -6,7 +6,7 @@ _major_version='4.8'
 _srcname="linux-${_major_version}"
 pkgdesc="generic kernel"
 pkgver="${_major_version}.13"
-pkgrel=2
+pkgrel=3
 
 # Additional information...
 arch=('i586' 'mips')
@@ -45,6 +45,34 @@ prepare() {
     # Make the default config.
     make defconfig ARCH="${_target_arch_alias}" \
         CROSS_COMPILE="${_target_triplet}-"
+
+    case "${_target_arch}" in
+        mips)
+            # Use the malta config.
+            cp -f "arch/mips/configs/malta_defconfig" ".config"
+            # We want a big-endian kernel.
+            sed -i -e 's:CONFIG_CPU_LITTLE_ENDIAN:CONFIG_CPU_BIG_ENDIAN:' \
+                .config
+
+            # Currently the kernel will not build with -Werror; I haven't
+            # figured out a way to neatly disable this, so sed it out of
+            # the Kbuild file for mips.
+            sed -i arch/mips/Kbuild -e '/subdir-ccflags-y/d'
+            ;;
+        i586)
+            # Ensure that we actually use i586.
+            # We also add in a bunch of extra legacy drivers in the hope that
+            # at least one of them works.
+            cat >> .config << EOF
+CONFIG_M586=y
+CONFIG_ATA_SFF=y
+CONFIG_PATA_PLATFORM=y
+CONFIG_PATA_LEGACY=y
+CONFIG_PATA_ACPI=y
+EOF
+            ;;
+        *) echo "Using default...";;
+    esac
 
     # Add everything for using with qemu.
     cat >> .config << EOF
@@ -93,34 +121,6 @@ CONFIG_BLOCK=y
 # CONFIG_BLK_DEV_BSG is not set
 # CONFIG_IOSCHED_CFQ is not set
 EOF
-
-    case "${_target_arch}" in
-        mips)
-            # Use the malta config.
-            cp -f "arch/mips/configs/malta_defconfig" ".config"
-            # We want a big-endian kernel.
-            sed -i -e 's:CONFIG_CPU_LITTLE_ENDIAN:CONFIG_CPU_BIG_ENDIAN:' \
-                .config
-
-            # Currently the kernel will not build with -Werror; I haven't
-            # figured out a way to neatly disable this, so sed it out of
-            # the Kbuild file for mips.
-            sed -i arch/mips/Kbuild -e '/subdir-ccflags-y/d'
-            ;;
-        i586)
-            # Ensure that we actually use i586.
-            # We also add in a bunch of extra legacy drivers in the hope that
-            # at least one of them works.
-            cat >> .config << EOF
-CONFIG_M586=y
-CONFIG_ATA_SFF=y
-CONFIG_PATA_PLATFORM=y
-CONFIG_PATA_LEGACY=y
-CONFIG_PATA_ACPI=y
-EOF
-            ;;
-        *) echo "Using default...";;
-    esac
 
     yes '' | make oldconfig ARCH="${_target_arch_alias}" \
         CROSS_COMPILE="${_target_triplet}-"

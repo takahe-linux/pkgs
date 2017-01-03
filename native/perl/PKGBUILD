@@ -3,7 +3,7 @@
 # Package information
 pkgname='perl'
 pkgver='5.24.0'
-pkgrel=17
+pkgrel=18
 pkgdesc="A highly capable, feature-rich programming language"
 
 # Additional information...

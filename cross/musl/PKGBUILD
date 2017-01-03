@@ -2,8 +2,8 @@
 
 # Package information
 pkgname='musl'
-pkgver='1.1.15'
-pkgrel=3
+pkgver='1.1.16'
+pkgrel=1
 pkgdesc="Lightweight libc implementation"
 
 # Additional information...
@@ -17,18 +17,8 @@ makedepends=('linux-api-headers')
 hostdepends=("${_target_triplet}-gcc-static" "${_target_triplet}-binutils")
 
 # Building information
-source=("http://www.musl-libc.org/releases/${pkgname}-${pkgver}.tar.gz"
-        "mips-termios.patch")
-md5sums=('9590a9d47ee64f220b3c12f7afb864ca'
-         '76752ed7a3194b2931317bcfac1f63b7')
-
-
-prepare() {
-    cd "${srcdir}/${pkgname}-${pkgver}"
-
-    # MIPS termios fix (http://www.openwall.com/lists/musl/2016/07/13/3)
-    patch -p1 < "${srcdir}/mips-termios.patch"
-}
+source=("http://www.musl-libc.org/releases/${pkgname}-${pkgver}.tar.gz")
+md5sums=('ac52ccaec6b06ab0f289d37e8436859b')
 
 
 build() {

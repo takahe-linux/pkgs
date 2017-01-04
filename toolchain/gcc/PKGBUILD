@@ -4,7 +4,7 @@
 _pkgname='gcc'
 pkgname="${_target_triplet}-${_pkgname}"
 pkgver='6.3.0'
-pkgrel=3
+pkgrel=4
 pkgdesc="The GNU Compiler Collection"
 
 # Additional information...

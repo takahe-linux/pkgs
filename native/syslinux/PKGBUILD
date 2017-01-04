@@ -3,7 +3,7 @@
 # Package information
 pkgname='syslinux'
 pkgver='6.0.3'
-pkgrel=18
+pkgrel=19
 pkgdesc="Collection of boot loaders for i386 and x86_64"
 
 # Additional information...

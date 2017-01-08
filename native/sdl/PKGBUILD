@@ -1,0 +1,38 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='sdl'
+pkgver='1.2.15'
+pkgrel=1
+pkgdesc="A library for low-level access to a framebuffer and input"
+
+# Additional information...
+arch=('mips' 'i586')
+url="http://www.libsdl.org"
+license=('LGPL')
+
+# Dependency information
+makedepends=('nasm' 'linux-api-headers' 'pkg-config')
+
+# Building information
+source=("${pkgname}-${pkgver}.tar.gz::https://www.libsdl.org/release/SDL-${pkgver}.tar.gz")
+md5sums=('9d96df8417572a2afb781a7c4c811a85')
+
+
+build() {
+    cd "${srcdir}/SDL-${pkgver}"
+    ./configure --prefix="/usr" \
+        --disable-shared --disable-rpath
+    make
+}
+
+
+package() {
+    cd "${srcdir}/SDL-${pkgver}"
+    make DESTDIR="${pkgdir}/" install
+
+    # Remove the second SDL reference from the Libs.private list.
+    # This shouldn't cause issues, but seems to cause a linking failure when
+    # building netsurf...
+    sed -i "${pkgdir}/usr/lib/pkgconfig/sdl.pc" -e '/Libs.private:/s:-lSDL::'
+}

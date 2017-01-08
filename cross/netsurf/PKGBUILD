@@ -2,8 +2,8 @@
 
 # Package information
 pkgname='netsurf'
-pkgver='3.5'
-pkgrel=15
+pkgver='3.6'
+pkgrel=1
 pkgdesc="Lightweight and fast web browser"
 
 # Additional information...
@@ -14,7 +14,7 @@ license=('MIT' 'GPL2')
 # Dependency information
 makedepends=('zlib' 'libpng' 'libjpeg' 'openssl' 'curl' 'musl' 'expat'
     'libcss' 'libdom' 'libhubbub' 'libwapcaplet' 'libparserutils'
-    'libnsbmp' 'libnsfb' 'libnsgif' 'libutf8proc' 'libnsutils')
+    'libnsbmp' 'libnsfb' 'libnsgif' 'libutf8proc' 'libnsutils' 'sdl')
 hostdepends=('git' 'toolchain' 'perl-html-parser' 'libpng'
     'netsurf-buildsystem' 'nsgenbind')
 

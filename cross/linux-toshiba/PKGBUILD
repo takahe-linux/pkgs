@@ -6,7 +6,7 @@ _major_version='4.8'
 _srcname="linux-${_major_version}"
 pkgdesc="Toshiba 310CDS kernel"
 pkgver="${_major_version}.10"
-pkgrel=2
+pkgrel=3
 
 # Additional information...
 arch=('i586')
@@ -145,10 +145,10 @@ CONFIG_X86_VERBOSE_BOOTUP=y
 
 # Framebuffer console support.
 CONFIG_FB=y
-CONFIG_FB_VGA16=y
+CONFIG_FB_VESA=y
 CONFIG_FRAMEBUFFER_CONSOLE=y
 CONFIG_FRAMEBUFFER_CONSOLE_DETECT_PRIMARY=y
-# CONFIG_VGA_CONSOLE is not set
+CONFIG_VGA_CONSOLE=y
 
 # Serial console support.
 CONFIG_SERIAL_8250=y

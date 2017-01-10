@@ -6,7 +6,7 @@ _major_version='4.8'
 _srcname="linux-${_major_version}"
 pkgdesc="Toshiba 310CDS kernel"
 pkgver="${_major_version}.10"
-pkgrel=3
+pkgrel=4
 
 # Additional information...
 arch=('i586')
@@ -16,8 +16,6 @@ license=('GPL2')
 # Dependency information
 hostdepends=('bc' 'inetutils' "${_target_triplet}-gcc-static"
     "${_target_triplet}-binutils")
-#provides=('linux')
-#conflicts=('linux')
 
 # Building information
 options=('!buildflags')
@@ -129,9 +127,9 @@ CONFIG_USB_STORAGE=y
 CONFIG_TTY=y
 # CONFIG_UNIX98_PTYS is not set
 # CONFIG_LEGACY_PTYS is not set
-# CONFIG_HID is not set
-# CONFIG_INPUT_MOUSEDEV is not set
-# CONFIG_INPUT_MOUSE is not set
+CONFIG_HID is not set
+CONFIG_INPUT_MOUSEDEV is not set
+CONFIG_INPUT_MOUSE is not set
 
 # Virtual terminal options.
 CONFIG_VT=y

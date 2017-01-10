@@ -1,0 +1,35 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='linux-firmware'
+_rev="4b9559f"
+pkgver="20161222.${_rev}"
+pkgrel=1
+pkgdesc="Firmware files for Linux"
+
+# Additional information...
+arch=('mips' 'i586')
+url="http://git.kernel.org/?p=linux/kernel/git/firmware/linux-firmware.git;a=summary"
+license=('GPL2' 'GPL3' 'custom')
+
+# Dependency information
+makedepends=('git')
+
+# Building information
+options=(!strip)
+source=("git://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git#commit=${_rev}")
+md5sums=('SKIP')
+
+
+package() {
+    cd "${srcdir}/${pkgname}"
+
+    mkdir -p "${pkgdir}/usr/lib/firmware"
+    cp -r * "${pkgdir}/usr/lib/firmware/"
+    rm -rf "${pkgdir}/usr/lib/firmware/usbdux"
+    rm -f "${pkgdir}"/usr/lib/firmware/{WHENCE,LICENCE*,LICENSE*}
+    rm -f "${pkgdir}"/usr/lib/firmware/{Makefile,README,configure,GPL-*}
+    install -d "${pkgdir}/usr/share/licenses/${pkgname}"
+    install -Dm0644 LICEN* WHENCE \
+        "${pkgdir}/usr/share/licenses/linux-firmware/"
+}

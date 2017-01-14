@@ -6,7 +6,7 @@ _major_version='4.8'
 _srcname="linux-${_major_version}"
 pkgdesc="Toshiba 310CDS kernel"
 pkgver="${_major_version}.10"
-pkgrel=4
+pkgrel=5
 
 # Additional information...
 arch=('i586')
@@ -61,6 +61,12 @@ CONFIG_NOHIGHMEM=y
 CONFIG_CC_OPTIMIZE_FOR_SIZE=y
 CONFIG_OPTIMIZE_INLINING=y
 
+# uevent helper (hotplug script) support.
+# We use mdev for (eg) loading firmware.
+# TODO: We should replace this with a netlink helper daemon instead.
+CONFIG_UEVENT_HELPER=y
+CONFIG_UEVENT_HELPER_PATH="/usr/bin/mdev"
+
 # We currently need this for the hard drive controller.
 CONFIG_BLOCK=y
 # CONFIG_LBDAF is not set
@@ -92,7 +98,7 @@ CONFIG_TMPFS=y
 CONFIG_DEVTMPFS=y
 CONFIG_DEVTMPFS_MOUNT=y
 CONFIG_PROC_FS=y
-# CONFIG_PROC_SYSCTL is not set
+CONFIG_PROC_SYSCTL=y
 # CONFIG_PROC_PAGE_MONITOR is not set
 CONFIG_SYSFS=y
 CONFIG_TMPFS=y
@@ -111,10 +117,14 @@ CONFIG_UNIX=y
 CONFIG_INET=y
 # I can't use IPv6 yet, so disable.
 # CONFIG_IPV6 is not set
+# Wireless:
+CONFIG_PACKET=y
 CONFIG_CFG80211=y
 CONFIG_MAC80211=y
+CONFIG_NL80211=y
 CONFIG_NETDEVICES=y
 CONFIG_RTL8192CU=y
+# CONFIG_RTLWIFI_DEBUG is not set
 
 # USB support.
 CONFIG_USB=y

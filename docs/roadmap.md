@@ -8,6 +8,8 @@ Packages to be fixed:
 - netsurf has some relatively easy fixes
 - the toolchain pkg-config seems to be broken - figure out what uses it and
   make it an explicit dependency, fixing it if at all possible
+- busybox's udhcpc needs a script to help autoconfigure the network
+- e2fsprogs should be part of base? (for e2fsck)
 
 I should also run namcap on the remaining packages, and fix any warnings...
 
@@ -18,12 +20,18 @@ Otherwise, grep for TODO's in the PKGBUILDs.
 
 Remaining packages:
 
-- linux-toshiba
+- alsa-utils
+
+Packages to check:
+
+- nldev
+- x11 and related (dwm, st, dmenu, xorg utils, xclip, ...)?
+- daemon manager + associated scripts?
+- mpv?
 
 
 ## Misc ##
 
-- Update the Toshiba kernel config (v0.3.1)
 - All remaining packages built (v0.3.2)
 - Mirror set up (v0.4.0)
 - Website published (v0.4.0)

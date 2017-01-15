@@ -52,9 +52,18 @@ udev has plenty of existing documentation.
 Also, there is a minimal devd implementation in both C and shell 
 [here](https://lkml.iu.edu/hypermail/linux/kernel/0510.3/1853.html).
 
+mdev can be set up as a uevent helper, however that method is apparently
+deprecated. Instead, I should consider using the netlink socket method
+(see also nldev, which should work with mdev).
+
 ## Init ##
 
-I'm using [sinit](http://core.suckless.org/sinit), with some custom scripts.
+I'm using [sinit](http://core.suckless.org/sinit).
+
+## Daemon manager ##
+
+I have no daemon manager yet, just some simple scripts.
+OpenWRT's procd looks nice, but it is fairly openwrt-specific.
 
 ## Cron ##
 
@@ -68,8 +77,7 @@ No idea on this yet :(
 
 ## Networking ##
 
-Well, I'm currently leaning towards using {u,m}dev scripts for this, but as
-I have yet to test that idea I'm less certain.
+udhpc started when a new interface appears seems to be sufficient.
 
 ## Zeroconf ##
 
@@ -80,9 +88,9 @@ which are lightweight. I need to do some rudimentary memory usage profiling...
 ## WPA ##
 
 wpa\_supplicant appears to be the only option. I'm not a fan, but it works...
+and is pretty lightweight, suitably stripped down.
 
-Using {u,m}dev to autostart as required might be the best option, although
-starting only when I need networking would be even better...
+Starting wpa\_supplicant automatically does not currently work.
 
 ## Dynamic permissions ##
 
@@ -109,5 +117,4 @@ Redshift, colour profiles, monitor dimming... stuff I can get excited about :)
 I think that colord handles some of this on systemd systems, but I suspect I
 don't really need a daemon running just for this - I'll revisit it if I ever
 have a system with an integrated webcam.
-
 

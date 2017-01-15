@@ -4,7 +4,7 @@
 pkgname='python'
 pkgver='3.5.2'
 _basever='3.5'
-pkgrel=19
+pkgrel=20
 pkgdesc="High level scripting language"
 
 # Additional information...

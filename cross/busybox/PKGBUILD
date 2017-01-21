@@ -2,8 +2,8 @@
 
 # Package information
 pkgname=('busybox' 'mdev' 'hush' 'bb-coreutils' 'bb-util-linux' 'bb-findutils')
-pkgver='1.26.0'
-pkgrel=4
+pkgver='1.26.2'
+pkgrel=1
 
 # Additional information...
 arch=('i586' 'mips')
@@ -20,10 +20,14 @@ _patch_address="${_web_address}/fixes-${pkgver}"
 source=("${_web_address}/${pkgname}-${pkgver}.tar.bz2"
         "config"
         "man.conf"
+        "mdev.conf"
+        "udhcpc.sh"
        )
-md5sums=('362acc60bd94343aa36d98beb1f0831f'
-         'f68ddf6ec457133818c66938dcd8a1a4'
-         'e9245e5f55f004e3598cc90e2e86de30')
+md5sums=('bb59d25ee2643db20f212eec539429f1'
+         '4b248e665ca52428b5968392e4bc1723'
+         'e9245e5f55f004e3598cc90e2e86de30'
+         '840b553662a232f731c5d09744436b2d'
+         'a6dcd7c5cfe19c900d9461562f05b6cb')
 
 
 prepare() {
@@ -32,6 +36,11 @@ prepare() {
     # Adjust the config for the current settings
     sed -i -e "/CONFIG_CROSS_COMPILER_PREFIX/s:=\".*\":=\"${_target_triplet}-\":" \
         "${srcdir}/config"
+
+    # Patch halt/poweroff/reboot to use the signals for sinit.
+    # sinit does not support the halt/poweroff split, so always use poweroff
+    # instead.
+    sed -i init/halt.c -e 's:SIGUSR1, SIGUSR2, SIGTERM:SIGUSR1, SIGUSR1, SIGINT:'
 }
 
 
@@ -60,6 +69,7 @@ package_busybox() {
     conflicts=('kbd' 'which' 'gzip' 'tar' 'bzip2' 'awk' 'diffutils' \
         'sed' 'vi' 'patch' 'shadow' 'less' 'hdparm' 'man' 'inetutils' \
         'ip2route' 'iputils' 'dhcpcd' 'procps-ng')
+    backup=('etc/man.conf')
 
     cd "${srcdir}/${pkgname}-${pkgver}"
 
@@ -86,16 +96,21 @@ package_busybox() {
         $MISC $NET $PROC $SHADOW
 
     install -Dm0644 "${srcdir}/man.conf" "${pkgdir}/etc/man.conf"
+    install -Dm0755 "${srcdir}/udhcpc.sh" \
+        "${pkgdir}/usr/share/udhcpc/default.script"
 }
 
 package_mdev() {
     pkgdesc="Lightweight udev alternative, from busybox"
     depends=("busybox")
     groups=('bb' 'base')
+    backup=('etc/mdev.conf')
 
     MDEV="mdev"
 
     _link_packages $MDEV
+
+    install -Dm0644 "${srcdir}/mdev.conf" "${pkgdir}/etc/mdev.conf"
 }
 
 package_hush() {

@@ -3,9 +3,9 @@
 # Package information
 pkgname='bash'
 _basever='4.4'
-_patchlevel='005'
+_patchlevel='011'
 pkgver="${_basever}.${_patchlevel}"
-pkgrel=3
+pkgrel=1
 pkgdesc='The GNU Bourne Again shell'
 
 # Additional information...
@@ -32,7 +32,13 @@ md5sums=('148888a7c95ac23705559b6f477dfe25'
          '765e14cff12c7284009772e8e24f2fe0'
          '49e7da93bf07f510a2eb6bb43ac3e5a2'
          '4557d674ab5831a5fa98052ab19edaf4'
-         'cce96dd77cdd1d293beec10848f6cbb5')
+         'cce96dd77cdd1d293beec10848f6cbb5'
+         'd3379f8d8abce5c6ee338f931ad008d5'
+         'ec38c76ca439ca7f9c178e9baede84fc'
+         'e0ba18c1e3b94f905da9b5bf9d38b58b'
+         'e952d4f44e612048930c559d90eb99bb'
+         '57b5b35955d68f9a09dbef6b86d2c782'
+         'cc896e1fa696b93ded568e557e2392d5')
 
 
 prepare() {

@@ -3,7 +3,7 @@
 # Package information
 pkgname='git'
 pkgver='2.11.0'
-pkgrel=17
+pkgrel=18
 pkgdesc="A fast distributed version control system"
 
 # Additional information...

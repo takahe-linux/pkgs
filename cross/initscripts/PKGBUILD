@@ -3,7 +3,7 @@
 # Package information
 pkgname='initscripts'
 pkgver='0.3'
-pkgrel=12
+pkgrel=13
 pkgdesc="Startup and shutdown scripts"
 
 # Additional information...
@@ -18,7 +18,7 @@ depends=('busybox' 'coreutils' 'util-linux' 'sh')
 # Building information
 backup=('etc/init.d/init' 'etc/init.d/shutdown' 'etc/init.d/reboot')
 source=('init.sh'
-        'shutdown.sh'
+        'poweroff.sh'
         'reboot.sh')
 md5sums=('570da713411f054f4d8c979c3f0d6919'
          'b6d6ba862a24cc809376af41df058f82'
@@ -28,6 +28,6 @@ md5sums=('570da713411f054f4d8c979c3f0d6919'
 package() {
     cd "${srcdir}"
     install -Dm0755 "init.sh" "${pkgdir}/etc/init.d/init"
-    install -Dm0755 "shutdown.sh" "${pkgdir}/etc/init.d/shutdown"
+    install -Dm0755 "poweroff.sh" "${pkgdir}/etc/init.d/poweroff"
     install -Dm0755 "reboot.sh" "${pkgdir}/etc/init.d/reboot"
 }

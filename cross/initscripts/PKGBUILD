@@ -2,8 +2,8 @@
 
 # Package information
 pkgname='initscripts'
-pkgver='0.3'
-pkgrel=13
+pkgver='0.4'
+pkgrel=1
 pkgdesc="Startup and shutdown scripts"
 
 # Additional information...
@@ -13,21 +13,19 @@ license=('MIT')
 
 # Dependency information
 groups=('base')
-depends=('busybox' 'coreutils' 'util-linux' 'sh')
+depends=('busybox' 'coreutils' 'util-linux')
 
 # Building information
-backup=('etc/init.d/init' 'etc/init.d/shutdown' 'etc/init.d/reboot')
+backup=('etc/init.d/init' 'etc/init.d/poweroff')
 source=('init.sh'
-        'poweroff.sh'
-        'reboot.sh')
-md5sums=('570da713411f054f4d8c979c3f0d6919'
-         'b6d6ba862a24cc809376af41df058f82'
-         '00ff07fddd2099d2021fee8ec9d2d97b')
+        'poweroff.sh')
+md5sums=('a64929d8c8b1b3a887215b25b6328a85'
+         '5cc34b14b193c0a667ac0a4d0c613d79')
 
 
 package() {
     cd "${srcdir}"
     install -Dm0755 "init.sh" "${pkgdir}/etc/init.d/init"
     install -Dm0755 "poweroff.sh" "${pkgdir}/etc/init.d/poweroff"
-    install -Dm0755 "reboot.sh" "${pkgdir}/etc/init.d/reboot"
+    ln -s "poweroff" "${pkgdir}/etc/init.d/reboot"
 }

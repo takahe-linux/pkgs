@@ -1,4 +1,4 @@
-#!/usr/bin/sh
+#!/usr/bin/busybox hush
 
 # Mount the expected filesystems.
 mount -t proc proc /proc
@@ -10,7 +10,7 @@ mount -a
 hostname -F /etc/hostname
 
 # Initialise the devices.
-# TODO: Actually use mdev...
+mdev -s
 ln -s /proc/self/fd /dev/fd
 
 # Run the helper script.

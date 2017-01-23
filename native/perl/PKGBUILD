@@ -2,8 +2,8 @@
 
 # Package information
 pkgname='perl'
-pkgver='5.24.0'
-pkgrel=22
+pkgver='5.24.1'
+pkgrel=1
 pkgdesc="A highly capable, feature-rich programming language"
 
 # Additional information...
@@ -16,7 +16,7 @@ license=('GPL' 'PerlArtistic')
 
 # Building information
 source=("http://www.cpan.org/src/5.0/${pkgname}-${pkgver}.tar.bz2")
-md5sums=('99f39abe614b50719d9915431e54fc1e')
+md5sums=('178ee0e8fa544dbc76d99cf041e2c9f0')
 
 
 build() {

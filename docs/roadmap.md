@@ -8,7 +8,6 @@ Packages to be fixed:
 - netsurf has some relatively easy fixes
 - the toolchain pkg-config seems to be broken - figure out what uses it and
   make it an explicit dependency, fixing it if at all possible
-- busybox's udhcpc needs a script to help autoconfigure the network
 - e2fsprogs should be part of base? (for e2fsck)
 
 I should also run namcap on the remaining packages, and fix any warnings...

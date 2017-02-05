@@ -2,8 +2,8 @@
 
 # Package information
 pkgname='e2fsprogs'
-pkgver='1.43.3'
-pkgrel=4
+pkgver='1.43.4'
+pkgrel=1
 pkgdesc='Ext2/3/4 filesystem utilities'
 
 # Additional information...
@@ -18,7 +18,7 @@ hostdepends=('toolchain')
 # Building information
 backup=('etc/mke2fs.conf')
 source=("http://downloads.sourceforge.net/sourceforge/${_pkgname}/${pkgname}-${pkgver}.tar.gz")
-sha1sums=('927cb79c6399c559a83b4fa528ec8912a82d122f')
+sha1sums=('f7cf8c82805103b53f89ad5da641e1085281d411')
 
 
 prepare() {

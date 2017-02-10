@@ -3,7 +3,7 @@
 # Package information
 pkgname='libffi'
 pkgver='3.2.1'
-pkgrel=24
+pkgrel=25
 pkgdesc="Portable foreign function interface library"
 
 # Additional information...

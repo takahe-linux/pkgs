@@ -3,7 +3,7 @@
 # Package information
 pkgname='fbv'
 pkgver='1.0b'
-pkgrel=25
+pkgrel=26
 pkgdesc="Framebuffer image viewer"
 
 # Additional information...

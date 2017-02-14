@@ -3,7 +3,7 @@
 # Package information
 pkgname='nasm'
 pkgver='2.12.02'
-pkgrel=18
+pkgrel=19
 pkgdesc="A 80x86 assembler designed for portability and modularity"
 
 # Additional information...

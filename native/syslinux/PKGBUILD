@@ -2,7 +2,7 @@
 
 # Package information
 pkgname='syslinux'
-pkgver='6.0.3'
+pkgver='6.03'
 pkgrel=31
 pkgdesc="Collection of boot loaders for i386 and x86_64"
 
@@ -17,7 +17,7 @@ makedepends=('git' 'nasm' 'perl' 'python' 'xz' 'linux-api-headers' 'e2fsprogs')
 # Building information
 backup=('boot/syslinux/syslinux.cfg')
 options=('!makeflags')
-source=(git://git.kernel.org/pub/scm/boot/syslinux/syslinux.git#tag=$_tag
+source=("git://git.kernel.org/pub/scm/boot/syslinux/syslinux.git#tag=syslinux-${pkgver}"
         syslinux.cfg
         gcc-fix-alignment.patch::http://repo.or.cz/syslinux.git/patch/e5f2b577ded109291c9632dacb6eaa621d8a59fe?hp=8dc6d758b564a1ccc44c3ae11f265d43628219ce
         dont-guess-alignment.patch::http://repo.or.cz/syslinux.git/patch/0cc9a99e560a2f52bcf052fd85b1efae35ee812f?hp=e5f2b577ded109291c9632dacb6eaa621d8a59fe

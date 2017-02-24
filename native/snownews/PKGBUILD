@@ -3,7 +3,7 @@
 # Package information
 pkgname='snownews'
 pkgver='1.5.12'
-pkgrel=28
+pkgrel=29
 pkgdesc="Text mode RSS newsreader"
 
 # Additional information...

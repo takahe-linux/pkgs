@@ -5,7 +5,7 @@ pkgname="linux"
 _major_version='4.9'
 _srcname="linux-${_major_version}"
 pkgdesc="generic kernel"
-pkgver="${_major_version}.8"
+pkgver="${_major_version}.11"
 pkgrel=1
 
 # Additional information...
@@ -22,7 +22,7 @@ options=('!buildflags')
 source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz")
 md5sums=('0a68ef3615c64bd5ee54a3320e46667d'
-         '96c8ec21e9c75afce14f718d90478040')
+         '738953d9d33739f3a333c7ef6ce33e3d')
 
 modules() {
     # true if modules are enabled, false otherwise

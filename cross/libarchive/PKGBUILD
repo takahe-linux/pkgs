@@ -2,7 +2,7 @@
 
 # Package information
 pkgname='libarchive'
-pkgver='3.3.0'
+pkgver='3.3.1'
 pkgrel=1
 pkgdesc="Library for reading and writing several compression formats"
 
@@ -17,7 +17,7 @@ hostdepends=('toolchain')
 
 # Building information
 source=("http://libarchive.org/downloads/${pkgname}-${pkgver}.tar.gz")
-md5sums=('2a2df353a96e132fd04665d17c1561f8')
+md5sums=('d2af45480aa5b0db5b5f3919cd0ea65e')
 
 
 build() {

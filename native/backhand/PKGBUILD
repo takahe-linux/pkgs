@@ -1,0 +1,32 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='backhand'
+pkgver='1.0'
+pkgrel=1
+pkgdesc="Utilities for managing background processes"
+
+# Additional information...
+arch=('mips' 'i586')
+url="https://github.com/hobbitalastair/${pkgname}"
+license=('MIT')
+
+# Dependency information
+makedepends=('git')
+
+# Building information
+source=("git+${url}")
+md5sums=('SKIP')
+
+
+build() {
+    cd "${srcdir}/${pkgname}"
+    make
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}"
+    make DESTDIR="${pkgdir}/" install
+    install -Dm0644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+}

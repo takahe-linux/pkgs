@@ -6,7 +6,7 @@ _major_version='4.9'
 _srcname="linux-${_major_version}"
 pkgdesc="Toshiba 310CDS kernel"
 pkgver="${_major_version}.11"
-pkgrel=1
+pkgrel=2
 
 # Additional information...
 arch=('i586')
@@ -74,7 +74,6 @@ CONFIG_BLOCK=y
 # CONFIG_IOSCHED_CFQ is not set
 # CONFIG_SCSI_PROC_FS is not set
 CONFIG_BLK_DEV_SD=y
-CONFIG_BLK_DEV_SR=y
 CONFIG_ATA=y
 # CONFIG_ATA_VERBOSE_ERROR is not set
 # CONFIG_SATA_PMP is not set
@@ -101,10 +100,10 @@ CONFIG_PROC_FS=y
 CONFIG_PROC_SYSCTL=y
 # CONFIG_PROC_PAGE_MONITOR is not set
 CONFIG_SYSFS=y
-CONFIG_TMPFS=y
 CONFIG_MSDOS_PARTITION=y
 CONFIG_EXT2_FS=y
 # CONFIG_SWAP is not set
+CONFIG_FILE_LOCKING=y
 
 # FAT support (approx 20K).
 CONFIG_VFAT_FS=y
@@ -149,7 +148,6 @@ CONFIG_VT_CONSOLE=y
 # Printk options.
 CONFIG_PRINTK=y
 CONFIG_PRINTK_TIME=y
-CONFIG_X86_VERBOSE_BOOTUP=y
 
 # Framebuffer console support.
 CONFIG_FB=y

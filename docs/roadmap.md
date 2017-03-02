@@ -24,7 +24,6 @@ Remaining packages:
 Packages to consider adding:
 
 - nldev
-- micropython
 - pass
 - x11 and related (dwm, st, dmenu, xorg utils, xclip, ...)?
 - daemon manager + associated scripts?

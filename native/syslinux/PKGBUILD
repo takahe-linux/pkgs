@@ -3,7 +3,7 @@
 # Package information
 pkgname='syslinux'
 pkgver='6.03'
-pkgrel=35
+pkgrel=36
 pkgdesc="Collection of boot loaders for i386 and x86_64"
 
 # Additional information...
@@ -12,7 +12,7 @@ url="http://www.syslinux.org"
 license=('GPL2')
 
 # Dependency information
-makedepends=('git' 'nasm' 'perl' 'python' 'xz' 'linux-api-headers' 'e2fsprogs')
+makedepends=('git' 'nasm' 'perl' 'xz' 'linux-api-headers' 'e2fsprogs')
 
 # Building information
 backup=('boot/syslinux/syslinux.cfg')
@@ -41,6 +41,9 @@ prepare() {
     # Fix usage of "-n" flags for gzip (not in busybox).
     sed -i -e 's:$(GZIPPROG) -9:$(GZIPPROG):' \
         diag/geodsp/Makefile
+
+    # Don't build any of the test cmenus (needs python).
+    rm -f "com32/cmenu/"*.menu
 }
 
 

@@ -3,7 +3,7 @@
 # Package information
 pkgname=('busybox' 'mdev' 'hush' 'bb-coreutils' 'bb-util-linux' 'bb-findutils')
 pkgver='1.26.2'
-pkgrel=1
+pkgrel=2
 
 # Additional information...
 arch=('i586' 'mips')
@@ -24,7 +24,7 @@ source=("${_web_address}/${pkgname}-${pkgver}.tar.bz2"
         "udhcpc.sh"
        )
 md5sums=('bb59d25ee2643db20f212eec539429f1'
-         '4b248e665ca52428b5968392e4bc1723'
+         'b7928efc8df1a3dfeaa82e2d110fb1d4'
          'e9245e5f55f004e3598cc90e2e86de30'
          '840b553662a232f731c5d09744436b2d'
          'a6dcd7c5cfe19c900d9461562f05b6cb')
@@ -79,7 +79,7 @@ package_busybox() {
     install -Dm755 "_install/bin/busybox" "${pkgdir}/usr/bin/busybox"
 
 
-    KBD="deallocvt setkeycodes showkey kbd_mode"
+    KBD="setkeycodes showkey kbd_mode"
     KEYBOARD="dumpkmap loadkmap setconsole"
     WHICH="which"
 
@@ -89,7 +89,7 @@ package_busybox() {
 
     MISC="less hdparm man halt poweroff reboot"
     NET="ping hostname ip udhcpc ipaddr iplink iproute"
-    PROC="iostat lsof nmeter pstree top free fuser kill pgrep \
+    PROC="iostat lsof nmeter pstree top free fuser kill killall pgrep \
         pidof pkill ps renice watch sysctl"
 
     _link_packages $KBD $KEYBOARD $NCURSES $WHICH $APPLETS $EDITORS $LOGIN \
@@ -132,7 +132,7 @@ package_bb-coreutils() {
 
     COREUTILS="basename base64 cat date id groups shuf test touch tr chgrp \
         chmod chown chroot cksum comm cp cut dd df dirname du echo env expand \
-        expr false fsync head install ln logname ls md5sum mkdir mkfifo \
+        expr false fsync head install ln ls md5sum mkdir mkfifo \
         mknod mv nice nohup printf pwd readlink realpath rm rmdir seq \
         sha1sum sha256sum sha512sum sha3sum sleep sort stat stty sync tac \
         tail tee true tty uname unexpand uniq usleep uudecode uuencode wc \
@@ -149,7 +149,7 @@ package_bb-util-linux() {
     provides=('util-linux')
     conflicts=('util-linux')
 
-    UTILLINUX="blockdev dmesg fbset getopt hwclock losetup lspci lsusb \
+    UTILLINUX="blockdev dmesg fbset getopt hwclock lspci lsusb \
         mount umount su nsenter unshare"
     LOGIN="getty login"
     MISC_UTILS="mountpoint setsid time fsck"

@@ -12,7 +12,7 @@ url="https://www.micropython.org"
 license=('MIT')
 
 # Dependency information
-makedepends=('musl' 'readline' 'libffi')
+makedepends=('musl' 'readline' 'libffi' 'linux-api-headers')
 hostdepends=('toolchain' 'python')
 provides=('python')
 conflicts=('python')

@@ -3,7 +3,7 @@
 # Package information
 pkgname='heirloom-doctools'
 pkgver='160308'
-pkgrel=31
+pkgrel=32
 pkgdesc="troff, nroff, and related utilities from the Heirloom project"
 
 # Additional information...

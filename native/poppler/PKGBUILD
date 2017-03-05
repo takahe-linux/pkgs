@@ -3,7 +3,7 @@
 # Package information
 pkgname='poppler'
 pkgver='0.51.0'
-pkgrel=14
+pkgrel=15
 pkgdesc="PDF rendering library and toolkit"
 
 # Additional information...

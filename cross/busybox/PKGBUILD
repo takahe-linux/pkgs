@@ -3,7 +3,7 @@
 # Package information
 pkgname=('busybox' 'mdev' 'hush' 'bb-coreutils' 'bb-util-linux' 'bb-findutils')
 pkgver='1.26.2'
-pkgrel=2
+pkgrel=3
 
 # Additional information...
 arch=('i586' 'mips')
@@ -24,7 +24,7 @@ source=("${_web_address}/${pkgname}-${pkgver}.tar.bz2"
         "udhcpc.sh"
        )
 md5sums=('bb59d25ee2643db20f212eec539429f1'
-         'b7928efc8df1a3dfeaa82e2d110fb1d4'
+         '1896be5221eeb177edf494b8b8f4c92a'
          'e9245e5f55f004e3598cc90e2e86de30'
          '840b553662a232f731c5d09744436b2d'
          'a6dcd7c5cfe19c900d9461562f05b6cb')
@@ -89,7 +89,7 @@ package_busybox() {
 
     MISC="less hdparm man halt poweroff reboot"
     NET="ping hostname ip udhcpc ipaddr iplink iproute"
-    PROC="iostat lsof nmeter pstree top free fuser kill killall pgrep \
+    PROC="iostat lsof nmeter pstree top free fuser kill pgrep \
         pidof pkill ps renice watch sysctl"
 
     _link_packages $KBD $KEYBOARD $NCURSES $WHICH $APPLETS $EDITORS $LOGIN \

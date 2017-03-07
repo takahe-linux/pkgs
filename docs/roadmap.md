@@ -9,6 +9,7 @@ Packages to be fixed:
 - the toolchain pkg-config seems to be broken - figure out what uses it and
   make it an explicit dependency, fixing it if at all possible
 - e2fsprogs should be part of base? (for e2fsck)
+- binutils 2.28 needs a patch or it won't build the toolchain gcc on mips
 
 I should also run namcap on the remaining packages, and fix any warnings...
 

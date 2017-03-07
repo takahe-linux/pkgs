@@ -3,7 +3,7 @@
 # Package information
 pkgname='gperf'
 pkgver='3.0.4'
-pkgrel=27
+pkgrel=28
 pkgdesc="A perfect hash function generator"
 
 # Additional information...

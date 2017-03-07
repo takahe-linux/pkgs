@@ -1,0 +1,80 @@
+From 7f855ad4169657a7c320c12c30661f2b3aadc601 Mon Sep 17 00:00:00 2001
+From: Alastair Hughes <hobbitalastair@gmail.com>
+Date: Wed, 8 Mar 2017 21:15:49 +1300
+Subject: [PATCH] Revert "MIPS/BFD: Respect the ELF gABI dynamic symbol table
+ sort requirement"
+
+This reverts commit e7ec0c47c5500b572b847cddd5b0868ef3784473.
+---
+ bfd/ChangeLog    |  9 ---------
+ bfd/elfxx-mips.c | 16 +++-------------
+ 2 files changed, 3 insertions(+), 22 deletions(-)
+
+diff --git a/bfd/ChangeLog b/bfd/ChangeLog
+index 85c6a817e5..0c0e06e545 100644
+--- a/bfd/ChangeLog
++++ b/bfd/ChangeLog
+@@ -134,15 +134,6 @@
+ 
+ 2017-02-13  Maciej W. Rozycki  <macro@imgtec.com>
+ 
+-	* elfxx-mips.c (mips_elf_hash_sort_data): Add
+-	`max_local_dynindx'.
+-	(mips_elf_sort_hash_table): Handle it.
+-	(mips_elf_sort_hash_table_f) <GGA_NONE>: For forced local
+-	symbols bump up `max_local_dynindx' rather than
+-	`max_non_got_dynindx'.
+-
+-2017-02-13  Maciej W. Rozycki  <macro@imgtec.com>
+-
+ 	* elfxx-mips.c (mips_elf_hash_sort_data): Convert the
+ 	`min_got_dynindx', `max_unref_got_dynindx' and
+ 	`max_non_got_dynindx' members to the `bfd_size_type' data type.
+diff --git a/bfd/elfxx-mips.c b/bfd/elfxx-mips.c
+index 723853f821..35c92f0f73 100644
+--- a/bfd/elfxx-mips.c
++++ b/bfd/elfxx-mips.c
+@@ -315,10 +315,7 @@ struct mips_elf_hash_sort_data
+      with a GOT entry that is not referenced (e.g., a dynamic symbol
+      with dynamic relocations pointing to it from non-primary GOTs).  */
+   bfd_size_type max_unref_got_dynindx;
+-  /* The greatest dynamic symbol table index corresponding to a local
+-     symbol.  */
+-  bfd_size_type max_local_dynindx;
+-  /* The greatest dynamic symbol table index corresponding to an external
++  /* The greatest dynamic symbol table index not corresponding to a
+      symbol without a GOT entry.  */
+   bfd_size_type max_non_got_dynindx;
+ };
+@@ -3849,15 +3846,11 @@ mips_elf_sort_hash_table (bfd *abfd, struct bfd_link_info *info)
+   hsd.max_unref_got_dynindx
+     = hsd.min_got_dynindx
+     = (htab->root.dynsymcount - g->reloc_only_gotno);
+-  /* Add 1 to local symbol indices to account for the mandatory NULL entry
+-     at the head of the table; see `_bfd_elf_link_renumber_dynsyms'.  */
+-  hsd.max_local_dynindx = count_section_dynsyms (abfd, info) + 1;
+-  hsd.max_non_got_dynindx = htab->root.local_dynsymcount + 1;
++  hsd.max_non_got_dynindx = count_section_dynsyms (abfd, info) + 1;
+   mips_elf_link_hash_traverse (htab, mips_elf_sort_hash_table_f, &hsd);
+ 
+   /* There should have been enough room in the symbol table to
+      accommodate both the GOT and non-GOT symbols.  */
+-  BFD_ASSERT (hsd.max_local_dynindx <= htab->root.local_dynsymcount + 1);
+   BFD_ASSERT (hsd.max_non_got_dynindx <= hsd.min_got_dynindx);
+   BFD_ASSERT (hsd.max_unref_got_dynindx == htab->root.dynsymcount);
+   BFD_ASSERT (htab->root.dynsymcount - hsd.min_got_dynindx == g->global_gotno);
+@@ -3886,10 +3879,7 @@ mips_elf_sort_hash_table_f (struct mips_elf_link_hash_entry *h, void *data)
+   switch (h->global_got_area)
+     {
+     case GGA_NONE:
+-      if (h->root.forced_local)
+-	h->root.dynindx = hsd->max_local_dynindx++;
+-      else
+-	h->root.dynindx = hsd->max_non_got_dynindx++;
++      h->root.dynindx = hsd->max_non_got_dynindx++;
+       break;
+ 
+     case GGA_NORMAL:
+-- 
+2.12.0
+

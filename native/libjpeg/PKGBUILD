@@ -4,7 +4,7 @@
 pkgname='libjpeg'
 _pkgname='libjpeg-turbo'
 pkgver='1.5.1'
-pkgrel=34
+pkgrel=35
 pkgdesc="JPEG image codec"
 
 # Additional information...

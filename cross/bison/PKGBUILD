@@ -3,7 +3,7 @@
 # Package information
 pkgname='bison'
 pkgver='3.0.4'
-pkgrel=7
+pkgrel=8
 pkgdesc="The GNU general-purpose parser generator"
 
 # Additional information...

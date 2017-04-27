@@ -4,7 +4,7 @@
 pkgname='sudo'
 _sudover="1.8.19p2"
 pkgver="${_sudover/p/.p}"
-pkgrel=14
+pkgrel=15
 pkgdesc="Give certain users raised privileges"
 
 # Additional information...

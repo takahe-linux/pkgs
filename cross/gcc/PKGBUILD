@@ -4,8 +4,8 @@
 
 # Package information
 pkgname='gcc'
-pkgver='6.3.0'
-pkgrel=10
+pkgver='7.1.0'
+pkgrel=2
 pkgdesc="The GNU Compiler Collection"
 
 # Additional information...
@@ -22,11 +22,9 @@ hostdepends=('toolchain')
 options=('!emptydirs')
 source=("ftp://gcc.gnu.org/pub/gcc/releases/gcc-${pkgver}/gcc-${pkgver}.tar.bz2"
         *.patch)
-sha256sums=('f06ae7f3f790fbf0f018f6d40e844451e6bc3b7bc96e128e63b09825c1f8b29f'
-            'fe3334cffd41d3becfe3e57bea38822678b463a0947a3141195d953aab8d26e8'
+sha256sums=('8a8136c235f64c6fef69cac0d73a46a1a09bb250776a050aec8f9fc880bebc17'
             '7ad65c8a8613b34b7ffdf0dcee15659ba12a21ed0b65052644d6ca73653d337a'
             '9854b80d6b4854f48438f6784e86411fbc607763a6be80faae5a36c508c3cf9e'
-            'e0f0c2d556ab5e0367f579307db1b1b5abfc4533ccf423597eabcefae52430af'
             'c00abb172cd9aee0c951450b4e77d320ea6fd76a2901e96547113c3d0e9bf210')
 
 

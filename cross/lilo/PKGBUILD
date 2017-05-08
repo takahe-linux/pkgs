@@ -3,7 +3,7 @@
 # Package information
 pkgname='lilo'
 pkgver='24.2'
-pkgrel=5
+pkgrel=6
 pkgdesc="Simple i386 linux bootloader"
 
 # Additional information...

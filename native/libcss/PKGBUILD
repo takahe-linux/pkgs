@@ -3,7 +3,7 @@
 # Package information
 pkgname='libcss'
 pkgver='0.6.1'
-pkgrel=23
+pkgrel=24
 pkgdesc="CSS library from the Netsurf project"
 
 # Additional information...
@@ -16,8 +16,17 @@ makedepends=('git' 'netsurf-buildsystem' 'pkg-config' 'perl' \
     'libwapcaplet' 'libparserutils')
 
 # Building information
-source=("git://git.netsurf-browser.org/${pkgname}.git#tag=release/${pkgver}")
-md5sums=('SKIP')
+source=("git://git.netsurf-browser.org/${pkgname}.git#tag=release/${pkgver}"
+        *.patch)
+md5sums=('SKIP'
+         'd829f5d25a4b6fd75e0239fbcbc7bd3b')
+
+
+prepare() {
+    cd "${srcdir}/${pkgname}"
+
+    patch -p1 < "${srcdir}"/*.patch
+}
 
 
 build() {

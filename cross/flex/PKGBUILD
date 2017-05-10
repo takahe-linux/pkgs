@@ -2,8 +2,8 @@
 
 # Package information
 pkgname='flex'
-pkgver='2.6.1'
-pkgrel=10
+pkgver='2.6.4'
+pkgrel=1
 pkgdesc="A tool for generating text-scanning programs"
 
 # Additional information...
@@ -18,11 +18,8 @@ makedepends=('musl' 'bison' 'm4')
 hostdepends=('toolchain')
 
 # Building information
-source=("${url}/releases/download/v${pkgver}/${pkgname}-${pkgver}.tar.xz"
-        "stage1flex.patch" # https://github.com/westes/flex/issues/78
-        )
-md5sums=('cd3c86290fc2676a641aefafeb10848a'
-         '915321d31ef144e0c01886c3cf564c36')
+source=("${url}/releases/download/v${pkgver}/${pkgname}-${pkgver}.tar.gz")
+md5sums=('2882e3179748cc9f9c23ec593d6adc8d')
 
 
 build() {
@@ -34,9 +31,6 @@ build() {
         --disable-shared
     # Disable tests; we can't run these while cross compiling.
     printf 'all:\n\ttrue\n\ninstall:\n\ttrue\n\n' > tests/Makefile.in
-
-    # Patch the makefile.
-    patch src/Makefile < "${srcdir}/stage1flex.patch"
 
     make
 }

@@ -4,7 +4,6 @@
 
 Packages to be fixed:
 - openssl 1.1.0 breaks lynx, wpa\_supplicant, snownews builds
-- flex does not cross compile (see issue #78)
 - netsurf has some relatively easy fixes
 - the toolchain pkg-config seems to be broken - figure out what uses it and
   make it an explicit dependency, fixing it if at all possible

@@ -2,8 +2,8 @@
 
 # Package information
 pkgname='git'
-pkgver='2.12.2'
-pkgrel=4
+pkgver='2.13.0'
+pkgrel=1
 pkgdesc="A fast distributed version control system"
 
 # Additional information...
@@ -17,13 +17,13 @@ makedepends=('zlib' 'expat')
 
 # Building information
 source=("https://www.kernel.org/pub/software/scm/git/git-${pkgver}.tar.xz")
-md5sums=('ad5ae08664c40caf074392abc301cccd')
+md5sums=('a18711ae968ded392d2208c8c6277b7d')
 
 build() {
     cd "${srcdir}/${pkgname}-${pkgver}"
 
     make prefix="/usr/" gitexecdir="/usr/lib/git" \
-        CC=gcc NEEDS_SSL_WITH_CURL="y" NO_PERL="y" \
+        CC=gcc NEEDS_SSL_WITH_CURL="y" NEEDS_CRYPTO_WITH_SSL="y" NO_PERL="y" \
         CFLAGS="${CFLAGS}" LDFLAGS="${LDFLAGS}" CPPFLAGS="${CPPFLAGS}" \
         NO_CROSS_DIRECTORY_HARDLINKS=1 NO_REGEX="NeedsStartEnd" \
         MAN_BOLD_LITERAL=1 \
@@ -35,7 +35,7 @@ package() {
     cd "${srcdir}/${pkgname}-${pkgver}"
 
     make prefix="/usr/" gitexecdir="/usr/lib/git" \
-        CC=gcc NEEDS_SSL_WITH_CURL="y" NO_PERL="y" \
+        CC=gcc NEEDS_SSL_WITH_CURL="y" NEEDS_CRYPTO_WITH_SSL="y" NO_PERL="y" \
         CFLAGS="${CFLAGS}" LDFLAGS="${LDFLAGS}" CPPFLAGS="${CPPFLAGS}" \
         NO_CROSS_DIRECTORY_HARDLINKS=1 NO_REGEX="NeedsStartEnd" \
         MAN_BOLD_LITERAL=1 \

@@ -2,8 +2,8 @@
 
 # Package information
 pkgname='strace'
-pkgver='4.14'
-pkgrel=39
+pkgver='4.16'
+pkgrel=1
 pkgdesc="syscall tracer"
 
 # Additional information...
@@ -16,7 +16,7 @@ makedepends=('linux-api-headers')
 
 # Building information
 source=("http://downloads.sourceforge.net/${pkgname}/${pkgname}-${pkgver}.tar.xz")
-md5sums=('1e39b5f7583256d7dc21170b9da529ae')
+md5sums=('2873366cac98770efcbed6e748d5ef23')
 
 
 prepare() {

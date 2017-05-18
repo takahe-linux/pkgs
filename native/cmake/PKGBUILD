@@ -1,0 +1,56 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='cmake'
+pkgver='3.8.1'
+pkgrel=1
+pkgdesc="A cross platform build system"
+
+# Additional information...
+arch=('mips' 'i586')
+url="https://cmake.org"
+license=('custom')
+
+# Dependency information
+makedepends=('curl' 'libarchive' 'zlib' 'expat')
+
+# Building information
+source=("https://www.cmake.org/files/v${pkgver%.*}/${pkgname}-${pkgver}.tar.gz")
+md5sums=('e8ef820ddf7a650845252bca846696e7')
+
+
+prepare() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+    sed -i -e '/CMAKE_USE_LIBUV 1/s/1/0/' CMakeLists.txt
+}
+
+
+build() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    ./bootstrap --prefix="/usr" \
+        --mandir="/share/man" \
+        --system-libs \
+        --no-system-jsoncpp \
+        --no-system-librhash
+
+    # Fix static build - pkg-config is used without the --static flag, so curl
+    # needs the extra link variables, and the dynamic flags also need removing.
+    # Setting the PKG_CONFIG var doesn't seem to work, and removing the
+    # dynamic flags from the platform modules broke other effects, so just
+    # settle for a brute-force version for now.
+    sed -i "Source/CMakeFiles"/*.dir/link.txt \
+        -e 's:-rdynamic::g' \
+        -e 's:-Wl,-Bdynamic::g' \
+        -e 's:-lcurl:-lcurl -lssl -lcrypto:g'
+
+    make VERBOSE=1
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+    make DESTDIR="${pkgdir}/" install
+    mkdir -p "${pkgdir}/usr/share/licenses/"
+    mv "${pkgdir}/usr/doc/"*/ "${pkgdir}/usr/share/licenses/${pkgname}"
+}

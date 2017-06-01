@@ -2,8 +2,8 @@
 
 # Package information
 pkgname='micropython'
-pkgver='1.8.7'
-pkgrel=9
+pkgver='1.9'
+pkgrel=2
 pkgdesc="Minimal implementation of the python scripting language"
 
 # Additional information...
@@ -19,7 +19,7 @@ conflicts=('python')
 
 # Building information
 source=("${pkgname}-${pkgver}.tar.gz::https://github.com/micropython/micropython/archive/v${pkgver}.tar.gz")
-md5sums=('80fd6b88c05ed20886acfd2fb1ea2e11')
+md5sums=('9007e338c970ee3d6eff4894f7ad6fda')
 
 
 prepare() {

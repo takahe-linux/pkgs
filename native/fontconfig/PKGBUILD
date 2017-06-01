@@ -2,8 +2,8 @@
 
 # Package information
 pkgname='fontconfig'
-pkgver='2.12.1'
-pkgrel=34
+pkgver='2.12.3'
+pkgrel=2
 pkgdesc="A library for customising font access"
 
 # Additional information...
@@ -16,7 +16,7 @@ makedepends=('expat' 'freetype' 'pkg-config' 'zlib' 'libpng')
 
 # Building information
 source=("${url}/${pkgname}-${pkgver}.tar.bz2")
-md5sums=('b5af5a423ee3b5cfc34846838963c058')
+md5sums=('872f757ec180e8c51918ff39705c40de')
 
 
 build() {

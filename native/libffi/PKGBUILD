@@ -34,7 +34,8 @@ package() {
 
     make DESTDIR="${pkgdir}/" install
 
-    # Install puts the header files into an odd place.
+    # Install puts the header files into an odd place; move them so the python
+    # build finds them.
     mv "${pkgdir}/usr/lib/${pkgname}-${pkgver}/include" "${pkgdir}/usr/"
     rmdir "${pkgdir}/usr/lib/${pkgname}-${pkgver}/"
     sed -i -e 's:includedir=.*:includedir=${exec_prefix}/include:' \

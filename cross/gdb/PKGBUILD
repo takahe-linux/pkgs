@@ -2,8 +2,8 @@
 
 # Package information
 pkgname='gdb'
-pkgver='7.12.1'
-pkgrel=5
+pkgver='8.0'
+pkgrel=1
 pkgdesc='The GNU Debugger'
 
 # Additional information...
@@ -22,7 +22,7 @@ source=("http://ftp.gnu.org/gnu/gdb/${pkgname}-${pkgver}.tar.xz"
         "gdb-sgidefs.h"
         "gdb-linux_nat.patch"
         "gnulib-configure.patch")
-sha1sums=('ef77c5345d6f9fdcdf7a5d8503301242b701936e'
+sha1sums=('148c8e783ebf9b281241d0566db59961191ec64d'
           '20eb85f7adb77b894229998432caae530962316c'
           '7a60c126b1a49cfb554b318a8d7aee1d79fe2bfe'
           'abb3f47ae79c825f8aa76bbb9628afd864a26442')

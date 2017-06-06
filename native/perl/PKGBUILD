@@ -2,8 +2,8 @@
 
 # Package information
 pkgname='perl'
-pkgver='5.24.1'
-pkgrel=19
+pkgver='5.26.0'
+pkgrel=1
 pkgdesc="A highly capable, feature-rich programming language"
 
 # Additional information...
@@ -15,9 +15,16 @@ license=('GPL' 'PerlArtistic')
 
 
 # Building information
-source=("http://www.cpan.org/src/5.0/${pkgname}-${pkgver}.tar.bz2")
-md5sums=('178ee0e8fa544dbc76d99cf041e2c9f0')
+source=("http://www.cpan.org/src/5.0/${pkgname}-${pkgver}.tar.bz2"
+        "grapheme.patch")
+md5sums=('8d34cb5a4eccd66e7a6a80e62b7b4aec'
+         '7c0153471e5f6f9cd59a774cf455c3cf')
 
+
+prepare() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+    patch -p1 < "${srcdir}/grapheme.patch"
+}
 
 build() {
     cd "${srcdir}/${pkgname}-${pkgver}"

@@ -1,0 +1,23 @@
+X-Git-Url: https://perl5.git.perl.org/perl.git/blobdiff_plain/bb5b17cdb7d08a1d41edbdaefed408064d4cd453..66c5e3f2ab554a89dfc00689602414ac21ea66f6:/regexec.c
+
+diff --git a/regexec.c b/regexec.c
+index 35b88d7ece..e63f15d13e 100644
+--- a/regexec.c
++++ b/regexec.c
+@@ -9750,6 +9750,8 @@ S_to_byte_substr(pTHX_ regexp *prog)
+     return TRUE;
+ }
+ 
++#ifndef PERL_IN_XSUB_RE
++
+ bool
+ Perl__is_grapheme(pTHX_ const U8 * strbeg, const U8 * s, const U8 * strend, const UV cp)
+ {
+@@ -9805,6 +9807,7 @@ Perl__is_grapheme(pTHX_ const U8 * strbeg, const U8 * s, const U8 * strend, cons
+     return isGCB(cp_gcb_val, next_cp_gcb_val, strbeg, s, TRUE);
+ }
+ 
++#endif
+ 
+ 
+ 

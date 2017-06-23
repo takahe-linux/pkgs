@@ -12,6 +12,9 @@ Packages to be fixed:
 
 I should also run namcap on the remaining packages, and fix any warnings...
 
+We don't consistently use groups - either conform to Arch's set of groups, or
+don't bother using them (we currently use meta-packages instead).
+
 Otherwise, grep for TODO's in the PKGBUILDs.
 
 

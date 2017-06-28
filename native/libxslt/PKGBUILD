@@ -1,0 +1,41 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='libxslt'
+pkgver='1.1.29'
+pkgrel=1
+pkgdesc="XML stylesheet transformation library"
+
+# Additional information...
+arch=('mips' 'i586')
+url="http://xmlsoft.org/XSLT/"
+license=('custom')
+
+# Dependency information
+makedepends=('libxml2')
+
+# Building information
+source=("ftp://xmlsoft.org/libxslt/${pkgname}-${pkgver}.tar.gz")
+md5sums=('a129d3c44c022de3b9dcf6d6f288d72e')
+
+
+build() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    ./configure --prefix="/usr"
+    make
+}
+
+
+check() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    make -k check
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    make DESTDIR="${pkgdir}/" install
+}

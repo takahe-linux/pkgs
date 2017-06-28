@@ -1,0 +1,39 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# NOTE: This (apparently) requires a rebuild with each new GCC version.
+#       Not a problem currently, but if we switch to being more careful
+#       with rebuilds this could catch us out.
+
+# Package information
+pkgname='libtool'
+pkgver='2.4.6'
+pkgrel=1
+pkgdesc="A generic library builder helper script"
+
+# Additional information...
+arch=('mips' 'i586')
+url="http://www.gnu.org/software/libtool"
+license=('GPL')
+
+# Dependency information
+groups=('base-devel')
+depends=('sh' 'tar')
+
+# Building information
+source=("ftp://ftp.gnu.org/pub/gnu/libtool/${pkgname}-${pkgver}.tar.xz")
+md5sums=('1bfb9b923f2c1339b4d2ce1807064aa5')
+
+
+build() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    ./configure --prefix="/usr"
+    make
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    make DESTDIR="${pkgdir}/" install
+}

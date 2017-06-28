@@ -1,0 +1,36 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='automake'
+pkgver='1.15.1'
+pkgrel=1
+pkgdesc="A GNU tool for automatically creating makefiles"
+
+# Additional information...
+arch=('mips' 'i586')
+url="http://www.gnu.org/software/automake"
+license=('GPL')
+
+# Dependency information
+groups=('base-devel')
+depends=('bash' 'perl')
+makedepends=('autoconf')
+
+# Building information
+source=("ftp://ftp.gnu.org/pub/gnu/${pkgname}/${pkgname}-${pkgver}.tar.xz")
+md5sums=('24cd3501b6ad8cd4d7e2546f07e8b4d4')
+
+
+build() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    ./configure --prefix="/usr"
+    make
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    make DESTDIR="${pkgdir}/" install
+}

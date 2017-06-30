@@ -1,0 +1,38 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='alsa-utils'
+pkgver='1.1.4'
+pkgrel=2
+pkgdesc="Sound support and basic utilities"
+
+# Additional information...
+arch=('mips' 'i586')
+url="http://www.alsa-project.org"
+license=('LGPL')
+
+# Dependency information
+depends=('alsa-lib')
+
+# Building information
+source=("ftp://ftp.alsa-project.org/pub/lib/${pkgname}-${pkgver}.tar.bz2")
+md5sums=('01e3934ca5bd22a80c27289d1b0adcdc')
+
+
+build() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    ./configure --prefix="/usr" --sbindir="/usr/bin" \
+        --disable-alsaconf
+    make
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    make DESTDIR="${pkgdir}/" install
+
+    # We don't need the udev rules.
+    rm -rf "${pkgdir}/lib"
+}

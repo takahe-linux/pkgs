@@ -20,10 +20,6 @@ Otherwise, grep for TODO's in the PKGBUILDs.
 
 ## Packages ##
 
-Remaining packages:
-
-- alsa-utils
-
 Packages to consider adding:
 
 - nldev

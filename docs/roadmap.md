@@ -26,7 +26,6 @@ Packages to consider adding:
 - pass
 - x11 and related (dwm, st, dmenu, xorg utils, xclip, ...)?
 - daemon manager + associated scripts?
-- mpv?
 
 
 ## Misc ##

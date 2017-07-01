@@ -1,0 +1,37 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='ffmpeg'
+pkgver='3.3.2'
+pkgrel=2
+pkgdesc="Utilities to record, convert, and stream audio and video"
+
+# Additional information...
+arch=('mips' 'i586')
+url="https://ffmpeg.org/"
+license=('GPL3')
+
+# Dependency information
+depends=('alsa-lib')
+makedepends=('nasm' 'pkgconf' 'zlib')
+
+# Building information
+source=("${url}/releases/${pkgname}-${pkgver}.tar.xz")
+md5sums=('d6c09c84e3d0d9ca8a51f481da660603')
+
+
+build() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    ./configure --prefix="/usr" \
+        --disable-debug \
+        --enable-gpl --enable-version3
+    make
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    make DESTDIR="${pkgdir}/" install
+}

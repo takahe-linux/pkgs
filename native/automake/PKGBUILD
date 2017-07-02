@@ -3,7 +3,7 @@
 # Package information
 pkgname='automake'
 pkgver='1.15.1'
-pkgrel=1
+pkgrel=2
 pkgdesc="A GNU tool for automatically creating makefiles"
 
 # Additional information...
@@ -33,4 +33,7 @@ package() {
     cd "${srcdir}/${pkgname}-${pkgver}"
 
     make DESTDIR="${pkgdir}/" install
+
+    # Remove unwanted info dir.
+    rm -rf "${pkgdir}/usr/share/info"
 }

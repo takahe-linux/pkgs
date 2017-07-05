@@ -2,8 +2,8 @@
 
 # Package information
 pkgname='libnl'
-pkgver='3.2.29'
-pkgrel=29
+pkgver='3.3.0'
+pkgrel=1
 pkgdesc="Library for applications dealing with netlink sockets"
 
 # Additional information...
@@ -17,7 +17,16 @@ makedepends=('linux-api-headers')
 # Building information
 backup=('etc/libnl/classid' 'etc/libnl/pktloc')
 source=("https://github.com/thom311/libnl/releases/download/libnl${pkgver//./_}/${pkgname}-${pkgver}.tar.gz")
-md5sums=('a8ba62a5c4f883f4e493a46d1f3733fe')
+md5sums=('ab3ef137cad95bdda5ff0ffa5175dfa5')
+
+
+prepare() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    sed -i include/linux-private/linux/ipv6.h -e '/#include <linux\/in6.h>/d'
+    sed -i include/linux-private/linux/if_bridge.h \
+        -e '/#include <linux\/in6.h>/d'
+}
 
 
 build() {

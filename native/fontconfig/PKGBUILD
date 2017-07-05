@@ -2,8 +2,8 @@
 
 # Package information
 pkgname='fontconfig'
-pkgver='2.12.3'
-pkgrel=7
+pkgver='2.12.4'
+pkgrel=1
 pkgdesc="A library for customising font access"
 
 # Additional information...
@@ -12,11 +12,11 @@ url="https://www.fontconfig.org/release"
 license=('custom')
 
 # Dependency information
-makedepends=('expat' 'freetype' 'pkg-config' 'zlib' 'libpng')
+makedepends=('expat' 'freetype' 'pkg-config' 'zlib' 'libpng' 'gperf')
 
 # Building information
 source=("${url}/${pkgname}-${pkgver}.tar.bz2")
-md5sums=('872f757ec180e8c51918ff39705c40de')
+md5sums=('29105662c7d319720e0088a0ac53f494')
 
 
 build() {

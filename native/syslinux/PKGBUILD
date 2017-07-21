@@ -12,7 +12,8 @@ url="http://www.syslinux.org"
 license=('GPL2')
 
 # Dependency information
-makedepends=('git' 'nasm' 'perl' 'xz' 'e2fsprogs')
+depends=('e2fsprogs')
+makedepends=('git' 'nasm' 'perl' 'xz')
 
 # Building information
 backup=('boot/syslinux/syslinux.cfg')

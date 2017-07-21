@@ -13,7 +13,7 @@ license=('custom')
 
 # Dependency information
 groups=('base-devel')
-makedepends=('musl')
+depends=('musl')
 hostdepends=('toolchain')
 provides=('pkg-config')
 conflicts=('pkg-config')

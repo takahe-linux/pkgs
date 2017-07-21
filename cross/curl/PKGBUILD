@@ -12,8 +12,7 @@ url="http://curl.haxx.se"
 license=('MIT')
 
 # Dependency information
-depends=('ca-certificates')
-makedepends=('openssl' 'musl')
+depends=('openssl' 'musl' 'ca-certificates')
 hostdepends=('toolchain')
 
 # Building information
@@ -33,8 +32,6 @@ build() {
         --disable-ldap \
         --without-libidn \
         --with-ssl \
-        --disable-shared \
-        --enable-static \
         --with-ca-bundle="/etc/ssl/certs/ca-certificates.crt" \
         --with-ca-path="/etc/ssl/certs"
     make

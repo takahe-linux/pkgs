@@ -12,7 +12,7 @@ url='http://invisible-island.net/ncurses/ncurses.html'
 license=('MIT')
 
 # Dependency information
-makedepends=('musl')
+depends=('musl')
 hostdepends=('toolchain')
 
 # Building information
@@ -27,7 +27,6 @@ build() {
         --host="${_target_triplet}" \
         --mandir="/usr/share/man" \
         --enable-overwrite \
-        --disable-shared \
         --disable-db-install \
         --with-build-cc="gcc" \
         --with-fallbacks="ansi linux vt100 xterm" \

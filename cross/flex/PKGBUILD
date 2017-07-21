@@ -13,8 +13,8 @@ license=('custom')
 
 # Dependency information
 groups=('base-devel')
-depends=('sh')
-makedepends=('musl' 'bison' 'm4')
+depends=('sh' 'musl' 'm4')
+makedepends=('bison')
 hostdepends=('toolchain')
 
 # Building information
@@ -37,7 +37,6 @@ EOF
     ./configure --prefix="/usr" \
         --host="${_target_triplet}" \
         --build="${_local_triplet}" \
-        --disable-shared \
         --cache-file=config.cache
 
     # Disable tests; we can't run these while cross compiling.

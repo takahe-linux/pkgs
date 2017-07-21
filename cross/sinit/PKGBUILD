@@ -13,7 +13,7 @@ license=('i586' 'mips')
 
 # Dependency information
 groups=('base')
-makedepends=('musl')
+depends=('musl')
 hostdepends=('toolchain')
 
 # Building information

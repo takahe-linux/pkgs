@@ -8,10 +8,6 @@ Packages to be fixed:
 
 I should also run namcap on the remaining packages, and fix any warnings...
 
-If I decide to stick with static linking, I should split the static packages
-into lib and bin subpackages, with the lib packages depending on the other
-packages which are actually required for linking with it.
-
 Otherwise, grep for TODO's in the PKGBUILDs.
 
 
@@ -25,7 +21,6 @@ Packages to consider adding:
 
 Fixes/changes:
 
-- Remove /lib symlink
 - Make hush the default shell
 - Make the OOM killer more aggressive?
 

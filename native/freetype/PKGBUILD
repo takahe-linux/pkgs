@@ -22,8 +22,7 @@ md5sums=('be4601619827b7935e1d861745923a68')
 build() {
     cd "${srcdir}/${pkgname}-${pkgver}"
 
-    ./configure --prefix="/usr" \
-        --disable-shared
+    ./configure --prefix="/usr"
     make
 }
 

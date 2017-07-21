@@ -12,7 +12,7 @@ url='http://www.gnu.org/software/gdb/'
 license=('GPL3')
 
 # Dependency information
-makedepends=('readline' 'zlib')
+depends=('readline' 'zlib')
 
 # Building information
 backup=('etc/gdb/gdbinit')
@@ -33,9 +33,6 @@ prepare() {
     cp "${srcdir}/gdb-sgidefs.h" "./gdb/sgidefs.h"
 
     patch -p0 < "${srcdir}/gdb-linux_nat.patch"
-
-    # Stop using --dynamic-list as this produces a dynamic executable.
-    sed -i -e "s:['\"]-Wl,--dynamic-list.*['\"]:'-Wl,-static':" gdb/configure
 }
 
 
@@ -43,8 +40,6 @@ build() {
     cd "${srcdir}/${pkgname}-${pkgver}"
 
     ./configure --prefix="/usr" \
-        --enable-static \
-        --disable-shared \
         --disable-plugins \
         --disable-multilib \
         --disable-werror \

@@ -12,7 +12,7 @@ url="http://gmplib.org/"
 license=('LGPL3' 'GPL')
 
 # Dependency information
-makedepends=('musl')
+depends=('musl')
 hostdepends=('toolchain')
 
 # Building information
@@ -27,7 +27,6 @@ build() {
     ./configure --prefix="/usr" \
         --build="${_local_triplet}" \
         --host="${_target_triplet}" \
-        --disable-shared \
         --enable-cxx
 
     make

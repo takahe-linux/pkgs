@@ -13,8 +13,7 @@ license=('GPL3')
 
 # Dependency information
 groups=('base-devel')
-depends=('sh')
-makedepends=('musl')
+depends=('sh' 'musl')
 hostdepends=('toolchain')
 
 # Building information

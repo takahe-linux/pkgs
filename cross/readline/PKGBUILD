@@ -14,8 +14,7 @@ url="https://cnswww.cns.cwru.edu/php/chet/readline/rltop.html"
 license=('GPL')
 
 # Dependency information
-depends=('ncurses')
-makedepends=('musl')
+depends=('ncurses' 'musl')
 hostdepends=('toolchain')
 
 # Building information
@@ -49,7 +48,6 @@ build() {
         --host="${_target_triplet}" \
         --build="${_local_triplet}" \
         --enable-curses \
-        --disable-shared
 
     make
 }

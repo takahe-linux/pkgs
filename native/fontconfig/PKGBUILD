@@ -12,7 +12,8 @@ url="https://www.fontconfig.org/release"
 license=('custom')
 
 # Dependency information
-makedepends=('expat' 'freetype' 'zlib' 'libpng' 'gperf')
+depends=('expat' 'freetype' 'zlib' 'libpng')
+makedepends=('gperf')
 
 # Building information
 source=("${url}/${pkgname}-${pkgver}.tar.bz2")
@@ -22,15 +23,11 @@ md5sums=('e4d04a7723a66ae4db2a47703de00880')
 build() {
     cd "${srcdir}/${pkgname}-${pkgver}"
 
-    # Use a static PKG_CONFIG.
-    export PKG_CONFIG="pkg-config --static"
-
     ./configure --prefix="/usr" \
         --sysconfdir="/etc" \
         --with-templatedir="/etc/fonts/conf.d" \
         --with-xmldir="/etc/fonts" \
         --localstatedir="/var" \
-        --disable-shared \
         --with-default-fonts="/usr/share/fonts" \
         --without-add-fonts
     make

@@ -12,8 +12,8 @@ url="https://ffmpeg.org/"
 license=('GPL3')
 
 # Dependency information
-depends=('alsa-lib')
-makedepends=('nasm' 'zlib')
+depends=('alsa-lib' 'zlib')
+makedepends=('nasm')
 
 # Building information
 source=("${url}/releases/${pkgname}-${pkgver}.tar.xz")

@@ -22,7 +22,7 @@ md5sums=('9d96df8417572a2afb781a7c4c811a85')
 build() {
     cd "${srcdir}/SDL-${pkgver}"
     ./configure --prefix="/usr" \
-        --disable-shared --disable-rpath
+        --disable-rpath
     make
 }
 

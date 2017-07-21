@@ -12,7 +12,7 @@ url="https://poppler.freedesktop.org/"
 license=('GPL')
 
 # Dependency information
-makedepends=('libpng' 'libjpeg' 'fontconfig' 'freetype' 'expat' 'zlib')
+depends=('libpng' 'libjpeg' 'fontconfig' 'freetype' 'expat' 'zlib')
 
 # Building information
 source=("${url}/${pkgname}-${pkgver}.tar.xz")
@@ -22,15 +22,11 @@ md5sums=('6e44408a3b4f4a738f8a6770d0aea8a5')
 build() {
     cd "${srcdir}/${pkgname}-${pkgver}"
 
-    # Use a static PKG_CONFIG.
-    export PKG_CONFIG="pkg-config --static"
-
     ./configure --prefix="/usr" \
         --enable-zlib \
         --enable-dctdecoder=libjpeg \
         --enable-libopenjpeg=none \
-        --enable-libpng \
-        --disable-shared
+        --enable-libpng
     make
 }
 

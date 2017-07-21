@@ -21,7 +21,7 @@ md5sums=('SKIP')
 
 build() {
     cd "${srcdir}/buildsystem"
-    make PREFIX=/usr COMPONENT_TYPE="lib-static"
+    make PREFIX=/usr COMPONENT_TYPE="lib-shared"
 }
 
 

@@ -15,8 +15,7 @@ license=('GPL')
 
 # Dependency information
 groups=('base' 'base-devel')
-depends=('bash' 'curl' 'libarchive' 'gettext' 'xz')
-makedepends=('musl' 'openssl')
+depends=('bash' 'curl' 'libarchive' 'gettext' 'xz' 'musl' 'openssl')
 hostdepends=('asciidoc' 'libtool' 'toolchain')
 optdepends=('wget')
 
@@ -55,7 +54,6 @@ build() {
         --localstatedir='/var' \
         --sysconfdir="/etc" \
         --enable-doc \
-        --disable-shared \
         --cache-file=config.cache \
         --with-scriptlet-shell="/usr/bin/bash" \
         --without-gpgme \

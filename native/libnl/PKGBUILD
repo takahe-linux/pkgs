@@ -31,8 +31,7 @@ build() {
 
     ./configure --prefix="/usr" \
         --sysconfdir="/etc" \
-        --sbindir="/usr/bin" \
-        --disable-shared
+        --sbindir="/usr/bin"
     make
 }
 

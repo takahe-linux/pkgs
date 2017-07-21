@@ -13,7 +13,7 @@ license=('GPL')
 
 # Dependency information
 groups=('base-devel')
-makedepends=('musl')
+depends=('musl')
 hostdepends=('toolchain')
 
 # Building information
@@ -28,7 +28,6 @@ build() {
     ./configure --prefix="/usr" \
         --host="${_target_triplet}" \
         --build="${_local_triplet}" \
-        --disable-shared
     make
 }
 

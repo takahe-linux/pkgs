@@ -12,7 +12,8 @@ url="http://litcave.rudi.ir/"
 license=('custom:BSD')
 
 # Dependency information
-makedepends=('git' 'poppler' 'libpng' 'libjpeg' 'fontconfig' 'freetype' 'expat')
+depends=('poppler' 'libpng' 'libjpeg' 'fontconfig' 'freetype' 'expat')
+makedepends=('git')
 
 # Building information
 source=("${pkgname}-git::git+git://repo.or.cz/fbpdf.git"
@@ -25,14 +26,6 @@ pkgver() {
     cd "${srcdir}/${pkgname}-git"
     printf "0.r%s.%s" "$(git rev-list --count HEAD)" \
         "$(git rev-parse --short HEAD)"
-}
-
-prepare() {
-    cd "${srcdir}/${pkgname}-git"
-    # TODO: Linking with poppler-cpp statically fails because it doesn't have
-    #       a Libs.private dependency on fontconfig.
-    sed -i Makefile -e 's:pkg-config:pkg-config --static:' \
-        -e 's:\(`pkg-config.*`\):\1 `pkg-config --static --libs fontconfig` -ljpeg:'
 }
 
 

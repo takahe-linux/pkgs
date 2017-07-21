@@ -71,7 +71,6 @@ build() {
         --enable-libstdcxx-time \
         --enable-cxx-flags="${CXXFLAGS_FOR_TARGET}" \
         --disable-nls \
-        --disable-shared \
         --disable-multilib \
         --disable-libcc1 \
         --disable-libsanitizer \

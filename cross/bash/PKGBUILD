@@ -15,7 +15,7 @@ license=('GPL')
 
 # Dependency information
 groups=('base')
-makedepends=('musl' 'readline')
+depends=('musl' 'readline')
 hostdepends=('toolchain')
 provides=('sh')
 conflicts=('sh')
@@ -83,7 +83,6 @@ EOF
         --with-curses \
         --without-bash-malloc \
         --enable-readline \
-        --enable-static-link \
         --cache-file=config.cache
 
     make

@@ -17,14 +17,6 @@ source=("${pkgname}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz")
 sha1sums=('9f57fa18f881b27b577c4ecec07237ebe7b98561')
 
 
-prepare() {
-    cd "${srcdir}/${pkgname}-${pkgver}"
-
-    # TODO: We can't build statically due to -rdynamic...
-    sed -i -e 's:-rdynamic::' configure
-}
-
-
 build() {
     cd "${srcdir}/${pkgname}-${pkgver}"
 

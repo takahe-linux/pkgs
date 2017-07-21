@@ -14,7 +14,7 @@ license=('custom')
 
 # Dependency information
 groups=('base-devel')
-makedepends=('zlib')
+depends=('zlib')
 
 # Building information
 backup=('etc/sudoers')
@@ -34,7 +34,6 @@ build() {
         --with-rundir="/run/sudo" \
         --with-vardir="/var/lib/sudo" \
         --disable-pam-session \
-        --disable-shared \
         --disable-pie \
         --disable-hardening \
         --enable-zlib=system \

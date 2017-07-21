@@ -12,7 +12,7 @@ url="http://hostap.epitest.fi/wpa_supplicant"
 license=('GPL')
 
 # Dependency information
-makedepends=('libnl' 'zlib' 'readline' 'openssl')
+depends=('libnl' 'zlib' 'readline' 'openssl')
 
 # Building information
 source=("http://w1.fi/releases/${pkgname}-${pkgver}.tar.gz"
@@ -50,7 +50,6 @@ CONFIG_NO_CONFIG_BLOBS=y
 
 # We use openssl.
 CONFIG_TLS=openssl
-EXTRALIBS += -lz # We need to link to zlib as well.
 
 # Add the flags.
 CFLAGS += ${CFLAGS}
@@ -63,9 +62,9 @@ BINDIR = /usr/bin
 CC = gcc
 EOF
 
-    # TODO: fix -lncurses coming before -lreadline.
-    sed -i Makefile \
-        -e 's:LIBS_c += -lncurses -lreadline:LIBS_c += -lreadline -lncurses:'
+    # We need to link zlib whenever we link against ssl or crypto.
+    sed -i 'Makefile' -e 's:-lssl:-lssl -lz:g' \
+        -e 's:-lcrypto:-lcrypto -lz:g'
 }
 
 build() {

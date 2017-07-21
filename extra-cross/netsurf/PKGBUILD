@@ -12,10 +12,9 @@ url="http://www.netsurf-browser.org/"
 license=('MIT' 'GPL2')
 
 # Dependency information
-depends=('ca-certificates')
-makedepends=('libpng' 'libjpeg' 'openssl' 'curl' 'musl' 'expat'
-    'libcss' 'libdom' 'libhubbub' 'libwapcaplet' 'libparserutils'
-    'libnsbmp' 'libnsfb' 'libnsgif' 'libutf8proc' 'libnsutils')
+depends=('ca-certificates' 'libpng' 'libjpeg' 'openssl' 'curl' 'musl' 'expat'
+         'libcss' 'libdom' 'libhubbub' 'libwapcaplet' 'libparserutils'
+         'libnsbmp' 'libnsfb' 'libnsgif' 'libutf8proc' 'libnsutils')
 hostdepends=('git' 'toolchain' 'perl-html-parser' 'libpng'
     'netsurf-buildsystem' 'nsgenbind')
 
@@ -37,14 +36,14 @@ prepare() {
     #       upstream?
     cat > Makefile.config << EOF
 # Use our own pkg-config for cross-compiling.
-# This sets --static, PKG_CONFIG_SYSROOT_DIR, and PKG_CONFIG_LIBDIR to ensure
-# that pkg-config uses the right pc files, and inserts "/sysroot" into any
-# paths specified in the pc files.
+# This sets PKG_CONFIG_SYSROOT_DIR and PKG_CONFIG_LIBDIR to ensure that
+# pkg-config uses the right pc files, and inserts "/sysroot" into any paths
+# specified in the pc files.
 override PKG_CONFIG := \
     PKG_CONFIG_DIR="" \
     PKG_CONFIG_LIBDIR="/sysroot/usr/lib/pkgconfig:/sysroot/usr/share/pkgconfig" \
     PKG_CONFIG_SYSROOT_DIR=/sysroot \
-    pkg-config --static
+    pkg-config
 EOF
 }
 

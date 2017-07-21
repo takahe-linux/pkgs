@@ -71,7 +71,10 @@ package() {
     install -d -m755 /run/lock
 
     # Basically everything needs at least /bin/sh; add the /bin symlink.
+    # GCC assumes that the dynamic linker is in /lib by default, so just settle
+    # for that for now.
     ln -s usr/bin bin
+    ln -s usr/lib lib
 
     # Setup /usr hierarchy
     for d in bin include lib share/misc; do

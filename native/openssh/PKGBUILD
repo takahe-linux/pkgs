@@ -12,7 +12,7 @@ url="http://www.openssh.org/portable.html"
 license=('custom:BSD')
 
 # Dependency information
-makedepends=('zlib')
+depends=('zlib')
 
 # Building information
 backup=('etc/ssh/ssh_config' 'etc/ssh/sshd_config')
@@ -27,8 +27,6 @@ build() {
         --sbindir="/usr/bin" \
         --libexecdir="/usr/lib/ssh" \
         --sysconfdir="/etc/ssh" \
-        --disable-shared \
-        --enable-static \
 	--with-privsep-user=nobody \
         --with-pid-dir="/run" \
         --with-mantype=man \

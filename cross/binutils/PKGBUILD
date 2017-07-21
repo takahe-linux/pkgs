@@ -13,7 +13,7 @@ license=('GPL')
 
 # Dependency information
 groups=('base-devel')
-makedepends=('musl' 'zlib')
+depends=('musl' 'zlib')
 hostdepends=('toolchain')
 
 # Building information
@@ -40,9 +40,7 @@ build() {
         --host="${_target_triplet}" \
         --target="${_target_triplet}" \
         --disable-nls --disable-multilib \
-        --enable-static --disable-werror \
-        --disable-shared \
-        --disable-host-shared \
+        --disable-werror \
         --with-lib-path="/usr/lib" \
         --enable-deterministic-archives
 

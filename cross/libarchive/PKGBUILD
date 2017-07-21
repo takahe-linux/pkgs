@@ -12,7 +12,7 @@ url="http://www.libarchive.org"
 license=('BSD')
 
 # Dependency information
-makedepends=('musl' 'zlib')
+depends=('musl' 'zlib')
 hostdepends=('toolchain')
 
 # Building information
@@ -25,6 +25,7 @@ build() {
 
     ./configure --prefix="/usr" \
         --host="${_target_triplet}" \
+        --build="${_local_triplet}" \
         --libdir="/usr/lib" \
         --bindir="/usr/bin" \
         --includedir="/usr/include" \
@@ -32,7 +33,6 @@ build() {
         --without-iconv \
         --without-nettle \
         --without-expat \
-        --disable-shared
     make
 }
 

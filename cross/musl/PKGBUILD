@@ -29,7 +29,6 @@ build() {
                 --libdir="/usr/lib" \
                 --bindir="/usr/bin" \
                 --includedir="/usr/include" \
-                --disable-shared
 
     make
 }
@@ -40,4 +39,11 @@ package() {
 
     # Install musl
     make DESTDIR="${pkgdir}" install
+    mkdir "${pkgdir}/usr/bin"
+    ln -s /usr/lib/libc.so "${pkgdir}/usr/bin/ldd"
+
+    # Rename all the empty static libraries to dynamic equivalents.
+    for lib in "${pkgdir}/usr/lib/"*.a; do
+        mv -f "${lib}" "${lib%a}so"
+    done
 }

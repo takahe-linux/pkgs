@@ -15,8 +15,7 @@ license=('custom:BSD')
 
 # Dependency information
 groups=('base-devel')
-depends=('zlib')
-makedepends=('musl')
+depends=('zlib' 'musl')
 hostdepends=('toolchain')
 
 # Building information
@@ -58,7 +57,7 @@ build() {
     ./Configure --prefix="/usr" \
         --openssldir="/etc/ssl" \
         --libdir="lib" \
-        no-shared zlib "${optflags}" \
+        shared zlib "${optflags}" \
         "${openssltarget}" \
         "-Wa,--noexecstack ${CFLAGS} -fPIC ${LDFLAGS}"
 

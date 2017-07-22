@@ -52,8 +52,7 @@ Now run pacman:
 See
 [the arch wiki](https://wiki.archlinux.org/index.php/Syslinux#Manual_install)
 for more detailed instructions.
-The alternative (``altmbr.bin``) method is probably better for simple systems;
-also consider using lilo.
+The alternative (``altmbr.bin``) method is probably better for simple systems.
 
 ```
 # cp -r /usr/lib/syslinux/bios/*.c32 /boot/syslinux

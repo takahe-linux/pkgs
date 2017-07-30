@@ -1,0 +1,11 @@
+--- tests/run_make_tests.pl.orig	2017-07-23 14:03:52.378974578 +1200
++++ tests/run_make_tests.pl	2017-07-23 14:04:28.099920027 +1200
+@@ -58,6 +58,8 @@
+   *CORE::GLOBAL::rmdir = \&vms_rmdir;
+ }
+ 
++use FindBin;
++use lib "$FindBin::Bin";
+ require "test_driver.pl";
+ require "config-flags.pm";
+ 

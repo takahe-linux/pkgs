@@ -3,7 +3,7 @@
 # Package information
 pkgname='flex'
 pkgver='2.6.4'
-pkgrel=1
+pkgrel=2
 pkgdesc="A tool for generating text-scanning programs"
 
 # Additional information...
@@ -25,11 +25,23 @@ md5sums=('2882e3179748cc9f9c23ec593d6adc8d')
 build() {
     cd "${srcdir}/${pkgname}-${pkgver}"
 
+    # TODO: Upstream some kind of fix? (see github.com/westes/flex/issues/247)
+    # The replacement malloc and realloc functions do not work properly when
+    # cross-compiling flex, so instead of using those just tell configure that
+    # they work properly.
+    cat > config.cache << EOF
+ac_cv_func_malloc_0_nonnull=yes
+ac_cv_func_realloc_0_nonnull=yes
+EOF
+
     ./configure --prefix="/usr" \
         --host="${_target_triplet}" \
         --build="${_local_triplet}" \
-        --disable-shared
+        --disable-shared \
+        --cache-file=config.cache
+
     # Disable tests; we can't run these while cross compiling.
+    # TODO: Upstream disabling tests.
     printf 'all:\n\ttrue\n\ninstall:\n\ttrue\n\n' > tests/Makefile.in
 
     make

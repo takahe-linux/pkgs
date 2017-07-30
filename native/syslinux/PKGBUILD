@@ -3,7 +3,7 @@
 # Package information
 pkgname='syslinux'
 pkgver='6.03'
-pkgrel=51
+pkgrel=52
 pkgdesc="Collection of boot loaders for i386 and x86_64"
 
 # Additional information...
@@ -49,8 +49,12 @@ prepare() {
 
 build() {
     cd "${srcdir}/${pkgname}"
-    unset LDFLAGS
-    make bios
+    unset LDFLAGS # Syslinux uses LDFLAGS; we can't provide our own here.
+
+    # TODO: --no-dynamic-linker is required to build with binutils-2.29
+    # (possibly also with binutils-2.28).
+    # We override LD here to pass in the flag, since we can't set LDFLAGS.
+    make bios LD="ld --no-dynamic-linker"
 }
 
 

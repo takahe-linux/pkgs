@@ -3,7 +3,7 @@
 # Package information
 pkgname='libpng'
 pkgver='1.6.30'
-pkgrel=1
+pkgrel=2
 pkgdesc="A collection of PNG manipulation routines"
 
 # Additional information...

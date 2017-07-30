@@ -3,7 +3,7 @@
 # Package information
 _pkgname='binutils'
 pkgname="${_target_triplet}-${_pkgname}"
-pkgver='2.28'
+pkgver='2.29'
 pkgrel=1
 pkgdesc="A set of programs to assemble and manipulate binary and object files"
 
@@ -19,10 +19,8 @@ depends=('glibc>=2.20' 'zlib')
 
 # Building information
 options=('staticlibs' '!distcc' '!ccache')
-source=("ftp://ftp.gnu.org/gnu/${_pkgname}/${_pkgname}-${pkgver}.tar.bz2"
-        *.patch)
-md5sums=('9e8340c96626b469a603c15c9d843727'
-         'ee3f89bd29dd6c70fab7bde3640f5f1f')
+source=("ftp://ftp.gnu.org/gnu/${_pkgname}/${_pkgname}-${pkgver}.tar.bz2")
+md5sums=('23733a26c8276edbb1168c9bee60e40e')
 
 
 prepare() {
@@ -32,10 +30,6 @@ prepare() {
     sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" libiberty/configure
 
     mkdir "${srcdir}/${_pkgname}-build"
-
-    for patch in "${srcdir}/"*.patch; do
-        patch -p1 < "${patch}"
-    done
 }
 
 

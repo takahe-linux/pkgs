@@ -2,8 +2,8 @@
 
 # Package information
 pkgname='libpng'
-pkgver='1.6.30'
-pkgrel=2
+pkgver='1.6.31'
+pkgrel=1
 pkgdesc="A collection of PNG manipulation routines"
 
 # Additional information...
@@ -16,7 +16,7 @@ makedepends=('zlib')
 
 # Building information
 source=("http://downloads.sourceforge.net/sourceforge/${pkgname}/${pkgname}-${pkgver}.tar.xz")
-md5sums=('88a729d47eaf880d61a0ef90f4bd5e8f')
+md5sums=('1b34eab440263e32cfa39d19413fad54')
 
 
 build() {

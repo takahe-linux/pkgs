@@ -1,0 +1,93 @@
+From e7652146696ffa15d22cc0d33aee7b1262a1b7cd Mon Sep 17 00:00:00 2001
+From: Alastair Hughes <hobbitalastair@gmail.com>
+Date: Sun, 6 Aug 2017 20:39:11 +1200
+Subject: [PATCH] Always check return value for *alloc()
+
+---
+ src/cursor.c       |  2 ++
+ src/plot/generic.c |  4 ++++
+ src/surface/ram.c  |  4 ++++
+ src/surface/x.c    | 10 ++++++----
+ 4 files changed, 16 insertions(+), 4 deletions(-)
+
+diff --git a/src/cursor.c b/src/cursor.c
+index 87633dc..a18eba0 100644
+--- a/src/cursor.c
++++ b/src/cursor.c
+@@ -100,6 +100,8 @@ bool nsfb_cursor_plot(nsfb_t *nsfb, struct nsfb_cursor_s *cursor)
+     sav_size = cursor->sav_width * cursor->sav_height * sizeof(nsfb_colour_t);
+     if (cursor->sav_size < sav_size) {
+         cursor->sav = realloc(cursor->sav, sav_size);
++        if (!cursor->sav)
++            return false;
+         cursor->sav_size = sav_size;
+     }
+ 
+diff --git a/src/plot/generic.c b/src/plot/generic.c
+index 0c3d9e8..50bfe1a 100644
+--- a/src/plot/generic.c
++++ b/src/plot/generic.c
+@@ -799,6 +799,8 @@ path(nsfb_t *nsfb, int pathc, nsfb_plot_pathop_t *pathop, nsfb_plot_pen_t *pen)
+ 
+     /* allocate storage for the vertexes */
+     curpt = pts = malloc(ptc * sizeof(nsfb_point_t));
++    if (curpt == NULL || pts == NULL)
++        return false;
+ 
+     for (path_loop = 0; path_loop < pathc; path_loop++) {
+         switch (pathop[path_loop].operation) {
+@@ -910,6 +912,8 @@ bool select_plotters(nsfb_t *nsfb)
+ 	free(nsfb->plotter_fns);
+ 
+     nsfb->plotter_fns = calloc(1, sizeof(nsfb_plotter_fns_t));
++    if (nsfb->plotter_fns == NULL)
++        return false;
+     memcpy(nsfb->plotter_fns, table, sizeof(nsfb_plotter_fns_t));
+ 
+     /* set the generics */
+diff --git a/src/surface/ram.c b/src/surface/ram.c
+index 4deabda..f1ff72e 100644
+--- a/src/surface/ram.c
++++ b/src/surface/ram.c
+@@ -38,6 +38,8 @@ static int ram_initialise(nsfb_t *nsfb)
+     size_t size = (nsfb->width * nsfb->height * nsfb->bpp) / 8;
+ 
+     nsfb->ptr = realloc(nsfb->ptr, size);
++    if (!nsfb->ptr)
++        return -1;
+     nsfb->linelen = (nsfb->width * nsfb->bpp) / 8;
+ 
+     return 0;
+@@ -68,6 +70,8 @@ static int ram_set_geometry(nsfb_t *nsfb, int width, int height, enum nsfb_forma
+     endsize = (nsfb->width * nsfb->height * nsfb->bpp) / 8;
+     if ((nsfb->ptr != NULL) && (startsize != endsize)) {
+ 	nsfb->ptr = realloc(nsfb->ptr, endsize);
++        if (!nsfb->ptr)
++            return -1;
+     }
+     nsfb->linelen = (nsfb->width * nsfb->bpp) / 8;
+ 
+diff --git a/src/surface/x.c b/src/surface/x.c
+index f5ee01b..0e9b845 100644
+--- a/src/surface/x.c
++++ b/src/surface/x.c
+@@ -846,10 +846,12 @@ static int x_initialise(nsfb_t *nsfb)
+                        mask, values);
+     /* set size hits on window */
+     hints = xcb_alloc_size_hints();
+-    xcb_size_hints_set_max_size(hints, xstate->image->width, xstate->image->height);
+-    xcb_size_hints_set_min_size(hints, xstate->image->width, xstate->image->height);
+-    xcb_set_wm_size_hints(xstate->connection, xstate->window, WM_NORMAL_HINTS, hints);
+-    xcb_free_size_hints(hints);
++    if (hints) {
++        xcb_size_hints_set_max_size(hints, xstate->image->width, xstate->image->height);
++        xcb_size_hints_set_min_size(hints, xstate->image->width, xstate->image->height);
++        xcb_set_wm_size_hints(xstate->connection, xstate->window, WM_NORMAL_HINTS, hints);
++        xcb_free_size_hints(hints);
++    }
+ 
+     /* create backing pixmap */
+     xstate->pmap = xcb_generate_id(xstate->connection);
+-- 
+2.13.4
+

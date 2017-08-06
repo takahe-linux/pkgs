@@ -3,7 +3,7 @@
 # Package information
 pkgname='libnsfb'
 pkgver='0.1.5'
-pkgrel=36
+pkgrel=37
 pkgdesc="Framebuffer abstraction library from the Netsurf project"
 
 # Additional information...
@@ -15,8 +15,16 @@ license=('MIT' 'GPL2')
 makedepends=('git' 'netsurf-buildsystem' 'linux-api-headers' 'sdl' 'pkg-config')
 
 # Building information
-source=("git://git.netsurf-browser.org/${pkgname}.git#tag=release/${pkgver}")
-md5sums=('SKIP')
+source=("git://git.netsurf-browser.org/${pkgname}.git#tag=release/${pkgver}"
+        "alloc_check.patch")
+md5sums=('SKIP'
+         '11d7fc214384ab4f03df3b052ae89acf')
+
+
+prepare() {
+    cd "${srcdir}/${pkgname}"
+    patch -p1 < "${srcdir}/alloc_check.patch"
+}
 
 
 build() {

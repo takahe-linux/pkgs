@@ -3,7 +3,7 @@
 # Package information
 pkgname='cmake'
 pkgver='3.8.1'
-pkgrel=7
+pkgrel=8
 pkgdesc="A cross platform build system"
 
 # Additional information...

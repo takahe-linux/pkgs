@@ -13,7 +13,6 @@ license=('MIT')
 
 # Dependency information
 groups=('base-devel')
-makedepends=('linux-api-headers')
 hostdepends=("${_target_triplet}-gcc-static" "${_target_triplet}-binutils")
 
 # Building information

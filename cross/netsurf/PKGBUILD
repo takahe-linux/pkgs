@@ -3,7 +3,7 @@
 # Package information
 pkgname='netsurf'
 pkgver='3.6'
-pkgrel=44
+pkgrel=45
 pkgdesc="Lightweight and fast web browser"
 
 # Additional information...
@@ -33,12 +33,18 @@ prepare() {
         -e 's:utf8proc_normalise:utf8proc_reencode:'
 
     # Make the default config.
-    # TODO: PKG_CONFIG is being reset by Makefile; this should be fixed upstream?
-    # TODO: Our pkg-config is obviously broken since PKG_CONFIG_SYSROOT_DIR
-    #       wasn't being set anyway. Perhaps review what requires it and make
-    #       it an explicit dependency.
+    # TODO: PKG_CONFIG is being reset by Makefile; this should be fixed
+    #       upstream?
     cat > Makefile.config << EOF
-override PKG_CONFIG := PKG_CONFIG_SYSROOT_DIR=/sysroot ${_target_triplet}-pkg-config --static
+# Use our own pkg-config for cross-compiling.
+# This sets --static, PKG_CONFIG_SYSROOT_DIR, and PKG_CONFIG_LIBDIR to ensure
+# that pkg-config uses the right pc files, and inserts "/sysroot" into any
+# paths specified in the pc files.
+override PKG_CONFIG := \
+    PKG_CONFIG_DIR="" \
+    PKG_CONFIG_LIBDIR="/sysroot/usr/lib/pkgconfig:/sysroot/usr/share/pkgconfig" \
+    PKG_CONFIG_SYSROOT_DIR=/sysroot \
+    pkg-config --static
 EOF
 }
 

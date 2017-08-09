@@ -5,8 +5,6 @@
 Packages to be fixed:
 - openssl 1.1.0 breaks lynx, wpa\_supplicant, snownews builds
 - netsurf has some relatively easy fixes
-- the toolchain pkg-config seems to be broken - figure out what uses it and
-  make it an explicit dependency, fixing it if at all possible
 - e2fsprogs should be part of base? (for e2fsck)
 - musl does not require linux-api-headers to be installed to build
 

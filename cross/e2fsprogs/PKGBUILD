@@ -2,13 +2,13 @@
 
 # Package information
 pkgname='e2fsprogs'
-pkgver='1.43.4'
-pkgrel=6
+pkgver='1.43.5'
+pkgrel=1
 pkgdesc='Ext2/3/4 filesystem utilities'
 
 # Additional information...
 arch=('mips' 'i586')
-url="http://e2fsprogs.sourceforge.net"
+url="https://github.com/tytso/e2fsprogs"
 license=('GPL' 'LGPL' 'MIT')
 
 # Dependency information
@@ -17,8 +17,8 @@ hostdepends=('toolchain')
 
 # Building information
 backup=('etc/mke2fs.conf')
-source=("http://downloads.sourceforge.net/sourceforge/${_pkgname}/${pkgname}-${pkgver}.tar.gz")
-sha1sums=('f7cf8c82805103b53f89ad5da641e1085281d411')
+source=("${pkgname}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz")
+sha1sums=('9f57fa18f881b27b577c4ecec07237ebe7b98561')
 
 
 prepare() {

@@ -108,7 +108,8 @@ package_busybox() {
 
 package_mdev() {
     pkgdesc="Lightweight udev alternative, from busybox"
-    depends=("busybox")
+    groups=('base')
+    depends=('busybox')
     backup=('etc/mdev.conf')
 
     MDEV="mdev"
@@ -120,7 +121,7 @@ package_mdev() {
 
 package_hush() {
     pkgdesc="Simple busybox shell"
-    depends=("busybox")
+    depends=('busybox')
 
     SHELLS="hush"
 

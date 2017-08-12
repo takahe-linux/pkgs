@@ -3,7 +3,7 @@
 # Package information
 pkgname='ca-certificates'
 pkgver='20160104'
-pkgrel=45
+pkgrel=1
 pkgdesc="Trusted CA certificates from Debian"
 
 # Additional information...
@@ -13,7 +13,6 @@ license=('custom')
 
 # Dependency information
 depends=('openssl')
-makedepends=('zlib')
 
 # Building information
 backup=('etc/ca-certificates.conf')

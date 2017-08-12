@@ -10,17 +10,19 @@ pkgdesc="Meta-package for the cross-compiled packages"
 arch=('any')
 
 # Dependency information.
-# We basically require all of base, base-devel, and a kernel.
+# We need base-devel and enough to boot.
 depends=(
     # base-devel:
     'binutils'
     'bison'
-    'fakefakeroot'
+    'fakeroot'
     'flex'
     'gcc'
+    'linux-api-headers'
     'm4'
     'make'
     'musl'
+    'pkg-config'
     'xz'
 
     # base:
@@ -39,8 +41,6 @@ depends=(
     'backhand'
     'mdev'
     'sinit'
-
-    # kernel:
     'linux'
     )
 

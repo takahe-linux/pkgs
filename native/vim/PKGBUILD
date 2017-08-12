@@ -2,9 +2,9 @@
 
 # Package information
 pkgname='vim'
-pkgver='8.0.0329'
+pkgver='8.0.0851'
 _versiondir=80
-pkgrel=19
+pkgrel=1
 pkgdesc='An improved version of the vi text editor'
 
 # Additional information...
@@ -13,12 +13,11 @@ url="http://www.vim.org"
 license=('custom:vim')
 
 # Dependency information
-depends=('ncurses')
-
+makedepends=('ncurses')
 
 # Building information
 source=("${pkgname}-${pkgver}.tar.gz::http://github.com/vim/vim/archive/v${pkgver}.tar.gz")
-md5sums=('a641ba6135afb64cc81dc8c2cdd63353')
+md5sums=('61b3d8593c2dee3d1974ab411d82f8ab')
 
 
 prepare() {
@@ -66,7 +65,6 @@ package() {
     install -Dm644 runtime/rgb.txt \
         "${pkgdir}/usr/share/vim/vim${_versiondir}/rgb.txt"
     
-    # license
     install -Dm644 runtime/doc/uganda.txt \
         "${pkgdir}/usr/share/licenses/${pkgname}/license.txt"
 }

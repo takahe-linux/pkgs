@@ -13,7 +13,7 @@ license=('GPL3')
 
 # Dependency information
 groups=('base-devel')
-depends=('hush' 'util-linux') # util-linux contains su
+depends=('sh' 'util-linux') # util-linux contains su
 provides=('fakeroot')
 conflicts=('fakeroot')
 

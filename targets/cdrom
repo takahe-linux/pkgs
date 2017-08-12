@@ -1,7 +1,6 @@
 base
 e2fsprogs
-linux
-lynx
 parted
+lynx
 syslinux
 vim

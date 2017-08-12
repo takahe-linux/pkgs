@@ -1,10 +1,8 @@
 base
 base-devel
 gdb
-linux
 lynx
 netsurf
 openssh
-snownews
 strace
 vim

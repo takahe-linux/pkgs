@@ -2,8 +2,8 @@
 
 # Package information
 pkgname='initscripts'
-pkgver='0.4'
-pkgrel=9
+pkgver='0.5'
+pkgrel=1
 pkgdesc="Startup and shutdown scripts"
 
 # Additional information...
@@ -13,14 +13,14 @@ license=('MIT')
 
 # Dependency information
 groups=('base')
-depends=('busybox' 'coreutils' 'util-linux')
+depends=('busybox' 'coreutils' 'util-linux' 'hush')
 
 # Building information
-backup=('etc/init.d/init' 'etc/init.d/poweroff')
+backup=('etc/init.d/init' 'etc/init.d/poweroff' 'etc/init.d/reboot')
 source=('init.sh'
         'poweroff.sh')
-md5sums=('a64929d8c8b1b3a887215b25b6328a85'
-         '5cc34b14b193c0a667ac0a4d0c613d79')
+md5sums=('00560990cced1e97906d7a7ae7f092c3'
+         'c9bd1e233b1d1a59a61ad4ad1e5721c1')
 
 
 package() {

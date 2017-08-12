@@ -1,19 +1,20 @@
-#!/usr/bin/busybox hush
+#!/usr/bin/hush
 
-# Mount the expected filesystems.
+# Mount the filesystems.
 mount -t proc proc /proc
 mount -t sysfs sys /sys
-mount -t tmpfs tmp /tmp
 mount -a
 
 # Apply the hostname.
 hostname -F /etc/hostname
 
 # Initialise the devices.
-mdev -s
 ln -s /proc/self/fd /dev/fd
+mdev -s
+# mdev -s doesn't poke network devices; do that here.
+for i in /sys/class/net/*/uevent; do
+    printf 'add' > "$i"
+done 2> /dev/null
 
 # Run the helper script.
-while true; do
-    /etc/init.d/run
-done
+/etc/init.d/run

@@ -1,8 +1,14 @@
-#!/usr/bin/busybox hush
-# TODO: Research what actually needs to happen here:
-#       - Sync the disk?
-#       - Remount everything r/o?
-#       - Kill/wait for remaining processes?
+#!/usr/bin/hush
 
-call="${0##*/}"
-"${call}" -f
+# Stop all the running services.
+bh-stopall
+
+# Ask everything else to terminate.
+trap "" TERM
+kill -TERM -1
+
+# Remount everything readonly.
+mount -a -r
+
+# Actually shutdown/halt.
+"${0##*/}" -f

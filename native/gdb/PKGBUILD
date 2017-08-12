@@ -12,20 +12,16 @@ url='http://www.gnu.org/software/gdb/'
 license=('GPL3')
 
 # Dependency information
-depends=('ncurses')
-makedepends=('musl' 'linux-api-headers' 'readline' 'zlib')
-hostdepends=('toolchain')
+makedepends=('readline' 'zlib')
 
 # Building information
 backup=('etc/gdb/gdbinit')
 source=("http://ftp.gnu.org/gnu/gdb/${pkgname}-${pkgver}.tar.xz"
         "gdb-sgidefs.h"
-        "gdb-linux_nat.patch"
-        "gnulib-configure.patch")
+        "gdb-linux_nat.patch")
 sha1sums=('148c8e783ebf9b281241d0566db59961191ec64d'
           '20eb85f7adb77b894229998432caae530962316c'
-          '7a60c126b1a49cfb554b318a8d7aee1d79fe2bfe'
-          'abb3f47ae79c825f8aa76bbb9628afd864a26442')
+          '7916f25d3a6ea7830736f76b8ddc6e445fd26fdd')
 
 
 prepare() {
@@ -36,10 +32,7 @@ prepare() {
 
     cp "${srcdir}/gdb-sgidefs.h" "./gdb/sgidefs.h"
 
-    patch -p1 < "${srcdir}/gdb-linux_nat.patch"
-
-    # Work around gnulib trying to use rpl_gettimeofday, which is undefined.
-    patch gdb/gnulib/configure < "${srcdir}/gnulib-configure.patch"
+    patch -p0 < "${srcdir}/gdb-linux_nat.patch"
 
     # Stop using --dynamic-list as this produces a dynamic executable.
     sed -i -e "s:['\"]-Wl,--dynamic-list.*['\"]:'-Wl,-static':" gdb/configure
@@ -50,9 +43,6 @@ build() {
     cd "${srcdir}/${pkgname}-${pkgver}"
 
     ./configure --prefix="/usr" \
-        --build="${_local_triplet}" \
-        --host="${_target_triplet}" \
-        --target="${_target_triplet}" \
         --enable-static \
         --disable-shared \
         --disable-plugins \
@@ -64,14 +54,18 @@ build() {
         --with-system-readline \
         --with-system-zlib
 
-    make
+    # Disable building the documentation using MAKEINFO=true.
+    # Apparently some GDB releases have messed up timestamps causing the
+    # documentation to be regenerated, which fails as we don't have MAKEINFO.
+    # Instead, just set MAKEINFO="true".
+    make MAKEINFO="true"
 }
 
 
 package() {
     cd "${srcdir}/${pkgname}-${pkgver}"
 
-    make DESTDIR="${pkgdir}/" install
+    make MAKEINFO="true" DESTDIR="${pkgdir}/" install
 
     # Install "custom" system gdbinit.
     install -dm755 "${pkgdir}/etc/gdb"

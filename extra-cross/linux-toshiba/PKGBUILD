@@ -2,11 +2,11 @@
 
 # Package information
 pkgname="linux-toshiba"
-_major_version='4.10'
+_major_version='4.11'
 _srcname="linux-${_major_version}"
 pkgdesc="Toshiba 310CDS kernel"
-pkgver="${_major_version}.1"
-pkgrel=6
+pkgver="${_major_version}.6"
+pkgrel=1
 
 # Additional information...
 arch=('i586')
@@ -23,8 +23,8 @@ source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
         *.fw
         )
-md5sums=('b5e7f6b9b2fe1b6cc7bc56a3a0bfc090'
-         'd4ab54e17b686d1dbb1d28238fd0b081'
+md5sums=('251a5deee0fa6daf3f356b1bbda9eab8'
+         '87c32d18a9c77d1c24da88e3c2365e28'
          'a15877e2087e539fa18198ca290e3e4b'
          'b73b8918c38fa98c9a8d52b269433332'
          'ae41f030673d49db6a4db5fa73bc1c07'
@@ -72,9 +72,10 @@ CONFIG_NOHIGHMEM=y
 # CONFIG_HIGHMEM4G is not set
 CONFIG_CC_OPTIMIZE_FOR_SIZE=y
 CONFIG_OPTIMIZE_INLINING=y
+CONFIG_POSIX_TIMERS=y
 
 # uevent helper (hotplug script) support.
-# We use mdev for (eg) loading firmware.
+# We use mdev for setting up device nodes.
 # TODO: We should replace this with a netlink helper daemon instead.
 CONFIG_UEVENT_HELPER=y
 CONFIG_UEVENT_HELPER_PATH="/usr/bin/mdev"

@@ -3,7 +3,7 @@
 # Package information
 pkgname='cmake'
 pkgver='3.8.1'
-pkgrel=9
+pkgrel=10
 pkgdesc="A cross platform build system"
 
 # Additional information...
@@ -54,4 +54,5 @@ package() {
     make DESTDIR="${pkgdir}/" install
     mkdir -p "${pkgdir}/usr/share/licenses/"
     mv "${pkgdir}/usr/doc/"*/ "${pkgdir}/usr/share/licenses/${pkgname}"
+    rmdir "${pkgdir}/usr/doc/"
 }

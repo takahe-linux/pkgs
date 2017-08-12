@@ -12,7 +12,8 @@ url="https://github.com/hobbitalastair/${pkgname}"
 license=('MIT')
 
 # Dependency information
-makedepends=('git')
+makedepends=('musl')
+hostdepends=('toolchain' 'git')
 
 # Building information
 source=("git+${url}#tag=${pkgver}")

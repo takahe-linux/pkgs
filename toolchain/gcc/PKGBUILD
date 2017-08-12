@@ -32,8 +32,6 @@ sha256sums=('8a8136c235f64c6fef69cac0d73a46a1a09bb250776a050aec8f9fc880bebc17'
 prepare() {
     cd "${srcdir}/${_pkgname}-${pkgver}"
 
-    echo "${pkgver}" > gcc/BASE-VER
-
     # hack! - some configure tests for header files using "$CPP $CPPFLAGS"
     sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" {libiberty,gcc}/configure
 
@@ -52,17 +50,10 @@ prepare() {
 build() {
     cd "${srcdir}/gcc-build"
 
-    # --enable-cxx-flags is a hack, because currently libstdc++ uses CXXFLAGS,
-    # not CXXFLAGS_FOR_TARGET. See GCC bug 53579...
-    # Sigh...
-    # TODO: Figure out exactly how the build systems _works_ (or doesn't) so
-    # that I can patch it instead of applying this hack...
-    # WARNING: To use -Os or -O2, you need more than 2GB of space (tmp if you
-    # are using /tmp for compiling).
+    # TODO: --enable-cxx-flags is a hack, because currently libstdc++ uses
+    #       CXXFLAGS, not CXXFLAGS_FOR_TARGET. See GCC bug 53579...
     export CXXFLAGS="-Os"
 
-    # Also, disable libsanitizer, libatomic, libmudflap, libmpx, and mudflap
-    # (they do not build).
     LDFLAGS="-Wl,-rpath,${_toolroot}/lib" \
     "${srcdir}/${_pkgname}-${pkgver}/configure" \
         --build="${_local_triplet}" \
@@ -82,11 +73,6 @@ build() {
         --disable-nls \
         --disable-shared \
         --disable-multilib \
-        --disable-libmudflap \
-        --disable-mudflap \
-        --disable-libatomic \
-        --disable-libsanitizer \
-        --disable-libmpx \
         --disable-libcc1 \
         --with-gnu-as \
         --with-gnu-ld \
@@ -101,7 +87,7 @@ package() {
 
     make DESTDIR="${pkgdir}" install -j1
 
-    # strip target binaries
+    # Strip target binaries.
     find "${pkgdir}/usr/lib/gcc/${_target_triplet}/" \
          "${pkgdir}${_toolroot}/lib" \
          -type f -and \( -name \*.a -or -name \*.o \) \
@@ -110,11 +96,11 @@ package() {
          -R .debug_pubnames -R .debug_pubtypes -R .debug_abbrev -R .debug_line \
          -R .debug_str -R .debug_ranges -R .debug_loc '{}' \;
 
-    # strip host binaries
+    # Strip host binaries.
     find "${pkgdir}${_toolroot}/bin/" \
          "${pkgdir}/usr/lib/gcc/${_target_triplet}/" \
          -type f -and \( -executable \) -exec strip '{}' \;
 
-    # Remove info files (already existing)
+    # Remove info files (already existing).
     rm -r "${pkgdir}${_toolroot}/share/info"
 }

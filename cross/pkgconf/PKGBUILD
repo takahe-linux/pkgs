@@ -12,7 +12,9 @@ url="https://github.com/${pkgname}/${pkgname}"
 license=('custom')
 
 # Dependency information
-
+groups=('base-devel')
+makedepends=('musl')
+hostdepends=('toolchain')
 provides=('pkg-config')
 conflicts=('pkg-config')
 
@@ -23,7 +25,9 @@ md5sums=('0c0c1e6b981f8b10c494365185e5a8b2')
 build() {
     cd "${srcdir}/${pkgname}-${pkgver}"
 
-    ./configure --prefix="/usr"
+    ./configure --prefix="/usr" \
+        --host="${_target_triplet}" \
+        --build="${_local_triplet}"
     make
 }
 

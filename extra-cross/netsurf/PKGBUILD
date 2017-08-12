@@ -13,9 +13,9 @@ license=('MIT' 'GPL2')
 
 # Dependency information
 depends=('ca-certificates')
-makedepends=('zlib' 'libpng' 'libjpeg' 'openssl' 'curl' 'musl' 'expat'
+makedepends=('libpng' 'libjpeg' 'openssl' 'curl' 'musl' 'expat'
     'libcss' 'libdom' 'libhubbub' 'libwapcaplet' 'libparserutils'
-    'libnsbmp' 'libnsfb' 'libnsgif' 'libutf8proc' 'libnsutils' 'sdl')
+    'libnsbmp' 'libnsfb' 'libnsgif' 'libutf8proc' 'libnsutils')
 hostdepends=('git' 'toolchain' 'perl-html-parser' 'libpng'
     'netsurf-buildsystem' 'nsgenbind')
 

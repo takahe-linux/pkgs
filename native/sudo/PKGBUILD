@@ -13,6 +13,7 @@ url="https://www.sudo.ws/sudo/"
 license=('custom')
 
 # Dependency information
+groups=('base-devel')
 makedepends=('zlib')
 
 # Building information

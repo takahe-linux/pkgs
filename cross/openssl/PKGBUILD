@@ -14,6 +14,7 @@ url='https://www.openssl.org'
 license=('custom:BSD')
 
 # Dependency information
+groups=('base-devel')
 depends=('zlib')
 makedepends=('musl')
 hostdepends=('toolchain')

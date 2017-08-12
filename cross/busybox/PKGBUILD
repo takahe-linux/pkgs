@@ -66,7 +66,7 @@ build() {
 
 package_busybox() {
     pkgdesc="Main busybox binary and symlinks"
-    groups=('base')
+    groups=('base' 'base-devel')
     provides=('kbd' 'which' 'gzip' 'tar' 'bzip2' 'awk' 'diffutils' \
         'sed' 'vi' 'patch' 'shadow' 'less' 'hdparm' 'man' 'inetutils' \
         'ip2route' 'iputils' 'dhcpcd' 'procps-ng')
@@ -130,7 +130,7 @@ package_hush() {
 
 package_bb-coreutils() {
     pkgdesc="Coreutils symlinks for busybox"
-    groups=('base')
+    groups=('base' 'base-devel')
     depends=('busybox')
     provides=('coreutils')
     conflicts=('coreutils')
@@ -149,7 +149,7 @@ package_bb-coreutils() {
 
 package_bb-util-linux() {
     pkgdesc="util linux symlinks for busybox"
-    groups=('base')
+    groups=('base' 'base-devel')
     depends=('busybox')
     provides=('util-linux')
     conflicts=('util-linux')
@@ -181,7 +181,7 @@ EOF
 
 package_bb-findutils() {
     pkgdesc="findutils symlinks for busybox"
-    groups=('base')
+    groups=('base' 'base-devel')
     depends=('busybox')
     provides=('findutils')
     conflicts=('findutils')

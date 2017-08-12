@@ -12,9 +12,6 @@ arch=('mips' 'i586')
 url="http://www.vim.org"
 license=('custom:vim')
 
-# Dependency information
-makedepends=('ncurses')
-
 # Building information
 source=("${pkgname}-${pkgver}.tar.gz::http://github.com/vim/vim/archive/v${pkgver}.tar.gz")
 md5sums=('61b3d8593c2dee3d1974ab411d82f8ab')

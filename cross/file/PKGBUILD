@@ -12,7 +12,7 @@ url='http://www.darwinsys.com/file/'
 license=('custom')
 
 # Dependency information
-groups=('base')
+groups=('base' 'base-devel')
 makedepends=('zlib' 'musl')
 hostdepends=('toolchain' "${_target_triplet}-file")
 

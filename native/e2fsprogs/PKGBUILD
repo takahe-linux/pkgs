@@ -11,9 +11,6 @@ arch=('mips' 'i586')
 url="https://github.com/tytso/e2fsprogs"
 license=('GPL' 'LGPL' 'MIT')
 
-# Dependency information
-makedepends=('ncurses')
-
 # Building information
 backup=('etc/mke2fs.conf')
 source=("${pkgname}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz")

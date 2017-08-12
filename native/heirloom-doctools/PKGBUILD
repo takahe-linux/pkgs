@@ -12,7 +12,7 @@ url="https://github.com/n-t-roff/heirloom-doctools"
 license=('CDDL' 'LGPL2' 'LPPL' 'custom')
 
 # Dependency information
-groups=('base')
+groups=('base' 'base-devel')
 
 # Building information
 source=("${pkgname}-${pkgver}.tar.gz::https://github.com/n-t-roff/${pkgname}/archive/${pkgver}.tar.gz")

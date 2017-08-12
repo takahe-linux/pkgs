@@ -13,29 +13,27 @@ arch=('any')
 # We need base-devel and enough to boot.
 depends=(
     # base-devel:
+    'busybox'
     'binutils'
     'bison'
+    'coreutils'
     'fakeroot'
+    'file'
+    'filesystem'
+    'findutils'
     'flex'
     'gcc'
+    'gettext'
     'linux-api-headers'
     'm4'
     'make'
     'musl'
+    'ncurses'
     'openssl'
-    'pkg-config'
-    'xz'
-
-    # base:
-    'busybox'
-    'coreutils'
-    'util-linux'
-    'findutils'
-    'bash'
-    'file'
-    'filesystem'
-    'gettext'
     'pacman'
+    'pkg-config'
+    'util-linux'
+    'xz'
 
     # Required for booting:
     'initscripts'

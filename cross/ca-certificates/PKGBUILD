@@ -2,7 +2,7 @@
 
 # Package information
 pkgname='ca-certificates'
-pkgver='20160104'
+pkgver='20161130'
 pkgrel=1
 pkgdesc="Trusted CA certificates from Debian"
 
@@ -16,18 +16,18 @@ depends=('openssl')
 
 # Building information
 backup=('etc/ca-certificates.conf')
-source=("http://ftp.debian.org/debian/pool/main/c/${pkgname}/${pkgname}_${pkgver}.tar.xz"
+source=("http://ftp.debian.org/debian/pool/main/c/${pkgname}/${pkgname}_${pkgver}+nmu1.tar.xz"
         'update-ca-certificates.hook'
         'certdata2pem.c'
         'c_rehash.c')
-md5sums=('d9665a83d0d3ef8176a38e6aa20458e9'
+md5sums=('a09e8b63126188fd0ed77f6fbaf5d35f'
          'dff703d85ca3e8adade734e59ca0b41f'
          '1c759bac40fcae93119696ae24144ee2'
          'eba0f9b8d993f21c900a12ca03301344')
 
 
 prepare() {
-    cd "${srcdir}/${pkgname}"
+    cd "${srcdir}/${pkgname}-${pkgver}"
 
     # We use quite a bit of the Sabotage Linux build script to avoid excessive
     # dependencies.
@@ -55,7 +55,7 @@ EOF
 
 
 build() {
-    cd "${srcdir}/${pkgname}"
+    cd "${srcdir}/${pkgname}-${pkgver}"
     make
 
     gcc "${srcdir}/c_rehash.c" -o "${srcdir}/c_rehash" -lssl -lcrypto -lz
@@ -63,7 +63,7 @@ build() {
 
 
 package() {
-    cd "${srcdir}/${pkgname}"
+    cd "${srcdir}/${pkgname}-${pkgver}"
     make DESTDIR="${pkgdir}" SBINDIR="/usr/bin" install
 
     # Generate an initial ca-certificates.conf.

@@ -15,7 +15,7 @@ license=('GPL' 'LGPL' 'FDL')
 
 # Dependency information
 groups=('base-devel')
-makedepends=('musl' 'gmp' 'mpfr' 'mpc' 'binutils' 'linux-api-headers')
+makedepends=('musl' 'gmp' 'mpfr' 'mpc' 'binutils' 'linux-api-headers' 'zlib')
 hostdepends=('toolchain')
 
 # Building information

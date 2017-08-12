@@ -74,6 +74,9 @@ package() {
         MANSUFFIX='ssl' install
     install -Dm0644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 
+    # We don't support dynamic linking, so rm the engines dir.
+    rm -rf "${pkgdir}/usr/lib/engines"
+
     # Let ca-certificates provide an alternative c_rehash.
     rm -f "${pkgdir}/usr/bin/c_rehash"
 }

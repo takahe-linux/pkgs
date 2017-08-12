@@ -12,6 +12,7 @@ url="https://github.com/hobbitalastair/${pkgname}"
 license=('MIT')
 
 # Dependency information
+groups=('base')
 depends=('sh' 'hush') # Depend on hush for the service scripts.
 makedepends=('musl')
 hostdepends=('toolchain' 'git')

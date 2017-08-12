@@ -11,9 +11,6 @@ arch=('mips' 'i586')
 url="http://www.nasm.us"
 license=('BSD')
 
-# Dependency information
-
-
 # Building information
 source=("http://www.nasm.us/pub/nasm/releasebuilds/${pkgver}/${pkgname}-${pkgver}.tar.xz")
 sha1sums=('a0e6e655d04009178d4b7c15d935a46a691a617c')

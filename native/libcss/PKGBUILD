@@ -12,8 +12,8 @@ url="http://www.netsurf-browser.org/"
 license=('MIT' 'GPL2')
 
 # Dependency information
-makedepends=('git' 'netsurf-buildsystem' 'perl' 'libwapcaplet'
-    'libparserutils')
+depends=('libwapcaplet' 'libparserutils')
+makedepends=('git' 'netsurf-buildsystem' 'perl')
 
 # Building information
 source=("git://git.netsurf-browser.org/${pkgname}.git#tag=release/${pkgver}"

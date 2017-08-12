@@ -11,9 +11,6 @@ arch=('mips' 'i586')
 url="https://www.perl.org"
 license=('GPL' 'PerlArtistic')
 
-# Dependency information
-
-
 # Building information
 source=("http://www.cpan.org/src/5.0/${pkgname}-${pkgver}.tar.bz2"
         "grapheme.patch")
@@ -25,6 +22,7 @@ prepare() {
     cd "${srcdir}/${pkgname}-${pkgver}"
     patch -p1 < "${srcdir}/grapheme.patch"
 }
+
 
 build() {
     cd "${srcdir}/${pkgname}-${pkgver}"

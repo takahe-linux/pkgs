@@ -11,9 +11,6 @@ arch=('mips' 'i586')
 url="http://sourceforge.net/projects/giflib"
 license=('MIT')
 
-# Dependency information
-
-
 # Building information
 source=("http://downloads.sourceforge.net/sourceforge/giflib/${pkgname}-${pkgver}.tar.bz2")
 md5sums=('2c171ced93c0e83bb09e6ccad8e3ba2b')

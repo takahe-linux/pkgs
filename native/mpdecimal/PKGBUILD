@@ -11,9 +11,6 @@ arch=('mips' 'i586')
 url="http://www.bytereef.org/mpdecimal/index.html"
 license=('custom')
 
-# Dependency information
-
-
 # Building information
 source=("http://www.bytereef.org/software/${pkgname}/releases/${pkgname}-${pkgver}.tar.gz")
 md5sums=('aa63cab5d06a96855a44da2db90a29d9')

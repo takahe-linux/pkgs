@@ -12,7 +12,7 @@ url="https://www.freetype.org"
 license=('GPL')
 
 # Dependency information
-makedepends=('zlib' 'libpng')
+depends=('libpng')
 
 # Building information
 source=("http://download.savannah.gnu.org/releases/${pkgname}/${pkgname}-${pkgver}.tar.bz2")

@@ -11,9 +11,6 @@ arch=('mips' 'i586')
 url="https://www.xmlsoft.org/"
 license=('MIT')
 
-# Dependency information
-
-
 # Building information
 source=("ftp://xmlsoft.org/libxml2/${pkgname}-${pkgver}.tar.gz")
 md5sums=('ae249165c173b1ff386ee8ad676815f5')

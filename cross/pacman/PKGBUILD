@@ -15,8 +15,8 @@ license=('GPL')
 
 # Dependency information
 groups=('base' 'base-devel')
-depends=('bash' 'libarchive' 'gettext' 'xz')
-makedepends=('musl' 'curl' 'openssl')
+depends=('bash' 'curl' 'libarchive' 'gettext' 'xz')
+makedepends=('musl' 'openssl')
 hostdepends=('asciidoc' 'libtool' 'toolchain')
 optdepends=('wget')
 

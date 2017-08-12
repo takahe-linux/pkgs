@@ -13,27 +13,28 @@
 
 # rebind - set up the defaults for the interface.
 rebind() {
-	ip addr flush dev "${interface}"
-	ip addr add "${ip}/${mask}" dev "${interface}"
-	if [ -n "${router}" ]; then
-		ip route add default via "${router%% *}" dev "${interface}"
-	fi
+    ip addr flush dev "${interface}"
+    ip addr add "${ip}/${mask}" dev "${interface}"
+    if [ -n "${router}" ]; then
+	ip route add default via "${router%% *}" dev "${interface}"
+    fi
 }
 
 case "$1" in
-	deconfig)
-		# deconfig - called when udhcpc starts, and when leases are lost.
-		ip link set "${interface}" up
-	;;
-	bound|renew)
-		# bound - called when udhcpc has bound to an interface.
-		# renew - called when a lease is renewed.
-		# We rebind for both bound and renew events, although it would probably be
-		# more efficient to just apply any differences.
-		rebind
-	;;
-	nak)
-		# nak - called when udhcpc fails to get a lease.
-		# We don't do anything here, but we could log the failure.
-	;;
+    deconfig)
+        # deconfig - called when udhcpc starts, and when leases are lost.
+        ip link set "${interface}" up
+    ;;
+    bound|renew)
+        # bound - called when udhcpc has bound to an interface.
+        # renew - called when a lease is renewed.
+        # We rebind for both bound and renew events, although it would probably
+        # be more efficient to just apply any differences.
+        rebind
+    ;;
+    nak)
+        # nak - called when udhcpc fails to get a lease.
+        echo 'Failed to get a lease'
+        exit 1
+    ;;
 esac

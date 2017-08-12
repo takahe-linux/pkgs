@@ -1,0 +1,2 @@
+#!/usr/bin/hush
+exec /usr/bin/udhcpc -i "$1" -f

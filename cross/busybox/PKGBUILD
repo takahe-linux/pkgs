@@ -22,12 +22,16 @@ source=("${_web_address}/${pkgname}-${pkgver}.tar.bz2"
         "man.conf"
         "mdev.conf"
         "udhcpc.sh"
+        "udhcpc.run"
+        "getty.run"
        )
 md5sums=('bb59d25ee2643db20f212eec539429f1'
          '1896be5221eeb177edf494b8b8f4c92a'
          'e9245e5f55f004e3598cc90e2e86de30'
-         '840b553662a232f731c5d09744436b2d'
-         'a6dcd7c5cfe19c900d9461562f05b6cb')
+         '15b358b11ad0bb74721afc5459a853a5'
+         '24e4d0170eea0cac1d86daf24379e44c'
+         'b28033f6935af528f51d879ec364ecda'
+         '32fccce6e0a501fa2ae43cf366df5536')
 
 
 prepare() {
@@ -98,6 +102,10 @@ package_busybox() {
     install -Dm0644 "${srcdir}/man.conf" "${pkgdir}/etc/man.conf"
     install -Dm0755 "${srcdir}/udhcpc.sh" \
         "${pkgdir}/usr/share/udhcpc/default.script"
+
+    # Add a custom service for use with backhand.
+    install -Dm755 "${srcdir}/udhcpc.run" \
+        "${pkgdir}/usr/lib/backhand/udhcpc/run"
 }
 
 package_mdev() {
@@ -171,6 +179,8 @@ exit 1
 EOF
     chmod 0755 "${pkgdir}/usr/bin/nologin"
 
+    # Add a custom service for use with backhand.
+    install -Dm755 "${srcdir}/getty.run" "${pkgdir}/usr/lib/backhand/getty/run"
 }
 
 package_bb-findutils() {

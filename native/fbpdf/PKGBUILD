@@ -12,8 +12,8 @@ url="http://litcave.rudi.ir/"
 license=('custom:BSD')
 
 # Dependency information
-makedepends=('git' 'linux-api-headers' 'pkg-config'
-    'poppler' 'libpng' 'libjpeg' 'zlib' 'fontconfig' 'freetype' 'expat')
+makedepends=('git' 'poppler' 'libpng' 'libjpeg' 'zlib' 'fontconfig' 'freetype'
+             'expat')
 
 # Building information
 source=("${pkgname}-git::git+git://repo.or.cz/fbpdf.git"

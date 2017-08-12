@@ -11,9 +11,6 @@ arch=('mips' 'i586')
 url="http://sourceware.org/libffi/"
 license=('MIT')
 
-# Dependency information
-makedepends=('linux-api-headers')
-
 # Building information
 source=("ftp://sourceware.org/pub/libffi/libffi-${pkgver}.tar.gz")
 sha1sums=('280c265b789e041c02e5c97815793dfc283fb1e6')

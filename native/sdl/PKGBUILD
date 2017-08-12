@@ -12,7 +12,7 @@ url="http://www.libsdl.org"
 license=('LGPL')
 
 # Dependency information
-makedepends=('nasm' 'linux-api-headers' 'pkg-config')
+makedepends=('nasm')
 
 # Building information
 source=("${pkgname}-${pkgver}.tar.gz::https://www.libsdl.org/release/SDL-${pkgver}.tar.gz")

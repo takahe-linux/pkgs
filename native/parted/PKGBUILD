@@ -12,7 +12,7 @@ url="http://www.gnu.org/software/parted/parted.html"
 license=('GPL3')
 
 # Dependency information
-makedepends=('e2fsprogs' 'readline' 'ncurses' 'linux-api-headers')
+makedepends=('e2fsprogs' 'readline')
 
 # Building information
 source=("http://ftp.gnu.org/gnu/${pkgname}/${pkgname}-${pkgver}.tar.xz"

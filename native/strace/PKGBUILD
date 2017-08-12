@@ -11,9 +11,6 @@ arch=('mips' 'i586')
 url="http://sourceforge.net/projects/strace/"
 license=('custom')
 
-# Dependency information
-makedepends=('linux-api-headers')
-
 # Building information
 source=("http://downloads.sourceforge.net/${pkgname}/${pkgname}-${pkgver}.tar.xz")
 md5sums=('3579b3266bb096cebaefbe2cdb1a3a78')

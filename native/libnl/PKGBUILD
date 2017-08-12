@@ -11,9 +11,6 @@ arch=('mips' 'i586')
 url="http://www.infradead.org/~tgr/libnl/"
 license=('GPL')
 
-# Dependency information
-makedepends=('linux-api-headers')
-
 # Building information
 backup=('etc/libnl/classid' 'etc/libnl/pktloc')
 source=("https://github.com/thom311/libnl/releases/download/libnl${pkgver//./_}/${pkgname}-${pkgver}.tar.gz")

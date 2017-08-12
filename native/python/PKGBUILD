@@ -13,8 +13,7 @@ url="http://www.python.org"
 license=('custom')
 
 # Dependency information
-makedepends=('expat' 'libffi' 'mpdecimal' 'zlib' 'readline'
-            'linux-api-headers')
+makedepends=('expat' 'libffi' 'mpdecimal' 'zlib' 'readline')
 
 # Building information
 source=("http://www.python.org/ftp/python/${pkgver}/Python-${pkgver}.tar.xz"

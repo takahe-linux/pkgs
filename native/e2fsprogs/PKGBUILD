@@ -12,7 +12,7 @@ url="https://github.com/tytso/e2fsprogs"
 license=('GPL' 'LGPL' 'MIT')
 
 # Dependency information
-makedepends=('ncurses' 'linux-api-headers')
+makedepends=('ncurses')
 
 # Building information
 backup=('etc/mke2fs.conf')

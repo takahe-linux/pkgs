@@ -12,7 +12,7 @@ url="http://www.openssh.org/portable.html"
 license=('custom:BSD')
 
 # Dependency information
-makedepends=('linux-api-headers' 'zlib')
+makedepends=('zlib')
 
 # Building information
 backup=('etc/ssh/ssh_config' 'etc/ssh/sshd_config')

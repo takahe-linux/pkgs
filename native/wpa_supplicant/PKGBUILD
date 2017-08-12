@@ -12,9 +12,7 @@ url="http://hostap.epitest.fi/wpa_supplicant"
 license=('GPL')
 
 # Dependency information
-depends=('openssl')
-makedepends=('libnl' 'pkg-config' 'zlib' 'readline' 'ncurses'
-    'linux-api-headers')
+makedepends=('libnl' 'zlib' 'readline' 'openssl')
 
 # Building information
 source=("http://w1.fi/releases/${pkgname}-${pkgver}.tar.gz"

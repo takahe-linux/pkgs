@@ -12,7 +12,7 @@ url="https://cmake.org"
 license=('custom')
 
 # Dependency information
-makedepends=('curl' 'libarchive' 'zlib' 'expat')
+makedepends=('curl' 'openssl' 'libarchive' 'expat')
 
 # Building information
 source=("https://www.cmake.org/files/v${pkgver%.*}/${pkgname}-${pkgver}.tar.gz")
@@ -34,6 +34,7 @@ build() {
         --no-system-jsoncpp \
         --no-system-librhash
 
+    # TODO: Track down a permanent fix for the static build.
     # Fix static build - pkg-config is used without the --static flag, so curl
     # needs the extra link variables, and the dynamic flags also need removing.
     # Setting the PKG_CONFIG var doesn't seem to work, and removing the
@@ -44,7 +45,7 @@ build() {
         -e 's:-Wl,-Bdynamic::g' \
         -e 's:-lcurl:-lcurl -lssl -lcrypto:g'
 
-    make VERBOSE=1
+    make
 }
 
 

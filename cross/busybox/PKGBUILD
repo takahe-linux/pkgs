@@ -26,7 +26,7 @@ source=("${_web_address}/${pkgname}-${pkgver}.tar.bz2"
         "getty.run"
        )
 md5sums=('df7e45d07634c54ca16b9191635db9c6'
-         '1896be5221eeb177edf494b8b8f4c92a'
+         '277716f85b108fc086e76f9404d9f170'
          'e9245e5f55f004e3598cc90e2e86de30'
          '15b358b11ad0bb74721afc5459a853a5'
          '24e4d0170eea0cac1d86daf24379e44c'

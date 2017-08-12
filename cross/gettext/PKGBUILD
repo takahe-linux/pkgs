@@ -12,7 +12,6 @@ url="http://www.gnu.org/software/gettext/"
 license=('GPL')
 
 # Dependency information
-groups=('base')
 makedepends=('musl')
 hostdepends=('toolchain')
 

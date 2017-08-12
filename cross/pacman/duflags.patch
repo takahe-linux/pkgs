@@ -1,32 +1,30 @@
-From 3557c92a26bb5130e74a00f276382cf2daffb8be Mon Sep 17 00:00:00 2001
+From 36f456ccaee64c41b6ae27f885700521f9b7c2e9 Mon Sep 17 00:00:00 2001
 From: Alastair Hughes <hobbitalastair@gmail.com>
-Date: Thu, 23 Jun 2016 14:43:13 +1200
+Date: Sat, 20 Aug 2016 08:52:39 +1200
 Subject: [PATCH] Make DUFLAGS be overrideable during configure
-To: pacman-dev@archlinux.org
-MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="------------2.9.0"
 
-This is a multi-part message in MIME format.
---------------2.9.0
-Content-Type: text/plain; charset=UTF-8; format=fixed
-Content-Transfer-Encoding: 8bit
+Not all du implementations on linux accept --apparent-size, so let the
+user configure the arguments passed to du if required.
+
+This fixes FS#47943.
 
 Signed-off-by: Alastair Hughes <hobbitalastair@gmail.com>
+Signed-off-by: Allan McRae <allan@archlinux.org>
 ---
- configure.ac | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
-
-
---------------2.9.0
-Content-Type: text/x-patch; name="0001-Make-DUFLAGS-be-overrideable-during-configure.patch"
-Content-Transfer-Encoding: 8bit
-Content-Disposition: inline; filename="0001-Make-DUFLAGS-be-overrideable-during-configure.patch"
+ configure.ac | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
 diff --git a/configure.ac b/configure.ac
-index dd4ac04..fdcd142 100644
+index 1991be6f..63f87d14 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -332,7 +332,6 @@ OWNERCMD="stat -c '%u:%g'"
+@@ -338,12 +338,12 @@ AC_CHECK_MEMBERS([struct statfs.f_flags],,,[[#include <sys/param.h>
+ GCC_VISIBILITY_CC
+ 
+ # Host-dependant definitions
++DEFAULT_DUFLAGS=" -sk --apparent-size"
+ INODECMD="stat -c '%i %n'"
+ OWNERCMD="stat -c '%u:%g'"
  MODECMD="stat -c '%a'"
  SIZECMD="stat -c %s"
  SEDINPLACE="sed --follow-symlinks -i"
@@ -34,32 +32,31 @@ index dd4ac04..fdcd142 100644
  STRIP_BINARIES="--strip-all"
  STRIP_SHARED="--strip-unneeded"
  STRIP_STATIC="--strip-debug"
-@@ -343,7 +342,7 @@ case "${host_os}" in
+@@ -354,7 +354,7 @@ case "${host_os}" in
  		MODECMD="stat -f '%Lp'"
  		SIZECMD="stat -f %z"
  		SEDINPLACE="sed -i \"\""
 -		DUFLAGS="-sk"
-+		DUFLAGS="${DUFLAGS- -sk}"
++		DEFAULT_DUFLAGS=" -sk"
  		;;
  	darwin*)
  		host_os_darwin=yes
-@@ -352,11 +351,14 @@ case "${host_os}" in
+@@ -363,13 +363,12 @@ case "${host_os}" in
  		MODECMD="/usr/bin/stat -f '%Lp'"
  		SIZECMD="/usr/bin/stat -f %z"
  		SEDINPLACE="/usr/bin/sed -i ''"
 -		DUFLAGS="-sk"
-+		DUFLAGS="${DUFLAGS- -sk}"
++		DEFAULT_DUFLAGS=" -sk"
  		STRIP_BINARIES=""
  		STRIP_SHARED="-S"
  		STRIP_STATIC="-S"
  		;;
-+	*)
-+		DUFLAGS="${DUFLAGS- -sk --apparent-size}"
-+		;;
  esac
- 
+-
  AM_CONDITIONAL([DARWIN], test "x$host_os_darwin" = "xyes")
-@@ -366,10 +368,10 @@ AC_SUBST(OWNERCMD)
+ AC_PATH_PROGS([DUPATH], [du], [du], [/usr/bin$PATH_SEPARATOR/bin] )
+ AC_SUBST(INODECMD)
+@@ -377,11 +376,16 @@ AC_SUBST(OWNERCMD)
  AC_SUBST(MODECMD)
  AC_SUBST(SIZECMD)
  AC_SUBST(SEDINPLACE)
@@ -67,11 +64,16 @@ index dd4ac04..fdcd142 100644
  AC_SUBST(STRIP_BINARIES)
  AC_SUBST(STRIP_SHARED)
  AC_SUBST(STRIP_STATIC)
-+AC_ARG_VAR(DUFLAGS, [flags to pass to du])
  
++# Flags for du
++if test "${DUFLAGS+set}" != "set"; then
++    DUFLAGS="${DEFAULT_DUFLAGS}"
++fi
++AC_ARG_VAR(DUFLAGS, [flags for du, overriding the default])
++
  # Variables plugged into makepkg.conf
  CARCH="${host%%-*}"
-
---------------2.9.0--
-
+ CHOST="${host}"
+-- 
+2.14.0
 

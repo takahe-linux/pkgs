@@ -29,7 +29,7 @@ source=("https://sources.archlinux.org/other/pacman/${pkgname}-${pkgver}.tar.gz"
 md5sums=('f36f5e7e95a89436febe1bcca874fc33'
          '044786f82c98ca027067c63037e1fa15'
          'fefa873b52d15f08a1d32cb469ec6018'
-         '9c7f88dc3e02be3495ab97f0027241e3'
+         '16fe9fbb5bfeaaefdffcfe7cab147445'
          '8814d0b46687cc017d44d4dd5eebd1c1')
 
 

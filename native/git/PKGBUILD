@@ -12,8 +12,8 @@ url="https://git-scm.com"
 license=('GPL2')
 
 # Dependency information
-depends=('curl' 'openssl')
-makedepends=('zlib' 'expat')
+depends=('curl')
+makedepends=('openssl' 'zlib' 'expat')
 
 # Building information
 source=("https://www.kernel.org/pub/software/scm/git/git-${pkgver}.tar.xz")

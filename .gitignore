@@ -1,4 +1,4 @@
 *.pkg.tar.*
 */*/*.src.tar.*
 */*/.SRCINFO
-cross/linux-toshiba/*.fw
+extra-cross/linux-toshiba/*.fw

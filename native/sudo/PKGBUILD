@@ -57,5 +57,7 @@ package() {
         "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 
     # Remove empty ignored dirs.
-    rm -rf "${pkgdir}/"{no,usr/local,usr/lib,usr/include}
+    rm -rf "${pkgdir}/"{no,usr/local,usr/lib,usr/include,run/sudo}
+    # Remove extra config file.
+    rm -f "${pkgdir}/etc/sudoers.dist"
 }

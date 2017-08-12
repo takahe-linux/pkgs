@@ -30,7 +30,6 @@ pkgver() {
 
 prepare() {
     cd "${srcdir}/${pkgname}-git"
-    # TODO: Upstream doesn't support this
     # TODO: Linking with poppler-cpp statically fails because it doesn't have
     #       a Libs.private dependency on fontconfig.
     sed -i Makefile -e 's:pkg-config:pkg-config --static:' \

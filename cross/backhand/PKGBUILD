@@ -12,6 +12,7 @@ url="https://github.com/hobbitalastair/${pkgname}"
 license=('MIT')
 
 # Dependency information
+depends=('sh' 'hush') # Depend on hush for the service scripts.
 makedepends=('musl')
 hostdepends=('toolchain' 'git')
 
@@ -31,7 +32,12 @@ package() {
     make DESTDIR="${pkgdir}/" install
     install -Dm0644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 
+    # Use hush instead of sh for the various scripts.
+    for f in "${pkgdir}"/usr/bin/bh-{start,stop,stopall,status,release,require}; do
+        sed -i "$f" -e 's:/usr/bin/sh:/usr/bin/hush:g'
+    done
+
     # Create the directories for storing services and logs.
-    mkdir -p /var/log/backhand/
-    mkdir -p /usr/lib/backhand/
+    mkdir -p "${pkgdir}/var/log/backhand/"
+    mkdir -p "${pkgdir}/usr/lib/backhand/"
 }

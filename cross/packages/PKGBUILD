@@ -33,8 +33,10 @@ depends=(
     'filesystem'
     'gettext'
     'pacman'
+
     # Required for booting:
     'initscripts'
+    'backhand'
     'mdev'
     'sinit'
 

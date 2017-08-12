@@ -54,16 +54,14 @@ prepare() {
 build() {
     cd "${srcdir}/${pkgname}-${_basever}"
 
-    # Setup some config for bash
+    # Setup the config.
     _bashconfig=(-DDEFAULT_PATH_VALUE=\'\"/usr/bin\"\'
                  -DSTANDARD_UTILS_PATH=\'\"/usr/bin\"\'
                  -DSYS_BASHRC=\'\"/etc/bash/bash.conf\"\'
                  -DSYS_BASH_LOGOUT=\'\"/etc/bash/bash.logout\"\')
     export CFLAGS="${CFLAGS} ${_bashconfig[@]}"
 
-    # Fix the undetectable configure variables (during cross compiling, anyway)
-    # This is copied from CLFS, and as such probably needs some work.
-    # TODO: Check that all of these are valid.
+    # Fix the undetectable configure variables (during cross compiling).
     cat > config.cache << EOF
 ac_cv_func_mmap_fixed_mapped=yes
 ac_cv_func_strcoll_works=yes
@@ -79,7 +77,7 @@ bash_cv_unusable_rtsigs=no
 gt_cv_int_divbyzero_sigfpe=yes
 EOF
 
-    # Build bash!
+    # Build bash.
     ./configure --prefix="/usr" \
         --host="${_target_triplet}" \
         --build="${_local_triplet}" \
@@ -104,7 +102,6 @@ package() {
     cd "${srcdir}/${pkgname}-${_basever}"
 
     make DESTDIR="${pkgdir}/" install
-
     ln -s bash "${pkgdir}/usr/bin/sh"
 
     rm -rf "${pkgdir}/usr/share/info"

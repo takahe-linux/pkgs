@@ -5,7 +5,7 @@
 # Package information
 pkgname='pacman'
 pkgver='5.0.2'
-pkgrel=4
+pkgrel=5
 pkgdesc="Arch Linux's simple package manager"
 
 # Additional information...
@@ -15,8 +15,8 @@ license=('GPL')
 
 # Dependency information
 groups=('base')
-depends=('bash' 'libarchive' 'gettext' 'openssl' 'xz')
-makedepends=('zlib' 'musl' 'curl')
+depends=('bash' 'libarchive' 'gettext' 'xz')
+makedepends=('musl' 'curl' 'openssl')
 hostdepends=('asciidoc' 'libtool' 'toolchain')
 optdepends=('wget')
 
@@ -29,7 +29,8 @@ source=("https://sources.archlinux.org/other/pacman/${pkgname}-${pkgver}.tar.gz"
 md5sums=('f36f5e7e95a89436febe1bcca874fc33'
          '044786f82c98ca027067c63037e1fa15'
          'fefa873b52d15f08a1d32cb469ec6018'
-         '9c7f88dc3e02be3495ab97f0027241e3')
+         '9c7f88dc3e02be3495ab97f0027241e3'
+         '8814d0b46687cc017d44d4dd5eebd1c1')
 
 
 prepare() {
@@ -59,6 +60,7 @@ build() {
         --with-scriptlet-shell="/usr/bin/bash" \
         --without-gpgme \
         DUFLAGS="-sk" \
+        SEDINPLACEFLAGS="-i" \
         LIBSSL_LIBS="-lcrypto -lz" \
         LIBARCHIVE_LIBS="-larchive -lz" \
         LIBCURL_LIBS="-lcurl -lssl"

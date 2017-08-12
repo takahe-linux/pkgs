@@ -172,6 +172,8 @@ package() {
     if modules; then
         mkdir -p "${pkgdir}"/{/usr/lib/modules,/usr/lib/firmware}
         make INSTALL_MOD_PATH="${pkgdir}/usr" modules_install
+        # TODO: The module install is broken; we just delete them here.
+        rm -rf "${pkgdir}/usr/lib/modules/"
         # Remove the kernel source tree
         rm -f "${pkgdir}/usr/lib/modules/${_kernver}"/{source,build}
         # Add vmlinux

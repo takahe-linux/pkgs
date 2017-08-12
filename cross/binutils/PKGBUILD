@@ -17,7 +17,7 @@ makedepends=('musl' 'zlib')
 hostdepends=('toolchain')
 
 # Building information
-options=('staticlibs' '!distcc' '!ccache')
+options=('!distcc' '!ccache')
 source=("ftp://ftp.gnu.org/gnu/${pkgname}/${pkgname}-${pkgver}.tar.bz2")
 md5sums=('23733a26c8276edbb1168c9bee60e40e')
 
@@ -46,10 +46,7 @@ build() {
         --with-lib-path="/usr/lib" \
         --enable-deterministic-archives
 
-    # Check the host environment and makes sure all the necessary tools are
-    # available
     make configure-host
-
     make
 }
 

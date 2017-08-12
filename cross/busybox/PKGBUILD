@@ -66,7 +66,7 @@ build() {
 
 package_busybox() {
     pkgdesc="Main busybox binary and symlinks"
-    groups=('bb' 'base')
+    groups=('base')
     provides=('kbd' 'which' 'gzip' 'tar' 'bzip2' 'awk' 'diffutils' \
         'sed' 'vi' 'patch' 'shadow' 'less' 'hdparm' 'man' 'inetutils' \
         'ip2route' 'iputils' 'dhcpcd' 'procps-ng')
@@ -102,8 +102,6 @@ package_busybox() {
     install -Dm0644 "${srcdir}/man.conf" "${pkgdir}/etc/man.conf"
     install -Dm0755 "${srcdir}/udhcpc.sh" \
         "${pkgdir}/usr/share/udhcpc/default.script"
-
-    # Add a custom service for use with backhand.
     install -Dm755 "${srcdir}/udhcpc.run" \
         "${pkgdir}/usr/lib/backhand/udhcpc/run"
 }
@@ -111,7 +109,6 @@ package_busybox() {
 package_mdev() {
     pkgdesc="Lightweight udev alternative, from busybox"
     depends=("busybox")
-    groups=('bb' 'base')
     backup=('etc/mdev.conf')
 
     MDEV="mdev"
@@ -124,7 +121,6 @@ package_mdev() {
 package_hush() {
     pkgdesc="Simple busybox shell"
     depends=("busybox")
-    groups=('bb')
 
     SHELLS="hush"
 
@@ -133,7 +129,7 @@ package_hush() {
 
 package_bb-coreutils() {
     pkgdesc="Coreutils symlinks for busybox"
-    groups=('bb' 'base')
+    groups=('base')
     depends=('busybox')
     provides=('coreutils')
     conflicts=('coreutils')
@@ -152,8 +148,8 @@ package_bb-coreutils() {
 
 package_bb-util-linux() {
     pkgdesc="util linux symlinks for busybox"
-    groups=('bb' 'base')
-    depends=('busybox' 'hush')
+    groups=('base')
+    depends=('busybox')
     provides=('util-linux')
     conflicts=('util-linux')
 
@@ -179,13 +175,12 @@ exit 1
 EOF
     chmod 0755 "${pkgdir}/usr/bin/nologin"
 
-    # Add a custom service for use with backhand.
     install -Dm755 "${srcdir}/getty.run" "${pkgdir}/usr/lib/backhand/getty/run"
 }
 
 package_bb-findutils() {
     pkgdesc="findutils symlinks for busybox"
-    groups=('bb' 'base')
+    groups=('base')
     depends=('busybox')
     provides=('findutils')
     conflicts=('findutils')

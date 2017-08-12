@@ -74,6 +74,11 @@ build() {
         --disable-shared \
         --disable-multilib \
         --disable-libcc1 \
+        --disable-libsanitizer \
+        --disable-libatomic \
+        --disable-libmudflap \
+        --disable-mudflap \
+        --disable-libmpx \
         --with-gnu-as \
         --with-gnu-ld \
         --with-system-zlib

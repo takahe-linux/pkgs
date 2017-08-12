@@ -15,7 +15,7 @@ license=('GPL' 'LGPL' 'FDL')
 
 # Dependency information
 groups=('base-devel')
-makedepends=('musl' 'gmp' 'mpfr' 'mpc' 'binutils' 'zlib' 'linux-api-headers')
+makedepends=('musl' 'gmp' 'mpfr' 'mpc' 'binutils' 'linux-api-headers')
 hostdepends=('toolchain')
 
 # Building information
@@ -30,8 +30,6 @@ sha256sums=('8a8136c235f64c6fef69cac0d73a46a1a09bb250776a050aec8f9fc880bebc17'
 
 prepare() {
     cd "${srcdir}/${pkgname}-${pkgver}"
-
-    echo "${pkgver}" > gcc/BASE-VER
 
     # hack! - some configure tests for header files using "$CPP $CPPFLAGS"
     sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" {libiberty,gcc}/configure

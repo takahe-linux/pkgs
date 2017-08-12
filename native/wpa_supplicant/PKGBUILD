@@ -3,7 +3,7 @@
 # Package information
 pkgname='wpa_supplicant'
 pkgver='2.6'
-pkgrel=47
+pkgrel=48
 pkgdesc="Utility for key negotiation for WPA networks"
 
 # Additional information...
@@ -17,8 +17,10 @@ makedepends=('libnl' 'pkg-config' 'zlib' 'readline' 'ncurses'
     'linux-api-headers')
 
 # Building information
-source=("http://w1.fi/releases/${pkgname}-${pkgver}.tar.gz")
-md5sums=('091569eb4440b7d7f2b4276dbfc03c3c')
+source=("http://w1.fi/releases/${pkgname}-${pkgver}.tar.gz"
+        "wpa_supplicant.run")
+md5sums=('091569eb4440b7d7f2b4276dbfc03c3c'
+         '3396a38f6675d3fbb8327b05d2ca882e')
 
 prepare() {
     cd "${srcdir}/${pkgname}-${pkgver}/${pkgname}"
@@ -86,4 +88,8 @@ package() {
             "${pkgdir}/usr/share/man/man${i}"
     done
     rm -f "${pkgdir}/usr/share/man/man8/wpa_"{priv,gui}.8
+
+    # Add a custom service for use with backhand.
+    install -Dm755 "${srcdir}/wpa_supplicant.run" \
+        "${pkgdir}/usr/lib/backhand/wpa_supplicant/run"
 }

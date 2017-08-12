@@ -1,0 +1,2 @@
+#!/usr/bin/hush
+exec /usr/bin/wpa_supplicant -i "$1" -c /etc/wpa_supplicant.conf

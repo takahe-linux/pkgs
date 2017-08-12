@@ -12,8 +12,7 @@ url="http://www.gnu.org/software/parted/parted.html"
 license=('GPL3')
 
 # Dependency information
-makedepends=('musl' 'e2fsprogs' 'readline' 'ncurses' 'linux-api-headers')
-hostdepends=('toolchain')
+makedepends=('e2fsprogs' 'readline' 'ncurses' 'linux-api-headers')
 
 # Building information
 source=("http://ftp.gnu.org/gnu/${pkgname}/${pkgname}-${pkgver}.tar.xz"
@@ -40,8 +39,6 @@ build() {
 
     ./configure --prefix="/usr" \
         --sbindir="/usr/bin" \
-        --host="${_target_triplet}" \
-        --build="${_local_triplet}" \
         --disable-debug \
         --disable-rpath \
         --disable-device-mapper

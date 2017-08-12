@@ -14,6 +14,7 @@ license=('MIT')
 # Dependency information
 groups=('base')
 depends=('busybox' 'coreutils' 'util-linux' 'hush')
+optdepends=('backhand: service management')
 
 # Building information
 backup=('etc/init.d/init' 'etc/init.d/poweroff' 'etc/init.d/reboot')

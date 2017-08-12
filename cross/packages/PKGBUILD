@@ -39,7 +39,6 @@ depends=(
 
     # Required for booting:
     'initscripts'
-    'backhand'
     'mdev'
     'sinit'
     'linux'

@@ -13,7 +13,7 @@ license=('GPL3')
 
 # Dependency information
 depends=('alsa-lib')
-makedepends=('nasm' 'pkgconf' 'zlib')
+makedepends=('nasm' 'zlib')
 
 # Building information
 source=("${url}/releases/${pkgname}-${pkgver}.tar.xz")

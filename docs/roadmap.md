@@ -16,8 +16,6 @@ If I decide to stick with static linking, I should split the static packages
 into lib and bin subpackages, with the lib packages depending on the other
 packages which are actually required for linking with it.
 
-Some of the packages in cross/ should be moved into native, eg e2fsprogs...
-
 Otherwise, grep for TODO's in the PKGBUILDs.
 
 

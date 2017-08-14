@@ -4,7 +4,7 @@
 pkgname='sudo'
 _sudover="1.8.20p2"
 pkgver="${_sudover/p/.p}"
-pkgrel=6
+pkgrel=7
 pkgdesc="Give certain users raised privileges"
 
 # Additional information...
@@ -57,7 +57,7 @@ package() {
         "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 
     # Remove empty ignored dirs.
-    rm -rf "${pkgdir}/"{no,usr/local,usr/lib,usr/include,run/sudo}
+    rm -rf "${pkgdir}/"{no,usr/local,usr/lib,usr/include,run}
     # Remove extra config file.
     rm -f "${pkgdir}/etc/sudoers.dist"
 }

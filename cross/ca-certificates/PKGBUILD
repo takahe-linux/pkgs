@@ -3,7 +3,7 @@
 # Package information
 pkgname='ca-certificates'
 pkgver='20161130'
-pkgrel=2
+pkgrel=3
 pkgdesc="Trusted CA certificates from Debian"
 
 # Additional information...
@@ -58,7 +58,8 @@ build() {
     cd "${srcdir}/${pkgname}-${pkgver}"
     make
 
-    gcc "${srcdir}/c_rehash.c" -o "${srcdir}/c_rehash" -lssl -lcrypto -lz
+    "${CC}" "${srcdir}/c_rehash.c" -o "${srcdir}/c_rehash" -lssl -lcrypto -lz \
+        "${CFLAGS}" "${LDFLAGS}"
 }
 
 

@@ -3,7 +3,7 @@
 # Package information
 pkgname='libxslt'
 pkgver='1.1.29'
-pkgrel=3
+pkgrel=4
 pkgdesc="XML stylesheet transformation library"
 
 # Additional information...

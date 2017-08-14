@@ -13,6 +13,8 @@ license=('custom')
 
 # Dependency information
 depends=('openssl')
+makedepends=('musl')
+hostdepends=('toolchain')
 
 # Building information
 backup=('etc/ca-certificates.conf')
@@ -42,7 +44,7 @@ EOF
     mv "${srcdir}/certdata2pem.c" "mozilla/certdata2pem.c"
     cat > mozilla/Makefile << EOF
 all:
-	gcc -Wall certdata2pem.c -o certdata2pem
+	"${CC}" ${CFLAGS} ${LDFLAGS} -Wall certdata2pem.c -o certdata2pem
 	./certdata2pem
 clean:
 	-rm -f *.crt
@@ -59,7 +61,7 @@ build() {
     make
 
     "${CC}" "${srcdir}/c_rehash.c" -o "${srcdir}/c_rehash" -lssl -lcrypto -lz \
-        "${CFLAGS}" "${LDFLAGS}"
+        ${CFLAGS} ${LDFLAGS}
 }
 
 

@@ -44,7 +44,7 @@ EOF
     mv "${srcdir}/certdata2pem.c" "mozilla/certdata2pem.c"
     cat > mozilla/Makefile << EOF
 all:
-	"${CC}" ${CFLAGS} ${LDFLAGS} -Wall certdata2pem.c -o certdata2pem
+	"${HOSTCC}" -Wall certdata2pem.c -o certdata2pem
 	./certdata2pem
 clean:
 	-rm -f *.crt

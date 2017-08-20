@@ -2,9 +2,9 @@
 
 # Package information
 pkgname='python'
-pkgver='3.5.2'
+pkgver='3.5.4'
 _basever='3.5'
-pkgrel=39
+pkgrel=1
 pkgdesc="High level scripting language"
 
 # Additional information...
@@ -18,7 +18,7 @@ makedepends=('expat' 'libffi' 'mpdecimal' 'zlib' 'readline')
 # Building information
 source=("http://www.python.org/ftp/python/${pkgver}/Python-${pkgver}.tar.xz"
         'setup')
-sha1sums=('4843aabacec5bc0cdd3e1f778faa926e532794d2'
+sha1sums=('4aacbd09ca6988255de84a98ab9e4630f584efba'
           '66b296a76ee0a230aa3197dbc00cbc900d5ebe8d')
 
 

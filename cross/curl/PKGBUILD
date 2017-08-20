@@ -2,8 +2,8 @@
 
 # Package information
 pkgname='curl'
-pkgver='7.55.0'
-pkgrel=3
+pkgver='7.55.1'
+pkgrel=1
 pkgdesc="An URL retrieval utility and library"
 
 # Additional information...
@@ -18,7 +18,7 @@ hostdepends=('toolchain')
 
 # Building information
 source=("http://curl.haxx.se/download/${pkgname}-${pkgver}.tar.gz")
-md5sums=('66b2b81489ada6a9de77bafae8dd21d8')
+md5sums=('3b832160a8c9c40075fd71191960307c')
 
 
 build() {

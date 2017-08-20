@@ -17,4 +17,4 @@ for i in /sys/class/net/*/uevent; do
 done 2> /dev/null
 
 # Run the helper script.
-/etc/init.d/run
+[ -x /etc/init.d/run ] && /etc/init.d/run

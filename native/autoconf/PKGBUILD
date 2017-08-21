@@ -3,7 +3,7 @@
 # Package information
 pkgname='autoconf'
 pkgver='2.69'
-pkgrel=50
+pkgrel=51
 pkgdesc="A GNU tool for automatically configuring source code"
 
 # Additional information...

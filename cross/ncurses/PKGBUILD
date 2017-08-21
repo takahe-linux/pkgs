@@ -3,7 +3,7 @@
 # Package information
 pkgname='ncurses'
 pkgver='6.0'
-pkgrel=10
+pkgrel=11
 pkgdesc='System V Release 4.0 curses emulation library'
 
 # Additional information...

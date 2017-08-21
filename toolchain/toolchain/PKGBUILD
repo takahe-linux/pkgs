@@ -3,7 +3,7 @@
 # Package information
 pkgname='toolchain'
 pkgver='1.0'
-pkgrel=10
+pkgrel=11
 pkgdesc="Meta-package for the toolchain"
 
 # Additional information...

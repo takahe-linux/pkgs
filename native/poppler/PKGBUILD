@@ -2,8 +2,8 @@
 
 # Package information
 pkgname='poppler'
-pkgver='0.57.0'
-pkgrel=7
+pkgver='0.58.0'
+pkgrel=1
 pkgdesc="PDF rendering library and toolkit"
 
 # Additional information...
@@ -16,7 +16,7 @@ makedepends=('libpng' 'libjpeg' 'fontconfig' 'freetype' 'expat' 'zlib')
 
 # Building information
 source=("${url}/${pkgname}-${pkgver}.tar.xz")
-md5sums=('bc5a191741604552c90d484103229374')
+md5sums=('7de34c4e1255351cc1c8a6e721355a18')
 
 
 build() {

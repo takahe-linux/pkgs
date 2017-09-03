@@ -23,6 +23,12 @@ Packages to consider adding:
 - pass
 - x11 and related (dwm, st, dmenu, xorg utils, xclip, ...)?
 
+Fixes/changes:
+
+- Remove /lib symlink
+- Make hush the default shell
+- Make the OOM killer more aggressive?
+
 
 ## Misc ##
 

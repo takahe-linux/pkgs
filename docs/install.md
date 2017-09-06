@@ -19,6 +19,11 @@ I start at 1M, end at -1 (the end of the disk).
 Mark the partition as a boot partition:
 ``# parted /dev/sda toggle 1 boot``
 
+Note that some older systems cannot handle booting from a filesystem starting
+above the `4G` mark.
+To work around this limitation, create an extra partition (`50M` should be
+plenty) at the start of the drive and use that as `/boot`.
+
 ### Create a filesystem ###
 
 Using ext4, disabling 64bit as Syslinux cannot handle that yet:

@@ -28,7 +28,7 @@ plenty) at the start of the drive and use that as `/boot`.
 
 Using ext4, disabling 64bit as Syslinux cannot handle that yet:
 
-``# mkfs.ext4 -L "${name}" -O ^64bit /dev/sda1``
+``# mkfs.ext4 -L "${name}" -O ^64bit,^huge_file /dev/sda1``
 
 Mount the filesystem:
 
@@ -71,21 +71,7 @@ Configure /boot/syslinux/syslinux.cfg as required.
 
 Edit fstab as required.
 
-### Create a default run script ###
-
-/etc/init.d/init runs /etc/init.d/run.
-A sensible default is starting a terminal on /dev/console:
-
-```
-#!/usr/bin/sh
-/usr/bin/getty -l /usr/bin/login 0 /dev/console
-```
-
-Don't forget to make the script executable!
-
-```
-# chmod +x /etc/init.d/run
-```
+Consider adding a /tmp and /run entry, both as a tmpfs.
 
 ## Adjusting the install ##
 

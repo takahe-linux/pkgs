@@ -1,0 +1,31 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='nsgenbind'
+pkgver='0.4'
+pkgrel=1
+pkgdesc="NetSurf Javascript binding generator"
+
+# Additional information...
+arch=('mips' 'i586')
+url="http://git.netsurf-browser.org/nsgenbind.git/"
+license=('GPL')
+
+# Dependency information
+depends=('netsurf-buildsystem' 'git')
+
+# Building information
+source=("git://git.netsurf-browser.org/nsgenbind.git#tag=release/${pkgver}")
+md5sums=('SKIP')
+
+
+build() {
+    cd "${srcdir}/${pkgname}"
+    make PREFIX="/usr"
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}"
+    make install DESTDIR="${pkgdir}/" PREFIX="/usr"
+}

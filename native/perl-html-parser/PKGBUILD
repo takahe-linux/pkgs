@@ -1,0 +1,41 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='perl-html-parser'
+_pkgname='HTML-Parser'
+pkgver='3.72'
+pkgrel=1
+pkgdesc="Perl HTML parser"
+
+# Additional information...
+arch=('i586' 'mips')
+url="http://search.cpan.org/dist/${_pkgname}"
+license=('PerlArtistic')
+
+# Dependency information
+depends=('perl-html-tagset')
+
+# Building information
+options=('!emptydirs')
+source=("https://www.cpan.org/authors/id/G/GA/GAAS/${_pkgname}-${pkgver}.tar.gz")
+md5sums=('eb7505e5f626913350df9dd4a03d54a8')
+
+
+build() {
+    cd "${srcdir}/${_pkgname}-${pkgver}"
+    perl Makefile.PL INSTALLDIRS=vendor
+    make
+}
+
+
+package() {
+    cd "${srcdir}/${_pkgname}-${pkgver}"
+    make DESTDIR="${pkgdir}/" install
+#template start; name=perl-binary-module-dependency; version=1
+if [[ "$(find "${pkgdir}/usr/lib/perl5/" -name '*.so')" ]]; then
+    _perlver_min="$(perl -e '$v = $^V->{version}; print $v->[0].".".($v->[1]);')"
+    _perlver_max="$(perl -e '$v = $^V->{version}; print $v->[0].".".($v->[1]+1);')"
+    depends+=("perl>=${_perlver_min}" "perl<${_perlver_max}")
+fi
+#template end;
+}

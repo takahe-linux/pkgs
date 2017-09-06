@@ -1,0 +1,40 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='perl-html-tagset'
+_pkgname='HTML-Tagset'
+pkgver='3.20'
+pkgrel=1
+pkgdesc="Data structures useful in parsing HTML"
+
+# Additional information...
+arch=('any')
+url="http://search.cpan.org/dist/${_pkgname}"
+license=('PerlArtistic')
+
+# Dependency information
+depends=('perl')
+
+# Building information
+options=('!emptydirs')
+source=("https://www.cpan.org/authors/id/P/PE/PETDANCE/${_pkgname}-${pkgver}.tar.gz")
+md5sums=('d2bfa18fe1904df7f683e96611e87437')
+
+
+build() {
+    cd "${srcdir}/${_pkgname}-${pkgver}"
+    perl Makefile.PL INSTALLDIRS=vendor
+    make
+}
+
+
+check() {
+    cd "${srcdir}/${_pkgname}-${pkgver}"
+    make test
+}
+
+
+package() {
+    cd "${srcdir}/${_pkgname}-${pkgver}"
+    make DESTDIR="${pkgdir}/" install
+}

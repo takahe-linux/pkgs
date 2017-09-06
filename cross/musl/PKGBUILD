@@ -3,7 +3,7 @@
 # Package information
 pkgname='musl'
 pkgver='1.1.16'
-pkgrel=6
+pkgrel=8
 pkgdesc="Lightweight libc implementation"
 
 # Additional information...
@@ -29,6 +29,7 @@ build() {
                 --libdir="/usr/lib" \
                 --bindir="/usr/bin" \
                 --includedir="/usr/include" \
+                --disable-static
 
     make
 }

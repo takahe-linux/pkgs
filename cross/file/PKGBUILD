@@ -3,7 +3,7 @@
 # Package information
 pkgname='file'
 pkgver='5.31'
-pkgrel=6
+pkgrel=7
 pkgdesc='File type identification utility'
 
 # Additional information...

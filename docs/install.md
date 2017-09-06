@@ -21,9 +21,9 @@ Mark the partition as a boot partition:
 
 ### Create a filesystem ###
 
-Using ext2, disabling 64bit as Syslinux cannot handle that yet:
+Using ext4, disabling 64bit as Syslinux cannot handle that yet:
 
-``# mkfs.ext2 -L "${name}" -O ^64bit /dev/sda1``
+``# mkfs.ext4 -L "${name}" -O ^64bit /dev/sda1``
 
 Mount the filesystem:
 

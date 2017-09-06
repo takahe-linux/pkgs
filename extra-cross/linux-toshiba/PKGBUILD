@@ -6,7 +6,7 @@ _major_version='4.11'
 _srcname="linux-${_major_version}"
 pkgdesc="Toshiba 310CDS kernel"
 pkgver="${_major_version}.6"
-pkgrel=3
+pkgrel=4
 
 # Additional information...
 arch=('i586')
@@ -117,7 +117,9 @@ CONFIG_PROC_SYSCTL=y
 # CONFIG_PROC_PAGE_MONITOR is not set
 CONFIG_SYSFS=y
 CONFIG_MSDOS_PARTITION=y
-CONFIG_EXT2_FS=y
+# EXT2 corrupts easily, but is supposed to be faster and is ~130k
+# smaller than EXT4.
+CONFIG_EXT4_FS=y
 # CONFIG_SWAP is not set
 CONFIG_FILE_LOCKING=y
 

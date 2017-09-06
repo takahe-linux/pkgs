@@ -3,7 +3,7 @@
 # Package information
 pkgname=('busybox' 'mdev' 'hush' 'bb-coreutils' 'bb-util-linux' 'bb-findutils')
 pkgver='1.27.1'
-pkgrel=4
+pkgrel=5
 
 # Additional information...
 arch=('i586' 'mips')
@@ -29,7 +29,7 @@ source=("${_web_address}/${pkgname}-${pkgver}.tar.bz2"
 md5sums=('df7e45d07634c54ca16b9191635db9c6'
          '3d4c0627aed4a717157de18fb3dec620'
          'e9245e5f55f004e3598cc90e2e86de30'
-         '15b358b11ad0bb74721afc5459a853a5'
+         '7b373f4f770a360d8f2167bf4f22f0dc'
          '24e4d0170eea0cac1d86daf24379e44c'
          'b28033f6935af528f51d879ec364ecda'
          '32fccce6e0a501fa2ae43cf366df5536')

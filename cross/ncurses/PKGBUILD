@@ -30,6 +30,7 @@ build() {
         --disable-db-install \
         --with-build-cc="gcc" \
         --with-fallbacks="ansi linux vt100 xterm" \
+        --with-shared \
         --without-debug \
         --without-tests \
         --without-ada \

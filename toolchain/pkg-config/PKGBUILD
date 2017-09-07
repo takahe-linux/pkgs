@@ -1,0 +1,31 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname="${_target_triplet}-pkg-config"
+pkgver='1.0'
+pkgrel=1
+pkgdesc="pkg-config wrapper for cross-compiling"
+
+# Additional information...
+arch=('any')
+url="https://github.com/takahe-linux"
+license=('MIT')
+
+# Dependency information
+depends=('pkg-config')
+
+
+package() {
+    cd "${srcdir}"
+
+    file="${pkgdir}/${_toolroot}/bin/${pkgname}"
+    mkdir -p "$(dirname "${file}")"
+    cat << EOF > "${file}"
+#!/usr/bin/env sh
+PKG_CONFIG_DIR="" \
+PKG_CONFIG_LIBDIR="/sysroot/usr/lib/pkgconfig:/sysroot/usr/share/pkgconfig" \
+PKG_CONFIG_SYSROOT_DIR="/sysroot" \
+pkg-config "$@"
+EOF
+    chmod +x "${file}"
+}

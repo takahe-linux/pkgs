@@ -13,7 +13,7 @@ license=('MIT')
 
 # Dependency information
 depends=('openssl' 'musl' 'ca-certificates')
-hostdepends=('toolchain')
+hostdepends=('toolchain' "${_target_triplet}-pkg-config")
 
 # Building information
 source=("http://curl.haxx.se/download/${pkgname}-${pkgver}.tar.gz")
@@ -30,6 +30,7 @@ build() {
         --target="${_target_triplet}" \
         --mandir="/usr/share/man" \
         --disable-ldap \
+        --disable-static \
         --without-libidn \
         --with-ssl \
         --with-ca-bundle="/etc/ssl/certs/ca-certificates.crt" \

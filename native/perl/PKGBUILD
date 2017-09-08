@@ -21,6 +21,12 @@ md5sums=('8d34cb5a4eccd66e7a6a80e62b7b4aec'
 prepare() {
     cd "${srcdir}/${pkgname}-${pkgver}"
     patch -p1 < "${srcdir}/grapheme.patch"
+
+    # Don't use stack-protector-strong - we can't build properly with it at the
+    # moment.
+    # TODO: Fix stack-protector strong (this involves building gcc with libssp,
+    #       and adding an extra link flag to GCC's SSP spec).
+    sed -i ./Configure -e 's:-fstack-protector-strong::'
 }
 
 
@@ -42,9 +48,8 @@ build() {
         -Dman1dir=/usr/share/man/man1 \
         -Dman3dir=/usr/share/man/man3 \
         -Dman1ext="1pm" -Dman3ext="3pm" \
-        -Dlddlflags="${LDFLAGS}" -Dldflags="${LDFLAGS}" \
-        -Dcc="gcc" \
-        -Uusedl
+        -Dlddlflags="-shared ${LDFLAGS}" -Dldflags="${LDFLAGS}" \
+        -Dcc="gcc"
     make
 }
 
@@ -61,7 +66,6 @@ package() {
         -e '/(mbuildpl_arg =>/ s/""/"installdirs=site"/' \
         -i "${pkgdir}/usr/share/perl5/core_perl/CPAN/FirstTime.pm"
     rm -f "${pkgdir}/usr/bin/perl${pkgver}"
-    rm -rf "${pkgdir}/usr/lib/perl5/core_perl/auto"
     install -d -m755 "$pkgdir/usr/bin/vendor_perl"
     install -d -m755 "$pkgdir/usr/bin/site_perl"
 }

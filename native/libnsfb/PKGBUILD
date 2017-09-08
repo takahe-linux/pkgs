@@ -30,13 +30,13 @@ prepare() {
 
 build() {
     cd "${srcdir}/${pkgname}"
-    make LIBDIR=lib INCLUDEDIR=include PREFIX=/usr
+    make LIBDIR=lib INCLUDEDIR=include PREFIX=/usr COMPONENT_TYPE="lib-shared"
 }
 
 
 package() {
     cd "${srcdir}/${pkgname}"
 
-    make LIBDIR=lib INCLUDEDIR=include PREFIX=/usr \
+    make LIBDIR=lib INCLUDEDIR=include PREFIX=/usr COMPONENT_TYPE="lib-shared" \
         DESTDIR="${pkgdir}/" install
 }

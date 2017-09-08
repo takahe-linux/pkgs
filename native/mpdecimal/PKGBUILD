@@ -30,6 +30,4 @@ package() {
     make DESTDIR="${pkgdir}/" install
     install -Dm644 LICENSE.txt \
         "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE.txt"
-    # Remove dynamically linked libraries.
-    rm -rf "${pkgdir}/usr/lib/"*.so*
 }

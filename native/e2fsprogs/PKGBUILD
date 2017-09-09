@@ -23,6 +23,7 @@ build() {
     ./configure --prefix="/usr" \
         --sbindir="/usr/bin" \
         --sysconfdir="/etc" \
+        --enable-elf-shlibs \
         --disable-fsck
     make
 }

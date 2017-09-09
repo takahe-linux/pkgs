@@ -58,10 +58,7 @@ build() {
         --with-scriptlet-shell="/usr/bin/bash" \
         --without-gpgme \
         DUFLAGS="-sk" \
-        SEDINPLACEFLAGS="-i" \
-        LIBSSL_LIBS="-lcrypto -lz" \
-        LIBARCHIVE_LIBS="-larchive -lz" \
-        LIBCURL_LIBS="-lcurl -lssl"
+        SEDINPLACEFLAGS="-i"
 
     make
     make -C contrib

@@ -4,10 +4,10 @@
 
 # Package information
 pkgname='mpfr'
-_pkgver='3.1.5'
-_patchlevel='p2'
+_pkgver='3.1.6'
+_patchlevel='p0'
 pkgver="${_pkgver}.${_patchlevel}"
-pkgrel=3
+pkgrel=1
 pkgdesc="Multiple-precision floating-point library"
 
 # Additional information...
@@ -20,10 +20,9 @@ makedepends=('gmp' 'musl')
 hostdepends=('toolchain')
 
 # Building information
-source=("http://www.mpfr.org/mpfr-current/${pkgname}-${_pkgver}.tar.xz"
-        "${pkgname}-${pkgver}.patch")
-md5sums=('c4ac246cf9795a4491e7766002cd528f'
-         'f388b7983bf69e2bfd3216426c89954c')
+source=("http://www.mpfr.org/mpfr-current/${pkgname}-${_pkgver}.tar.xz")
+        #"${pkgname}-${pkgver}.patch")
+md5sums=('51bfdbf81553966c8d43808122cc81b3')
 
 
 prepare() {
@@ -34,7 +33,7 @@ prepare() {
     sed -i -e 's:| -linux-uclibc\*:| -linux-musl\* | -linux-uclibc\*:' 'config.sub'
 
     # Add the patchlevel version patch
-    patch -N -Z -p1 < "${srcdir}/${pkgname}-${pkgver}.patch"
+    #patch -N -Z -p1 < "${srcdir}/${pkgname}-${pkgver}.patch"
 }
 
 

@@ -2,8 +2,8 @@
 
 # Package information
 pkgname='libxslt'
-pkgver='1.1.29'
-pkgrel=6
+pkgver='1.1.30'
+pkgrel=1
 pkgdesc="XML stylesheet transformation library"
 
 # Additional information...
@@ -16,11 +16,14 @@ depends=('libxml2')
 
 # Building information
 source=("ftp://xmlsoft.org/libxslt/${pkgname}-${pkgver}.tar.gz")
-md5sums=('a129d3c44c022de3b9dcf6d6f288d72e')
+md5sums=('70becbbcb1dad55f14de0b84171b91d5')
 
 
 build() {
     cd "${srcdir}/${pkgname}-${pkgver}"
+
+    # Use a static PKG_CONFIG.
+    export PKG_CONFIG="pkg-config --static"
 
     ./configure --prefix="/usr"
     make

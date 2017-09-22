@@ -39,7 +39,8 @@ build() {
         --with-system-expat \
         --with-system-ffi \
         --with-system-libmpdec \
-        --without-ensurepip
+        --without-ensurepip \
+        --enable-shared
 
     make
 }
@@ -53,8 +54,8 @@ package() {
     rm -f "${pkgdir}/usr/bin/"idle*
 
     # Avoid duplicating libpython.
-    ln -sf "../../libpython${_basever}m.a" \
-        "${pkgdir}/usr/lib/python${_basever}/config-${_basever}m/libpython${_basever}m.a"
+    ln -sf "../../libpython${_basever}m.so" \
+        "${pkgdir}/usr/lib/python${_basever}/config-${_basever}m/libpython${_basever}m.so"
 
     # Provide python.
     ln -s python3 "${pkgdir}/usr/bin/python"

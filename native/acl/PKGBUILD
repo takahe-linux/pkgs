@@ -1,0 +1,35 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='acl'
+pkgver='2.2.52'
+pkgrel=1
+pkgdesc="Access control support library"
+
+# Additional information...
+arch=('mips' 'i586')
+url="http://savannah.nongnu.org/projects/${pkgname}"
+license=('LGPL')
+
+# Dependency information
+depends=('attr')
+
+# Building information
+source=("https://download.savannah.gnu.org/releases/${pkgname}/${pkgname}-${pkgver}.src.tar.gz")
+md5sums=('a61415312426e9c2212bd7dc7929abda')
+
+
+build() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    export INSTALL_USER=root INSTALL_GROUP=root
+    ./configure --prefix="/usr" --libdir="/usr/lib" --libexecdir="/usr/lib"
+    make
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    make DIST_ROOT="${pkgdir}/" install install-lib install-dev
+}

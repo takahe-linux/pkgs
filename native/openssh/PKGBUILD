@@ -3,7 +3,7 @@
 # Package information
 pkgname='openssh'
 pkgver='7.5p1'
-pkgrel=15
+pkgrel=16
 pkgdesc="Secure shell implementation"
 
 # Additional information...
@@ -16,8 +16,10 @@ depends=('zlib')
 
 # Building information
 backup=('etc/ssh/ssh_config' 'etc/ssh/sshd_config')
-source=("http://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/${pkgname}-${pkgver}.tar.gz")
-md5sums=('652fdc7d8392f112bef11cacf7e69e23')
+source=("http://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/${pkgname}-${pkgver}.tar.gz"
+        "sshd.run")
+md5sums=('652fdc7d8392f112bef11cacf7e69e23'
+         'bfeb1aef10852b45eeb348dc24321f61')
 
 
 build() {
@@ -44,4 +46,6 @@ package() {
     install -Dm755 contrib/ssh-copy-id "${pkgdir}/usr/bin/ssh-copy-id"
     install -Dm644 contrib/ssh-copy-id.1 \
         "${pkgdir}/usr/share/man/man1/ssh-copy-id.1"
+
+    install -Dm755 "${srcdir}/sshd.run" "${pkgdir}/usr/lib/backhand/sshd/run"
 }

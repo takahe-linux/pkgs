@@ -3,7 +3,7 @@
 # Package information
 pkgname='fbpdf'
 pkgver='0.r91.43ca240'
-pkgrel=65
+pkgrel=66
 pkgdesc="A small framebuffer PDF viewer, built against poppler"
 
 # Additional information...

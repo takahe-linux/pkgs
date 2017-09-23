@@ -1,2 +1,4 @@
 #!/usr/bin/hush
-exec /usr/bin/getty -l /usr/bin/login 0 "/dev/$1"
+tty="/dev/$(printf '%s' "$1" | cut -d, -f1)"
+speed="$(printf '%s' "$1" | cut -d, -f2)"
+exec /usr/bin/getty -l /usr/bin/login "${speed}" "${tty}"

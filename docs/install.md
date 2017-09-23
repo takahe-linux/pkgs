@@ -71,8 +71,6 @@ Configure /boot/syslinux/syslinux.cfg as required.
 
 Edit fstab as required.
 
-Consider adding a /tmp and /run entry, both as a tmpfs.
-
 ## Adjusting the install ##
 
 The system should now be bootable. However, some additional things should be

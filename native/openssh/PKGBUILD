@@ -3,7 +3,7 @@
 # Package information
 pkgname='openssh'
 pkgver='7.5p1'
-pkgrel=16
+pkgrel=17
 pkgdesc="Secure shell implementation"
 
 # Additional information...

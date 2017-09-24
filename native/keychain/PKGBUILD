@@ -1,0 +1,35 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='keychain'
+pkgver='2.8.3'
+pkgrel=1
+pkgdesc="A front-end to SSH agent allowing one agent per session"
+
+# Additional information...
+arch=('mips' 'i586')
+url="http://www.funtoo.org/Keychain"
+license=('GPL2')
+
+# Dependency information
+depends=('sh')
+
+# Building information
+source=("http://www.funtoo.org/archive/keychain/${pkgname}-${pkgver}.tar.bz2"
+        "busybox-ps.patch")
+md5sums=('bdf70a69b8b2208664cfcd4a8e42523b'
+         '21092f40a5402688da37f3124717a214')
+
+
+prepare() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+    # Fix the PS invocation on busybox-based systems.
+    patch keychain < "${srcdir}/busybox-ps.patch"
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+    install -Dm755 keychain "${pkgdir}/usr/bin/keychain"
+    install -Dm644 keychain.1 "${pkgdir}/usr/share/man/man1/keychain.1"
+}

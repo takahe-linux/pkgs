@@ -1,0 +1,27 @@
+From e4b1950153d010f015a55de693e887bd70f2d077 Mon Sep 17 00:00:00 2001
+From: Alastair Hughes <hobbitalastair@gmail.com>
+Date: Wed, 27 Sep 2017 16:48:06 +1300
+Subject: [PATCH] support busybox ps
+
+Busybox ps built with PS_FEATURE_WIDE option will print the required
+information when run with the 'w' argument, but will fail otherwise, so
+use that to support such systems.
+---
+ keychain.sh | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/keychain.sh b/keychain.sh
+index e09a737..fb60349 100755
+--- a/keychain.sh
++++ b/keychain.sh
+@@ -257,6 +257,7 @@ findpids() {
+ 	if [ -z "$fp_psout" ]; then
+ 		fp_psout=$(UNIX95=1 ps -u $me -o pid,comm 2>/dev/null | grep '^ *[0-9]')
+ 		[ -z "$fp_psout" ] && fp_psout=$(ps x 2>/dev/null)
++		[ -z "$fp_psout" ] && fp_psout=$(ps w 2>/dev/null) # Busybox syntax
+ 	fi
+ 
+ 	# Return the list of pids; ignore case for Cygwin.
+-- 
+2.14.1
+

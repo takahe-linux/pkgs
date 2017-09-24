@@ -1,0 +1,37 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='bash-completion'
+pkgver='2.7'
+pkgrel=1
+pkgdesc="Programmable completion for the bash shell"
+
+# Additional information...
+arch=('mips' 'i586')
+url="https://github.com/scop/bash-completion"
+license=('GPL2')
+
+# Dependency information
+depends=('bash')
+
+# Building information
+options=('!emptydirs')
+source=("${url}/releases/download/${pkgver}/${pkgname}-${pkgver}.tar.xz")
+md5sums=('28117492bdc9408438e6041683a423ce')
+
+
+build() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    ./configure --prefix="/usr" --sysconfdir="/etc"
+    make
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    make DESTDIR="${pkgdir}/" install
+    rm -rf "${pkgdir}/etc/profile.d/"
+    rm -rf "${pkgdir}/usr/share/bash-completion/completions/makepkg"
+}

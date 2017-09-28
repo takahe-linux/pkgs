@@ -3,7 +3,7 @@
 # Package information
 pkgname='musl'
 pkgver='1.1.16'
-pkgrel=8
+pkgrel=9
 pkgdesc="Lightweight libc implementation"
 
 # Additional information...

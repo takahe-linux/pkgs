@@ -28,6 +28,7 @@ build() {
     ./configure --prefix="/usr" \
         --host="${_target_triplet}" \
         --build="${_local_triplet}" \
+        --target="${_target_triplet}"
     make
 }
 

@@ -3,10 +3,10 @@
 # This needs more than 1.4GB of spare space to build!
 
 # Package information
-pkgname='gcc'
+pkgbase='gcc'
+pkgname=('gcc' 'gcc-libs')
 pkgver='7.2.0'
 pkgrel=3
-pkgdesc="The GNU Compiler Collection"
 
 # Additional information...
 arch=('mips' 'i586')
@@ -14,9 +14,7 @@ url="http://gcc.gnu.org"
 license=('GPL' 'LGPL' 'FDL')
 
 # Dependency information
-groups=('base-devel')
-depends=('musl' 'gmp' 'mpfr' 'mpc' 'zlib' 'binutils')
-makedepends=('linux-api-headers')
+makedepends=('linux-api-headers' 'musl' 'gmp' 'mpfr' 'mpc' 'zlib' 'binutils')
 hostdepends=('toolchain')
 
 # Building information
@@ -30,7 +28,7 @@ sha256sums=('1cf7adf8ff4b5aa49041c8734bbcf1ad18cc4c94d0029aae0f4e48841088479a'
 
 
 prepare() {
-    cd "${srcdir}/${pkgname}-${pkgver}"
+    cd "${srcdir}/${pkgbase}-${pkgver}"
 
     # hack! - some configure tests for header files using "$CPP $CPPFLAGS"
     sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" {libiberty,gcc}/configure
@@ -44,7 +42,6 @@ prepare() {
     done
     
     mkdir "${srcdir}/gcc-build"
-
 }
 
 
@@ -65,7 +62,7 @@ build() {
     # unset these for now (they are set to be target flags by default).
     unset CFLAGS CXXFLAGS CPPFLAGS LDFLAGS
 
-    "${srcdir}/${pkgname}-${pkgver}/configure" \
+    "${srcdir}/${pkgbase}-${pkgver}/configure" \
         --build="${_local_triplet}" \
         --host="${_target_triplet}" \
         --target="${_target_triplet}" \
@@ -84,7 +81,6 @@ build() {
         --disable-libstdcxx-pch \
         --disable-libatomic \
         --disable-libsanitizer \
-        --disable-libgomp \
         --disable-libquadmath \
         --disable-libmpx \
         --disable-libvtv \
@@ -103,14 +99,31 @@ build() {
 }
 
 
-package() {
+package_gcc() {
+    pkgdesc="GNU Compiler Collection"
+    depends=('musl' 'gmp' 'mpfr' 'mpc' 'zlib' 'binutils' 'gcc-libs')
+    groups=('base-devel')
     cd "${srcdir}/gcc-build"
 
     make DESTDIR="${pkgdir}" install-strip -j1
+    rm -rf "${pkgdir}/usr/lib/"*.so{,.*}
 
     # Remove info files.
     rm -r "${pkgdir}/usr/share/info"
 
     # Add a link to cc
     ln -s gcc "${pkgdir}/usr/bin/cc"
+}
+
+package_gcc-libs() {
+    pkgdesc="Runtime GCC libraries"
+    groups=('base')
+    cd "${srcdir}/gcc-build"
+
+    make DESTDIR="${pkgdir}" install-strip -j1
+    mkdir "${srcdir}/libs"
+    mv "${pkgdir}/usr/lib/"*.so{,.*} "${srcdir}/libs"
+    rm -rf "${pkgdir}/"*
+    mkdir -p "${pkgdir}/usr/lib/"
+    mv "${srcdir}/libs/"* "${pkgdir}/usr/lib/"
 }

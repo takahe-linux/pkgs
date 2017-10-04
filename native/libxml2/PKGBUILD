@@ -3,7 +3,7 @@
 # Package information
 pkgname='libxml2'
 pkgver='2.9.5'
-pkgrel=5
+pkgrel=6
 pkgdesc="XML parsing library"
 
 # Additional information...

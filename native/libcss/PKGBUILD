@@ -2,8 +2,8 @@
 
 # Package information
 pkgname='libcss'
-pkgver='0.6.1'
-pkgrel=48
+pkgver='0.7.0'
+pkgrel=1
 pkgdesc="CSS library from the Netsurf project"
 
 # Additional information...
@@ -16,16 +16,13 @@ depends=('libwapcaplet' 'libparserutils')
 makedepends=('git' 'netsurf-buildsystem' 'perl')
 
 # Building information
-source=("git://git.netsurf-browser.org/${pkgname}.git#tag=release/${pkgver}"
-        *.patch)
-md5sums=('SKIP'
-         'd829f5d25a4b6fd75e0239fbcbc7bd3b')
+source=("git://git.netsurf-browser.org/${pkgname}.git#tag=release/${pkgver}")
+md5sums=('SKIP')
 
 
 prepare() {
     cd "${srcdir}/${pkgname}"
-
-    patch -p1 < "${srcdir}"/*.patch
+    sed -i Makefile -e 's:-Werror::g' # Don't build with Werror.
 }
 
 

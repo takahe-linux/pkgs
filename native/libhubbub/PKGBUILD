@@ -2,8 +2,8 @@
 
 # Package information
 pkgname='libhubbub'
-pkgver='0.3.3'
-pkgrel=61
+pkgver='0.3.4'
+pkgrel=1
 pkgdesc="HTML5 parser library from the Netsurf project"
 
 # Additional information...

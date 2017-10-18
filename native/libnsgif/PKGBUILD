@@ -2,8 +2,8 @@
 
 # Package information
 pkgname='libnsgif'
-pkgver='0.1.4'
-pkgrel=45
+pkgver='0.2.0'
+pkgrel=1
 pkgdesc="GIF parser library from the Netsurf project"
 
 # Additional information...
@@ -17,6 +17,12 @@ makedepends=('git' 'netsurf-buildsystem')
 # Building information
 source=("git://git.netsurf-browser.org/${pkgname}.git#tag=release/${pkgver}")
 md5sums=('SKIP')
+
+
+prepare() {
+    cd "${srcdir}/${pkgname}"
+    sed -i Makefile -e 's:-Werror::g' # Don't build with Werror.
+}
 
 
 build() {

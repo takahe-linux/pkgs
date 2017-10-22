@@ -3,7 +3,7 @@
 # Package information
 pkgname='netsurf-buildsystem'
 pkgver='1.5'
-pkgrel=58
+pkgrel=59
 pkgdesc="Build system from the netsurf project"
 
 # Additional information...

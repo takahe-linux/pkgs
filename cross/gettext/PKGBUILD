@@ -3,7 +3,7 @@
 # Package information
 pkgname='gettext'
 pkgver='0.19.8'
-pkgrel=13
+pkgrel=14
 pkgdesc="GNU internationalization library"
 
 # Additional information...

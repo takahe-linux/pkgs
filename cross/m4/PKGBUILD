@@ -3,7 +3,7 @@
 # Package information
 pkgname='m4'
 pkgver='1.4.18'
-pkgrel=13
+pkgrel=14
 pkgdesc="The GNU macro processor"
 
 # Additional information...

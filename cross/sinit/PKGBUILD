@@ -3,7 +3,7 @@
 # Package information
 pkgname='sinit'
 pkgver='1.0'
-pkgrel=16
+pkgrel=17
 pkgdesc="A simple init"
 
 # Additional information...

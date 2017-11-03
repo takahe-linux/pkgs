@@ -2,7 +2,7 @@
 
 # Package information
 pkgname='musl'
-pkgver='1.1.17'
+pkgver='1.1.18'
 pkgrel=1
 pkgdesc="Lightweight libc implementation"
 
@@ -17,7 +17,7 @@ hostdepends=("${_target_triplet}-gcc-static" "${_target_triplet}-binutils")
 
 # Building information
 source=("http://www.musl-libc.org/releases/${pkgname}-${pkgver}.tar.gz")
-md5sums=('b2cbb0598ced4fd337b07c27b08d1233')
+md5sums=('5ff5f669dd248f00df77c19f575d2039')
 
 
 build() {

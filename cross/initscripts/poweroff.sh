@@ -3,12 +3,12 @@
 # Stop all the running services.
 bh-stopall
 
-# Ask everything else to terminate.
-trap "" TERM
-kill -TERM -1
+# Kill everything else.
+killall5 -SIGKILL
 
 # Remount everything readonly.
-mount -a -r
+umount -a -r
+mount -o remount,ro /dev/root /
 
 # Actually shutdown/halt.
 "${0##*/}" -f

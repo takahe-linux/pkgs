@@ -3,7 +3,7 @@
 # Package information
 pkgname=('busybox' 'mdev' 'hush' 'bb-coreutils' 'bb-util-linux' 'bb-findutils')
 pkgver='1.27.2'
-pkgrel=3
+pkgrel=5
 
 # Additional information...
 arch=('i586' 'mips')
@@ -27,7 +27,7 @@ source=("${_web_address}/${pkgname}-${pkgver}.tar.bz2"
         "getty.run"
        )
 md5sums=('476186f4bab81781dab2369bfd42734e'
-         '66991b2b180663ed15ae65407e7bdb07'
+         '53d6f37fc54de4f4c0052b7e8d1aba60'
          'e9245e5f55f004e3598cc90e2e86de30'
          '075068a820619ce91bb2b0c70ae237f4'
          '24e4d0170eea0cac1d86daf24379e44c'
@@ -85,20 +85,18 @@ package_busybox() {
     chmod +s "${pkgdir}/usr/bin/busybox"
 
 
-    KBD="setkeycodes showkey kbd_mode"
-    KEYBOARD="dumpkmap loadkmap setconsole"
     WHICH="which"
 
-    APPLETS="gunzip gzip tar bzip2 bunzip2 bzcat zcat [ [[ uevent"
+    APPLETS="gunzip gzip tar bzip2 bunzip2 bzcat zcat [ [["
     EDITORS="awk cmp diff patch sed vi"
     SHADOW="adduser addgroup deluser delgroup passwd"
 
     MISC="less hdparm man halt poweroff reboot"
     NET="ping hostname ip udhcpc ipaddr iplink iproute"
-    PROC="iostat lsof nmeter pstree top free fuser kill pgrep \
-        pidof pkill ps renice watch sysctl"
+    PROC="iostat lsof nmeter top free fuser kill killall5 pgrep \
+        pidof pkill ps watch sysctl"
 
-    _link_packages $KBD $KEYBOARD $NCURSES $WHICH $APPLETS $EDITORS $LOGIN \
+    _link_packages $NCURSES $WHICH $APPLETS $EDITORS $LOGIN \
         $MISC $NET $PROC $SHADOW
 
     install -Dm0644 "${srcdir}/man.conf" "${pkgdir}/etc/man.conf"
@@ -157,9 +155,9 @@ package_bb-util-linux() {
     conflicts=('util-linux')
 
     UTILLINUX="blockdev dmesg fbset getopt hwclock lspci lsusb \
-        mount umount su nsenter unshare"
+        mount umount su"
     LOGIN="getty login"
-    MISC_UTILS="mountpoint setsid time fsck"
+    MISC_UTILS="mountpoint setsid time"
 
     _link_packages $UTILLINUX $LOGIN $MISC_UTILS
 

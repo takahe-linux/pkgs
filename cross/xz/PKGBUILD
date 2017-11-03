@@ -3,7 +3,7 @@
 # Package information
 pkgname='xz'
 pkgver='5.2.3'
-pkgrel=12
+pkgrel=13
 pkgdesc="Library for dealing with XZ and LZMA compressed files"
 
 # Additional information...

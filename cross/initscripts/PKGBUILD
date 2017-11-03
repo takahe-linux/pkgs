@@ -3,7 +3,7 @@
 # Package information
 pkgname='initscripts'
 pkgver='0.6'
-pkgrel=6
+pkgrel=7
 pkgdesc="Startup and shutdown scripts"
 
 # Additional information...
@@ -21,7 +21,7 @@ backup=('etc/init.d/init' 'etc/init.d/poweroff' 'etc/init.d/reboot')
 source=('init.sh'
         'poweroff.sh')
 md5sums=('dd2b6e21ff9453f6b07e51654a9dea27'
-         'c9bd1e233b1d1a59a61ad4ad1e5721c1')
+         '390d4c07932b130017a6c261d2385322')
 
 
 package() {

@@ -2,8 +2,8 @@
 
 # Package information
 pkgname='libxml2'
-pkgver='2.9.6'
-pkgrel=5
+pkgver='2.9.7'
+pkgrel=1
 pkgdesc="XML parsing library"
 
 # Additional information...
@@ -13,7 +13,7 @@ license=('MIT')
 
 # Building information
 source=("ftp://xmlsoft.org/libxml2/${pkgname}-${pkgver}.tar.gz")
-md5sums=('dbae8327d8471941bf0472e273473e36')
+md5sums=('896608641a08b465098a40ddf51cefba')
 
 
 build() {

@@ -1,0 +1,2 @@
+#!/usr/bin/hush
+exec mdevd-netlink | mdevd

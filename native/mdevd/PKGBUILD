@@ -1,0 +1,42 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='mdevd'
+pkgver='0.0.1.0'
+pkgrel=3
+pkgdesc="Device hotplug daemon, similar to mdev"
+
+# Additional information...
+arch=('mips' 'i586')
+url="https://skarnet.org/software/${pkgname}"
+license=('ISC')
+
+# Dependency information
+depends=('skalibs')
+
+# Building information
+source=("${url}/${pkgname}-${pkgver}.tar.gz"
+        'mdevd.run')
+md5sums=('ec292664a18a1731f7207d895bde8e2a'
+         '45073fcf1584d27f0672b3338099c690')
+
+
+build() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    ./configure --prefix="/usr"
+    make
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    make DESTDIR="${pkgdir}/" install
+    install -Dm644 COPYING \
+        "${pkgdir}/usr/share/licenses/${pkgname}/COPYING"
+
+    # Add a custom service for use with backhand.
+    install -Dm755 "${srcdir}/mdevd.run" \
+        "${pkgdir}/usr/lib/backhand/mdevd/run"
+}

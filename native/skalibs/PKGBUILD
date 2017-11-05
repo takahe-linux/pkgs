@@ -1,0 +1,33 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='skalibs'
+pkgver='2.6.1.0'
+pkgrel=2
+pkgdesc="General-purpose C library for skarnet.org software"
+
+# Additional information...
+arch=('mips' 'i586')
+url="https://skarnet.org/software/${pkgname}"
+license=('ISC')
+
+# Building information
+source=("${url}/${pkgname}-${pkgver}.tar.gz")
+md5sums=('b650c523884bad8d4b7d5d692674ab38')
+
+
+build() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    ./configure --prefix="/usr"
+    make
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    make DESTDIR="${pkgdir}/" install
+    install -Dm644 COPYING \
+        "${pkgdir}/usr/share/licenses/${pkgname}/COPYING"
+}

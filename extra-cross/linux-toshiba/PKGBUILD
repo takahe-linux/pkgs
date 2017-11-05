@@ -6,7 +6,7 @@ _major_version='4.13'
 _srcname="linux-${_major_version}"
 pkgdesc="Toshiba 310CDS kernel"
 pkgver="${_major_version}.1"
-pkgrel=5
+pkgrel=6
 
 # Additional information...
 arch=('i586')
@@ -58,6 +58,7 @@ CONFIG_M586MMX=y
 # ~2K for CONFIG_TOSHIBA
 CONFIG_TOSHIBA=y
 CONFIG_LOG_BUF_SHIFT=16
+# CONFIG_UID16 is not set
 CONFIG_MULTIUSER=y
 CONFIG_BINFMT_ELF=y
 CONFIG_BINFMT_SCRIPT=y
@@ -73,12 +74,13 @@ CONFIG_NOHIGHMEM=y
 CONFIG_CC_OPTIMIZE_FOR_SIZE=y
 CONFIG_OPTIMIZE_INLINING=y
 CONFIG_POSIX_TIMERS=y
+CONFIG_SIGNALFD=y
 
 # uevent helper (hotplug script) support.
 # We use mdev for setting up device nodes.
 # TODO: We should replace this with a netlink helper daemon instead.
-CONFIG_UEVENT_HELPER=y
-CONFIG_UEVENT_HELPER_PATH="/usr/bin/mdev"
+#CONFIG_UEVENT_HELPER=y
+#CONFIG_UEVENT_HELPER_PATH="/usr/bin/mdev"
 
 # We currently need this for the hard drive controller.
 CONFIG_BLOCK=y
@@ -105,7 +107,7 @@ CONFIG_PCI=y
 # CONFIG_VGA_ARB is not set
 
 # PNP support (disable ACPI using acpi=off to make this work).
-CONFIG_PNPBIOS=y
+#CONFIG_PNPBIOS=y
 
 # Filesystems!.
 CONFIG_SHMEM=y
@@ -120,6 +122,7 @@ CONFIG_MSDOS_PARTITION=y
 # EXT2 corrupts easily, but is supposed to be faster and is ~130k
 # smaller than EXT4.
 CONFIG_EXT4_FS=y
+# CONFIG_EXT4_USE_FOR_EXT2 is not set
 # CONFIG_SWAP is not set
 CONFIG_FILE_LOCKING=y
 
@@ -163,7 +166,7 @@ CONFIG_USB_STORAGE=y
 
 # Terminal support.
 CONFIG_TTY=y
-# CONFIG_UNIX98_PTYS is not set
+CONFIG_UNIX98_PTYS=y
 # CONFIG_LEGACY_PTYS is not set
 CONFIG_HID is not set
 CONFIG_INPUT_MOUSEDEV=y
@@ -193,13 +196,12 @@ CONFIG_FB=y
 CONFIG_FB_VESA=y
 CONFIG_FRAMEBUFFER_CONSOLE=y
 CONFIG_FRAMEBUFFER_CONSOLE_DETECT_PRIMARY=y
-CONFIG_VGA_CONSOLE=y
 
 # Serial console support.
-CONFIG_SERIAL_8250=y
-# CONFIG_SERIAL_8250_DEPRECATED_OPTIONS is not set
-CONFIG_SERIAL_8250_CONSOLE=y
-# CONFIG_SERIAL_8250_MID is not set
+#CONFIG_SERIAL_8250=y
+## CONFIG_SERIAL_8250_DEPRECATED_OPTIONS is not set
+#CONFIG_SERIAL_8250_CONSOLE=y
+## CONFIG_SERIAL_8250_MID is not set
 
 # Sound support (50K).
 CONFIG_SOUND=y

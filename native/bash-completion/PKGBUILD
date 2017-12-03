@@ -3,7 +3,7 @@
 # Package information
 pkgname='bash-completion'
 pkgver='2.7'
-pkgrel=8
+pkgrel=9
 pkgdesc="Programmable completion for the bash shell"
 
 # Additional information...

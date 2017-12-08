@@ -3,7 +3,7 @@
 # Package information
 pkgname='skalibs'
 pkgver='2.6.1.0'
-pkgrel=4
+pkgrel=5
 pkgdesc="General-purpose C library for skarnet.org software"
 
 # Additional information...

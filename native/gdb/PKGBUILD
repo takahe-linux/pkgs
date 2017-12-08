@@ -3,7 +3,7 @@
 # Package information
 pkgname='gdb'
 pkgver='8.0.1'
-pkgrel=13
+pkgrel=14
 pkgdesc='The GNU Debugger'
 
 # Additional information...

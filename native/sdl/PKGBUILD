@@ -3,7 +3,7 @@
 # Package information
 pkgname='sdl'
 pkgver='1.2.15'
-pkgrel=43
+pkgrel=44
 pkgdesc="A library for low-level access to a framebuffer and input"
 
 # Additional information...

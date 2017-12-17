@@ -3,7 +3,7 @@
 # Package information
 pkgname='alsa-lib'
 pkgver='1.1.4.1'
-pkgrel=19
+pkgrel=20
 pkgdesc="Sound helper library"
 
 # Additional information...

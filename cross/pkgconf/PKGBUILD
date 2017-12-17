@@ -2,7 +2,7 @@
 
 # Package information
 pkgname='pkgconf'
-pkgver='1.3.11'
+pkgver='1.3.90'
 pkgrel=1
 pkgdesc="A drop-in replacement for pkg-config"
 
@@ -20,7 +20,7 @@ conflicts=('pkg-config')
 
 # Building information
 source=("http://rabbit.dereferenced.org/~nenolod/distfiles/${pkgname}-${pkgver}.tar.gz")
-md5sums=('f983491e95568f2d8d7023c322647d7c')
+md5sums=('1b47da56983452646b5a2cab217e517b')
 
 build() {
     cd "${srcdir}/${pkgname}-${pkgver}"

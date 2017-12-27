@@ -2,8 +2,8 @@
 
 # Package information
 pkgname='mpc'
-pkgver='1.0.3'
-pkgrel=16
+pkgver='0.r1332.608a221'
+pkgrel=1
 pkgdesc="Library for the arithmetic of complex numbers with arbitrarily high precision"
 
 # Additional information...
@@ -13,15 +13,28 @@ license=('LGPL')
 
 # Dependency information
 depends=('mpfr' 'gmp' 'musl')
-hostdepends=('toolchain')
+hostdepends=('toolchain' 'git')
 
 # Building information
-source=("http://www.multiprecision.org/mpc/download/mpc-${pkgver}.tar.gz")
-md5sums=('d6a1d5f8ddea3abd2cc3e98f58352d26')
+source=("${pkgname}::git+https://gforge.inria.fr/anonscm/git/mpc/mpc.git#commit=608a22178bea8fe9bebab88b5bc23a914f0926da")
+md5sums=('SKIP')
+
+
+pkgver() {
+    cd "${srcdir}/${pkgname}"
+    printf "0.r%s.%s" "$(git rev-list --count HEAD)" \
+        "$(git rev-parse --short HEAD)"
+}
+
+
+prepare() {
+    cd "${srcdir}/${pkgname}"
+    autoreconf -i
+}
 
 
 build() {
-    cd "${srcdir}/${pkgname}-${pkgver}"
+    cd "${srcdir}/${pkgname}"
 
     ./configure --prefix="/usr" \
         --build="${_local_triplet}" \
@@ -32,7 +45,7 @@ build() {
 
 
 package() {
-    cd "${srcdir}/${pkgname}-${pkgver}"
+    cd "${srcdir}/${pkgname}"
 
     make DESTDIR="${pkgdir}/" install
 

@@ -3,7 +3,7 @@
 # Package information
 pkgname='libdom'
 pkgver='0.3.2'
-pkgrel=13
+pkgrel=14
 pkgdesc="DOM library from the Netsurf project"
 
 # Additional information...

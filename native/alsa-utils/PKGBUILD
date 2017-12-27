@@ -3,7 +3,7 @@
 # Package information
 pkgname='alsa-utils'
 pkgver='1.1.4'
-pkgrel=21
+pkgrel=22
 pkgdesc="Sound support and basic utilities"
 
 # Additional information...

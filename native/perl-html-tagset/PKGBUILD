@@ -4,7 +4,7 @@
 pkgname='perl-html-tagset'
 _pkgname='HTML-Tagset'
 pkgver='3.20'
-pkgrel=15
+pkgrel=16
 pkgdesc="Data structures useful in parsing HTML"
 
 # Additional information...

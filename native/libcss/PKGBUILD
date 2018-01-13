@@ -3,7 +3,7 @@
 # Package information
 pkgname='libcss'
 pkgver='0.7.0'
-pkgrel=15
+pkgrel=16
 pkgdesc="CSS library from the Netsurf project"
 
 # Additional information...

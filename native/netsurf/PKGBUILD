@@ -3,7 +3,7 @@
 # Package information
 pkgname='netsurf'
 pkgver='3.7'
-pkgrel=17
+pkgrel=18
 pkgdesc="Lightweight and fast web browser"
 
 # Additional information...

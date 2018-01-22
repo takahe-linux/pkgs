@@ -3,7 +3,7 @@
 # Package information
 pkgname='libnsutils'
 pkgver='0.0.3'
-pkgrel=61
+pkgrel=62
 pkgdesc="Utility library from the Netsurf project"
 
 # Additional information...

@@ -3,7 +3,7 @@
 # Package information
 pkgname='mpdecimal'
 pkgver='2.4.2'
-pkgrel=64
+pkgrel=65
 pkgdesc="Implements arbitary precision decimal arithmetic"
 
 # Additional information...

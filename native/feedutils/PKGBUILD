@@ -3,7 +3,7 @@
 # Package information
 pkgname='feedutils'
 pkgver=r25.bf9e5b8
-pkgrel=26
+pkgrel=27
 pkgdesc="Utilities for managing Atom and RSS feeds"
 
 # Additional information...

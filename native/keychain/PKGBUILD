@@ -3,7 +3,7 @@
 # Package information
 pkgname='keychain'
 pkgver='2.8.3'
-pkgrel=16
+pkgrel=17
 pkgdesc="A front-end to SSH agent allowing one agent per session"
 
 # Additional information...

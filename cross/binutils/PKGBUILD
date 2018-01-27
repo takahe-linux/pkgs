@@ -2,8 +2,8 @@
 
 # Package information
 pkgname='binutils'
-pkgver='2.29.1'
-pkgrel=5
+pkgver='2.30'
+pkgrel=2
 pkgdesc="A set of programs to assemble and manipulate binary and object files"
 
 # Additional information...
@@ -18,8 +18,8 @@ hostdepends=('toolchain')
 
 # Building information
 options=('!distcc' '!ccache')
-source=("ftp://ftp.gnu.org/gnu/${pkgname}/${pkgname}-${pkgver}.tar.bz2")
-md5sums=('9af59a2ca3488823e453bb356fe0f113')
+source=("https://sourceware.org/pub/${pkgname}/releases/${pkgname}-${pkgver}.tar.xz")
+md5sums=('ffc476dd46c96f932875d1b2e27e929f')
 
 
 prepare() {

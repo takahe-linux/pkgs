@@ -3,7 +3,7 @@
 # Package information
 pkgname='libutf8proc'
 pkgver='2.1.0'
-pkgrel=29
+pkgrel=30
 pkgdesc="A simple UTF8 processing library"
 
 # Additional information...

@@ -3,7 +3,7 @@
 # Package information
 pkgname='gmp'
 pkgver='6.1.2'
-pkgrel=15
+pkgrel=16
 pkgdesc="A free library for arbitrary precision arithmetic"
 
 # Additional information...

@@ -3,7 +3,7 @@
 # Package information
 pkgname='initscripts'
 pkgver='0.6'
-pkgrel=8
+pkgrel=9
 pkgdesc="Startup and shutdown scripts"
 
 # Additional information...

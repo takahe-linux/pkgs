@@ -3,7 +3,7 @@
 # Package information
 pkgname='automake'
 pkgver='1.15.1'
-pkgrel=26
+pkgrel=27
 pkgdesc="A GNU tool for automatically creating makefiles"
 
 # Additional information...

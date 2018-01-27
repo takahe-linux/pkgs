@@ -5,7 +5,7 @@ pkgname='readline'
 _basever='7.0'
 _patchlevel='003'
 pkgver="${_basever}.${_patchlevel}"
-pkgrel=13
+pkgrel=14
 pkgdesc="GNU line editing library"
 
 # Additional information...

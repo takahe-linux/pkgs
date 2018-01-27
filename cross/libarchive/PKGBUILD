@@ -3,7 +3,7 @@
 # Package information
 pkgname='libarchive'
 pkgver='3.3.1'
-pkgrel=13
+pkgrel=14
 pkgdesc="Library for reading and writing several compression formats"
 
 # Additional information...

@@ -5,7 +5,7 @@ pkgname='openssl'
 _ver='1.0.2n'
 # use a pacman compatible version scheme
 pkgver=${_ver/[a-z]/.${_ver//[0-9.]/}}
-pkgrel=2
+pkgrel=3
 pkgdesc='The Open Source toolkit for Secure Sockets Layer and Transport Layer Security'
 
 # Additional information...

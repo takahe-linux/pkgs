@@ -4,7 +4,7 @@
 pkgname='lynx'
 pkgver='2.8.8rel.2'
 _pkgver='2-8-8'
-pkgrel=67
+pkgrel=69
 pkgdesc="A text WWW browser"
 
 # Additional information...
@@ -17,8 +17,16 @@ depends=('openssl' 'zlib')
 
 # Building information
 backup=('etc/lynx.cfg')
-source=("http://invisible-mirror.net/archives/lynx/tarballs/${pkgname}${pkgver}.tar.bz2")
-md5sums=('b231c2aa34dfe7ca25681ef4e55ee7e8')
+source=("http://invisible-mirror.net/archives/lynx/tarballs/${pkgname}${pkgver}.tar.bz2"
+        'ncurses_6.1.patch')
+md5sums=('b231c2aa34dfe7ca25681ef4e55ee7e8'
+         'e0a478d5820a2264e61174421cc8637f')
+
+
+prepare() {
+    cd "${srcdir}/${pkgname}${_pkgver}"
+    patch -p1 < "${srcdir}/ncurses_6.1.patch"
+}
 
 
 build() {

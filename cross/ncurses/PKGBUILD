@@ -2,8 +2,8 @@
 
 # Package information
 pkgname='ncurses'
-pkgver='6.0'
-pkgrel=17
+pkgver='6.1'
+pkgrel=1
 pkgdesc='System V Release 4.0 curses emulation library'
 
 # Additional information...
@@ -16,8 +16,8 @@ depends=('musl')
 hostdepends=('toolchain')
 
 # Building information
-source=("ftp://invisible-island.net/ncurses/ncurses-${pkgver}.tar.gz")
-md5sums=('ee13d052e1ead260d7c28071f46eefb1')
+source=("https://invisible-mirror.net/archives/ncurses/ncurses-${pkgver}.tar.gz")
+md5sums=('98c889aaf8d23910d2b92d65be2e737a')
 
 
 build() {

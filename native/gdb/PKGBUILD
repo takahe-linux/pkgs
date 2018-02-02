@@ -2,8 +2,8 @@
 
 # Package information
 pkgname='gdb'
-pkgver='8.0.1'
-pkgrel=22
+pkgver='8.1'
+pkgrel=1
 pkgdesc='The GNU Debugger'
 
 # Additional information...
@@ -19,7 +19,7 @@ backup=('etc/gdb/gdbinit')
 source=("http://ftp.gnu.org/gnu/gdb/${pkgname}-${pkgver}.tar.xz"
         "gdb-sgidefs.h"
         "gdb-linux_nat.patch")
-sha1sums=('faa945f77cf9bb5ae9530664f8b34ad21e38088f'
+sha1sums=('641861f7d3f22b6a23bc3e801f0ff29a78375490'
           '20eb85f7adb77b894229998432caae530962316c'
           '7916f25d3a6ea7830736f76b8ddc6e445fd26fdd')
 

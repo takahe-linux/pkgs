@@ -3,7 +3,7 @@
 # Package information
 pkgname='libparserutils'
 pkgver='0.2.3'
-pkgrel=82
+pkgrel=83
 pkgdesc="Lexer/parser utility function library from the Netsurf project"
 
 # Additional information...

@@ -6,7 +6,7 @@
 pkgbase='gcc'
 pkgname=('gcc' 'gcc-libs')
 pkgver='7.3.0'
-pkgrel=2
+pkgrel=3
 
 # Additional information...
 arch=('mips' 'i586')

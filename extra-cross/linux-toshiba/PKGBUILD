@@ -6,7 +6,7 @@ _major_version='4.15'
 _srcname="linux-${_major_version}"
 pkgdesc="Toshiba 310CDS kernel"
 pkgver="${_major_version}.1"
-pkgrel=1
+pkgrel=2
 
 # Additional information...
 arch=('i586')
@@ -98,6 +98,13 @@ CONFIG_ATA_SFF=y
 # ATA_GENERIC, PATA_ACPI do not work.
 CONFIG_PATA_LEGACY=y
 #CONFIG_PATA_ISAPNP=y
+
+CONFIG_ACPI_DEBUGGER=y
+CONFIG_ACPI_DEBUG=y
+CONFIG_ACPI_PCI_SLOT=y
+CONFIG_ATA_ACPI=y
+CONFIG_ATA_BMDMA=y
+CONFIG_PATA_ACPI=y
 
 # CDROM support.
 # Note that we would also need the filesystem here.
@@ -203,10 +210,10 @@ CONFIG_FRAMEBUFFER_CONSOLE=y
 CONFIG_FRAMEBUFFER_CONSOLE_DETECT_PRIMARY=y
 
 # Serial console support.
-#CONFIG_SERIAL_8250=y
-## CONFIG_SERIAL_8250_DEPRECATED_OPTIONS is not set
-#CONFIG_SERIAL_8250_CONSOLE=y
-## CONFIG_SERIAL_8250_MID is not set
+CONFIG_SERIAL_8250=y
+# CONFIG_SERIAL_8250_DEPRECATED_OPTIONS is not set
+CONFIG_SERIAL_8250_CONSOLE=y
+# CONFIG_SERIAL_8250_MID is not set
 
 # Sound support (50K).
 CONFIG_SOUND=y

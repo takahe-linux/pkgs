@@ -3,7 +3,7 @@
 # Package information
 pkgname='fakefakeroot'
 pkgver='1.0.0'
-pkgrel=28
+pkgrel=29
 pkgdesc="a fake fakeroot, for statically linked systems - uses su instead"
 
 # Additional information...

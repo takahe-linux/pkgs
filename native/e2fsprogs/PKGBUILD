@@ -2,8 +2,8 @@
 
 # Package information
 pkgname='e2fsprogs'
-pkgver='1.43.5'
-pkgrel=27
+pkgver='1.43.9'
+pkgrel=1
 pkgdesc='Ext2/3/4 filesystem utilities'
 
 # Additional information...
@@ -14,7 +14,7 @@ license=('GPL' 'LGPL' 'MIT')
 # Building information
 backup=('etc/mke2fs.conf')
 source=("${pkgname}-${pkgver}.tar.gz::${url}/archive/v${pkgver}.tar.gz")
-sha1sums=('9f57fa18f881b27b577c4ecec07237ebe7b98561')
+sha1sums=('6adac37d468e55cd9ae68adc231019e2fe1d3727')
 
 
 build() {

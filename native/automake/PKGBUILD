@@ -2,8 +2,8 @@
 
 # Package information
 pkgname='automake'
-pkgver='1.16'
-pkgrel=1
+pkgver='1.16.1'
+pkgrel=2
 pkgdesc="A GNU tool for automatically creating makefiles"
 
 # Additional information...
@@ -18,7 +18,7 @@ makedepends=('autoconf')
 
 # Building information
 source=("ftp://ftp.gnu.org/pub/gnu/${pkgname}/${pkgname}-${pkgver}.tar.xz")
-md5sums=('bfdf69ac36c327b3a59b83ab01057e30')
+md5sums=('53f38e7591fa57c3d2cee682be668e5b')
 
 
 build() {

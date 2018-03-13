@@ -3,7 +3,7 @@
 # Package information
 pkgname='backhand'
 pkgver='0.2'
-pkgrel=9
+pkgrel=10
 pkgdesc="Utilities for managing background processes"
 
 # Additional information...

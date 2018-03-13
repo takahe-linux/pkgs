@@ -3,7 +3,7 @@
 # Package information
 pkgname='libnl'
 pkgver='3.4.0'
-pkgrel=18
+pkgrel=19
 pkgdesc="Library for applications dealing with netlink sockets"
 
 # Additional information...

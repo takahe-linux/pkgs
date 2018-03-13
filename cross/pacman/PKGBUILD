@@ -5,7 +5,7 @@
 # Package information
 pkgname='pacman'
 pkgver='5.0.2'
-pkgrel=24
+pkgrel=25
 pkgdesc="Arch Linux's simple package manager"
 
 # Additional information...

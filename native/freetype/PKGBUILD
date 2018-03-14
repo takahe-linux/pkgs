@@ -3,7 +3,7 @@
 # Package information
 pkgname='freetype'
 pkgver='2.9'
-pkgrel=2
+pkgrel=3
 pkgdesc="TrueType font rendering library"
 
 # Additional information...

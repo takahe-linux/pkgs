@@ -3,7 +3,7 @@
 # Package information
 pkgname='binutils'
 pkgver='2.30'
-pkgrel=2
+pkgrel=3
 pkgdesc="A set of programs to assemble and manipulate binary and object files"
 
 # Additional information...

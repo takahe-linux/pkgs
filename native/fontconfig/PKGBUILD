@@ -3,7 +3,7 @@
 # Package information
 pkgname='fontconfig'
 pkgver='2.13.0'
-pkgrel=3
+pkgrel=4
 pkgdesc="A library for customising font access"
 
 # Additional information...

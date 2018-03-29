@@ -3,7 +3,7 @@
 # Package information
 pkgname='attr'
 pkgver='2.4.47'
-pkgrel=26
+pkgrel=27
 pkgdesc="Extended attribute support library"
 
 # Additional information...

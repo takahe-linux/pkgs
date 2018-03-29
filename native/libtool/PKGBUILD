@@ -7,7 +7,7 @@
 # Package information
 pkgname='libtool'
 pkgver='2.4.6'
-pkgrel=33
+pkgrel=34
 pkgdesc="A generic library builder helper script"
 
 # Additional information...

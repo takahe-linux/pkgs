@@ -3,7 +3,7 @@
 # Package information
 pkgname='mdevd'
 pkgver='0.0.1.0'
-pkgrel=21
+pkgrel=22
 pkgdesc="Device hotplug daemon, similar to mdev"
 
 # Additional information...

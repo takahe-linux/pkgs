@@ -4,7 +4,7 @@
 pkgname='linux-firmware'
 _rev="4b9559f"
 pkgver="20161222.${_rev}"
-pkgrel=72
+pkgrel=73
 pkgdesc="Firmware files for Linux"
 
 # Additional information...

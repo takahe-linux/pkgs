@@ -2,18 +2,18 @@
 
 # Package information
 pkgname='strace'
-pkgver='4.21'
-pkgrel=8
+pkgver='4.22'
+pkgrel=1
 pkgdesc="syscall tracer"
 
 # Additional information...
 arch=('mips' 'i586')
-url="http://sourceforge.net/projects/strace/"
+url="https://github.com/strace/strace/"
 license=('custom')
 
 # Building information
-source=("http://downloads.sourceforge.net/${pkgname}/${pkgname}-${pkgver}.tar.xz")
-md5sums=('2f3d225b4de54ffe49a392f39923c5fd')
+source=("${url}/releases/download/v${pkgver}/${pkgname}-${pkgver}.tar.xz")
+md5sums=('7a2a7d7715da6e6834bc65bd09bace1c')
 
 
 prepare() {

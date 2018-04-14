@@ -2,8 +2,8 @@
 
 # Package information
 pkgname='alsa-utils'
-pkgver='1.1.4'
-pkgrel=36
+pkgver='1.1.6'
+pkgrel=2
 pkgdesc="Sound support and basic utilities"
 
 # Additional information...
@@ -15,8 +15,8 @@ license=('LGPL')
 depends=('alsa-lib')
 
 # Building information
-source=("ftp://ftp.alsa-project.org/pub/lib/${pkgname}-${pkgver}.tar.bz2")
-md5sums=('01e3934ca5bd22a80c27289d1b0adcdc')
+source=("ftp://ftp.alsa-project.org/pub/utils/${pkgname}-${pkgver}.tar.bz2")
+md5sums=('50ae75567459646b843bed78d916b002')
 
 
 build() {

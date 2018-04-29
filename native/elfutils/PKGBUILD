@@ -1,0 +1,93 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='elfutils'
+pkgver='0.170'
+pkgrel=1
+pkgdesc="Utilities to handle elf object files and DWARF debugging information"
+
+# Additional information...
+arch=('mips' 'i586')
+url="https://sourceware.org/elfutils"
+license=('LGPL3' 'GPL' 'GPL3')
+
+# Dependency information
+depends=('argp' 'fts')
+
+# Building information
+options=('staticlibs')
+source=("${url}/ftp/${pkgver}/${pkgname}-${pkgver}.tar.bz2"
+        *.patch)
+md5sums=('03599aee98c9b726c7a732a2dd0245d5'
+         'c9956c110e85f3613147e2ceaaf77242'
+         '4a95899058fdc7b5b2a326332b5f8ae8'
+         'a8000a18a6f7b97d9e1fe0edbfad9e45'
+         'e4057882643eb11058ca4a1db5178089'
+         '12f96412e1c2472f02ba2e87573fd688'
+         '90afb1bdc51e968d8fe6e248e577ada9')
+
+
+prepare() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+    for p in "${srcdir}/"*.patch; do
+        patch -p1 < "${p}"
+    done
+    sed -i lib/fixedsizehash.h -e '/#include <sys\/cdefs.h>/d'
+    cat > src/error.h <<-EOF
+#ifndef _ERROR_H_
+#define _ERROR_H_
+
+#include <stdarg.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <errno.h>
+
+static unsigned int error_message_count = 0;
+
+static inline void error(int status, int errnum, const char* format, ...)
+{
+        va_list ap;
+        fprintf(stderr, "%s: ", program_invocation_name);
+        va_start(ap, format);
+        vfprintf(stderr, format, ap);
+        va_end(ap);
+        if (errnum)
+                fprintf(stderr, ": %s", strerror(errnum));
+        fprintf(stderr, "\n");
+        error_message_count++;
+        if (status)
+                exit(status);
+}
+
+#endif	/* _ERROR_H_ */
+EOF
+    cp src/error.h lib/
+}
+
+
+build() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+    ./configure --prefix="/usr" --program-prefix="eu-"
+
+    # Work around using a discrete fts library.
+    sed -i libdw/Makefile -e 's:\(libdw_so_LDLIBS =.*\):\1 -lfts:'
+    # TODO: Figure out why TEXTREL is being generated...
+    sed -i libdw/Makefile -e 's:textrel_found = .*:textrel_found = $(textrel_msg):g'
+
+    # Update the pacakge version
+    sed config/version.h.in -e "s:@eu_version@:${pkgver#*.}:" > config/version.h
+
+    for i in lib libdwelf libdwfl libebl libelf libdw; do
+        make -C "$i"
+    done
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+    for i in lib libdwelf libdwfl libebl libelf libdw; do
+        make -C "$i" DESTDIR="${pkgdir}/" install
+    done
+    install -Dm0644 config/version.h "${pkgdir}/usr/include/elfutils/version.h"
+}

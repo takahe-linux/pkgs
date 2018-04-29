@@ -1,0 +1,46 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='fts'
+pkgver='1.2.7'
+pkgrel=1
+pkgdesc="fts from glibc"
+
+# Additional information...
+arch=('mips' 'i586')
+url="https://github.com/pullmoll/musl-fts"
+license=('custom')
+
+# Building information
+source=("${pkgname}-${pkgver}::${url}/archive/v${pkgver}.tar.gz")
+md5sums=('bce0b5de0cf2519a74fbfacead60369d')
+
+
+build() {
+    cd "${srcdir}/musl-${pkgname}-${pkgver}"
+    touch config.h
+    gcc -c -fpic fts.c -I./
+    gcc -shared -o libfts.so fts.o
+}
+
+
+package() {
+    cd "${srcdir}/musl-${pkgname}-${pkgver}"
+
+    install -Dm0755 libfts.so "${pkgdir}/usr/lib/libfts.so"
+    install -Dm0644 fts.h "${pkgdir}/usr/include/fts.h"
+
+    cat > musl-fts.pc << EOF
+prefix=/usr
+exec_prefix=/usr/bin
+libdir=/usr/lib
+includedir=/usr/include
+
+Name: musl-fts
+Description: ${pkgdesc}
+Version: ${pkgver}
+Libs: -L$${libdir} -lfts
+Cflags: -I$${includedir}
+EOF
+    install -Dm0644 musl-fts.pc "${pkgdir}/usr/lib/pkgconfig/libfts.pc"
+}

@@ -1,0 +1,49 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='argp'
+pkgver='1.3'
+pkgrel=1
+pkgdesc="Standalone hierarchial argument parsing library from glibc"
+
+# Additional information...
+arch=('mips' 'i586')
+url="http://www.lysator.liu.se/~nisse/misc"
+license=('GPL2')
+
+# Dependency information
+makedepends=('libtool' 'automake' 'autoconf')
+
+# Building information
+source=("${url}/${pkgname}-standalone-${pkgver}.tar.gz"
+        *.patch)
+md5sums=('720704bac078d067111b32444e24ba69'
+         '05ba8faf86b1f320127119e9bfc76d1a'
+         '26557436fa85068f499120f573b05b17')
+
+
+prepare() {
+    cd "${srcdir}/${pkgname}-standalone-${pkgver}"
+    for p in "${srcdir}/"*.patch; do
+        patch -p1 < "${p}"
+    done
+    autoreconf -vif
+}
+
+
+build() {
+    cd "${srcdir}/${pkgname}-standalone-${pkgver}"
+
+    ./configure --prefix="/usr" \
+        --sysconfdir="/etc" \
+        --mandir="/usr/share/man" \
+        --localstatedir="/var"
+    make
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}-standalone-${pkgver}"
+    install -Dm644 argp.h "${pkgdir}/usr/include/argp.h"
+    install -Dm755 libargp.a "${pkgdir}/usr/lib/libargp.a"
+}

@@ -3,7 +3,7 @@
 # Package information
 pkgname='binutils'
 pkgver='2.30'
-pkgrel=3
+pkgrel=4
 pkgdesc="A set of programs to assemble and manipulate binary and object files"
 
 # Additional information...
@@ -17,7 +17,7 @@ depends=('musl' 'zlib')
 hostdepends=('toolchain')
 
 # Building information
-options=('!distcc' '!ccache')
+options=('staticlibs' '!distcc' '!ccache')
 source=("https://sourceware.org/pub/${pkgname}/releases/${pkgname}-${pkgver}.tar.xz")
 md5sums=('ffc476dd46c96f932875d1b2e27e929f')
 
@@ -40,7 +40,7 @@ build() {
         --host="${_target_triplet}" \
         --target="${_target_triplet}" \
         --disable-nls --disable-multilib \
-        --disable-werror \
+        --disable-werror --enable-shared \
         --with-lib-path="/usr/lib" \
         --enable-deterministic-archives
 

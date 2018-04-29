@@ -3,7 +3,7 @@
 # Package information
 pkgname='ncurses'
 pkgver='6.1'
-pkgrel=2
+pkgrel=3
 pkgdesc='System V Release 4.0 curses emulation library'
 
 # Additional information...
@@ -27,9 +27,7 @@ build() {
         --host="${_target_triplet}" \
         --mandir="/usr/share/man" \
         --enable-overwrite \
-        --disable-db-install \
         --with-build-cc="gcc" \
-        --with-fallbacks="ansi linux vt100 xterm" \
         --with-shared \
         --without-debug \
         --without-tests \

@@ -2,8 +2,8 @@
 
 # Package information
 pkgname='libutf8proc'
-pkgver='2.1.0'
-pkgrel=39
+pkgver='2.1.1'
+pkgrel=1
 pkgdesc="A simple UTF8 processing library"
 
 # Additional information...
@@ -14,7 +14,7 @@ license=('MIT')
 # Building information
 source=("${pkgname}-${pkgver}.tar.gz::https://github.com/JuliaLang/utf8proc/archive/v${pkgver}.tar.gz"
         "${pkgname}.pc")
-md5sums=('8ec2f58a12b3cec857881360b2b99952'
+md5sums=('0713679a26f18d1f217c15b245a85e92'
          'eac32d19e3ea069934ea070755ca294d')
 
 

@@ -5,8 +5,8 @@
 # Package information
 pkgbase='gcc'
 pkgname=('gcc' 'gcc-libs')
-pkgver='7.3.0'
-pkgrel=4
+pkgver='8.1.0'
+pkgrel=1
 
 # Additional information...
 arch=('mips' 'i586')
@@ -21,7 +21,7 @@ hostdepends=('toolchain')
 options=('!emptydirs')
 source=("ftp://gcc.gnu.org/pub/gcc/releases/gcc-${pkgver}/gcc-${pkgver}.tar.xz"
         *.patch)
-sha256sums=('832ca6ae04636adbb430e865a1451adf6979ab44ca1c8374f61fba65645ce15c'
+sha256sums=('1d1866f992626e61349a1ccd0b8d5253816222cdc13390dcfaa74b093aa2b153'
             '7ad65c8a8613b34b7ffdf0dcee15659ba12a21ed0b65052644d6ca73653d337a'
             '9854b80d6b4854f48438f6784e86411fbc607763a6be80faae5a36c508c3cf9e'
             'c00abb172cd9aee0c951450b4e77d320ea6fd76a2901e96547113c3d0e9bf210')

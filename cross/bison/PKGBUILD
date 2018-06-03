@@ -2,8 +2,8 @@
 
 # Package information
 pkgname='bison'
-pkgver='3.0.4'
-pkgrel=23
+pkgver='3.0.5'
+pkgrel=1
 pkgdesc="The GNU general-purpose parser generator"
 
 # Additional information...
@@ -18,7 +18,7 @@ hostdepends=('toolchain' 'm4')
 
 # Building information
 source=("ftp://ftp.gnu.org/gnu/${pkgname}/${pkgname}-${pkgver}.tar.xz")
-md5sums=('c342201de104cc9ce0a21e0ad10d4021')
+md5sums=('3e54f20988ecd1b62044e25481e5f06b')
 
 
 build() {

@@ -1,0 +1,12 @@
+diff --git a/scripts/makepkg.sh.in b/scripts/makepkg.sh.in
+index 29413704..21737af8 100644
+--- a/scripts/makepkg.sh.in
++++ b/scripts/makepkg.sh.in
+@@ -1372,7 +1372,6 @@ if ! ensure_writable_dir "BUILDDIR" "$BUILDDIR"; then
+ 	plain "$(gettext "Aborting...")"
+ 	exit $E_FS_PERMISSIONS
+ fi
+-chmod a-s "$BUILDDIR"
+ 
+ if (( ! (NOBUILD || GENINTEG) )) && ! ensure_writable_dir "PKGDEST" "$PKGDEST"; then
+ 	plain "$(gettext "Aborting...")"

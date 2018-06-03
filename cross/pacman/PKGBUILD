@@ -4,8 +4,8 @@
 
 # Package information
 pkgname='pacman'
-pkgver='5.0.2'
-pkgrel=28
+pkgver='5.1.0'
+pkgrel=1
 pkgdesc="Arch Linux's simple package manager"
 
 # Additional information...
@@ -25,27 +25,19 @@ source=("https://sources.archlinux.org/other/pacman/${pkgname}-${pkgver}.tar.gz"
         pacman.conf
         makepkg.conf
         *.patch)
-md5sums=('f36f5e7e95a89436febe1bcca874fc33'
+md5sums=('7b0460d449323eb3097ab39913d2668b'
          '044786f82c98ca027067c63037e1fa15'
          'fefa873b52d15f08a1d32cb469ec6018'
-         '16fe9fbb5bfeaaefdffcfe7cab147445'
-         '8814d0b46687cc017d44d4dd5eebd1c1')
+         'f3572075f951c64be04653513fdf6a29')
 
 
 prepare() {
     cd "${srcdir}/${pkgname}-${pkgver}"
-
-    autoreconf --force --install
-
-    # Upstreamed, remove with next release.
-    cat > config.cache << EOF
-ac_cv_func_malloc_0_nonnull=yes
-EOF
-
-    for p in ../*.patch; do
+    for p in "${srcdir}/"*.patch; do
         patch -p1 < "${p}"
     done
 }
+
 
 build() {
     cd "${srcdir}/${pkgname}-${pkgver}"
@@ -63,7 +55,6 @@ build() {
         SEDINPLACEFLAGS="-i"
 
     make
-    make -C contrib
 }
 
 
@@ -71,7 +62,6 @@ package() {
     cd "${srcdir}/${pkgname}-${pkgver}"
 
     make DESTDIR="${pkgdir}/" install
-    make DESTDIR="${pkgdir}/" -C contrib install
 
     # Install the configuration files
     install -dm755 "${pkgdir}/etc"
@@ -95,7 +85,4 @@ package() {
     for file in makepkg pacman-key; do
         ln -s 'pacman' "${pkgdir}/usr/share/bash-completion/completions/${file}"
     done
-
-    install -Dm644 'contrib/PKGBUILD.vim' \
-        "${pkgdir}/usr/share/vim/vimfiles/syntax/PKGBUILD.vim"
 }

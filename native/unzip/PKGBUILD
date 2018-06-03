@@ -1,0 +1,37 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='unzip'
+pkgver='6.0'
+_pkgver="${pkgver/./}"
+pkgrel=1
+pkgdesc="Utility for manipulating zip archives"
+
+# Additional information...
+arch=('mips' 'i586')
+url="http://www.info-zip.org/UnZip.html"
+license=('custom')
+
+# Building information
+source=("http://downloads.sourceforge.net/infozip/${pkgname}${_pkgver}.tar.gz")
+md5sums=('62b490407489521db863b523a7f86375')
+
+
+prepare() {
+    cd "${srcdir}/${pkgname}${_pkgver}"
+    sed -i "/MANDIR =/s#)/#)/share/#" unix/Makefile
+}
+
+
+build() {
+    cd "${srcdir}/${pkgname}${_pkgver}"
+    make -f unix/Makefile prefix=/usr unzips
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}${_pkgver}"
+
+    make -f unix/Makefile prefix="${pkgdir}/usr" install
+    install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+}

@@ -3,7 +3,7 @@
 # Package information
 pkgname='zlib'
 pkgver='1.2.11'
-pkgrel=15
+pkgrel=16
 pkgdesc='Compression library implementing the deflate compression method found in gzip and PKZIP'
 
 # Additional information...

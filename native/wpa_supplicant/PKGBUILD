@@ -3,7 +3,7 @@
 # Package information
 pkgname='wpa_supplicant'
 pkgver='2.6'
-pkgrel=80
+pkgrel=81
 pkgdesc="Utility for key negotiation for WPA networks"
 
 # Additional information...

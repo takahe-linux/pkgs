@@ -3,7 +3,7 @@
 # Package information
 pkgname='ca-certificates'
 pkgver='20161130'
-pkgrel=14
+pkgrel=15
 pkgdesc="Trusted CA certificates from Debian"
 
 # Additional information...

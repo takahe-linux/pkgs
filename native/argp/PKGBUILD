@@ -3,7 +3,7 @@
 # Package information
 pkgname='argp'
 pkgver='1.3'
-pkgrel=1
+pkgrel=2
 pkgdesc="Standalone hierarchial argument parsing library from glibc"
 
 # Additional information...

@@ -3,7 +3,7 @@
 # Package information
 pkgname='libnsbmp'
 pkgver='0.1.4'
-pkgrel=75
+pkgrel=76
 pkgdesc="BMP parser library from the Netsurf project"
 
 # Additional information...

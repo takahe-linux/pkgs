@@ -3,7 +3,7 @@
 # Package information
 pkgname='fts'
 pkgver='1.2.7'
-pkgrel=1
+pkgrel=2
 pkgdesc="fts from glibc"
 
 # Additional information...

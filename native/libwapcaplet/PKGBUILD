@@ -19,6 +19,13 @@ source=("git://git.netsurf-browser.org/${pkgname}.git#tag=release/${pkgver}")
 md5sums=('SKIP')
 
 
+prepare() {
+    cd "${srcdir}/${pkgname}"
+    # TODO: Fix GCC 8 warnings
+    sed -i Makefile -e 's:-Werror::'
+}
+
+
 build() {
     cd "${srcdir}/${pkgname}"
     make LIBDIR=lib INCLUDEDIR=include PREFIX=/usr COMPONENT_TYPE="lib-shared"

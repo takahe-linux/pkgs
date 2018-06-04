@@ -2,10 +2,10 @@
 
 # Package information
 pkgname="linux"
-_major_version='4.15'
+_major_version='4.16'
 _srcname="linux-${_major_version}"
 pkgdesc="generic kernel"
-pkgver="${_major_version}.1"
+pkgver="${_major_version}.13"
 pkgrel=1
 
 # Additional information...
@@ -22,8 +22,8 @@ hostdepends=('bc' 'inetutils' "${_target_triplet}-gcc-static"
 options=('!buildflags')
 source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz")
-md5sums=('0d701ac1e2a67d47ce7127432df2c32b'
-         '839159e4710e11dcc836023b3d7b1bf7')
+md5sums=('1357fb4ee7c288fdeac5d4e0048f5c18'
+         'ace51349b2f09e3731709b95b8053289')
 
 modules() {
     # true if modules are enabled, false otherwise
@@ -153,7 +153,8 @@ package() {
     cd "${srcdir}/${_srcname}"
 
     # Find the kernel version
-    _kernver="$(make kernelrelease)"
+    # TODO: make kernelrelease does not work here?
+    _kernver="${pkgver}-${pkgrel}"
 
     # Make the boot directory
     mkdir -p "${pkgdir}/boot"
@@ -172,8 +173,6 @@ package() {
     if modules; then
         mkdir -p "${pkgdir}"/{/usr/lib/modules,/usr/lib/firmware}
         make INSTALL_MOD_PATH="${pkgdir}/usr" modules_install
-        # TODO: The module install is broken; we just delete them here.
-        rm -rf "${pkgdir}/usr/lib/modules/"
         # Remove the kernel source tree
         rm -f "${pkgdir}/usr/lib/modules/${_kernver}"/{source,build}
         # Add vmlinux

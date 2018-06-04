@@ -2,11 +2,11 @@
 
 # Package information
 pkgname="linux-toshiba"
-_major_version='4.15'
+_major_version='4.16'
 _srcname="linux-${_major_version}"
 pkgdesc="Toshiba 310CDS kernel"
-pkgver="${_major_version}.1"
-pkgrel=7
+pkgver="${_major_version}.13"
+pkgrel=1
 
 # Additional information...
 arch=('i586')
@@ -21,12 +21,10 @@ hostdepends=('bc' 'inetutils' "${_target_triplet}-gcc-static"
 options=('!buildflags')
 source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
         "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
-        fix_b43_build.patch
         *.fw
         )
-md5sums=('0d701ac1e2a67d47ce7127432df2c32b'
-         '839159e4710e11dcc836023b3d7b1bf7'
-         'd5e95f0bc7ad9934ece811647ece5200'
+md5sums=('1357fb4ee7c288fdeac5d4e0048f5c18'
+         'ace51349b2f09e3731709b95b8053289'
          'a15877e2087e539fa18198ca290e3e4b'
          'b73b8918c38fa98c9a8d52b269433332'
          'ae41f030673d49db6a4db5fa73bc1c07'
@@ -43,9 +41,6 @@ prepare() {
 
     # Add upstream patch.
     patch -p1 -i "${srcdir}/patch-${pkgver}"
-
-    # Temporary fix for b43 and linux 4.15
-    patch -p1 -i "${srcdir}/fix_b43_build.patch"
 
     # Set extraversion to pkgrel.
     sed -ri "s|^(EXTRAVERSION =).*|\1 -${pkgrel}-toshiba|" Makefile

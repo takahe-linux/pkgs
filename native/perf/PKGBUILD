@@ -37,7 +37,7 @@ build() {
     cd "${srcdir}/${_srcname}/tools/perf"
     make -f Makefile.perf \
         prefix=/usr lib=lib/perf perfexecdir=lib/perf \
-        DESTDIR="${pkgdir}"
+        DESTDIR="${pkgdir}" WERROR=0
 }
 
 
@@ -45,7 +45,7 @@ package() {
     cd "${srcdir}/${_srcname}/tools/perf"
     make -f Makefile.perf \
         prefix=/usr lib=lib/perf perfexecdir=lib/perf \
-        DESTDIR="${pkgdir}" \
+        DESTDIR="${pkgdir}" WERROR=0 \
         install
     rm -rf "${pkgdir}/etc/bash_completion.d"
 }

@@ -1,0 +1,32 @@
+# Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
+
+# Package information
+pkgname='tcc'
+pkgver='0.9.27'
+pkgrel=1
+pkgdesc="Tiny C compiler"
+
+# Additional information...
+arch=('i586')
+url="http://bellard.org/tcc/"
+license=('LGPL')
+
+# Building information
+source=("https://download.savannah.nongnu.org/releases/tinycc/${pkgname}-${pkgver}.tar.bz2")
+md5sums=('9cdb185555da76db90287db351ca40b8')
+
+
+build() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    ./configure --prefix="/usr" --config-musl
+    make
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    make DESTDIR="${pkgdir}/" docdir="${pkgdir}/usr/share/doc/${pkgname}/" \
+        install
+}

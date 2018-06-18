@@ -3,7 +3,7 @@
 # Package information
 pkgname='nsgenbind'
 pkgver='0.5'
-pkgrel=32
+pkgrel=33
 pkgdesc="NetSurf Javascript binding generator"
 
 # Additional information...

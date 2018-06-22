@@ -2,8 +2,8 @@
 
 # Package information
 pkgname='git'
-pkgver='2.17.1'
-pkgrel=3
+pkgver='2.18.0'
+pkgrel=1
 pkgdesc="A fast distributed version control system"
 
 # Additional information...
@@ -16,7 +16,7 @@ depends=('curl' 'openssl' 'zlib' 'expat')
 
 # Building information
 source=("https://www.kernel.org/pub/software/scm/git/git-${pkgver}.tar.xz")
-md5sums=('5179245515c637357b4a134e8d4e9a6f')
+md5sums=('7a668403aa7807d0db37e8573299d471')
 
 build() {
     cd "${srcdir}/${pkgname}-${pkgver}"

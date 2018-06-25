@@ -2,8 +2,8 @@
 
 # Package information
 pkgname='acl'
-pkgver='2.2.52'
-pkgrel=30
+pkgver='2.2.53'
+pkgrel=1
 pkgdesc="Access control support library"
 
 # Additional information...
@@ -15,14 +15,13 @@ license=('LGPL')
 depends=('attr')
 
 # Building information
-source=("https://download.savannah.gnu.org/releases/${pkgname}/${pkgname}-${pkgver}.src.tar.gz")
-md5sums=('a61415312426e9c2212bd7dc7929abda')
+source=("https://download.savannah.gnu.org/releases/${pkgname}/${pkgname}-${pkgver}.tar.gz")
+md5sums=('007aabf1dbb550bcddde52a244cd1070')
 
 
 build() {
     cd "${srcdir}/${pkgname}-${pkgver}"
 
-    export INSTALL_USER=root INSTALL_GROUP=root
     ./configure --prefix="/usr" --libdir="/usr/lib" --libexecdir="/usr/lib"
     make
 }
@@ -31,5 +30,5 @@ build() {
 package() {
     cd "${srcdir}/${pkgname}-${pkgver}"
 
-    make DIST_ROOT="${pkgdir}/" install install-lib install-dev
+    make DESTDIR="${pkgdir}/" install
 }

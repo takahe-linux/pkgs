@@ -2,8 +2,8 @@
 
 # Package information
 pkgname='attr'
-pkgver='2.4.47'
-pkgrel=30
+pkgver='2.4.48'
+pkgrel=1
 pkgdesc="Extended attribute support library"
 
 # Additional information...
@@ -15,22 +15,13 @@ license=('LGPL')
 makedepends=('gettext')
 
 # Building information
-source=("https://download.savannah.gnu.org/releases/${pkgname}/${pkgname}-${pkgver}.src.tar.gz"
-        "attr-cdefs.patch")
-md5sums=('84f58dec00b60f2dc8fd1c9709291cc7'
-         'a7b4b287878ec5b717d33ce8e45ca389')
-
-
-prepare() {
-    cd "${srcdir}/${pkgname}-${pkgver}"
-    patch -p1 < "${srcdir}/attr-cdefs.patch"
-}
+source=("https://download.savannah.gnu.org/releases/${pkgname}/${pkgname}-${pkgver}.tar.gz")
+md5sums=('bc1e5cb5c96d99b24886f1f527d3bb3d')
 
 
 build() {
     cd "${srcdir}/${pkgname}-${pkgver}"
 
-    export INSTALL_USER=root INSTALL_GROUP=root
     ./configure --prefix="/usr" --libdir="/usr/lib" --libexecdir="/usr/lib"
     make
 }
@@ -39,6 +30,5 @@ build() {
 package() {
     cd "${srcdir}/${pkgname}-${pkgver}"
 
-    make DIST_ROOT="${pkgdir}/" install install-lib install-dev
-    chmod 0755 "${pkgdir}"/usr/lib/libattr.so.*.*.*
+    make DESTDIR="${pkgdir}/" install
 }

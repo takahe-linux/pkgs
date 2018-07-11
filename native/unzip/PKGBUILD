@@ -4,7 +4,7 @@
 pkgname='unzip'
 pkgver='6.0'
 _pkgver="${pkgver/./}"
-pkgrel=2
+pkgrel=3
 pkgdesc="Utility for manipulating zip archives"
 
 # Additional information...

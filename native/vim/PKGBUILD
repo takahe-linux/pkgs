@@ -4,7 +4,7 @@
 pkgname='vim'
 pkgver='8.1.0022'
 _versiondir=81
-pkgrel=2
+pkgrel=3
 pkgdesc='An improved version of the vi text editor'
 
 # Additional information...

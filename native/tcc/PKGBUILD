@@ -3,7 +3,7 @@
 # Package information
 pkgname='tcc'
 pkgver='0.9.27'
-pkgrel=3
+pkgrel=4
 pkgdesc="Tiny C compiler"
 
 # Additional information...

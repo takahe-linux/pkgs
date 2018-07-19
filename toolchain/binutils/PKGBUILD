@@ -3,7 +3,7 @@
 # Package information
 _pkgname='binutils'
 pkgname="${_target_triplet}-${_pkgname}"
-pkgver='2.30'
+pkgver='2.31.1'
 pkgrel=1
 pkgdesc="A set of programs to assemble and manipulate binary and object files"
 
@@ -19,7 +19,7 @@ depends=('glibc>=2.20' 'zlib')
 # Building information
 options=('staticlibs' '!distcc' '!ccache')
 source=("https://sourceware.org/pub/${_pkgname}/releases/${_pkgname}-${pkgver}.tar.xz")
-md5sums=('ffc476dd46c96f932875d1b2e27e929f')
+md5sums=('5b7c9d4ce96f507d95c1b9a255e52418')
 
 
 prepare() {

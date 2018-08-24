@@ -35,8 +35,12 @@ prepare() {
 build() {
     cd "${srcdir}/${_pkgname}-build"
 
+    # Specify --build, --host to avoid hangs when calling ldd.fakechroot.
+    # See also https://github.com/dex4er/fakechroot/pull/59.
     "${srcdir}/${_pkgname}-${pkgver}/configure" \
         --prefix="${_toolroot}" \
+        --build="${_local_triplet}" \
+        --host="${_local_triplet}" \
         --target="${_target_triplet}" \
         --with-sysroot="/sysroot" \
         --disable-nls --disable-multilib \
@@ -56,9 +60,6 @@ package() {
     cd "${srcdir}/${_pkgname}-build"
 
     make prefix="${pkgdir}${_toolroot}" install
-
-    # Remove file conflicting with host binutils and manpages for MS Windows tools
-    rm "${pkgdir}${_toolroot}/share/man/man1/${_target_triplet}-"{dlltool,nlmconv,windres,windmc}*
 
     # Remove the info files - I'm not using them and they conflict
     rm -rf "${pkgdir}${_toolroot}/share/info"

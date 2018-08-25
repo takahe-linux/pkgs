@@ -54,9 +54,6 @@ package() {
 
     make prefix="${pkgdir}/usr" install
 
-    # Remove manpages for MS Windows tools
-    rm "${pkgdir}/usr/share/man/man1/"{dlltool,nlmconv,windres,windmc}*
-
     # Remove the info files - I'm not using them
     rm -r "${pkgdir}/usr/share/info"
 }

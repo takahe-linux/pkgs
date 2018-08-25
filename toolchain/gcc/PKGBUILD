@@ -15,7 +15,7 @@ license=('GPL' 'LGPL' 'FDL')
 # Dependency information
 groups=("${_target_triplet}")
 depends=("${_target_triplet}-binutils" 'zlib' 'libmpc' 'gmp' 'mpfr')
-makedepends=("${_target_triplet}-gcc-static")
+makedepends=("${_target_triplet}-gcc-static" "attr-git")
 targetdepends=("musl" "linux-api-headers")
 conflicts=("${_target_triplet}-gcc-static")
 

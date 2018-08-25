@@ -14,6 +14,7 @@ license=('GPL' 'LGPL' 'FDL')
 
 # Dependency information
 depends=("${_target_triplet}-binutils" 'zlib' 'libmpc' 'gmp' 'mpfr')
+makedepends=('attr-git')
 targetdepends=("linux-api-headers")
 
 # Building information

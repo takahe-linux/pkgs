@@ -2,9 +2,9 @@
 
 # Package information
 pkgname='vim'
-pkgver='8.1.0022'
+pkgver='8.1.0279'
 _versiondir=81
-pkgrel=4
+pkgrel=1
 pkgdesc='An improved version of the vi text editor'
 
 # Additional information...
@@ -13,8 +13,10 @@ url="http://www.vim.org"
 license=('custom:vim')
 
 # Building information
-source=("${pkgname}-${pkgver}.tar.gz::http://github.com/vim/vim/archive/v${pkgver}.tar.gz")
-md5sums=('145ca7b2f2e86a6905985ba7558b9936')
+source=("${pkgname}-${pkgver}.tar.gz::http://github.com/vim/vim/archive/v${pkgver}.tar.gz"
+        'slim-filetype.vim')
+md5sums=('a68c4bfaa3e734ae575dfb8350d27725'
+         'ffb79b6a92fca2191c3ebae6d2f5fd56')
 
 
 prepare() {
@@ -47,6 +49,11 @@ package() {
     cd "${srcdir}/${pkgname}-${pkgver}"
 
     make VIMRCLOC=/etc DESTDIR="${pkgdir}/" install
+
+    # Use a new filetype.vim with less options to speed up start times on older
+    # machines.
+    install -m0644 "${srcdir}/slim-filetype.vim" \
+        "${pkgdir}/usr/share/vim/vim${_versiondir}/filetype.vim"
 
     # FS#17216 fix?
     sed -i 's|messages,/var|messages,/var/log/messages.log,/var|' \

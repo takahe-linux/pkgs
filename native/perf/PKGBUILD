@@ -6,7 +6,7 @@ _major_version='4.16'
 _srcname="linux-${_major_version}"
 pkgdesc="Perf utilities"
 pkgver="${_major_version}.13"
-pkgrel=4
+pkgrel=5
 
 # Additional information...
 arch=('i586')

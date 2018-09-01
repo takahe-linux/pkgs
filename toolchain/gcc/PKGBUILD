@@ -38,6 +38,11 @@ prepare() {
     # Disable fixincludes (could lead to header pollution)
     sed -i 's@\./fixinc\.sh@-c true@' gcc/Makefile.in
 
+    # Disable transactional memory support since it breaks the MIPS
+    # build.
+    sed -i libgcc/crtstuff.c \
+        -e 's/USE_TM_CLONE_REGISTRY 1/USE_TM_CLONE_REGISTRY 0/'
+
     # Apply the patches...
     for p in "${srcdir}"/*.patch; do
         patch -p1 < "${p}"
@@ -53,7 +58,7 @@ build() {
     # TODO: --enable-cxx-flags is a hack, because currently libstdc++ uses
     #       CXXFLAGS, not CXXFLAGS_FOR_TARGET. See GCC bug 53579...
     export CXXFLAGS="-Os"
-
+    
     LDFLAGS="-Wl,-rpath,${_toolroot}/lib" \
     "${srcdir}/${_pkgname}-${pkgver}/configure" \
         --build="${_local_triplet}" \
@@ -70,6 +75,7 @@ build() {
         --enable-threads=posix \
         --enable-libstdcxx-time \
         --enable-cxx-flags="${CXXFLAGS_FOR_TARGET}" \
+        --enable-initfini-array \
         --disable-nls \
         --disable-multilib \
         --disable-libcc1 \
@@ -78,6 +84,7 @@ build() {
         --disable-libmudflap \
         --disable-mudflap \
         --disable-libmpx \
+        --disable-libitm \
         --with-gnu-as \
         --with-gnu-ld \
         --with-system-zlib

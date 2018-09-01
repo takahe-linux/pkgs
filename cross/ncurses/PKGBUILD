@@ -33,7 +33,8 @@ build() {
         --without-tests \
         --without-ada \
         --without-cxx \
-        --without-cxx-binding
+        --without-cxx-binding \
+        --disable-stripping
     make
 }
 

@@ -3,8 +3,8 @@
 # Package information
 pkgname='libjpeg'
 _pkgname='libjpeg-turbo'
-pkgver='1.5.3'
-pkgrel=22
+pkgver='2.0.0'
+pkgrel=2
 pkgdesc="JPEG image codec"
 
 # Additional information...
@@ -17,7 +17,7 @@ makedepends=('nasm')
 
 # Building information
 source=("http://downloads.sourceforge.net/project/${_pkgname}/${pkgver}/${_pkgname}-${pkgver}.tar.gz")
-sha1sums=('87ebf4cab2bb27fcb8e7ccb18ec4eb680e1f2c2d')
+sha1sums=('fe49aea935617748c21ecbe46c986d6c1b98f39b')
 
 
 build() {

@@ -2,8 +2,8 @@
 
 # Package information
 pkgname=('busybox' 'mdev' 'hush' 'bb-coreutils' 'bb-util-linux' 'bb-findutils')
-pkgver='1.28.4'
-pkgrel=2
+pkgver='1.29.2'
+pkgrel=1
 
 # Additional information...
 arch=('i586' 'mips')
@@ -26,8 +26,8 @@ source=("${_web_address}/${pkgname}-${pkgver}.tar.bz2"
         "udhcpc.run"
         "getty.run"
        )
-md5sums=('5661d013c9ef7cc31a453640c320f56b'
-         '44e25dff3c065b2a14e949b5a80f8880'
+md5sums=('46617af37a39579711d8b36f189cdf1e'
+         '963d7da9f960cabe73401e4f6b108d01'
          'e9245e5f55f004e3598cc90e2e86de30'
          '075068a820619ce91bb2b0c70ae237f4'
          '24e4d0170eea0cac1d86daf24379e44c'

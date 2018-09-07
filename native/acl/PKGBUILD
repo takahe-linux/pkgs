@@ -3,7 +3,7 @@
 # Package information
 pkgname='acl'
 pkgver='2.2.53'
-pkgrel=5
+pkgrel=6
 pkgdesc="Access control support library"
 
 # Additional information...

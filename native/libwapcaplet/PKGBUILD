@@ -3,7 +3,7 @@
 # Package information
 pkgname='libwapcaplet'
 pkgver='0.4.0'
-pkgrel=82
+pkgrel=83
 pkgdesc="String internment library from the Netsurf project"
 
 # Additional information...

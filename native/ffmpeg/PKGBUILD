@@ -3,7 +3,7 @@
 # Package information
 pkgname='ffmpeg'
 pkgver='3.3.2'
-pkgrel=43
+pkgrel=44
 pkgdesc="Utilities to record, convert, and stream audio and video"
 
 # Additional information...

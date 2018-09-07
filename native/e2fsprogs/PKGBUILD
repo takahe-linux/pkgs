@@ -3,7 +3,7 @@
 # Package information
 pkgname='e2fsprogs'
 pkgver='1.43.9'
-pkgrel=13
+pkgrel=14
 pkgdesc='Ext2/3/4 filesystem utilities'
 
 # Additional information...

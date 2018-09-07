@@ -3,7 +3,7 @@
 # Package information
 pkgname='elfutils'
 pkgver='0.170'
-pkgrel=7
+pkgrel=8
 pkgdesc="Utilities to handle elf object files and DWARF debugging information"
 
 # Additional information...

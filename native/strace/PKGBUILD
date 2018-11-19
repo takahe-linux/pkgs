@@ -3,7 +3,7 @@
 # Package information
 pkgname='strace'
 pkgver='4.24'
-pkgrel=3
+pkgrel=5
 pkgdesc="syscall tracer"
 
 # Additional information...

@@ -3,7 +3,7 @@
 # Package information
 pkgname='perl'
 pkgver='5.26.0'
-pkgrel=45
+pkgrel=47
 pkgdesc="A highly capable, feature-rich programming language"
 
 # Additional information...

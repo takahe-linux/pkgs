@@ -29,7 +29,7 @@ Remaining targets are listed in docs/roadmap.md.
 I intend to make a live CD available for i586 machines in the near future.
 
 Building from scratch is achievable using the
-[build utilities](https://bitbucket.org/Alastair_Hughes/takahe-build) and this
+[build utilities](https://github.com/takahe-linux/util) and this
 repository.
 
 

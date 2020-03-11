@@ -1,5 +1,7 @@
 # Overview #
 
+_Note that Takahe Linux is on indefinite hiatus as I am currently experimenting with other things..._
+
 Takahe Linux is my experimental Linux distro, dedicated to 'extinct' computers.
 
 It is supposed to be a learning experience for me, and an opportunity to play
@@ -51,7 +53,7 @@ The Takahe is a flightless New Zealand bird, which was thought to be extinct.
 However, it was rediscovered in 1948...
 
 For more information, see [Wikipedia's article](https://en.wikipedia.org/wiki
-/Takahe "Takahe (Wikipedia)").
+/Takahe%20%22Takahe%20(Wikipedia)%22).
 
 
 # Naming scheme #
@@ -61,7 +63,7 @@ case, older computers) fly again, I plan to name releases after extinct NZ
 birds.
 
 Wikipedia (again) has [an article](https://en.wikipedia.org/wiki
-/List_of_extinct_animals_of_New_Zealand#Birds "Extinct NZ birds (Wikipedia)")
+/List_of_extinct_animals_of_New_Zealand#Birds%20%22Extinct%20NZ%20birds%20(Wikipedia)%22)
 listing them.
 
 

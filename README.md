@@ -1,5 +1,7 @@
 # Overview #
 
+_Note that Takahe Linux is on indefinite hiatus as I am currently experimenting with other things..._
+
 Takahe Linux is my experimental Linux distro, dedicated to 'extinct' computers.
 
 It is supposed to be a learning experience for me, and an opportunity to play
@@ -27,7 +29,7 @@ Remaining targets are listed in docs/roadmap.md.
 I intend to make a live CD available for i586 machines in the near future.
 
 Building from scratch is achievable using the
-[build utilities](https://bitbucket.org/Alastair_Hughes/takahe-build) and this
+[build utilities](https://github.com/takahe-linux/util) and this
 repository.
 
 
@@ -50,8 +52,7 @@ than my Toshiba to do that!
 The Takahe is a flightless New Zealand bird, which was thought to be extinct.
 However, it was rediscovered in 1948...
 
-For more information, see [Wikipedia's article](https://en.wikipedia.org/wiki
-/Takahe "Takahe (Wikipedia)").
+For more information, see [Wikipedia's article](https://en.wikipedia.org/wiki/South_Island_takah%C4%93).
 
 
 # Naming scheme #
@@ -60,8 +61,7 @@ Following on from the idea that Takahe Linux is helping extinct birds (in this
 case, older computers) fly again, I plan to name releases after extinct NZ
 birds.
 
-Wikipedia (again) has [an article](https://en.wikipedia.org/wiki
-/List_of_extinct_animals_of_New_Zealand#Birds "Extinct NZ birds (Wikipedia)")
+Wikipedia (again) has [an article](https://en.wikipedia.org/wiki/List_of_New_Zealand_animals_extinct_in_the_Holocene#Birds)
 listing them.
 
 

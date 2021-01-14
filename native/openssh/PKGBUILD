@@ -2,7 +2,7 @@
 
 # Package information
 pkgname='openssh'
-pkgver='7.8p1'
+pkgver='7.9p1'
 pkgrel=2
 pkgdesc="Secure shell implementation"
 
@@ -18,7 +18,7 @@ depends=('zlib')
 backup=('etc/ssh/ssh_config' 'etc/ssh/sshd_config')
 source=("http://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/${pkgname}-${pkgver}.tar.gz"
         "sshd.run")
-md5sums=('ce1d090fa6239fd38eb989d5e983b074'
+md5sums=('c6af50b7a474d04726a5aa747a5dce8f'
          'bfeb1aef10852b45eeb348dc24321f61')
 
 

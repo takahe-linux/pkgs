@@ -2,9 +2,9 @@
 
 # Package information
 pkgname='sudo'
-_sudover="1.8.20p2"
+_sudover="1.8.25"
 pkgver="${_sudover/p/.p}"
-pkgrel=42
+pkgrel=3
 pkgdesc="Give certain users raised privileges"
 
 # Additional information...
@@ -19,7 +19,7 @@ depends=('zlib')
 # Building information
 backup=('etc/sudoers')
 source=("https://www.sudo.ws/sudo/dist/${pkgname}-${_sudover}.tar.gz")
-sha256sums=('bd42ae1059e935f795c69ea97b3de09fe9410a58a74b5d5e6836eb5067a445d9')
+sha256sums=('9dcf0f61f663b4051d4b37a57f2da9d2800182b8c19205edde616fc9d935dc41')
 
 
 build() {
@@ -43,7 +43,7 @@ build() {
 
 check() {
     cd "${srcdir}/${pkgname}-${_sudover}"
-    make check || return 0 # TODO: Currently, a single test fails - report?
+    make check
 }
 
 

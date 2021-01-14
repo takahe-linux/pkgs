@@ -2,7 +2,7 @@
 
 # Package information
 pkgname='strace'
-pkgver='4.23'
+pkgver='4.24'
 pkgrel=5
 pkgdesc="syscall tracer"
 
@@ -13,7 +13,7 @@ license=('custom')
 
 # Building information
 source=("${url}/releases/download/v${pkgver}/${pkgname}-${pkgver}.tar.xz")
-md5sums=('fad4bba0947553cef34d46a9fd78f039')
+md5sums=('8780136849c85acf76ad3a522aa4462a')
 
 
 prepare() {

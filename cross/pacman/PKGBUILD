@@ -5,7 +5,7 @@
 # Package information
 pkgname='pacman'
 pkgver='5.1.0'
-pkgrel=3
+pkgrel=5
 pkgdesc="Arch Linux's simple package manager"
 
 # Additional information...
@@ -77,10 +77,9 @@ package() {
         -e "s|@LDFLAGS[@]|-Wl${_target_ldflags}|g"
 
     # Install the bash completion files
-    install -dm755 "${pkgdir}/usr/share/bash-completion/completions"
-    mv "${pkgdir}/etc/bash_completion.d/pacman" \
-        "${pkgdir}/usr/share/bash-completion/completions"
-    rmdir "${pkgdir}/etc/bash_completion.d"
+    install -Dm644 "${pkgdir}/etc/bash_completion.d/pacman" \
+        "${pkgdir}/usr/share/bash-completion/completions/pacman"
+    rm -rf "${pkgdir}/etc/bash_completion.d"
 
     for file in makepkg pacman-key; do
         ln -s 'pacman' "${pkgdir}/usr/share/bash-completion/completions/${file}"

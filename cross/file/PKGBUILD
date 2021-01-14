@@ -2,8 +2,8 @@
 
 # Package information
 pkgname='file'
-pkgver='5.32'
-pkgrel=9
+pkgver='5.35'
+pkgrel=1
 pkgdesc='File type identification utility'
 
 # Additional information...
@@ -18,7 +18,7 @@ hostdepends=('toolchain' "${_target_triplet}-file")
 
 # Building information
 source=("ftp://ftp.astron.com/pub/${pkgname}/${pkgname}-${pkgver}.tar.gz")
-md5sums=('4f2503752ff041895090ed6435610435')
+md5sums=('5f10fb45bdaffd729a572e563783b78e')
 
 
 build() {

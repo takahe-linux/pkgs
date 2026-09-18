@@ -12,7 +12,7 @@ url="http://www.gnu.org/software/gperf/"
 license=('GPL3')
 
 # Building information
-source=("http://ftp.gnu.org/pub/gnu/${pkgname}/${pkgname}-${pkgver}.tar.gz")
+source=("https://ftp.gnu.org/gnu/${pkgname}/${pkgname}-${pkgver}.tar.gz")
 md5sums=('c1f1db32fb6598d6a93e6e88796a8632')
 
 

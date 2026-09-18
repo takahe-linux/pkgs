@@ -16,7 +16,7 @@ depends=('readline' 'zlib')
 
 # Building information
 backup=('etc/gdb/gdbinit')
-source=("http://ftp.gnu.org/gnu/gdb/${pkgname}-${pkgver}.tar.xz"
+source=("https://ftp.gnu.org/gnu/gdb/${pkgname}-${pkgver}.tar.xz"
         "gdb-sgidefs.h"
         "gdb-linux_nat.patch")
 sha1sums=('ee66294d87a109f88a459d0da5d0bb2da5135f45'

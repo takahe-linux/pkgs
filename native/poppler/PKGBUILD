@@ -23,13 +23,15 @@ md5sums=('722ea5837cdfaae4c98607987000de30')
 build() {
     cd "${srcdir}/${pkgname}-${pkgver}"
 
-    cmake . -Bbuild -DCMAKE_INSTALL_PREFIX="/usr" -DENABLE_LIBOPENJPEG="none"
-    make -C build
+    mkdir -p build
+    cd build
+    cmake .. -DCMAKE_INSTALL_PREFIX="/usr" -DENABLE_LIBOPENJPEG="none"
+    make
 }
 
 
 package() {
-    cd "${srcdir}/${pkgname}-${pkgver}"
+    cd "${srcdir}/${pkgname}-${pkgver}/build"
 
-    make -C build DESTDIR="${pkgdir}/" install
+    make DESTDIR="${pkgdir}/" install
 }

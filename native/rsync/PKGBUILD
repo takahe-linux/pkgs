@@ -15,7 +15,7 @@ license=('GPL3')
 depends=('perl' 'zlib')
 
 # Building information
-source=("${url}/ftp/rsync/${pkgname}-${pkgver}.tar.gz")
+source=("http://web.archive.org/web/20171105010457id_/http://rsync.samba.org/ftp/rsync/${pkgname}-${pkgver}.tar.gz")
 md5sums=('0f758d7e000c0f7f7d3792610fad70cb')
 
 

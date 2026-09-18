@@ -16,7 +16,7 @@ depends=('poppler' 'libpng' 'libjpeg' 'fontconfig' 'freetype' 'expat')
 makedepends=('git')
 
 # Building information
-source=("${pkgname}-git::git+git://repo.or.cz/fbpdf.git"
+source=("${pkgname}-git::git+git://repo.or.cz/fbpdf.git#commit=43ca240"
         'fbpdf.1')
 md5sums=('SKIP'
         'ae7299de0fcd8e945940b014ba335c1b')

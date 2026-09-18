@@ -15,7 +15,7 @@ license=('GPL')
 depends=('libpng' 'giflib' 'libjpeg')
 
 # Building information
-source=("http://s-tech.elsat.net.pl/fbv/${pkgname}-${pkgver}.tar.gz"
+source=("https://web.archive.org/web/20051217170349id_/http://s-tech.elsat.net.pl/fbv/${pkgname}-${pkgver}.tar.gz"
         'giflib-5.1.patch')
 md5sums=('3e466375b930ec22be44f1041e77b55d'
          'f91404fb82f0b6b9fc0e0716f0c182c0')

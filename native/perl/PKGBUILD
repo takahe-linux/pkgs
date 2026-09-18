@@ -12,7 +12,7 @@ url="https://www.perl.org"
 license=('GPL' 'PerlArtistic')
 
 # Building information
-source=("http://www.cpan.org/src/5.0/${pkgname}-${pkgver}.tar.bz2"
+source=("https://www.cpan.org/src/5.0/${pkgname}-${pkgver}.tar.bz2"
         "grapheme.patch")
 md5sums=('8d34cb5a4eccd66e7a6a80e62b7b4aec'
          '7c0153471e5f6f9cd59a774cf455c3cf')

@@ -15,8 +15,8 @@ license=('custom')
 depends=('libxml2')
 
 # Building information
-source=("ftp://xmlsoft.org/libxslt/${pkgname}-${pkgver}.tar.gz")
-md5sums=('70becbbcb1dad55f14de0b84171b91d5')
+source=("https://download.gnome.org/sources/${pkgname}/1.1/${pkgname}-${pkgver}.tar.xz")
+md5sums=('5c2b03b2dc5abfa5c76e5bf78d3ed9ca')
 
 
 build() {

@@ -13,7 +13,7 @@ url="http://www.vim.org"
 license=('custom:vim')
 
 # Building information
-source=("${pkgname}-${pkgver}.tar.gz::http://github.com/vim/vim/archive/v${pkgver}.tar.gz"
+source=("${pkgname}-${pkgver}.tar.gz::https://github.com/vim/vim/archive/v${pkgver}.tar.gz"
         'slim-filetype.vim')
 md5sums=('a68c4bfaa3e734ae575dfb8350d27725'
          'ffb79b6a92fca2191c3ebae6d2f5fd56')

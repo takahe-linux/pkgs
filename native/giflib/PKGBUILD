@@ -12,7 +12,7 @@ url="http://sourceforge.net/projects/giflib"
 license=('MIT')
 
 # Building information
-source=("http://downloads.sourceforge.net/sourceforge/giflib/${pkgname}-${pkgver}.tar.bz2")
+source=("https://snapshot.debian.org/archive/debian/20160425T220009Z/pool/main/g/giflib/${pkgname}_${pkgver}.orig.tar.bz2")
 md5sums=('2c171ced93c0e83bb09e6ccad8e3ba2b')
 
 

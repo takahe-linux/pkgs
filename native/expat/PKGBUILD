@@ -12,7 +12,7 @@ url="http://expat.sourceforge.net/"
 license=('custom')
 
 # Building information
-source=("http://downloads.sourceforge.net/sourceforge/expat/${pkgname}-${pkgver}.tar.bz2")
+source=("https://snapshot.debian.org/archive/debian/20170618T072316Z/pool/main/e/expat/${pkgname}_${pkgver}.orig.tar.bz2")
 md5sums=('d9c3baeab58774cefc2f04faf29f2cf8')
 
 

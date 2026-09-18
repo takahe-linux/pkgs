@@ -15,7 +15,7 @@ license=('GPL')
 depends=('libnl' 'zlib' 'readline' 'openssl')
 
 # Building information
-source=("http://w1.fi/releases/${pkgname}-${pkgver}.tar.gz"
+source=("https://w1.fi/releases/${pkgname}-${pkgver}.tar.gz"
         "wpa_supplicant.run")
 md5sums=('091569eb4440b7d7f2b4276dbfc03c3c'
          '3396a38f6675d3fbb8327b05d2ca882e')

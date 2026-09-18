@@ -8,21 +8,29 @@ pkgdesc="A front-end to SSH agent allowing one agent per session"
 
 # Additional information...
 arch=('mips' 'i586')
-url="http://www.funtoo.org/Keychain"
+url="https://github.com/funtoo/keychain"
 license=('GPL2')
 
 # Dependency information
 depends=('sh')
+makedepends=('perl')
 
 # Building information
-source=("http://www.funtoo.org/archive/keychain/${pkgname}-${pkgver}.tar.bz2"
-        "busybox-ps.patch")
-md5sums=('bdf70a69b8b2208664cfcd4a8e42523b'
+# The original funtoo.org release tarball is gone. The 2.8.3 git tag does not
+# ship the generated 'keychain'/'keychain.1', so generate them with the in-tree
+# Makefile (perl's pod2text/pod2man), matching what the release tarball shipped.
+source=("${pkgname}-${pkgver}.tar.gz::https://github.com/funtoo/keychain/archive/${pkgver}.tar.gz"
+        'busybox-ps.patch')
+md5sums=('ef1d0b7c34bee06ccc90fab502b8ee9f'
          '21092f40a5402688da37f3124717a214')
 
 
-prepare() {
+build() {
     cd "${srcdir}/${pkgname}-${pkgver}"
+
+    # Generate the script and its manpage, as shipped in the release tarball.
+    make keychain keychain.1
+
     # Fix the PS invocation on busybox-based systems.
     patch keychain < "${srcdir}/busybox-ps.patch"
 }

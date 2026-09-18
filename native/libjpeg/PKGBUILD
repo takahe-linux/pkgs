@@ -13,7 +13,7 @@ url="http://libjpeg-turbo.virtualgl.org/"
 license=('custom')
 
 # Dependency information
-makedepends=('nasm')
+makedepends=('nasm' 'cmake')
 
 # Building information
 source=("http://downloads.sourceforge.net/project/${_pkgname}/${pkgver}/${_pkgname}-${pkgver}.tar.gz")
@@ -22,25 +22,28 @@ sha1sums=('fe49aea935617748c21ecbe46c986d6c1b98f39b')
 
 build() {
     cd "${srcdir}/${_pkgname}-${pkgver}"
-
-    ./configure --prefix="/usr" \
-        --mandir="/usr/share/man" \
-        --with-jpeg8
+    mkdir -p build
+    cd build
+    cmake .. \
+        -DCMAKE_INSTALL_PREFIX="/usr" \
+        -DCMAKE_INSTALL_LIBDIR="lib" \
+        -DCMAKE_INSTALL_DOCDIR="share/doc/${pkgname}" \
+        -DCMAKE_INSTALL_EXAMPLEDIR="share/doc/${pkgname}/examples" \
+        -DWITH_JPEG8=1
     make
 }
 
 
 check() {
-    cd "${srcdir}/${_pkgname}-${pkgver}"
+    cd "${srcdir}/${_pkgname}-${pkgver}/build"
     make test
 }
 
 
 package() {
-    cd "${srcdir}/${_pkgname}-${pkgver}"
+    cd "${srcdir}/${_pkgname}-${pkgver}/build"
 
-    make DESTDIR="${pkgdir}/" docdir="/usr/share/doc/${pkgname}" \
-        exampledir="/usr/share/doc/${pkgname}" install
+    make DESTDIR="${pkgdir}/" install
     install -d "${pkgdir}/usr/share/licenses/${pkgname}"
-    ln -s -f ../../doc/libjpeg/README "${pkgdir}/usr/share/licenses/${pkgname}"
+    ln -s -f ../../doc/libjpeg/README.md "${pkgdir}/usr/share/licenses/${pkgname}"
 }

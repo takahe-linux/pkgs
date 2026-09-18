@@ -16,7 +16,7 @@ groups=('base-devel')
 depends=('m4' 'bash' 'busybox' 'perl')
 
 # Building information
-source=("ftp://ftp.gnu.org/pub/gnu/${pkgname}/${pkgname}-${pkgver}.tar.xz"
+source=("https://ftp.gnu.org/gnu/${pkgname}/${pkgname}-${pkgver}.tar.xz"
         "autoconf-2.69-perl-5.22-autoscan.patch"
         "autoconf-2.69-libtool-compatibility.patch")
 md5sums=('50f97f4159805e374639a73e2636f22e'

@@ -15,7 +15,7 @@ license=('custom')
 depends=('zlib')
 
 # Building information
-source=("http://downloads.sourceforge.net/sourceforge/${pkgname}/${pkgname}-${pkgver}.tar.xz")
+source=("https://download.sourceforge.net/${pkgname}/${pkgname}-${pkgver}.tar.xz")
 md5sums=('e01be057a9369183c959b793a685ad15')
 
 

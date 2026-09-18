@@ -15,7 +15,7 @@ license=('GPL3')
 depends=('e2fsprogs' 'readline')
 
 # Building information
-source=("http://ftp.gnu.org/gnu/${pkgname}/${pkgname}-${pkgver}.tar.xz"
+source=("https://ftp.gnu.org/gnu/${pkgname}/${pkgname}-${pkgver}.tar.xz"
         "fix-includes.patch"
         "devmapper.patch")
 md5sums=('0247b6a7b314f8edeb618159fa95f9cb'

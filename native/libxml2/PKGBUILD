@@ -12,8 +12,8 @@ url="https://www.xmlsoft.org/"
 license=('MIT')
 
 # Building information
-source=("ftp://xmlsoft.org/libxml2/${pkgname}-${pkgver}.tar.gz")
-md5sums=('b786e353e2aa1b872d70d5d1ca0c740d')
+source=("https://download.gnome.org/sources/${pkgname}/2.9/${pkgname}-${pkgver}.tar.xz")
+md5sums=('4d6174e809c8d70e919e9206bed0d1d4')
 
 
 build() {

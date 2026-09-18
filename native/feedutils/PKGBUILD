@@ -16,7 +16,7 @@ depends=('expat' 'libxslt')
 makedepends=('git')
 
 # Building information
-source=("git+${url}")
+source=("git+${url}#commit=bf9e5b8")
 md5sums=('SKIP')
 
 

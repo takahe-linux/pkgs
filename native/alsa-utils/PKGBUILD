@@ -15,7 +15,7 @@ license=('LGPL')
 depends=('alsa-lib')
 
 # Building information
-source=("ftp://ftp.alsa-project.org/pub/utils/${pkgname}-${pkgver}.tar.bz2")
+source=("https://www.alsa-project.org/files/pub/utils/${pkgname}-${pkgver}.tar.bz2")
 md5sums=('50ae75567459646b843bed78d916b002')
 
 

@@ -16,7 +16,7 @@ license=('GPL2')
 groups=('base-devel')
 
 # Building information
-source=("http://ftp.barfooze.de/pub/sabotage/tarballs/\
+source=("http://web.archive.org/web/20180719175354id_/http://ftp.barfooze.de:80/pub/sabotage/tarballs/\
 kernel-headers-${pkgver}-${_header_version}.tar.xz"
        )
 md5sums=('633a0ff5b4d321d8e553133dcc2df36c')

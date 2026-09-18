@@ -20,7 +20,7 @@ depends=('gmp' 'musl')
 hostdepends=('toolchain')
 
 # Building information
-source=("http://www.mpfr.org/mpfr-current/${pkgname}-${_pkgver}.tar.xz")
+source=("https://www.mpfr.org/mpfr-${_pkgver}/${pkgname}-${_pkgver}.tar.xz")
         #"${pkgname}-${pkgver}.patch")
 md5sums=('b8dd19bd9bb1ec8831a6a582a7308073')
 

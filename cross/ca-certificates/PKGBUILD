@@ -18,7 +18,7 @@ hostdepends=('toolchain')
 
 # Building information
 backup=('etc/ca-certificates.conf')
-source=("http://ftp.debian.org/debian/pool/main/c/${pkgname}/${pkgname}_${pkgver}+nmu1.tar.xz"
+source=("https://snapshot.debian.org/archive/debian/20170524T212759Z/pool/main/c/${pkgname}/${pkgname}_${pkgver}%2Bnmu1.tar.xz"
         'update-ca-certificates.hook'
         'certdata2pem.c'
         'c_rehash.c')

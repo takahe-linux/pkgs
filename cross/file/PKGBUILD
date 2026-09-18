@@ -17,7 +17,7 @@ depends=('zlib' 'musl')
 hostdepends=('toolchain' "${_target_triplet}-file")
 
 # Building information
-source=("ftp://ftp.astron.com/pub/${pkgname}/${pkgname}-${pkgver}.tar.gz")
+source=("https://astron.com/pub/${pkgname}/${pkgname}-${pkgver}.tar.gz")
 md5sums=('5f10fb45bdaffd729a572e563783b78e')
 
 

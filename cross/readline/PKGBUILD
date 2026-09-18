@@ -18,7 +18,7 @@ depends=('ncurses' 'musl')
 hostdepends=('toolchain')
 
 # Building information
-source=("ftp://ftp.cwru.edu/pub/bash/${pkgname}-${_basever}.tar.gz")
+source=("https://ftp.gnu.org/gnu/readline/${pkgname}-${_basever}.tar.gz")
 _stripped_basever="$(echo ${_basever} | tr -d '.')"
 for _patch in $(seq 1 ${_patchlevel}); do
     source+=("ftp://ftp.cwru.edu/pub/bash/${pkgname}-${_basever}-patches/${pkgname}${_stripped_basever}-$(printf "%03d" "${_patch}")")

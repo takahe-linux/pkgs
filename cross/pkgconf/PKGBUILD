@@ -19,7 +19,7 @@ provides=('pkg-config')
 conflicts=('pkg-config')
 
 # Building information
-source=("http://rabbit.dereferenced.org/~nenolod/distfiles/${pkgname}-${pkgver}.tar.gz")
+source=("https://distfiles.dereferenced.org/pkgconf/${pkgname}-${pkgver}.tar.gz")
 md5sums=('71bd07819290ed3986221b11c62f26cb')
 
 build() {

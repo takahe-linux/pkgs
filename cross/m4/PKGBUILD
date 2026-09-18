@@ -17,7 +17,7 @@ depends=('sh' 'musl')
 hostdepends=('toolchain')
 
 # Building information
-source=("ftp://ftp.gnu.org/gnu/m4/${pkgname}-${pkgver}.tar.xz")
+source=("https://ftp.gnu.org/gnu/m4/${pkgname}-${pkgver}.tar.xz")
 md5sums=('730bb15d96fffe47e148d1e09235af82')
 
 

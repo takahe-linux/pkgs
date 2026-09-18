@@ -16,7 +16,7 @@ depends=('musl')
 hostdepends=('toolchain')
 
 # Building information
-source=("http://zlib.net/current/zlib-${pkgver}.tar.gz")
+source=("https://zlib.net/fossils/zlib-${pkgver}.tar.gz")
 md5sums=('1c9f62f0778697a09d36121ead88e08e')
 
 

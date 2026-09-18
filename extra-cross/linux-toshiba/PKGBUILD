@@ -244,6 +244,6 @@ package() {
 
     # Copy the image to the end location
     mkdir -p "${pkgdir}/boot"
-    cp "arch/${_target_arch_alias}/boot/bzImage" \
+    cp "arch/x86/boot/bzImage" \
        "${pkgdir}/boot/vmlinuz-toshiba"
 }

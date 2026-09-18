@@ -14,12 +14,12 @@ license=('GPL' 'LGPL' 'FDL')
 
 # Dependency information
 depends=("${_target_triplet}-binutils" 'zlib' 'libmpc' 'gmp' 'mpfr')
-makedepends=('attr-git')
+makedepends=('attr')
 targetdepends=("linux-api-headers")
 
 # Building information
 options=(!emptydirs !strip)
-source=("ftp://gcc.gnu.org/pub/gcc/releases/gcc-${pkgver}/gcc-${pkgver}.tar.xz")
+source=("https://ftp.gnu.org/gnu/gcc/gcc-${pkgver}/gcc-${pkgver}.tar.xz")
 sha256sums=('196c3c04ba2613f893283977e6011b2345d1cd1af9abeac58e916b1aab3e0080')
 
 
@@ -38,6 +38,12 @@ prepare() {
 
 build() {
     cd "${srcdir}/gcc-build"
+
+    # The host gcc (newer than this gcc) enables new warnings which get
+    # promoted to errors (via -Werror in our cflags and gcc's own
+    # --enable-werror). Defuse both for the host tools.
+    export CFLAGS="${CFLAGS//-Werror=format-security/}"
+    export CXXFLAGS="${CXXFLAGS//-Werror=format-security/}"
 
     "${srcdir}/${_pkgname}-${pkgver}/configure" \
         --build="${_local_triplet}" \
@@ -65,6 +71,7 @@ build() {
         --disable-multilib \
         --disable-tls \
         --disable-libcc1 \
+        --disable-werror \
         --with-gnu-as \
         --with-gnu-ld \
         --with-system-zlib \

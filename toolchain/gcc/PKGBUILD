@@ -15,13 +15,13 @@ license=('GPL' 'LGPL' 'FDL')
 # Dependency information
 groups=("${_target_triplet}")
 depends=("${_target_triplet}-binutils" 'zlib' 'libmpc' 'gmp' 'mpfr')
-makedepends=("${_target_triplet}-gcc-static" "attr-git")
+makedepends=("${_target_triplet}-gcc-static" "attr")
 targetdepends=("musl" "linux-api-headers")
 conflicts=("${_target_triplet}-gcc-static")
 
 # Building information
 options=(!emptydirs !strip)
-source=("ftp://gcc.gnu.org/pub/gcc/releases/gcc-${pkgver}/gcc-${pkgver}.tar.xz"
+source=("https://ftp.gnu.org/gnu/gcc/gcc-${pkgver}/gcc-${pkgver}.tar.xz"
         *.patch)
 sha256sums=('196c3c04ba2613f893283977e6011b2345d1cd1af9abeac58e916b1aab3e0080'
             '7ad65c8a8613b34b7ffdf0dcee15659ba12a21ed0b65052644d6ca73653d337a'
@@ -58,7 +58,12 @@ build() {
     # TODO: --enable-cxx-flags is a hack, because currently libstdc++ uses
     #       CXXFLAGS, not CXXFLAGS_FOR_TARGET. See GCC bug 53579...
     export CXXFLAGS="-Os"
-    
+
+    # The host gcc (newer than this gcc) enables new warnings which get
+    # promoted to errors (via -Werror in our cflags and gcc's own
+    # --enable-werror). Defuse both for the host tools.
+    export CFLAGS="${CFLAGS//-Werror=format-security/}"
+
     LDFLAGS="-Wl,-rpath,${_toolroot}/lib" \
     "${srcdir}/${_pkgname}-${pkgver}/configure" \
         --build="${_local_triplet}" \
@@ -84,7 +89,8 @@ build() {
         --disable-libmudflap \
         --disable-mudflap \
         --disable-libmpx \
-        --disable-libitm \
+        --without-isl \
+        --disable-werror \
         --with-gnu-as \
         --with-gnu-ld \
         --with-system-zlib

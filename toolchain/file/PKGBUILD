@@ -16,14 +16,24 @@ depends=('glibc' 'zlib')
 provides=("${_target_triplet}-${pkgname}")
 
 # Building information
-source=("ftp://ftp.astron.com/pub/${pkgname}/${pkgname}-${pkgver}.tar.gz")
+source=("https://astron.com/pub/${pkgname}/${pkgname}-${pkgver}.tar.gz")
 md5sums=('5f10fb45bdaffd729a572e563783b78e')
 
 
 build() {
     cd "${srcdir}/${pkgname}-${pkgver}"
 
-    ./configure --prefix="/usr"
+    # Link file statically against the in-tree libmagic. The host's much
+    # newer libmagic.so (same SONAME; /usr/lib is read-only so it cannot be
+    # displaced) is what the plain dynamic build picks up at runtime via
+    # rpath, and its magic version (548) mismatches this source (535),
+    # breaking the magic.mgc compile step during the build. A static
+    # libmagic keeps this bootstrap 'file' hermetic against host interference.
+    # Also disable the libseccomp sandbox: file 5.35 auto-enables it when the
+    # host has libseccomp, and its kill-filter trips on the fakechroot syscall
+    # shim during the build (SIGSYS while compiling magic.mgc).
+    ./configure --prefix="/usr" --disable-shared --enable-static \
+        --disable-libseccomp
     make
 }
 

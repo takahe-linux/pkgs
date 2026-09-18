@@ -1,0 +1,36 @@
+# Maintainer: Chocobo1 <chocobo1 AT archlinux DOT net>
+
+pkgname=attr
+pkgver=2.4.48
+pkgrel=1
+pkgdesc="Commands for manipulating filesystem extended attributes"
+arch=('i686' 'x86_64')
+url="https://savannah.nongnu.org/projects/attr"
+license=('GPL' 'LGPL')
+depends=('glibc')
+makedepends=('gettext')
+options=('staticlibs')
+source=("http://archive.debian.org/debian/pool/main/a/attr/attr_2.4.48.orig.tar.gz")
+sha256sums=('5ead72b358ec709ed00bbf7a9eaef1654baad937c001c044fe8b74c57f5324e7')
+
+
+build() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    ./configure --prefix="/usr"
+    make
+}
+
+
+check() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    #make check
+}
+
+
+package() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    make DESTDIR="$pkgdir" install
+}

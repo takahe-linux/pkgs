@@ -23,6 +23,11 @@ md5sums=('98c889aaf8d23910d2b92d65be2e737a')
 build() {
     cd "${srcdir}/${pkgname}-${pkgver}"
 
+    # ncurses' configure wrongly detects getttynam when cross compiling; musl
+    # has neither the function nor ttyent.h, and tset.c then fails to compile
+    # against an incomplete 'struct ttyent'. Force it off (tset falls back to
+    # parsing /etc/ttytype instead).
+    ac_cv_func_getttynam=no \
     ./configure --prefix="/usr" \
         --host="${_target_triplet}" \
         --mandir="/usr/share/man" \

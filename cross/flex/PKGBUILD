@@ -43,7 +43,13 @@ EOF
     # TODO: Upstream disabling tests.
     printf 'all:\n\ttrue\n\ninstall:\n\ttrue\n\n' > tests/Makefile.in
 
-    make
+    # The stage1flex bootstrap is compiled with the host gcc (CC_FOR_BUILD).
+    # Host gcc >= 15 defaults to C23, where an empty parameter list "()" means
+    # "takes no arguments"; flex's gnulib malloc.c declares "void *malloc ()"
+    # and calls it with arguments, which C23 rejects. Build the host helpers as
+    # C11 (where "()" still means unspecified arguments) and downgrade the
+    # newer implicit-declaration errors.
+    make CC_FOR_BUILD="gcc -std=gnu11 -Wno-implicit-function-declaration -Wno-implicit-int"
 }
 
 package() {

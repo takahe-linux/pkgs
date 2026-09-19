@@ -83,6 +83,12 @@ gt_cv_int_divbyzero_sigfpe=yes
 EOF
 
     # Build bash.
+    # mkbuiltins (and friends) are built for the *host* with CC_FOR_BUILD so
+    # they can run during the build. The host gcc (>=14) treats an empty
+    # parameter list "()" as "takes no arguments" and implicit declarations
+    # as errors, which breaks this K&R-era code ("too many arguments to
+    # function 'xmalloc'; expected 0, have 1"); build the host helpers as C89.
+    export CC_FOR_BUILD="gcc -std=gnu89"
     ./configure --prefix="/usr" \
         --host="${_target_triplet}" \
         --build="${_local_triplet}" \

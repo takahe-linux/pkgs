@@ -18,15 +18,18 @@ makedepends=('git' 'nasm' 'perl' 'xz')
 # Building information
 backup=('boot/syslinux/syslinux.cfg')
 options=('!makeflags')
+# Patches generated from the syslinux git repo:
+#   gcc-fix-alignment:        git show e5f2b577 (bios: Fix alignment change with gcc 5)
+#   dont-guess-alignment:     git show 0cc9a99e (bios: Don't try to guess the sections alignment)
+# (Formerly fetched from repo.or.cz, which no longer serves them.)
 source=("git://git.kernel.org/pub/scm/boot/syslinux/syslinux.git#tag=syslinux-${pkgver}"
         syslinux.cfg
-        gcc-fix-alignment.patch::http://repo.or.cz/syslinux.git/patch/e5f2b577ded109291c9632dacb6eaa621d8a59fe?hp=8dc6d758b564a1ccc44c3ae11f265d43628219ce
-        dont-guess-alignment.patch::http://repo.or.cz/syslinux.git/patch/0cc9a99e560a2f52bcf052fd85b1efae35ee812f?hp=e5f2b577ded109291c9632dacb6eaa621d8a59fe
-)
+        gcc-fix-alignment.patch
+        dont-guess-alignment.patch)
 sha1sums=('SKIP'
           '9dbd3189391dc1155e426c9d3ce89b416ab1d97e'
-          '74b976dd3ce28a619c2e9ef69a33fd455dc4bd4c'
-          'b6ef5a7cdd4b7c714fd78c174e93ae6e854ae1ee')
+          '9fe0d3a212284f1a1cfd4bdd530ea5494ca5ff64'
+          'bc94ad90f1080ba24eab1ccf5424ff9e4964679f')
 
 
 prepare() {

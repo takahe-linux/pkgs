@@ -1,10 +1,20 @@
 # Maintainer: Alastair Hughes < hobbitalastair at yandex dot com>
 
 # Package information
-pkgname='file'
+# This is the *host* (build-machine) build of file 5.35, used to bootstrap the
+# cross 'file' package: file 5.35's install regenerates magic.mgc with a
+# 'file' binary and refuses to use any version other than 5.35.
+#
+# It is named 'host-file' and installed under a private prefix so that it can
+# coexist with the host chroot's modern file/libmagic. Installing it as
+# 'file' replaces the host file package and removes its 'libmagic.so=1-64'
+# provision, which pacman refuses because util-linux depends on it - aborting
+# the entire toolchain transaction and silently leaving the cross gcc
+# uninstalled.
+pkgname='host-file'
 pkgver='5.35'
 pkgrel=1
-pkgdesc='File type identification utility'
+pkgdesc='Host build of file 5.35 (bootstrap for the cross file package)'
 
 # Additional information...
 arch=('i686' 'x86_64')
@@ -13,36 +23,32 @@ license=('custom')
 
 # Dependency information
 depends=('glibc' 'zlib')
-provides=("${_target_triplet}-${pkgname}")
+provides=("${_target_triplet}-file")
 
 # Building information
-source=("https://astron.com/pub/${pkgname}/${pkgname}-${pkgver}.tar.gz")
+source=("https://astron.com/pub/file/file-${pkgver}.tar.gz")
 md5sums=('5f10fb45bdaffd729a572e563783b78e')
 
 
 build() {
-    cd "${srcdir}/${pkgname}-${pkgver}"
+    cd "${srcdir}/file-${pkgver}"
 
-    # Link file statically against the in-tree libmagic. The host's much
-    # newer libmagic.so (same SONAME; /usr/lib is read-only so it cannot be
-    # displaced) is what the plain dynamic build picks up at runtime via
-    # rpath, and its magic version (548) mismatches this source (535),
-    # breaking the magic.mgc compile step during the build. A static
-    # libmagic keeps this bootstrap 'file' hermetic against host interference.
-    # Also disable the libseccomp sandbox: file 5.35 auto-enables it when the
-    # host has libseccomp, and its kill-filter trips on the fakechroot syscall
-    # shim during the build (SIGSYS while compiling magic.mgc).
-    ./configure --prefix="/usr" --disable-shared --enable-static \
+    # Link file statically against the in-tree libmagic so the bootstrap
+    # binary is hermetic against the host's much newer libmagic.so. Also
+    # disable the libseccomp sandbox: file 5.35 auto-enables it when the host
+    # has libseccomp, and its kill-filter trips on the fakechroot syscall shim
+    # during the build (SIGSYS while compiling magic.mgc).
+    ./configure --prefix="/opt/host-file" --disable-shared --enable-static \
         --disable-libseccomp
     make
 }
 
 
 package() {
-    cd "${srcdir}/${pkgname}-${pkgver}"
+    cd "${srcdir}/file-${pkgver}"
 
     make DESTDIR="${pkgdir}/" install
-    install -Dm644 COPYING "${pkgdir}/usr/share/licenses/${pkgname}/COPYING"
-    rmdir "${pkgdir}/usr/share/man/man5"
+    install -Dm644 COPYING \
+        "${pkgdir}/opt/host-file/share/licenses/${pkgname}/COPYING"
+    rmdir "${pkgdir}/opt/host-file/share/man/man5"
 }
-

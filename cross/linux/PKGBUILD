@@ -21,9 +21,11 @@ hostdepends=('bc' 'inetutils' "${_target_triplet}-gcc-static"
 # Building information
 options=('!buildflags')
 source=("https://www.kernel.org/pub/linux/kernel/v4.x/${_srcname}.tar.xz"
-        "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz")
+        "https://www.kernel.org/pub/linux/kernel/v4.x/patch-${pkgver}.xz"
+        "classmap-pfmax.patch")
 md5sums=('1357fb4ee7c288fdeac5d4e0048f5c18'
-         'ace51349b2f09e3731709b95b8053289')
+         'ace51349b2f09e3731709b95b8053289'
+         '550687e7bc813511c5e5e8a6a0c51e1e')
 
 modules() {
     # true if modules are enabled, false otherwise
@@ -36,6 +38,11 @@ prepare() {
 
     # Add upstream patch.
     patch -p1 -i "${srcdir}/patch-${pkgver}"
+
+    # Modern libc headers (PF_MAX=46) trip the SELinux classmap guard in
+    # this (4.16) kernel; register the class like upstream 4.17 did and
+    # allow the larger PF_MAX.
+    patch -p1 -i "${srcdir}/classmap-pfmax.patch"
 
     # Set extraversion to pkgrel.
     sed -ri "s|^(EXTRAVERSION =).*|\1 -${pkgrel}|" Makefile

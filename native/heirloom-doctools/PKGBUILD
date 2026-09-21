@@ -15,12 +15,19 @@ license=('CDDL' 'LGPL2' 'LPPL' 'custom')
 groups=('base' 'base-devel')
 
 # Building information
-source=("${pkgname}-${pkgver}.tar.gz::https://github.com/n-t-roff/${pkgname}/archive/${pkgver}.tar.gz")
-md5sums=('f9759a099fca6b3021da33b94b1f37a9')
+source=("${pkgname}-${pkgver}.tar.gz::https://github.com/n-t-roff/${pkgname}/archive/${pkgver}.tar.gz"
+        'eqn-yyval.patch')
+md5sums=('f9759a099fca6b3021da33b94b1f37a9'
+         'ef702e0a8dfe2619b6655bc946686a34')
 
 
 prepare() {
     cd "${srcdir}/${pkgname}-${pkgver}"
+
+    # Fix the eqn build on systems with bison 3.x; bison 3.x emits
+    # '#ifdef YYTYPE_UINT8' in the generated parser instead of the bison 2.x
+    # comment 'second part of user declarations' that yyval.sed matched.
+    patch -p1 < "${srcdir}/eqn-yyval.patch"
 
     cat > mk.config << EOF
 # Custom mk.config

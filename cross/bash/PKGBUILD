@@ -2,8 +2,8 @@
 
 # Package information
 pkgname='bash'
-_basever='4.4'
-_patchlevel='018'
+_basever='5.3'
+_patchlevel='020'
 pkgver="${_basever}.${_patchlevel}"
 pkgrel=4
 pkgdesc='The GNU Bourne Again shell'
@@ -26,25 +26,27 @@ source=("http://ftp.gnu.org/gnu/bash/bash-${_basever}.tar.gz")
 for _patch in $(seq 1 ${_patchlevel}); do
     source=(${source[@]} "http://ftp.gnu.org/gnu/bash/bash-${_basever}-patches/bash${_stripped_basever}-$(printf "%03d" ${_patch})")
 done
-md5sums=('148888a7c95ac23705559b6f477dfe25'
-         '817d01a6c0af6f79308a8b7b649e53d8'
-         '765e14cff12c7284009772e8e24f2fe0'
-         '49e7da93bf07f510a2eb6bb43ac3e5a2'
-         '4557d674ab5831a5fa98052ab19edaf4'
-         'cce96dd77cdd1d293beec10848f6cbb5'
-         'd3379f8d8abce5c6ee338f931ad008d5'
-         'ec38c76ca439ca7f9c178e9baede84fc'
-         'e0ba18c1e3b94f905da9b5bf9d38b58b'
-         'e952d4f44e612048930c559d90eb99bb'
-         '57b5b35955d68f9a09dbef6b86d2c782'
-         'cc896e1fa696b93ded568e557e2392d5'
-         'fa47fbfa56fb7e9e5367f19a9df5fc9e'
-         '5e6a20166efe166267972cc78025417b'
-         '00a8877a8787dbd78d97767db1115b0a'
-         '2409586fd19e3104197ead86ce549eca'
-         '4b31183db086daf8be8943d7f7ea7526'
-         'c15c8844f1eb87bdbcde71417c9bd342'
-         'b25e3373fc8de00523116dfe151ac4e0')
+md5sums=('977c8c0c5ae6309191e7768e28ebc951'
+         '71bdb280697184d2b84e31a6139cf46b'
+         '5eb5abc33afe9a72c885e9adf1c7ba17'
+         'f3250b36ff253a6f8ded854923705ad3'
+         '9ef19ac80cb5f344ed1c4611edc49fb6'
+         '4980fb99b7c1c1409329032864d37f58'
+         '44101096c42ee15e5da64d5585ef1522'
+         '5bf4213a691625e304048a30d90f73e0'
+         'db4ec751ad30cb596c6cc648c0fca895'
+         'b7f48b7a5cb506ec85038c3b89b9800d'
+         '35b18828e7b1e2be011601fa1155cdc6'
+         '38379e4331712cb030300bc8b8e5bdc5'
+         '432cab8c7d12907377db2f09b5341b36'
+         'b1306c3a7200b3da66d2b52cb9b0fa15'
+         'df4d3303fadaefa824902924ce8e0b76'
+         'c840c46dbafa9f0ebba00b4dea239ba3'
+         '0ed56c9b7793771e7408db25d67a8168'
+         'e428f09667b9a01da70c8189cad935cc'
+         'ec1b2b697c721a67c9a010aed7018513'
+         '943257a36854ea738eaf19a16670763c'
+         '3e2e35da940784c0ed543c296540416e')
 
 
 prepare() {

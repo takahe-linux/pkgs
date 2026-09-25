@@ -2,7 +2,7 @@
 
 # Package information
 pkgname='openssl'
-_ver='1.0.2p'
+_ver='3.6.4'
 # use a pacman compatible version scheme
 pkgver=${_ver/[a-z]/.${_ver//[0-9.]/}}
 pkgrel=1
@@ -16,26 +16,17 @@ license=('custom:BSD')
 # Dependency information
 groups=('base-devel')
 depends=('zlib' 'musl')
-hostdepends=('toolchain')
+makedepends=('linux-api-headers')
+hostdepends=('perl' 'toolchain')
 
 # Building information
-backup=('etc/ssl/openssl.cnf')
 options=('!makeflags')
-source=("https://www.openssl.org/source/${pkgname}-${_ver}.tar.gz"
-        'no-rpath.patch'
-        'ca-dir.patch')
-md5sums=('ac5eb30bf5798aa14b1ae6d0e7da58df'
-         'dc78d3d06baffc16217519242ce92478'
-         '3bf51be3a1bbd262be46dc619f92aa90')
+source=("https://www.openssl.org/source/${pkgname}-${_ver}.tar.gz")
+md5sums=('f771f53e0ce36d806d64e15f4d3a36d3')
 
 
 prepare() {
     cd "${srcdir}/${pkgname}-${_ver}"
-
-    # Remove rpath.
-    patch -p0 -i $srcdir/no-rpath.patch
-    # Set ca dir to /etc/ssl by default.
-    patch -p0 -i $srcdir/ca-dir.patch
 }
 
 
@@ -45,15 +36,11 @@ build() {
     if [ "${_target_arch_alias}" == 'x86_64' ]; then
         openssltarget='linux-x86_64'
         optflags='enable-ec_nistp_64_gcc_128'
-    elif [ "${_target_arch_alias}" == 'i386' ]; then
-        openssltarget='linux-elf'
-        optflags=''
-    elif [ "${_target_arch_alias}" == 'mips' ]; then
-        openssltarget='linux-mips32'
+    else
+        openssltarget='linux-generic32'
         optflags=''
     fi
 
-    # Mark stack as non-executable.
     ./Configure --prefix="/usr" \
         --openssldir="/etc/ssl" \
         --libdir="lib" \
@@ -68,10 +55,8 @@ build() {
 package() {
     cd "${srcdir}/${pkgname}-${_ver}"
 
-    make INSTALL_PREFIX="${pkgdir}/" \
-        MANDIR="/usr/share/man" \
-        MANSUFFIX='ssl' install
-    install -Dm0644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+    make DESTDIR="${pkgdir}" install_sw install_ssldirs
+    install -Dm0644 LICENSE.txt "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 
     # We don't support dynamic linking, so rm the engines dir.
     rm -rf "${pkgdir}/usr/lib/engines"

@@ -2,7 +2,7 @@
 
 # Package information
 pkgname='gmp'
-pkgver='6.1.2'
+pkgver='6.3.0'
 pkgrel=19
 pkgdesc="A free library for arbitrary precision arithmetic"
 
@@ -17,7 +17,7 @@ hostdepends=('toolchain')
 
 # Building information
 source=("https://ftp.gnu.org/gnu/gmp/${pkgname}-${pkgver}.tar.xz")
-md5sums=('f58fa8001d60c4c77595fbbb62b63c1d')
+md5sums=('956dc04e864001a9c22429f761f2c283')
 
 
 build() {

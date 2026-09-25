@@ -2,7 +2,7 @@
 
 # Package information
 pkgname='musl'
-pkgver='1.1.19'
+pkgver='1.2.6'
 pkgrel=2
 pkgdesc="Lightweight libc implementation"
 
@@ -17,16 +17,11 @@ hostdepends=("${_target_triplet}-gcc-static" "${_target_triplet}-binutils")
 
 # Building information
 source=("https://musl.libc.org/releases/${pkgname}-${pkgver}.tar.gz")
-md5sums=('399784355ef84d800623ef5e3f51e8b8')
+md5sums=('d5eec260f2c89aefc9906715104b8327')
 
 
 build() {
     cd "${srcdir}/${pkgname}-${pkgver}"
-
-    # musl 1.1.19's ldso start code breaks under LTO in the final link
-    # (undefined reference to '_dlstart_c'), so strip it if present.
-    export CFLAGS="${CFLAGS//-flto=auto/}"
-    export CFLAGS="${CFLAGS// -flto / }"
 
     ./configure --target="${_target_triplet}" \
                 --prefix="/usr" \

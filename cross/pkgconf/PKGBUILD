@@ -2,7 +2,7 @@
 
 # Package information
 pkgname='pkgconf'
-pkgver='1.5.3'
+pkgver='3.0.7'
 pkgrel=1
 pkgdesc="A drop-in replacement for pkg-config"
 
@@ -20,7 +20,7 @@ conflicts=('pkg-config')
 
 # Building information
 source=("https://distfiles.dereferenced.org/pkgconf/${pkgname}-${pkgver}.tar.gz")
-md5sums=('71bd07819290ed3986221b11c62f26cb')
+md5sums=('a9cd82a69f92ca8e223c4dc02673226e')
 
 build() {
     cd "${srcdir}/${pkgname}-${pkgver}"

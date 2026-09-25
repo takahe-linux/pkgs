@@ -3,7 +3,7 @@
 # Package information
 _pkgname='gcc'
 pkgname="${_target_triplet}-${_pkgname}-static"
-pkgver='8.2.0'
+pkgver='16.2.0'
 pkgrel=1
 pkgdesc="The GNU Compiler Collection"
 
@@ -20,7 +20,7 @@ targetdepends=("linux-api-headers")
 # Building information
 options=(!emptydirs !strip)
 source=("https://ftp.gnu.org/gnu/gcc/gcc-${pkgver}/gcc-${pkgver}.tar.xz")
-sha256sums=('196c3c04ba2613f893283977e6011b2345d1cd1af9abeac58e916b1aab3e0080')
+sha256sums=('e6738e29597f733270731aa90600f37ffdc045079dfc27ec7e8192cc81085c3e')
 
 
 prepare() {
@@ -28,9 +28,6 @@ prepare() {
 
     # hack! - some configure tests for header files using "$CPP $CPPFLAGS"
     sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" {libiberty,gcc}/configure
-
-    # Disable fixincludes (could lead to header pollution)
-    sed -i 's@\./fixinc\.sh@-c true@' gcc/Makefile.in
 
     mkdir "${srcdir}/gcc-build"
 }
@@ -60,7 +57,6 @@ build() {
         --disable-libffi \
         --disable-libgomp \
         --disable-atomic \
-        --disable-libmudflap \
         --disable-libquadmath \
         --disable-libssp \
         --disable-libitm \
@@ -71,13 +67,12 @@ build() {
         --disable-multilib \
         --disable-tls \
         --disable-libcc1 \
+        --disable-fixincludes \
         --disable-werror \
         --with-gnu-as \
         --with-gnu-ld \
         --with-system-zlib \
         --without-headers \
-        --without-cloog \
-        --without-isl \
         --with-newlib
 
     make all-gcc all-target-libgcc

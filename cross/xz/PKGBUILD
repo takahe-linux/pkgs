@@ -2,7 +2,7 @@
 
 # Package information
 pkgname='xz'
-pkgver='5.2.4'
+pkgver='5.8.4'
 pkgrel=3
 pkgdesc="Library for dealing with XZ and LZMA compressed files"
 
@@ -17,8 +17,8 @@ depends=('musl')
 hostdepends=('toolchain')
 
 # Building information
-source=("http://tukaani.org/${pkgname}/${pkgname}-${pkgver}.tar.gz")
-md5sums=('5ace3264bdd00c65eeec2891346f65e6')
+source=("https://github.com/tukaani-project/xz/releases/download/v${pkgver}/${pkgname}-${pkgver}.tar.gz")
+md5sums=('9093d82a0283145840722028c31d561f')
 
 
 build() {

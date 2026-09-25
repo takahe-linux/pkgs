@@ -2,7 +2,7 @@
 
 # Package information
 pkgname='libarchive'
-pkgver='3.3.1'
+pkgver='3.8.9'
 pkgrel=17
 pkgdesc="Library for reading and writing several compression formats"
 
@@ -12,12 +12,12 @@ url="http://www.libarchive.org"
 license=('BSD')
 
 # Dependency information
-depends=('musl' 'zlib')
+depends=('musl' 'zlib' 'xz')
 hostdepends=('toolchain')
 
 # Building information
-source=("http://libarchive.org/downloads/${pkgname}-${pkgver}.tar.gz")
-md5sums=('d2af45480aa5b0db5b5f3919cd0ea65e')
+source=("https://github.com/libarchive/libarchive/releases/download/v${pkgver}/${pkgname}-${pkgver}.tar.gz")
+md5sums=('4bcc47ebb12649fe973b11d6315d3403')
 
 
 build() {

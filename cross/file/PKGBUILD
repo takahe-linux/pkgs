@@ -2,7 +2,7 @@
 
 # Package information
 pkgname='file'
-pkgver='5.35'
+pkgver='5.48'
 pkgrel=1
 pkgdesc='File type identification utility'
 
@@ -14,17 +14,11 @@ license=('custom')
 # Dependency information
 groups=('base' 'base-devel')
 depends=('zlib' 'musl')
-# file 5.35's install step regenerates magic.mgc with a 'file' binary and
-# refuses to use any version other than 5.35. The toolchain 'host-file'
-# package (providing i586-linux-musl-file) supplies a private
-# /opt/host-file/bin/file build for exactly this, without clashing with the
-# host chroot's newer file/libmagic (installing it as 'file' would replace
-# the host package and break util-linux's 'libmagic.so=1-64' dependency).
 hostdepends=('toolchain' "${_target_triplet}-file")
 
 # Building information
 source=("https://astron.com/pub/${pkgname}/${pkgname}-${pkgver}.tar.gz")
-md5sums=('5f10fb45bdaffd729a572e563783b78e')
+md5sums=('423686e97f731d8c24e9cd1a22b03dec')
 
 
 build() {
@@ -40,9 +34,7 @@ build() {
 package() {
     cd "${srcdir}/${pkgname}-${pkgver}"
 
-    # magic.mgc must be compiled by file 5.35: point FILE_COMPILE at the
-    # private host build (the absolute path also makes file's Makefile skip
-    # its version check, which rejects the host's file 5.48).
+    # magic.mgc must be compiled by the matching file version
     make DESTDIR="${pkgdir}/" install \
         FILE_COMPILE=/opt/host-file/bin/file
     install -Dm644 COPYING "${pkgdir}/usr/share/licenses/${pkgname}/COPYING"

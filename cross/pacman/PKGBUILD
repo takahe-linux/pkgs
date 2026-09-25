@@ -4,8 +4,9 @@
 
 # Package information
 pkgname='pacman'
-pkgver='5.1.0'
+pkgver='7.1.0'
 pkgrel=5
+_srcname="pacman-v${pkgver}"
 pkgdesc="Arch Linux's simple package manager"
 
 # Additional information...
@@ -16,52 +17,68 @@ license=('GPL')
 # Dependency information
 groups=('base' 'base-devel')
 depends=('bash' 'curl' 'libarchive' 'gettext' 'xz' 'musl' 'openssl')
-hostdepends=('asciidoc' 'libtool' 'toolchain')
+hostdepends=('meson' 'ninja' 'toolchain' "${_target_triplet}-pkg-config")
 optdepends=('wget')
 
 # Building information
 backup=('etc/pacman.conf' 'etc/makepkg.conf')
-source=("https://sources.archlinux.org/other/pacman/${pkgname}-${pkgver}.tar.gz"
+source=("https://gitlab.archlinux.org/pacman/pacman/-/archive/v${pkgver}/${_srcname}.tar.gz"
         pacman.conf
-        makepkg.conf
-        *.patch)
-md5sums=('7b0460d449323eb3097ab39913d2668b'
+        makepkg.conf)
+md5sums=('1a795e083b120b21af088ab562aad7f4'
          '044786f82c98ca027067c63037e1fa15'
-         'fefa873b52d15f08a1d32cb469ec6018'
-         'f3572075f951c64be04653513fdf6a29')
+         'fefa873b52d15f08a1d32cb469ec6018')
 
 
 prepare() {
-    cd "${srcdir}/${pkgname}-${pkgver}"
-    for p in "${srcdir}/"*.patch; do
-        patch -p1 < "${p}"
-    done
+    cd "${srcdir}/${_srcname}"
 }
 
 
 build() {
-    cd "${srcdir}/${pkgname}-${pkgver}"
+    cd "${srcdir}/${_srcname}"
 
-    ./configure --prefix="/usr" \
-        --host="${_target_triplet}" \
-        --bindir="/usr/bin" \
-        --localstatedir='/var' \
-        --sysconfdir="/etc" \
-        --enable-doc \
-        --cache-file=config.cache \
-        --with-scriptlet-shell="/usr/bin/bash" \
-        --without-gpgme \
-        DUFLAGS="-sk" \
-        SEDINPLACEFLAGS="-i"
+    # Meson cross file: target the cross compiler via PATH.  Compiler and
+    # linker flags (sysroot, -march, etc.) come from the CFLAGS/LDFLAGS
+    # environment that makepkg provides.
+    cat > meson-cross.txt << EOF
+[binaries]
+c = '${_target_triplet}-gcc'
+ar = '${_target_triplet}-ar'
+strip = '${_target_triplet}-strip'
+pkgconfig = '${_target_triplet}-pkg-config'
 
-    make
+[host_machine]
+system = 'linux'
+cpu_family = 'x86'
+cpu = '${_target_arch_alias}'
+endian = 'little'
+EOF
+
+    meson setup build \
+        --cross-file meson-cross.txt \
+        -Dprefix=/usr \
+        -Dsysconfdir=/etc \
+        -Dlocalstatedir=/var \
+        -Ddoc=disabled \
+        -Ddoxygen=disabled \
+        -Di18n=false \
+        -Dcurl=enabled \
+        -Dcrypto=openssl \
+        -Dgpgme=disabled \
+        -Dfile-seccomp=disabled \
+        -Dscriptlet-shell=/usr/bin/bash \
+        -Dpkg-ext=.pkg.tar.gz \
+        -Dsrc-ext=.src.tar.gz
+
+    ninja -C build
 }
 
 
 package() {
-    cd "${srcdir}/${pkgname}-${pkgver}"
+    cd "${srcdir}/${_srcname}"
 
-    make DESTDIR="${pkgdir}/" install
+    DESTDIR="${pkgdir}/" meson install -C build --no-rebuild
 
     # Install the configuration files
     install -dm755 "${pkgdir}/etc"
@@ -75,13 +92,4 @@ package() {
         -e "s|@CFLAGS[@]|${_target_cflags}|g" \
         -e "s|@CPPFLAGS[@]|${_target_cppflags}|g" \
         -e "s|@LDFLAGS[@]|-Wl${_target_ldflags}|g"
-
-    # Install the bash completion files
-    install -Dm644 "${pkgdir}/etc/bash_completion.d/pacman" \
-        "${pkgdir}/usr/share/bash-completion/completions/pacman"
-    rm -rf "${pkgdir}/etc/bash_completion.d"
-
-    for file in makepkg pacman-key; do
-        ln -s 'pacman' "${pkgdir}/usr/share/bash-completion/completions/${file}"
-    done
 }

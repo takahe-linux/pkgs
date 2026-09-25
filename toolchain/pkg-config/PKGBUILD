@@ -20,7 +20,7 @@ package() {
 
     file="${pkgdir}/${_toolroot}/bin/${pkgname}"
     mkdir -p "$(dirname "${file}")"
-    cat << EOF > "${file}"
+    cat << "EOF" > "${file}"
 #!/usr/bin/env sh
 PKG_CONFIG_DIR="" \
 PKG_CONFIG_LIBDIR="/sysroot/usr/lib/pkgconfig:/sysroot/usr/share/pkgconfig" \

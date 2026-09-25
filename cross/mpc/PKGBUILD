@@ -2,7 +2,7 @@
 
 # Package information
 pkgname='mpc'
-pkgver='1.1.0'
+pkgver='1.4.1'
 pkgrel=7
 pkgdesc="Library for the arithmetic of complex numbers with arbitrarily high precision"
 
@@ -16,8 +16,8 @@ depends=('mpfr' 'gmp' 'musl')
 hostdepends=('toolchain' 'git')
 
 # Building information
-source=("https://ftp.gnu.org/gnu/mpc/${pkgname}-${pkgver}.tar.gz")
-md5sums=('4125404e41e482ec68282a2e687f6c73')
+source=("https://ftp.gnu.org/gnu/mpc/${pkgname}-${pkgver}.tar.xz")
+md5sums=('40c5fba305125279ea46041160e81daf')
 
 
 build() {

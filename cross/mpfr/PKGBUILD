@@ -4,9 +4,8 @@
 
 # Package information
 pkgname='mpfr'
-_pkgver='4.0.1'
-_patchlevel='p0'
-pkgver="${_pkgver}.${_patchlevel}"
+_pkgver='4.2.2'
+pkgver="${_pkgver}"
 pkgrel=4
 pkgdesc="Multiple-precision floating-point library"
 
@@ -22,7 +21,7 @@ hostdepends=('toolchain')
 # Building information
 source=("https://www.mpfr.org/mpfr-${_pkgver}/${pkgname}-${_pkgver}.tar.xz")
         #"${pkgname}-${pkgver}.patch")
-md5sums=('b8dd19bd9bb1ec8831a6a582a7308073')
+md5sums=('7c32c39b8b6e3ae85f25156228156061')
 
 
 prepare() {

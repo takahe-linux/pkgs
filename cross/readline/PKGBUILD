@@ -2,8 +2,8 @@
 
 # Package information
 pkgname='readline'
-_basever='7.0'
-_patchlevel='003'
+_basever='8.3'
+_patchlevel='006'
 pkgver="${_basever}.${_patchlevel}"
 pkgrel=18
 pkgdesc="GNU line editing library"
@@ -21,12 +21,15 @@ hostdepends=('toolchain')
 source=("https://ftp.gnu.org/gnu/readline/${pkgname}-${_basever}.tar.gz")
 _stripped_basever="$(echo ${_basever} | tr -d '.')"
 for _patch in $(seq 1 ${_patchlevel}); do
-    source+=("ftp://ftp.cwru.edu/pub/bash/${pkgname}-${_basever}-patches/${pkgname}${_stripped_basever}-$(printf "%03d" "${_patch}")")
+    source+=("https://ftp.gnu.org/gnu/readline/${pkgname}-${_basever}-patches/${pkgname}${_stripped_basever}-$(printf "%03d" "${_patch}")")
 done
-md5sums=('205b03a87fc83dab653b628c59b9fc91'
-         'e299384458a4cbefaaac3f30e9cc2bba'
-         'f9071a353e2fd52a91d32667b23715d6'
-         '03595464cf0283286a6e07f4f01c4a70')
+md5sums=('25a73bfb2a3ad7146c5e9d4408d9f6cd'
+         '41a796b6dc957645deb3520f4125091a'
+         '6b455153895949f29e999a19c8bcc63e'
+         '4a88e7d5ed1cc290b4fcb1ae3576267f'
+         '66e2392335908a6a083d08c90d9a3f04'
+         '64619eab873edaf45c0c524deda09d93'
+         'ff24671cbae3af9c669aaa78c58379b7')
 
 
 prepare() {

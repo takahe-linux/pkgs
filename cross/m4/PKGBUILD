@@ -2,7 +2,7 @@
 
 # Package information
 pkgname='m4'
-pkgver='1.4.18'
+pkgver='1.4.21'
 pkgrel=22
 pkgdesc="The GNU macro processor"
 
@@ -14,11 +14,12 @@ license=('GPL3')
 # Dependency information
 groups=('base-devel')
 depends=('sh' 'musl')
+makedepends=('linux-api-headers')
 hostdepends=('toolchain')
 
 # Building information
 source=("https://ftp.gnu.org/gnu/m4/${pkgname}-${pkgver}.tar.xz")
-md5sums=('730bb15d96fffe47e148d1e09235af82')
+md5sums=('8051eef7239b2f187791f2ab0034d6b7')
 
 
 build() {
@@ -37,7 +38,5 @@ package() {
 
     # Remove the redundant charset.alias (provided by gettext).
     rm -f "${pkgdir}/usr/lib/charset.alias"
-    rmdir "${pkgdir}/usr/lib"
-
     rm -rf "${pkgdir}/usr/share/info"
 }

@@ -2,8 +2,7 @@
 
 # Package information
 pkgname='linux-api-headers'
-pkgver='3.12.6' # Debian upstream version; I don't I need more modern headers
-_header_version="5"
+pkgver='7.2'
 pkgrel=1
 pkgdesc="Kernel headers sanitized for use in userspace, with musl patches"
 
@@ -16,27 +15,21 @@ license=('GPL2')
 groups=('base-devel')
 
 # Building information
-source=("http://web.archive.org/web/20180719175354id_/http://ftp.barfooze.de:80/pub/sabotage/tarballs/\
-kernel-headers-${pkgver}-${_header_version}.tar.xz"
-       )
-md5sums=('633a0ff5b4d321d8e553133dcc2df36c')
-
-
-build() {
-    mv "${srcdir}/kernel-headers-${pkgver}-${_header_version}" \
-       "${srcdir}/${pkgname}-${pkgver}"
-}
+source=("https://www.kernel.org/pub/linux/kernel/v7.x/linux-${pkgver}.tar.xz")
+md5sums=('381ae4b20294dcf4b8f63f1fd1bb7017')
 
 
 package() {
-  cd "${srcdir}/${pkgname}-${pkgver}"
+  cd "${srcdir}/linux-${pkgver}"
 
-  make ARCH="${_target_arch_alias}" INSTALL_HDR_PATH="${pkgdir}/usr" \
-      headers_install
+  make ARCH="${_target_arch_alias}" headers
+
+  mkdir -p "${pkgdir}/usr"
+  cp -rP usr/include "${pkgdir}/usr/"
 
   # Use headers from libdrm for drm support
   rm -r "${pkgdir}/usr/include/drm"
-  
-  # Clean-up unnecessary files generated during install
-  find ${pkgdir} \( -name .install -o -name ..install.cmd \) -delete
+
+  # Clean-up unnecessary files generated during install.
+  find ${pkgdir} \( -name .install -o -name '.*.cmd' \) -delete
 }

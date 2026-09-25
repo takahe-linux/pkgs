@@ -3,7 +3,7 @@
 # Package information
 _pkgname='binutils'
 pkgname="${_target_triplet}-${_pkgname}"
-pkgver='2.31.1'
+pkgver='2.47'
 pkgrel=1
 pkgdesc="A set of programs to assemble and manipulate binary and object files"
 
@@ -19,7 +19,7 @@ depends=('glibc>=2.20' 'zlib')
 # Building information
 options=('staticlibs' '!distcc' '!ccache')
 source=("https://sourceware.org/pub/${_pkgname}/releases/${_pkgname}-${pkgver}.tar.xz")
-md5sums=('5b7c9d4ce96f507d95c1b9a255e52418')
+md5sums=('d772acfbd55a81644e9fe7b8189cd2a5')
 
 
 prepare() {
@@ -27,6 +27,10 @@ prepare() {
 
     # hack! - libiberty configure tests for header files using "$CPP $CPPFLAGS"
     sed -i "/ac_cpp=/s/\$CPPFLAGS/\$CPPFLAGS -O2/" libiberty/configure
+
+    # Release tarballs still ship with development mode enabled (-Werror,
+    # unstable sonames); turn it off.
+    sed -i '/^development=/s/true/false/' bfd/development.sh
 
     mkdir "${srcdir}/${_pkgname}-build"
 }
@@ -46,6 +50,7 @@ build() {
         --disable-nls --disable-multilib \
         --disable-static --disable-werror \
         --disable-host-shared --disable-doc \
+        --disable-gprofng \
         --with-lib-path="${_toolroot}/lib"
 
     # Check the host environment and makes sure all the necessary tools are

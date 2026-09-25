@@ -2,7 +2,7 @@
 
 # Package information
 pkgname='gettext'
-pkgver='0.19.8'
+pkgver='1.0'
 pkgrel=23
 pkgdesc="GNU internationalization library"
 
@@ -14,12 +14,13 @@ license=('GPL')
 # Dependency information
 groups=('base-devel')
 depends=('musl' 'gcc-libs')
+makedepends=('linux-api-headers')
 hostdepends=('toolchain')
 
 # Building information
 options=(!docs)
 source=("https://ftp.gnu.org/gnu/gettext/${pkgname}-${pkgver}.tar.gz")
-md5sums=('7ad5c90e32ac6828de955a0432ab4a7c')
+md5sums=('4ba57b13fc49183a9b8ef6a691571a90')
 
 
 build() {

@@ -2,7 +2,7 @@
 
 # Package information
 pkgname='zlib'
-pkgver='1.2.11'
+pkgver='1.3.2'
 pkgrel=17
 pkgdesc='Compression library implementing the deflate compression method found in gzip and PKZIP'
 
@@ -17,7 +17,7 @@ hostdepends=('toolchain')
 
 # Building information
 source=("https://zlib.net/fossils/zlib-${pkgver}.tar.gz")
-md5sums=('1c9f62f0778697a09d36121ead88e08e')
+md5sums=('a1e6c958597af3c67d162995a342138a')
 
 
 prepare() {

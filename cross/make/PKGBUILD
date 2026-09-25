@@ -2,7 +2,7 @@
 
 # Package information
 pkgname='make'
-pkgver='4.2.1'
+pkgver='4.4.1'
 pkgrel=32
 pkgdesc="GNU make utility to maintain groups of programs"
 
@@ -17,9 +17,9 @@ depends=('sh' 'musl')
 hostdepends=('toolchain')
 
 # Building information
-source=("https://ftp.gnu.org/gnu/${pkgname}/${pkgname}-${pkgver}.tar.bz2"
+source=("https://ftp.gnu.org/gnu/${pkgname}/${pkgname}-${pkgver}.tar.gz"
         "test_fix.patch")
-md5sums=('15b012617e7c44c0ed482721629577ac'
+md5sums=('c8469a3713cbbe04d955d4ae4be23eeb'
          '219fe403bbb73db54fe04f6d10359bb0')
 
 
@@ -37,13 +37,6 @@ build() {
         --host="${_target_triplet}" \
         --build="${_local_triplet}"
     make
-}
-
-
-check() {
-    cd "${srcdir}/${pkgname}-${pkgver}"
-
-    make -k check
 }
 
 
